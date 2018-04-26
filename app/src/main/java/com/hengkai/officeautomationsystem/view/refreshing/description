@@ -1,0 +1,68 @@
+用法描述:
+    - 布局文件的写法(注意ID必须一致)
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.harry.swiperefreshlayoutdemo.RefreshHeaderView
+                android:id="@id/swipe_refresh_header"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="100dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.harry.swiperefreshlayoutdemo.LoadMoreFooterView
+                android:id="@id/swipe_load_more_footer"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="100dp" />
+
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+    - 关于SwipeToLoadLayout的其他常用属性
+        app:refresh_enabled：                                设置是否可以下拉刷新
+        app:load_more_enabled：                              设置是否可以上拉加载更多
+        app:swipe_style：                                    设置下拉刷新与上拉加载的样式，其值为classic，above，blew或scale
+        app:refresh_trigger_offset：                         触发下拉刷新的偏移量，默认值是下拉刷新头部的高度
+        app:load_more_trigger_offset：                       触发上拉加载更多的偏移量，默认值是上拉加载更多的高度
+        app:refresh_final_drag_offset：                      下拉刷新最大可以拖动的偏移量
+        app:load_more_final_drag_offset：                    上拉加载更多最大可以拖动的偏移量
+        app:release_to_refreshing_scrolling_duration：       释放下拉刷新持续滚动的时间
+        app:release_to_loading_more_scrolling_duration：     释放上拉加载更多持续滚动的时间
+        app:refresh_complete_delay_duration：                下拉刷新完成延迟的持续时间
+        app:load_more_complete_delay_duration：              上拉加载更多完成延迟的持续时间
+        app:refresh_complete_to_default_scrolling_duration： 默认完成下拉刷新持续滚动时间
+        app:load_more_complete_to_default_scrolling_duration：默认完成上拉加载更多持续滚动时间
+        app:default_to_refreshing_scrolling_duration：       默认下拉刷新滚动时间
+        app:default_to_loading_more_scrolling_duration：     默认上拉加载更多滚动时间
+
+    - 关于类中的写法
+        swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
+        //下拉刷新的监听
+        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //请求数据
+                adapter.notifyDataSetChanged();
+                //数据请求完毕, 停止刷新
+                swipeToLoadLayout.setRefreshing(false);
+            }
+        });
+
+        //上拉加载更多的监听
+        swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                //请求数据
+                adapter.notifyDataSetChanged();
+                //数据请求完毕, 停止刷新
+                swipeToLoadLayout.setLoadingMore(false);
+                //RecyclerView滚动到底部
+                swipe_target.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
