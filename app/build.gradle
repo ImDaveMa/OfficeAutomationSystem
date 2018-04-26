@@ -20,9 +20,48 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    allprojects {
+        repositories {
+            maven { url 'https://www.jitpack.io' }
+        }
+    }
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    //修改状态栏透明度的包
+    implementation 'com.jaeger.statusbarutil:library:1.5.0'
+    //Butter Knife
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    //下拉刷新和上拉记载
+    implementation 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+    //底部导航栏
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    //LoadingDialog
+    implementation 'com.wang.avi:library:2.1.3'
+    //CardView-v7
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    //PictureSelector
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
+    //CalendarView
+    implementation 'com.haibin:calendarview:3.2.8'
+    //MaterialDateTimePicker
+    implementation ('com.wdullaer:materialdatetimepicker:3.5.1'){
+        //因为这个库里面的support包的版本低于当前项目的, 所以忽略这个库里的支持包
+        exclude group: 'com.android.support'
+    }
 }
