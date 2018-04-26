@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".function.MainActivity">
+        <activity android:name=".function.MainActivity" />
+        <activity android:name=".function.schedule.ScheduleActivity" />
+        <activity android:name=".function.ask_for_leave.AskForLeaveActivity" />
+        <activity android:name=".function.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

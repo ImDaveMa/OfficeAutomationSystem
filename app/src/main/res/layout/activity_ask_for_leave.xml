@@ -280,7 +280,7 @@
                     android:background="@null"
                     android:gravity="start|top"
                     android:hint="请输入请假事由"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:lines="3"
                     android:padding="5dp"
                     android:textSize="15sp" />
