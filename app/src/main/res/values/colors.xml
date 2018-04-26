@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="teal">#00796B</color>
+    <color name="brown">#8D6E63</color>
+    <color name="blue">#2196F3</color>
+    <color name="blue1">#4164eb</color>
+    <color name="blue2">#7492ff</color>
+    <color name="blue3">#2196F3</color>
+    <color name="blue4">#4895c9</color>
+    <color name="blue5">#3F63E6</color>
+    <color name="grey">#607D8B</color>
+    <color name="grey2">#737373</color>
+    <color name="orange">#F57C00</color>
+    <color name="orange1">#FF802D</color>
+    <color name="red1">#d11900</color>
+    <color name="red2">#efa1a1</color>
+    <color name="red3">#e13b25</color>
+    <color name="red4">#FF4F2A</color>
+    <color name="black">#000000</color>
+    <color name="black1">#333333</color>
+    <color name="black2">#666666</color>
+    <color name="black3">#999999</color>
+    <color name="black4">#bbbbbb</color>
+    <color name="black5">#dbdbdb</color>
+    <color name="black6">#a1a1a1</color>
+    <color name="white">#ffffff</color>
+    <color name="white2">#ddd</color>
+    <color name="white3">#FFFAFA</color>
+    <color name="white4">#F1F1F1</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="transparent1">#33000000</color>
+    <color name="transparent2">#55000000</color>
+    <color name="content_background">#f2f2f2</color>
+</resources>
