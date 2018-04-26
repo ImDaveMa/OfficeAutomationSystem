@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="7dp">
+
+    <TextView
+        android:id="@+id/tv_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawablePadding="7dp"
+        android:drawableTop="@drawable/ic_user"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="我的任务"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:ignore="HardcodedText" />
+
+</FrameLayout>
