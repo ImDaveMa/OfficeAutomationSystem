@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 
 /**
  * Created by Harry on 2018/4/26.
  */
 public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<HomeFragmentGridLayoutAdapter.ViewHolder> {
 
-    private String[] names = {"我的任务", "通知", "审批", "我的申请", "通讯录", "通知", "审批", "我的申请"};
+    private String[] names = {"我的任务", "通知", "审批", "我的申请", "我的审批", "通知", "审批", "通讯录"};
     private Context context;
 
     @NonNull
@@ -57,7 +58,7 @@ public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<HomeFrag
 
                         break;
                     case 7:
-
+                        onClickMethod(ContactsActivity.class);
                         break;
 
                     default:
