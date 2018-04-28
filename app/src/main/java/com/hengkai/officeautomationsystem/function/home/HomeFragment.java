@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -82,6 +83,7 @@ public class HomeFragment extends BaseFragment {
                 return false;
             }
         };
+
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(new HomeFragmentGridLayoutAdapter());
     }

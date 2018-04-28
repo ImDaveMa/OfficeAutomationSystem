@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
@@ -31,8 +33,10 @@ public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<HomeFrag
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.tvItem.setText(names[position]);
-//        holder.tvItem.setCompoundDrawables(null, topDrawable, null, null);
-        holder.tvItem.setOnClickListener(new View.OnClickListener() {
+        if (position == 7) {
+            holder.ivHeader.setImageResource(R.drawable.ic_contacts);
+        }
+        holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (holder.getAdapterPosition()) {
@@ -76,10 +80,14 @@ public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<HomeFrag
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvItem;
+        ImageView ivHeader;
+        LinearLayout container;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvItem = itemView.findViewById(R.id.tv_item);
+            ivHeader = itemView.findViewById(R.id.iv_header);
+            container = (LinearLayout) itemView;
         }
     }
 

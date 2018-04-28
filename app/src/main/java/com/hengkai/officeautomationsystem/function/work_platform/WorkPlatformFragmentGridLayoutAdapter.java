@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.function.ask_for_leave.AskForLeaveActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
+import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 
 /**
  * Created by Harry on 2018/4/26.
@@ -24,12 +23,35 @@ import java.util.List;
 public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<WorkPlatformFragmentGridLayoutAdapter.ViewHolder> {
 
     private int itemPosition;
-    private List<String> mList;
     private Context context;
+    private String[] commonNames = {"日程", "日程提醒", "通讯录", "完善个人信息", "找回密码", "问题反馈", "修改密码", "更多"};
+    private String[] employeeNames = {"日报", "周报", "员工档案库", "请假申请单", "补卡", "外出", "报销", "分配工作", "我的工作", "分配开发", "我的开发", "更多"};
+    private String[] projectNames = {"单位库", "新增单位", "单位列表", "联系人库", "项目库", "新增项目", "拜访跟进记录", "方案需求", "新增方案", "合同预览", "售后续费", "更多"};
+    private String[] resourceNames = {"物品管理", "物品单位管理", "供应商管理", "采购合同管理", "合作合同管理", "入库申请", "领用申请", "统计分析"};
+
+    private int[] commonImageResources = {R.drawable.ic_schedule, R.drawable.ic_schedule_reminding,
+            R.drawable.ic_contacts, R.drawable.ic_improve_personal_information,
+            R.drawable.ic_forget_password, R.drawable.ic_problem_feedback,
+            R.drawable.ic_modify_password, R.drawable.ic_more_common};
+    private int[] employeeImageResources = {R.drawable.ic_daily_report, R.drawable.ic_weekly_report,
+            R.drawable.ic_emplyee_archives, R.drawable.ic_ask_for_leave,
+            R.drawable.ic_work_attendance_card, R.drawable.ic_go_out,
+            R.drawable.ic_reimbursement, R.drawable.ic_assign_jobs,
+            R.drawable.ic_my_work, R.drawable.ic_development,
+            R.drawable.ic_my_development, R.drawable.ic_more_employee};
+    private int[] projectImageResources = {R.drawable.ic_unit_library, R.drawable.ic_new_unit,
+            R.drawable.ic_unit_list, R.drawable.ic_contacts_library,
+            R.drawable.ic_project_library, R.drawable.ic_new_project,
+            R.drawable.ic_visit_record, R.drawable.ic_programme_requirements,
+            R.drawable.ic_new_programme, R.drawable.ic_preview_contract,
+            R.drawable.ic_aftermarket_renewal, R.drawable.ic_more_project};
+    private int[] resourceImageResources = {R.drawable.ic_management_of_goods, R.drawable.ic_item_management_of_goods,
+            R.drawable.ic_supplier_management, R.drawable.ic_procurement_contract_management,
+            R.drawable.ic_cooperation_contract_management, R.drawable.ic_application_for_warehousing,
+            R.drawable.ic_application_for_use, R.drawable.ic_statistical_analysis};
 
     public WorkPlatformFragmentGridLayoutAdapter(int itemPosition) {
         this.itemPosition = itemPosition;
-        initData();
     }
 
     @NonNull
@@ -44,33 +66,22 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         switch (itemPosition) {
             case 0://通用
-                if (position == 15) {
-                    holder.tvContent.setText("更多");
-                } else {
-                    holder.tvContent.setText(mList.get(position));
-                }
+                holder.tvContent.setText(commonNames[position]);
+                holder.ivContent.setImageResource(commonImageResources[position]);
+                setOnClickMethodToCommon(holder);//添加点击事件
                 break;
             case 1://员工
-                if (position == 15) {
-                    holder.tvContent.setText("更多");
-                } else {
-                    holder.tvContent.setText(mList.get(position));
-                }
+                holder.tvContent.setText(employeeNames[position]);
+                holder.ivContent.setImageResource(employeeImageResources[position]);
                 setOnClickMethodToEmployee(holder);//添加点击事件
                 break;
             case 2://项目
-                if (position == 15) {
-                    holder.tvContent.setText("更多");
-                } else {
-                    holder.tvContent.setText(mList.get(position));
-                }
+                holder.tvContent.setText(projectNames[position]);
+                holder.ivContent.setImageResource(projectImageResources[position]);
                 break;
             case 3://物品
-                if (position == 15) {
-                    holder.tvContent.setText("更多");
-                } else {
-                    holder.tvContent.setText(mList.get(position));
-                }
+                holder.tvContent.setText(resourceNames[position]);
+                holder.ivContent.setImageResource(resourceImageResources[position]);
                 break;
 
             default:
@@ -80,7 +91,19 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
 
     @Override
     public int getItemCount() {
-        return 16;
+        switch (itemPosition) {
+            case 0://通用
+                return 8;
+            case 1://员工
+                return 12;
+            case 2://项目
+                return 12;
+            case 3://物品
+                return 8;
+
+            default:
+                return 0;
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -97,53 +120,29 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
         }
     }
 
-    /**
-     * 初始化列表的数据源
-     */
-    private void initData() {
-        mList = new ArrayList<>();
-        mList.add("请假");
-        mList.add("考勤记录");
-        mList.add("外出打卡");
-        mList.add("离职");
-
-        mList.add("请假1");
-        mList.add("考勤记录1");
-        mList.add("外出打卡1");
-        mList.add("离职1");
-
-        mList.add("请假2");
-        mList.add("考勤记录2");
-        mList.add("外出打卡2");
-        mList.add("离职2");
-
-        mList.add("请假3");
-        mList.add("考勤记录3");
-        mList.add("外出打卡3");
-    }
-
     private void onClickMethod(Class aClass) {
         Intent intent = new Intent(context, aClass);
         context.startActivity(intent);
     }
 
     /**
-     * 员工的点击事件
+     * 通用的点击事件
+     *
      * @param holder ViewHolder
      */
-    private void setOnClickMethodToEmployee(final ViewHolder holder) {
+    private void setOnClickMethodToCommon(final ViewHolder holder) {
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (holder.getAdapterPosition()) {
-                    case 0:
-                        onClickMethod(AskForLeaveActivity.class); //跳转至请假页面
+                    case 0://日程
+                        onClickMethod(ScheduleActivity.class);
                         break;
                     case 1:
 
                         break;
-                    case 2:
-
+                    case 2: //通讯录
+                        onClickMethod(ContactsActivity.class);
                         break;
                     case 3:
 
@@ -158,6 +157,60 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
 
                         break;
                     case 7:
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * 员工的点击事件
+     *
+     * @param holder ViewHolder
+     */
+    private void setOnClickMethodToEmployee(final ViewHolder holder) {
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (holder.getAdapterPosition()) {
+                    case 0:
+
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+                        onClickMethod(AskForLeaveActivity.class); //跳转至请假页面
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
+                    case 8:
+
+                        break;
+                    case 9:
+
+                        break;
+                    case 10:
+
+                        break;
+                    case 11:
 
                         break;
 
