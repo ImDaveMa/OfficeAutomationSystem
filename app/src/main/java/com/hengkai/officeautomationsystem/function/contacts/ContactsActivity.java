@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function.contacts;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -40,7 +41,7 @@ public class ContactsActivity extends BaseActivity {
     @Override
     protected void initView() {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
         initTitle();
@@ -91,6 +92,17 @@ public class ContactsActivity extends BaseActivity {
             public void onUpdate(View headerView, int groupPosition, boolean expanded) {
                 TextView titleView = headerView.findViewById(R.id.group_view_title);
                 titleView.setText(groupNames[groupPosition]);
+            }
+        });
+
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContactsActivity.this);
+                View view = View.inflate(ContactsActivity.this, R.layout.dialog_contacts_detail, null);
+                builder.setView(view);
+                builder.show();
+                return true;
             }
         });
     }

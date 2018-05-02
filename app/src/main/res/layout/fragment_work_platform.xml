@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
+        android:background="@color/app_theme_color">
 
         <TextView
             android:id="@+id/tv_title"
@@ -21,7 +21,7 @@
             android:padding="5dp"
             android:text="工作台"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="17sp" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

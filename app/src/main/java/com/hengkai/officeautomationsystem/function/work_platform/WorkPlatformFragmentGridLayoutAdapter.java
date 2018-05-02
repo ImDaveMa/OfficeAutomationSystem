@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.function.ask_for_leave.AskForLeaveActivity;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
+import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 
 /**
@@ -78,10 +79,12 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
             case 2://项目
                 holder.tvContent.setText(projectNames[position]);
                 holder.ivContent.setImageResource(projectImageResources[position]);
+                setOnClickMethodToProject(holder);
                 break;
             case 3://物品
                 holder.tvContent.setText(resourceNames[position]);
                 holder.ivContent.setImageResource(resourceImageResources[position]);
+                setOnClickMethodToResource(holder);
                 break;
 
             default:
@@ -211,6 +214,102 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
 
                         break;
                     case 11:
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * 项目的点击事件
+     *
+     * @param holder ViewHolder
+     */
+    private void setOnClickMethodToProject(final ViewHolder holder) {
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (holder.getAdapterPosition()) {
+                    case 0:
+
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
+                    case 8:
+
+                        break;
+                    case 9:
+
+                        break;
+                    case 10:
+
+                        break;
+                    case 11:
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * 通用的点击事件
+     *
+     * @param holder ViewHolder
+     */
+    private void setOnClickMethodToResource(final ViewHolder holder) {
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (holder.getAdapterPosition()) {
+                    case 0://物品管理
+                        onClickMethod(ManagementOfGoodsActivity.class);
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
 
                         break;
 

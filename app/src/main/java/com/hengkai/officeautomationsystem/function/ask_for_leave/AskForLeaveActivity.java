@@ -14,6 +14,7 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
+import com.jaeger.library.StatusBarUtil;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -96,8 +97,9 @@ public class AskForLeaveActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
-
 
     }
 

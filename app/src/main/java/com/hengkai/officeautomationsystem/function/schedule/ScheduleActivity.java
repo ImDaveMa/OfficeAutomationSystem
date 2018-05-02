@@ -26,7 +26,7 @@ public class ScheduleActivity extends BaseActivity {
     @Override
     protected void initView() {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         initCalendarView();
     }
 

@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".function.contacts.ContactsActivity" />
+        <activity android:name=".function.management_of_goods.ManagementOfGoodsActivity" />
     </application>
 
 </manifest>

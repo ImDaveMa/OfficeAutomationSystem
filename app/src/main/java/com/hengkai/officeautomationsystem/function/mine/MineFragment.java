@@ -48,7 +48,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
-        StatusBarUtil.setColor(mActivity, getResources().getColor(R.color.colorPrimary), 0);
+        StatusBarUtil.setColor(mActivity, getResources().getColor(R.color.app_theme_color), 0);
         unbinder = ButterKnife.bind(this, view);
 
     }

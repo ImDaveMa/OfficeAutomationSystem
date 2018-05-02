@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="app_theme_color">#3ba5ff</color>
+
     <color name="teal">#00796B</color>
     <color name="brown">#8D6E63</color>
     <color name="blue">#2196F3</color>
@@ -27,6 +29,7 @@
     <color name="black4">#bbbbbb</color>
     <color name="black5">#dbdbdb</color>
     <color name="black6">#a1a1a1</color>
+    <color name="black7">#707070</color>
     <color name="white">#ffffff</color>
     <color name="white2">#ddd</color>
     <color name="white3">#FFFAFA</color>
