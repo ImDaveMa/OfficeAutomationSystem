@@ -3,11 +3,13 @@ package com.hengkai.officeautomationsystem.function.mine;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
+import com.hengkai.officeautomationsystem.function.setting.SettingActivity;
 import com.hengkai.officeautomationsystem.utils.ImageUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -38,6 +40,7 @@ public class MineFragment extends BaseFragment {
     TextView tvDepartment;
     @BindView(R.id.tv_time_of_entry)
     TextView tvTimeOfEntry;
+
     Unbinder unbinder;
 
     @Override
@@ -69,13 +72,17 @@ public class MineFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.iv_user_header, R.id.tv_user_name})
+    @OnClick({R.id.iv_user_header, R.id.tv_user_name, R.id.ll_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_user_header:
+            case R.id.iv_user_header:   //修改头像
                 changeHeaderImage();
                 break;
             case R.id.tv_user_name:
+                break;
+            case R.id.ll_setting:       //设置
+                Intent intent = new Intent(mActivity, SettingActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -127,6 +134,9 @@ public class MineFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PictureConfig.CHOOSE_REQUEST) {//修改头像 结果回调
+            if (data == null) {
+                return; //什么都不选择, 直接点击返回或者取消按钮的时候return掉
+            }
 //            showDialog();
             List<LocalMedia> medias = PictureSelector.obtainMultipleResult(data);
             // 1.media.getPath(); 为原图path

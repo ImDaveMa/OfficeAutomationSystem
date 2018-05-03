@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".function.contacts.ContactsActivity" />
         <activity android:name=".function.management_of_goods.ManagementOfGoodsActivity" />
+        <activity android:name=".function.setting.SettingActivity" />
     </application>
 
 </manifest>

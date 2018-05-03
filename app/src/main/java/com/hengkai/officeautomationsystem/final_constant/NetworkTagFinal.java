@@ -6,4 +6,8 @@ package com.hengkai.officeautomationsystem.final_constant;
  */
 public class NetworkTagFinal {
 
+    /**
+     * LoginActivity
+     */
+    public static final String LOGIN_ACTIVITY_LOGIN = "LOGIN_ACTIVITY_LOGIN";
 }

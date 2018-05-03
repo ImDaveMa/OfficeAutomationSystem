@@ -86,7 +86,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
     /**
      * 显示LoadingDialog
      */
-    protected void showDialog() {
+    public void showDialog() {
         initDialog();
         dialog.show();
     }
@@ -94,7 +94,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
     /**
      * 关闭LoadingDialog
      */
-    protected void dismissDialog() {
+    public void dismissDialog() {
         if (dialog != null) {
             dialog.cancel();
         }
