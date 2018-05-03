@@ -97,4 +97,11 @@ public class HomeFragment extends BaseFragment {
 
         }
     }
+
+    /**
+     * 更新列表
+     */
+    public void modifyMenus(){
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
 }

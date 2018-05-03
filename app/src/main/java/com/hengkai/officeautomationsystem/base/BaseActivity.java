@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.base;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +13,10 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.application.OfficeAutomationSystemApplication;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.base.view.BaseActivityImpl;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.utils.LoadingDialogType;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
+import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -45,9 +48,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
 
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
-    }
 
-    /**
+        // 增加点击次数
+        int dbId = getIntent().getIntExtra(CommonFinal.MENU_ID, 0);
+        new MenuDbHelper(this).setCount(dbId, System.currentTimeMillis());
+     }
+
+     /**
      * @return 布局文件的ID
      */
     protected abstract int setupView();

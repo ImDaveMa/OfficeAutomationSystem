@@ -77,8 +77,8 @@ public class MainActivity extends BaseActivity {
 //        ShapeBadgeItem shapeBadgeItem = new ShapeBadgeItem()
 
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_bottom_navigation_bar_home, "首页").setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.drawable.ic_bottom_navigation_bar_work_platform, "工作").setActiveColorResource(R.color.teal))
+                .addItem(new BottomNavigationItem(R.drawable.ic_bottom_navigation_bar_home, "首页").setActiveColorResource(R.color.blue))
+                .addItem(new BottomNavigationItem(R.drawable.ic_bottom_navigation_bar_work_platform, "工作").setActiveColorResource(R.color.blue))
                 .addItem(new BottomNavigationItem(R.drawable.ic_bottom_navigation_bar_mine, "我的").setActiveColorResource(R.color.blue))
                 .setFirstSelectedPosition(0)
                 .initialise();
@@ -99,6 +99,8 @@ public class MainActivity extends BaseActivity {
                             homeFragment = new HomeFragment();
                             ft.add(R.id.fl_container, homeFragment);
                         } else {
+                            // 调用刷新
+                            homeFragment.modifyMenus();
                             ft.show(homeFragment);
                         }
                         break;
@@ -131,7 +133,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onTabReselected(int position) {
-
+                homeFragment.modifyMenus();
             }
         });
     }

@@ -12,16 +12,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.ask_for_leave.AskForLeaveActivity;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
+import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
+import com.hengkai.officeautomationsystem.utils.OpenActivityUtils;
+import com.hengkai.officeautomationsystem.utils.ResourcesUtils;
+import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 
 /**
  * Created by Harry on 2018/4/26.
  * 列表中GridLayout的适配器
  */
-public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<WorkPlatformFragmentGridLayoutAdapter.ViewHolder> {
+public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<MenuViewHolder> {
 
     private int itemPosition;
     private Context context;
@@ -57,34 +62,42 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_work_platform_fragment_content, parent, false);
-        return new ViewHolder(view);
+        return new MenuViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
         switch (itemPosition) {
             case 0://通用
                 holder.tvContent.setText(commonNames[position]);
                 holder.ivContent.setImageResource(commonImageResources[position]);
-                setOnClickMethodToCommon(holder);//添加点击事件
+                //保存图片名称
+                holder.item.setTag(context.getResources().getResourceName(commonImageResources[position]));
+                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
             case 1://员工
                 holder.tvContent.setText(employeeNames[position]);
                 holder.ivContent.setImageResource(employeeImageResources[position]);
-                setOnClickMethodToEmployee(holder);//添加点击事件
+                //保存图片名称
+                holder.item.setTag(context.getResources().getResourceName(employeeImageResources[position]));
+                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
             case 2://项目
                 holder.tvContent.setText(projectNames[position]);
                 holder.ivContent.setImageResource(projectImageResources[position]);
-                setOnClickMethodToProject(holder);
+                //保存图片名称
+                holder.item.setTag(context.getResources().getResourceName(projectImageResources[position]));
+                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
             case 3://物品
                 holder.tvContent.setText(resourceNames[position]);
                 holder.ivContent.setImageResource(resourceImageResources[position]);
-                setOnClickMethodToResource(holder);
+                //保存图片名称
+                holder.item.setTag(context.getResources().getResourceName(resourceImageResources[position]));
+                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
 
             default:
@@ -109,214 +122,4 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvContent;
-        ImageView ivContent;
-        LinearLayout item;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            tvContent = itemView.findViewById(R.id.tv_content);
-            ivContent = itemView.findViewById(R.id.iv_content);
-            item = (LinearLayout) itemView;
-        }
-    }
-
-    private void onClickMethod(Class aClass) {
-        Intent intent = new Intent(context, aClass);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 通用的点击事件
-     *
-     * @param holder ViewHolder
-     */
-    private void setOnClickMethodToCommon(final ViewHolder holder) {
-        holder.item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (holder.getAdapterPosition()) {
-                    case 0://日程
-                        onClickMethod(ScheduleActivity.class);
-                        break;
-                    case 1:
-
-                        break;
-                    case 2: //通讯录
-                        onClickMethod(ContactsActivity.class);
-                        break;
-                    case 3:
-
-                        break;
-                    case 4:
-
-                        break;
-                    case 5:
-
-                        break;
-                    case 6:
-
-                        break;
-                    case 7:
-
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        });
-    }
-
-    /**
-     * 员工的点击事件
-     *
-     * @param holder ViewHolder
-     */
-    private void setOnClickMethodToEmployee(final ViewHolder holder) {
-        holder.item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (holder.getAdapterPosition()) {
-                    case 0:
-
-                        break;
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-                        onClickMethod(AskForLeaveActivity.class); //跳转至请假页面
-                        break;
-                    case 4:
-
-                        break;
-                    case 5:
-
-                        break;
-                    case 6:
-
-                        break;
-                    case 7:
-
-                        break;
-                    case 8:
-
-                        break;
-                    case 9:
-
-                        break;
-                    case 10:
-
-                        break;
-                    case 11:
-
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        });
-    }
-
-    /**
-     * 项目的点击事件
-     *
-     * @param holder ViewHolder
-     */
-    private void setOnClickMethodToProject(final ViewHolder holder) {
-        holder.item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (holder.getAdapterPosition()) {
-                    case 0:
-
-                        break;
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-
-                        break;
-                    case 4:
-
-                        break;
-                    case 5:
-
-                        break;
-                    case 6:
-
-                        break;
-                    case 7:
-
-                        break;
-                    case 8:
-
-                        break;
-                    case 9:
-
-                        break;
-                    case 10:
-
-                        break;
-                    case 11:
-
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        });
-    }
-
-    /**
-     * 通用的点击事件
-     *
-     * @param holder ViewHolder
-     */
-    private void setOnClickMethodToResource(final ViewHolder holder) {
-        holder.item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (holder.getAdapterPosition()) {
-                    case 0://物品管理
-                        onClickMethod(ManagementOfGoodsActivity.class);
-                        break;
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-
-                        break;
-                    case 4:
-
-                        break;
-                    case 5:
-
-                        break;
-                    case 6:
-
-                        break;
-                    case 7:
-
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        });
-    }
 }
