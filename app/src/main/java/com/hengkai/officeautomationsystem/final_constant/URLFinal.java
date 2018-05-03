@@ -13,12 +13,12 @@ public class URLFinal {
     /**
      * baseURL
      */
-//    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/mobile/";
-    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/";
+//    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/";
+    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
 
 
     /**
      * 登录
      */
-    public static final String LOGIN_URL = "login/password";
+    public static final String LOGIN_URL = "mobile/login/password";
 }

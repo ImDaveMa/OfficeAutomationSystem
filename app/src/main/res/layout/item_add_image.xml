@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    tools:ignore="HardcodedText">
+
+    <ImageView
+        android:id="@+id/iv_add_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:contentDescription="外出"
+        android:src="@drawable/ic_add128"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:contentDescription="外出"
+        android:padding="2dp"
+        android:src="@drawable/ic_cancel32" />
+</FrameLayout>

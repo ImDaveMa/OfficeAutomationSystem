@@ -19,103 +19,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_leave_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="这是本月第4次提交请假申请单"
-                android:textColor="@color/black3"
-                android:textSize="13sp" />
-
-            <LinearLayout
-                android:id="@+id/ll_leave_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:paddingTop="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@color/red1" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:text="请假类型"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_leave_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="@color/black3"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:id="@+id/iv_leave_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="image"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_arrow_gray32" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white4"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:paddingTop="15dp">
-
-                <TextView
-                    android:id="@+id/tv_holiday1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="零星假: 剩余0小时"
-                    android:textColor="@color/black3"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tv_holiday2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="婚假: 剩余0小时"
-                    android:textColor="@color/black3"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tv_my_holiday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="我的假期"
-                    android:textColor="@color/blue2"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-
             <LinearLayout
                 android:id="@+id/ll_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -128,7 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*"
-                    android:textColor="@color/red1" />
+                    android:textColor="@color/red1"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -250,7 +159,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_leave_reason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -278,18 +186,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:text="请假事由"
+                        android:text="外出事由"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/et_leave_reason"
+                    android:id="@+id/et_go_out_reason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start|top"
-                    android:hint="请输入请假事由"
+                    android:hint="请输入外出事由"
                     android:inputType="textMultiLine"
                     android:lines="3"
                     android:padding="5dp"
@@ -298,10 +206,39 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="图片"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_image_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_examine_and_approve"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="15dp"
@@ -360,7 +297,7 @@
                 android:id="@+id/ll_sender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="15dp"
