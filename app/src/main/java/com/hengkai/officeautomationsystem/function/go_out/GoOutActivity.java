@@ -153,6 +153,7 @@ public class GoOutActivity extends BaseActivity {
             case R.id.iv_start_time:
                 if (!tvStartTime.getText().toString().trim().equals("请选择")) {
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvStartTime, ivStartTime);
+                    startTimeStr = "";
                 }
                 break;
             case R.id.ll_end_time:
@@ -166,9 +167,23 @@ public class GoOutActivity extends BaseActivity {
             case R.id.iv_end_time:
                 if (!tvEndTime.getText().toString().trim().equals("请选择")) {
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvEndTime, ivEndTime);
+                    endTimeStr = "";
                 }
                 break;
             case R.id.btn_commit:
+                if(TextUtils.isEmpty(tvStartTime.getText())){
+                    ToastUtil.showToast("请选择开始时间");
+                    return;
+                }
+                if(TextUtils.isEmpty(tvEndTime.getText())){
+                    ToastUtil.showToast("请选择结束时间");
+                    return;
+                }
+                if(TextUtils.isEmpty(etGoOutReason.getText())){
+                    ToastUtil.showToast("请输入外出事由");
+                    etGoOutReason.requestFocus();
+                    return;
+                }
                 break;
         }
     }
@@ -186,6 +201,22 @@ public class GoOutActivity extends BaseActivity {
                 startHour = hourOfDay;
                 startMinute = minute;
                 startTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
+
+                //判断结束时间是否存在
+                if(!TextUtils.isEmpty(endTimeStr)) {
+                    String formatType = "yyyy-MM-dd HH:mm";
+                    SimpleDateFormat format = new SimpleDateFormat(formatType);
+                    try {
+                        long startTime = format.parse(startTimeStr).getTime();
+                        long endTime = format.parse(endTimeStr).getTime();
+                        if ((endTime - startTime) < 0) {
+                            ToastUtil.showToast("开始时间不能大于结束时间");
+                            return;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 setTextViewAttribute(startTimeStr, R.drawable.ic_cancel28, R.color.black, tvStartTime, ivStartTime);
             }
@@ -206,17 +237,20 @@ public class GoOutActivity extends BaseActivity {
                 endMinute = minute;
                 endTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
 
-                String formatType = "yyyy-MM-dd HH:mm";
-                SimpleDateFormat format = new SimpleDateFormat(formatType);
-                try {
-                    long startTime = format.parse(startTimeStr).getTime();
-                    long endTime = format.parse(endTimeStr).getTime();
-                    if ((endTime - startTime) < 0) {
-                        ToastUtil.showToast("结束时间不能小于开始时间");
-                        return;
+                //判断开始时间是否存在
+                if(!TextUtils.isEmpty(startTimeStr)) {
+                    String formatType = "yyyy-MM-dd HH:mm";
+                    SimpleDateFormat format = new SimpleDateFormat(formatType);
+                    try {
+                        long startTime = format.parse(startTimeStr).getTime();
+                        long endTime = format.parse(endTimeStr).getTime();
+                        if ((endTime - startTime) < 0) {
+                            ToastUtil.showToast("结束时间不能小于开始时间");
+                            return;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
 
                 setTextViewAttribute(endTimeStr, R.drawable.ic_cancel28, R.color.black, tvEndTime, ivEndTime);
@@ -245,7 +279,7 @@ public class GoOutActivity extends BaseActivity {
     private void addImage() {
         PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()
-//                .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+                .theme(R.style.picture_default_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(9)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
@@ -301,7 +335,7 @@ public class GoOutActivity extends BaseActivity {
             // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
 //            String compressPath = medias.get(0).getCompressPath();
             if (medias.size() == 1) {
-                adapter.addItem(medias.get(0), 0);
+                adapter.addItem(medias.get(0));
             } else {
                 adapter.addItems(medias);
             }

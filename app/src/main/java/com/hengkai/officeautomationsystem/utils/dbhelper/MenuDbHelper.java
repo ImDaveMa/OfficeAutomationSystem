@@ -43,7 +43,7 @@ public class MenuDbHelper extends BaseDbHelper {
         //创建数据库实例
         SQLiteDatabase db = new MenuDbHelper(ctx).getReadableDatabase();
 
-        Cursor cursor = db.query(BaseDbHelper.TBL_MENUS, null, null, null, null, null, "count desc","0,8");
+        Cursor cursor = db.query(BaseDbHelper.TBL_MENUS, null, null, null, null, null, "count desc,last_time desc","0,8");
         if(cursor != null){
             menus = new ArrayList<MenuConfigModel>();
             while(cursor.moveToNext()){

@@ -107,10 +107,10 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
     /**
      * 在指定位置添加一个新的Item
      */
-    public void addItem(LocalMedia media, int positionToAdd) {
-        list.add(media);
+    public void addItem(LocalMedia media) {
+        list.add(0, media);
         //  通知RecyclerView控件插入了某个Item
-        notifyItemInserted(positionToAdd);
+        notifyDataSetChanged();
     }
 
     public void addItems(List<LocalMedia> medias) {

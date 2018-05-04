@@ -146,6 +146,7 @@ public class AskForLeaveActivity extends BaseActivity {
             case R.id.iv_start_time://开始请假时间
                 if (!tvStartTime.getText().toString().trim().equals("请选择")) {
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvStartTime, ivStartTime);
+                    startTimeStr = "";
                 }
                 break;
             case R.id.ll_end_time://结束请假时间
@@ -163,6 +164,7 @@ public class AskForLeaveActivity extends BaseActivity {
             case R.id.iv_end_time://结束请假时间
                 if (!tvEndTime.getText().toString().trim().equals("请选择")) {
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvEndTime, ivEndTime);
+                    endTimeStr = "";
                 }
                 break;
         }
@@ -181,6 +183,22 @@ public class AskForLeaveActivity extends BaseActivity {
                 startHour = hourOfDay;
                 startMinute = minute;
                 startTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
+
+                //判断结束时间是否存在
+                if(!TextUtils.isEmpty(endTimeStr)) {
+                    String formatType = "yyyy-MM-dd HH:mm";
+                    SimpleDateFormat format = new SimpleDateFormat(formatType);
+                    try {
+                        long startTime = format.parse(startTimeStr).getTime();
+                        long endTime = format.parse(endTimeStr).getTime();
+                        if ((endTime - startTime) < 0) {
+                            ToastUtil.showToast("开始时间不能大于结束时间");
+                            return;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 setTextViewAttribute(startTimeStr, R.drawable.ic_cancel28, R.color.black, tvStartTime, ivStartTime);
             }
@@ -201,9 +219,26 @@ public class AskForLeaveActivity extends BaseActivity {
                 endMinute = minute;
                 endTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
 
-                if (!TextUtils.isEmpty(startTimeStr) && !TextUtils.isEmpty(endTimeStr)) {
-                    calculateLeaveTime();
+                //判断开始时间是否存在
+                if(!TextUtils.isEmpty(startTimeStr)) {
+                    String formatType = "yyyy-MM-dd HH:mm";
+                    SimpleDateFormat format = new SimpleDateFormat(formatType);
+                    try {
+                        long startTime = format.parse(startTimeStr).getTime();
+                        long endTime = format.parse(endTimeStr).getTime();
+                        if ((endTime - startTime) < 0) {
+                            ToastUtil.showToast("结束时间不能小于开始时间");
+                            return;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+                //计算时间先注释掉
+//                if (!TextUtils.isEmpty(startTimeStr) && !TextUtils.isEmpty(endTimeStr)) {
+//                    calculateLeaveTime();
+//                }
 
                 setTextViewAttribute(endTimeStr, R.drawable.ic_cancel28, R.color.black, tvEndTime, ivEndTime);
             }
