@@ -2,7 +2,9 @@ package com.hengkai.officeautomationsystem.function.login;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.view.View;
@@ -56,7 +58,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         ButterKnife.bind(this);
 
         initText();
-        requestPremission();
+        //检测并且注册权限
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission();
+        }
     }
 
     /**
@@ -120,18 +125,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         finish();
     }
 
-    private void requestPremission(){
+    private void requestPermission() {
         ZbPermission.with(LoginActivity.this)
                 .addRequestCode(REQUEST_PHONE_STATE)
                 .permissions(Manifest.permission.READ_PHONE_STATE)
-                .request(new ZbPermission.ZbPermissionCallback(){
+                .request(new ZbPermission.ZbPermissionCallback() {
                     @Override
                     public void permissionSuccess(int requestCode) {
                         ToastUtil.showToast("权限申请成功");
                     }
+
                     @Override
                     public void permissionFail(int requestCode) {
-                        ToastUtil.showToast("权限申请失败");
+                        ToastUtil.showToast("权限申请失败, 有可能造成登录失败");
                     }
                 });
     }

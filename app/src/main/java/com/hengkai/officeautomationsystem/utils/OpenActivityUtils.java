@@ -7,13 +7,16 @@ import android.view.View;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
+import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
 import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 
+/**
+ * 有页面的通用点击事件
+ */
 public class OpenActivityUtils {
-
 
     private static void onClickMethod(Context context, Class aClass, int id) {
         Intent intent = new Intent(context, aClass);
@@ -42,6 +45,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_management_of_goods:
                         onClickMethod(context, ManagementOfGoodsActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_go_out:
+                        onClickMethod(context, GoOutActivity.class, dbId);
                         break;
                     default:
                         break;

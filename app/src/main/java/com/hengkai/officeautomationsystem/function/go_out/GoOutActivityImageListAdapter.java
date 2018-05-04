@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.hengkai.officeautomationsystem.R;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +19,15 @@ import java.util.List;
  */
 public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutActivityImageListAdapter.ViewHolder> {
 
-    private List<LocalMedia> medias;
+    private List<LocalMedia> list;
+
+    public GoOutActivityImageListAdapter() {
+        list = new ArrayList<>();
+    }
 
     @NonNull
     @Override
+
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_image, parent, false);
         return new ViewHolder(view);
@@ -30,18 +36,20 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.ivCancel.setImageResource(R.drawable.ic_cancel32);
-        if (position == medias.size() + 1) {
+        if (position == list.size()) {
             holder.ivAddImage.setImageResource(R.drawable.ic_add128);
             holder.ivCancel.setVisibility(View.GONE);
             holder.ivAddImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (mListener != null) {
+                        mListener.click();
+                    }
                 }
             });
         } else {
             holder.ivCancel.setVisibility(View.VISIBLE);
-            String path = medias.get(position).getPath();
+            String path = list.get(position).getCompressPath();
             holder.ivAddImage.setImageBitmap(BitmapFactory.decodeFile(path));
             holder.ivCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -55,7 +63,7 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
 
     @Override
     public int getItemCount() {
-        return medias.size() + 1;
+        return list.size() + 1;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +82,7 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
      * 删除指定的Item
      */
     public void removeData(int position) {
-        medias.remove(position);
+        list.remove(position);
         //  通知RecyclerView控件某个Item已经被删除
         notifyItemRemoved(position);
     }
@@ -83,14 +91,25 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
      * 在指定位置添加一个新的Item
      */
     public void addItem(LocalMedia media, int positionToAdd) {
-        medias.add(media);
+        list.add(media);
         //  通知RecyclerView控件插入了某个Item
         notifyItemInserted(positionToAdd);
     }
 
-    public void setData(List<LocalMedia> medias) {
-        this.medias = medias;
+    public void addItems(List<LocalMedia> medias) {
+        list.addAll(0, medias);
         notifyDataSetChanged();
     }
+
+    public interface OnImageViewClickListener {
+        void click();
+    }
+
+    private OnImageViewClickListener mListener;
+
+    public void setOnImageViewClickListener(OnImageViewClickListener listener) {
+        mListener = listener;
+    }
+
 
 }

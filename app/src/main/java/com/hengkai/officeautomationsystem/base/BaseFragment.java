@@ -56,7 +56,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseFragment
         dialog = new Dialog(mActivity, R.style.LoadingDialog);
         final AVLoadingIndicatorView indicatorView = new AVLoadingIndicatorView(mActivity);
         indicatorView.setIndicator(LoadingDialogType.BallPulseIndicator.name());    //设置dialog的样式
-        indicatorView.setIndicatorColor(getResources().getColor(R.color.teal));
+        indicatorView.setIndicatorColor(getResources().getColor(R.color.white));
 
         dialog.setContentView(indicatorView);
 
@@ -72,7 +72,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseFragment
             dialogWindow.setAttributes(params);
         }
 
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
     }
 
     /**

@@ -75,7 +75,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
         dialog = new Dialog(this, R.style.LoadingDialog);
         final AVLoadingIndicatorView indicatorView = new AVLoadingIndicatorView(this);
         indicatorView.setIndicator(LoadingDialogType.BallScaleMultipleIndicator.name());    //设置dialog的样式
-        indicatorView.setIndicatorColor(getResources().getColor(R.color.teal));
+        indicatorView.setIndicatorColor(getResources().getColor(R.color.white));
 
         dialog.setContentView(indicatorView);
 
@@ -91,7 +91,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
             dialogWindow.setAttributes(params);
         }
 
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
     }
 
     /**

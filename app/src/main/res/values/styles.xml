@@ -20,7 +20,7 @@
         <!--背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!--允许模糊--><!--意思是dialog之外的窗口模糊化-->
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
         <!--全屏-->
         <item name="android:windowFullscreen">true</item>
     </style>
