@@ -3,6 +3,10 @@
     package="com.hengkai.officeautomationsystem">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.OfficeAutomationSystemApplication"
@@ -26,6 +30,7 @@
         <activity android:name=".function.management_of_goods.ManagementOfGoodsActivity" />
         <activity android:name=".function.setting.SettingActivity" />
         <activity android:name=".function.go_out.GoOutActivity" />
+        <activity android:name=".function.go_out.GoOutPreviewActivity" />
     </application>
 
 </manifest>

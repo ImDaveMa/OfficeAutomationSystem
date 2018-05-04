@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function.go_out;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ import com.luck.picture.lib.compress.Luban;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.unistrong.yang.zb_permission.ZbPermission;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -114,7 +116,7 @@ public class GoOutActivity extends BaseActivity {
             }
         };
         rvImageList.setLayoutManager(gridLayoutManager);
-        adapter = new GoOutActivityImageListAdapter();
+        adapter = new GoOutActivityImageListAdapter(this);
         rvImageList.setAdapter(adapter);
         adapter.setOnImageViewClickListener(new GoOutActivityImageListAdapter.OnImageViewClickListener() {
             @Override
@@ -249,34 +251,38 @@ public class GoOutActivity extends BaseActivity {
                 .imageSpanCount(4)// 每行显示个数 int
                 .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .previewImage(true)// 是否可预览图片 true or false
-                .compressGrade(Luban.FIRST_GEAR)// luban压缩档次，默认3档 Luban.THIRD_GEAR、Luban.FIRST_GEAR、Luban.CUSTOM_GEAR
+//                .previewVideo(true)// 是否可预览视频 true or false
+//                .enablePreviewAudio(true) // 是否可播放音频 true or false
                 .isCamera(true)// 是否显示拍照按钮 true or false
+                .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                 .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
                 .setOutputCameraPath("/CustomPath")// 自定义拍照保存路径,可不填
                 .enableCrop(false)// 是否裁剪 true or false
                 .compress(true)// 是否压缩 true or false
-                .compressMode(PictureConfig.SYSTEM_COMPRESS_MODE)//系统自带 or 鲁班压缩 PictureConfig.SYSTEM_COMPRESS_MODE or LUBAN_COMPRESS_MODE
 //                .glideOverride()// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
 //                .withAspectRatio()// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
                 .hideBottomControls(true)// 是否显示uCrop工具栏，默认不显示 true or false
 //                .isGif()// 是否显示gif图片 true or false
+//                .compressSavePath(getPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .circleDimmedLayer(true)// 是否圆形裁剪 true or false
                 .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
                 .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
-                .openClickSound(true)// 是否开启点击声音 true or false
+                .openClickSound(false)// 是否开启点击声音 true or false
 //                .selectionMedia()// 是否传入已选图片 List<LocalMedia> list
 //                .previewEggs()// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中) true or false
 //                .cropCompressQuality()// 裁剪压缩质量 默认90 int
-//                .compressMaxKB()//压缩最大值kb compressGrade()为Luban.CUSTOM_GEAR有效 int
-//                .compressWH() // 压缩宽高比 compressGrade()为Luban.CUSTOM_GEAR有效  int
+//                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                .synOrAsy(true)//同步true或异步false 压缩 默认同步
 //                .cropWH()// 裁剪宽高比，设置如果大于图片本身宽高则无效 int
                 .rotateEnabled(false) // 裁剪是否可旋转图片 true or false
                 .scaleEnabled(true)// 裁剪是否可放大缩小图片 true or false
 //                .videoQuality()// 视频录制质量 0 or 1 int
-//                .videoSecond()// 显示多少秒以内的视频or音频也可适用 int
+//                .videoMaxSecond(15)// 显示多少秒以内的视频or音频也可适用 int
+//                .videoMinSecond(10)// 显示多少秒以内的视频or音频也可适用 int
 //                .recordVideoSecond()//视频秒数录制 默认60s int
+//                .isDragFrame(false)// 是否可拖动裁剪框(固定)
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
@@ -300,5 +306,24 @@ public class GoOutActivity extends BaseActivity {
                 adapter.addItems(medias);
             }
         }
+    }
+
+    private void requestPermission() {
+        ZbPermission.with(this)
+                .addRequestCode(1001)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA)
+                .request(new ZbPermission.ZbPermissionCallback() {
+                    @Override
+                    public void permissionSuccess(int requestCode) {
+                        ToastUtil.showToast("权限申请成功");
+                    }
+
+                    @Override
+                    public void permissionFail(int requestCode) {
+                        ToastUtil.showToast("权限申请失败, 有可能造成拍照或者读取图片失败");
+                    }
+                });
     }
 }

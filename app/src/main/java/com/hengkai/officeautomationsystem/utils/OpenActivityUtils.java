@@ -8,6 +8,7 @@ import android.view.View;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
+import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
@@ -44,6 +45,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_management_of_goods: //物品管理
                         onClickMethod(activity, ManagementOfGoodsActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_go_out: //外出
+                        onClickMethod(activity, GoOutActivity.class, dbId);
                         break;
                     default:
                         break;

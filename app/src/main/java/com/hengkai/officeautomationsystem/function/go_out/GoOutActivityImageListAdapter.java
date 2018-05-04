@@ -1,5 +1,9 @@
 package com.hengkai.officeautomationsystem.function.go_out;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.function.login.LoginActivity;
+import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.unistrong.yang.zb_permission.ZbPermission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +27,18 @@ import java.util.List;
 public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutActivityImageListAdapter.ViewHolder> {
 
     private List<LocalMedia> list;
+    private Activity mActivity;
 
-    public GoOutActivityImageListAdapter() {
+    public GoOutActivityImageListAdapter(Activity activity) {
         list = new ArrayList<>();
+        mActivity = activity;
     }
 
     @NonNull
     @Override
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_image, parent, false);
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_add_image, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,6 +60,14 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
             holder.ivCancel.setVisibility(View.VISIBLE);
             String path = list.get(position).getCompressPath();
             holder.ivAddImage.setImageBitmap(BitmapFactory.decodeFile(path));
+            holder.ivAddImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mActivity, GoOutPreviewActivity.class);
+                    intent.putExtra("previewImage", list.get(holder.getAdapterPosition()).getPath());
+                    mActivity.startActivity(intent);
+                }
+            });
             holder.ivCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,6 +127,5 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
     public void setOnImageViewClickListener(OnImageViewClickListener listener) {
         mListener = listener;
     }
-
 
 }
