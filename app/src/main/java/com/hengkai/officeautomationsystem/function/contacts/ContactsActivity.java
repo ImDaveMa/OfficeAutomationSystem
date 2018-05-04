@@ -10,12 +10,15 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
+import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.adapter.DockingExpandableListViewAdapter;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.controller.IDockingHeaderUpdateListener;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.view.DockingExpandableListView;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,13 +28,16 @@ import butterknife.OnClick;
  * Created by Harry on 2018/4/26.
  * 联系人列表
  */
-public class ContactsActivity extends BaseActivity {
+public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    private String[] groupNames = {"技术部", "销售部", "孵化器", "行政部"};
+    private List<String> groupNames;
+    private DockingExpandableListViewAdapter adapter;
+    private ContactsDockingAdapterDataSource listData;
+
 
     @Override
     protected int setupView() {
@@ -57,23 +63,27 @@ public class ContactsActivity extends BaseActivity {
 
     @Override
     protected ArrayList<String> cancelNetWork() {
-        return null;
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add(NetworkTagFinal.CONTACTS_ACTIVITY_GET_CONTACTS_LIST);
+        return tags;
     }
 
     @Override
-    protected BasePresenter bindPresenter() {
-        return null;
+    protected ContactsActivityPresenter bindPresenter() {
+        return new ContactsActivityPresenter();
     }
 
     /**
      * 初始化列表
      */
     private void initExpandableListView() {
-        ContactsDockingAdapterDataSource listData = prepareData();
+        listData = new ContactsDockingAdapterDataSource(this);
+//        ContactsDockingAdapterDataSource listData = prepareData();
         DockingExpandableListView listView = findViewById(R.id.docking_list_view);
         listView.setGroupIndicator(null);
         listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        listView.setAdapter(new DockingExpandableListViewAdapter(this, listView, listData));
+        adapter = new DockingExpandableListViewAdapter(this, listView, listData);
+        listView.setAdapter(adapter);
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -91,7 +101,7 @@ public class ContactsActivity extends BaseActivity {
             @Override
             public void onUpdate(View headerView, int groupPosition, boolean expanded) {
                 TextView titleView = headerView.findViewById(R.id.group_view_title);
-                titleView.setText(groupNames[groupPosition]);
+                titleView.setText(groupNames.get(groupPosition));
             }
         });
 
@@ -105,42 +115,24 @@ public class ContactsActivity extends BaseActivity {
                 return true;
             }
         });
+
+        //请求网络获取数据
+        mPresenter.getContactsList();
     }
 
     /**
      * @return 准备列表的数据
      */
-    private ContactsDockingAdapterDataSource prepareData() {
-        ContactsDockingAdapterDataSource listData = new ContactsDockingAdapterDataSource(this);
-        listData.addGroup("技术部")
-                .addChild("技术部-孙红1")
-                .addChild("技术部-孙红2")
-                .addChild("技术部-孙红3")
-                .addChild("技术部-孙红4")
-                .addChild("技术部-孙红5")
-
-                .addGroup("销售部")
-                .addChild("销售部-孙红1")
-                .addChild("销售部-孙红2")
-                .addChild("销售部-孙红3")
-                .addChild("销售部-孙红4")
-                .addChild("销售部-孙红5")
-
-                .addGroup("孵化器")
-                .addChild("孵化器-孙红1")
-                .addChild("孵化器-孙红2")
-                .addChild("孵化器-孙红3")
-                .addChild("孵化器-孙红4")
-                .addChild("孵化器-孙红5")
-
-                .addGroup("行政部")
-                .addChild("行政部-孙红1")
-                .addChild("行政部-孙红2")
-                .addChild("行政部-孙红3")
-                .addChild("行政部-孙红4")
-                .addChild("行政部-孙红5");
-        return listData;
-
+    public void prepareData(List<ContactsEntity.DIRECTORIESBean> list) {
+        groupNames = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            listData.addGroup(list.get(i).departmentName);
+            groupNames.add(list.get(i).departmentName);
+            for (int j = 0; j < list.get(i).departmentUserList.size(); j++) {
+                listData.addChild(list.get(i).departmentUserList.get(j));
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_title})

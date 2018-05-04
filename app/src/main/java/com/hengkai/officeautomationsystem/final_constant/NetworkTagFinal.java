@@ -10,4 +10,10 @@ public class NetworkTagFinal {
      * LoginActivity
      */
     public static final String LOGIN_ACTIVITY_LOGIN = "LOGIN_ACTIVITY_LOGIN";
+    /**
+     * ContactsActivity
+     */
+    public static final String CONTACTS_ACTIVITY_GET_CONTACTS_LIST = "CONTACTS_ACTIVITY_GET_CONTACTS_LIST";
+
+
 }

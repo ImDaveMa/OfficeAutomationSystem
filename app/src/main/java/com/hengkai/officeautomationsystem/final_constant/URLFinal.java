@@ -21,4 +21,8 @@ public class URLFinal {
      * 登录
      */
     public static final String LOGIN_URL = "mobile/login/password";
+    /**
+     * 获取联系人列表
+     */
+    public static final String GET_CONTACTS_LIST = "mobile/user/selectDirectories";
 }
