@@ -55,4 +55,10 @@ public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<MenuView
     public int getItemCount() {
         return 8;
     }
+
+    public void updateDataSet(){
+        MenuDbHelper helper = new MenuDbHelper(context);
+        menus = helper.getMenus();
+        notifyDataSetChanged();
+    }
 }

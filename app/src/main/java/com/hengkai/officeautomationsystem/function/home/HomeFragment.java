@@ -28,6 +28,8 @@ import butterknife.Unbinder;
  */
 public class HomeFragment extends BaseFragment {
 
+    private HomeFragmentGridLayoutAdapter adapter;
+
     @BindView(R.id.iv_logo)
     ImageView ivLogo;
     @BindView(R.id.tv_title)
@@ -84,8 +86,9 @@ public class HomeFragment extends BaseFragment {
             }
         };
 
+        adapter = new HomeFragmentGridLayoutAdapter();
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(new HomeFragmentGridLayoutAdapter());
+        recyclerView.setAdapter(adapter);
     }
 
     @OnClick({R.id.rl_schedule})
@@ -102,6 +105,8 @@ public class HomeFragment extends BaseFragment {
      * 更新列表
      */
     public void modifyMenus(){
-        recyclerView.getAdapter().notifyDataSetChanged();
+        if(adapter!=null){
+            adapter.updateDataSet();
+        }
     }
 }
