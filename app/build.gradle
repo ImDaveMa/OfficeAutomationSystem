@@ -64,4 +64,6 @@ dependencies {
         //因为这个库里面的support包的版本低于当前项目的, 所以忽略这个库里的支持包
         exclude group: 'com.android.support'
     }
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }
