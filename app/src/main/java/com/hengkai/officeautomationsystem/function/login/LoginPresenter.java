@@ -48,6 +48,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
             @Override
             public void onError(Throwable e) {
                 view.dismissDialog();
+                ToastUtil.showToast("登陆失败:" + e.getMessage());
             }
 
             @Override

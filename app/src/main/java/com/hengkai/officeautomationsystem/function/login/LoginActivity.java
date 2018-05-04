@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function.login;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -16,6 +17,7 @@ import com.hengkai.officeautomationsystem.function.MainActivity;
 import com.hengkai.officeautomationsystem.utils.EditTextFilterUtil;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
+import com.unistrong.yang.zb_permission.ZbPermission;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ import butterknife.OnClick;
  * 登录页面
  */
 public class LoginActivity extends BaseActivity<LoginPresenter> {
+
+    private final int REQUEST_PHONE_STATE = 100;
 
     @BindView(R.id.et_account)
     EditText etAccount;
@@ -52,8 +56,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         ButterKnife.bind(this);
 
         initText();
-
-
+        requestPremission();
     }
 
     /**
@@ -103,6 +106,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
             ToastUtil.showToast("密码不能为空");
             return;
         }
+        showDialog();
         mPresenter.login(account, password);
     }
 
@@ -116,12 +120,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         finish();
     }
 
-    /**
-     * 登录失败
-     */
-    public void loginFailure() {
-
+    private void requestPremission(){
+        ZbPermission.with(LoginActivity.this)
+                .addRequestCode(REQUEST_PHONE_STATE)
+                .permissions(Manifest.permission.READ_PHONE_STATE)
+                .request(new ZbPermission.ZbPermissionCallback(){
+                    @Override
+                    public void permissionSuccess(int requestCode) {
+                        ToastUtil.showToast("权限申请成功");
+                    }
+                    @Override
+                    public void permissionFail(int requestCode) {
+                        ToastUtil.showToast("权限申请失败");
+                    }
+                });
     }
-
-
 }

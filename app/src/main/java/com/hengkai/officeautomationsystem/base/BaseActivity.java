@@ -50,8 +50,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
 
         // 增加点击次数
-        int dbId = getIntent().getIntExtra(CommonFinal.MENU_ID, 0);
-        new MenuDbHelper(this).setCount(dbId, System.currentTimeMillis());
+        if(getIntent().hasExtra(CommonFinal.MENU_ID)) {
+            int dbId = getIntent().getIntExtra(CommonFinal.MENU_ID, 0);
+            if (dbId > 0) {
+                new MenuDbHelper(this).setCount(dbId, System.currentTimeMillis());
+            }
+        }
      }
 
      /**

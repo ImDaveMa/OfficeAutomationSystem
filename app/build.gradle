@@ -66,4 +66,6 @@ dependencies {
     }
     //PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+    //Permission
+    implementation 'com.github.Andy-13:ZbPermission:1.0.0'
 }

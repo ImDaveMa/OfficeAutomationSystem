@@ -75,28 +75,28 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
                 holder.tvContent.setText(commonNames[position]);
                 holder.ivContent.setImageResource(commonImageResources[position]);
                 //保存图片名称
-                holder.item.setTag(context.getResources().getResourceName(commonImageResources[position]));
+                holder.item.setTag(ResourcesUtils.getResourceName(context,commonImageResources[position]));
                 OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
             case 1://员工
                 holder.tvContent.setText(employeeNames[position]);
                 holder.ivContent.setImageResource(employeeImageResources[position]);
                 //保存图片名称
-                holder.item.setTag(context.getResources().getResourceName(employeeImageResources[position]));
+                holder.item.setTag(ResourcesUtils.getResourceName(context,employeeImageResources[position]));
                 OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
             case 2://项目
                 holder.tvContent.setText(projectNames[position]);
                 holder.ivContent.setImageResource(projectImageResources[position]);
                 //保存图片名称
-                holder.item.setTag(context.getResources().getResourceName(projectImageResources[position]));
+                holder.item.setTag(ResourcesUtils.getResourceName(context,projectImageResources[position]));
                 OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
             case 3://物品
                 holder.tvContent.setText(resourceNames[position]);
                 holder.ivContent.setImageResource(resourceImageResources[position]);
                 //保存图片名称
-                holder.item.setTag(context.getResources().getResourceName(resourceImageResources[position]));
+                holder.item.setTag(ResourcesUtils.getResourceName(context,resourceImageResources[position]));
                 OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
                 break;
 

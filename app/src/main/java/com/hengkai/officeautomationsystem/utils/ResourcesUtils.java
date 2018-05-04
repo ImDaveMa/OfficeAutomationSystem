@@ -32,4 +32,16 @@ public class ResourcesUtils {
         //如果没有在"mipmap"下找到imageName,将会返回0
         return resId;
     }
+
+    /**
+     * 获取资源名称（不带前缀）
+     * @param context
+     * @param rid
+     * @return
+     */
+    public static String getResourceName(Context context, int rid){
+        String longName = context.getResources().getResourceName(rid);
+        int index = longName.indexOf('/') + 1;
+        return longName.substring(index);
+    }
 }
