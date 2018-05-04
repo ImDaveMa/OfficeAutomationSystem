@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -13,6 +14,7 @@ import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.function.home.HomeFragment;
 import com.hengkai.officeautomationsystem.function.mine.MineFragment;
 import com.hengkai.officeautomationsystem.function.work_platform.WorkPlatformFragment;
+import com.hengkai.officeautomationsystem.utils.OpenActivityUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -136,6 +138,19 @@ public class MainActivity extends BaseActivity {
                 homeFragment.modifyMenus();
             }
         });
+    }
+
+    /**
+     * 页面回调结果事件
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == OpenActivityUtils.REQUEST_CODE){
+            if(homeFragment!=null) {
+                homeFragment.modifyMenus();
+            }
+        }
     }
 
     @Override

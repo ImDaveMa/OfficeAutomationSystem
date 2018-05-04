@@ -1,15 +1,12 @@
 package com.hengkai.officeautomationsystem.function.home;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.model.MenuConfigModel;
@@ -28,6 +25,12 @@ public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<MenuView
     //存储菜单信息
     private List<MenuConfigModel> menus;
     private Context context;
+    private Activity activity;
+
+    public HomeFragmentGridLayoutAdapter(Activity activity) {
+        super();
+        this.activity = activity;
+    }
 
     @NonNull
     @Override
@@ -47,7 +50,7 @@ public class HomeFragmentGridLayoutAdapter extends RecyclerView.Adapter<MenuView
             holder.tvContent.setText(menu.getName());
             holder.ivContent.setImageResource(ResourcesUtils.getResource(context, menu.getImage()));
             holder.item.setTag(menu.getImage());
-            OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
+            OpenActivityUtils.setOnClickMethodToCommon(activity, holder);//添加点击事件
         }
     }
 

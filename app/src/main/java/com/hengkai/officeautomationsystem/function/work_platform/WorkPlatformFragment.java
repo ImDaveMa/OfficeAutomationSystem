@@ -45,7 +45,7 @@ public class WorkPlatformFragment extends BaseFragment {
      */
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(new WorkPlatformFragmentAdapter());
+        recyclerView.setAdapter(new WorkPlatformFragmentAdapter(mActivity));
     }
 
     @Override

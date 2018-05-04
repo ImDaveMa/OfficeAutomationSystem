@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function.work_platform;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,6 +22,12 @@ public class WorkPlatformFragmentAdapter extends RecyclerView.Adapter<WorkPlatfo
 
     private final String[] names = {"通用", "员工", "项目", "物品"};
     private Context context;
+    private Activity activity;
+
+    public WorkPlatformFragmentAdapter(Activity activity) {
+        super();
+        this.activity = activity;
+    }
 
     @NonNull
     @Override
@@ -44,7 +51,7 @@ public class WorkPlatformFragmentAdapter extends RecyclerView.Adapter<WorkPlatfo
                 return false;
             }
         });
-        holder.rvCommon.setAdapter(new WorkPlatformFragmentGridLayoutAdapter(position));
+        holder.rvCommon.setAdapter(new WorkPlatformFragmentGridLayoutAdapter(activity, position));
     }
 
     @Override

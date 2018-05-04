@@ -1,26 +1,17 @@
 package com.hengkai.officeautomationsystem.function.work_platform;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
-import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
-import com.hengkai.officeautomationsystem.function.ask_for_leave.AskForLeaveActivity;
-import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
-import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
-import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
 import com.hengkai.officeautomationsystem.utils.OpenActivityUtils;
 import com.hengkai.officeautomationsystem.utils.ResourcesUtils;
-import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 
 /**
  * Created by Harry on 2018/4/26.
@@ -30,6 +21,7 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
 
     private int itemPosition;
     private Context context;
+    private Activity activity;
     private String[] commonNames = {"日程", "日程提醒", "通讯录", "完善个人信息", "找回密码", "问题反馈", "修改密码", "更多"};
     private String[] employeeNames = {"日报", "周报", "员工档案库", "请假申请单", "补卡", "外出", "报销", "分配工作", "我的工作", "分配开发", "我的开发", "更多"};
     private String[] projectNames = {"单位库", "新增单位", "单位列表", "联系人库", "项目库", "新增项目", "拜访跟进记录", "方案需求", "新增方案", "合同预览", "售后续费", "更多"};
@@ -56,7 +48,8 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
             R.drawable.ic_cooperation_contract_management, R.drawable.ic_application_for_warehousing,
             R.drawable.ic_application_for_use, R.drawable.ic_statistical_analysis};
 
-    public WorkPlatformFragmentGridLayoutAdapter(int itemPosition) {
+    public WorkPlatformFragmentGridLayoutAdapter(Activity activity, int itemPosition) {
+        this.activity = activity;
         this.itemPosition = itemPosition;
     }
 
@@ -76,28 +69,28 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
                 holder.ivContent.setImageResource(commonImageResources[position]);
                 //保存图片名称
                 holder.item.setTag(ResourcesUtils.getResourceName(context,commonImageResources[position]));
-                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
+                OpenActivityUtils.setOnClickMethodToCommon(activity, holder);//添加点击事件
                 break;
             case 1://员工
                 holder.tvContent.setText(employeeNames[position]);
                 holder.ivContent.setImageResource(employeeImageResources[position]);
                 //保存图片名称
                 holder.item.setTag(ResourcesUtils.getResourceName(context,employeeImageResources[position]));
-                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
+                OpenActivityUtils.setOnClickMethodToCommon(activity, holder);//添加点击事件
                 break;
             case 2://项目
                 holder.tvContent.setText(projectNames[position]);
                 holder.ivContent.setImageResource(projectImageResources[position]);
                 //保存图片名称
                 holder.item.setTag(ResourcesUtils.getResourceName(context,projectImageResources[position]));
-                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
+                OpenActivityUtils.setOnClickMethodToCommon(activity, holder);//添加点击事件
                 break;
             case 3://物品
                 holder.tvContent.setText(resourceNames[position]);
                 holder.ivContent.setImageResource(resourceImageResources[position]);
                 //保存图片名称
                 holder.item.setTag(ResourcesUtils.getResourceName(context,resourceImageResources[position]));
-                OpenActivityUtils.setOnClickMethodToCommon(context, holder);//添加点击事件
+                OpenActivityUtils.setOnClickMethodToCommon(activity, holder);//添加点击事件
                 break;
 
             default:
