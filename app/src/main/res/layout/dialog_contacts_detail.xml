@@ -9,6 +9,7 @@
 
 
     <TextView
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="孙微"
@@ -28,6 +29,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -48,6 +50,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -68,6 +71,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -88,6 +92,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_wei_xin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -108,6 +113,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -128,6 +134,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_ding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -148,6 +155,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_entry_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -168,6 +176,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_quit_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

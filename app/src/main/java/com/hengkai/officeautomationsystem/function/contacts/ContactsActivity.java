@@ -12,6 +12,7 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
+import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.adapter.DockingExpandableListViewAdapter;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.controller.IDockingHeaderUpdateListener;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.view.DockingExpandableListView;
@@ -37,6 +38,7 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> {
     private List<String> groupNames;
     private DockingExpandableListViewAdapter adapter;
     private ContactsDockingAdapterDataSource listData;
+    private DockingExpandableListView listView;
 
 
     @Override
@@ -79,7 +81,7 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> {
     private void initExpandableListView() {
         listData = new ContactsDockingAdapterDataSource(this);
 //        ContactsDockingAdapterDataSource listData = prepareData();
-        DockingExpandableListView listView = findViewById(R.id.docking_list_view);
+        listView = findViewById(R.id.docking_list_view);
         listView.setGroupIndicator(null);
         listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         adapter = new DockingExpandableListViewAdapter(this, listView, listData);
@@ -105,17 +107,6 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> {
             }
         });
 
-        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ContactsActivity.this);
-                View view = View.inflate(ContactsActivity.this, R.layout.dialog_contacts_detail, null);
-                builder.setView(view);
-                builder.show();
-                return true;
-            }
-        });
-
         //请求网络获取数据
         mPresenter.getContactsList();
     }
@@ -133,6 +124,55 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> {
             }
         }
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 设置子列表每一项的点击事件
+     */
+    public void initListChildClickListener(final List<ContactsEntity.DIRECTORIESBean> list) {
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContactsActivity.this);
+                View view = View.inflate(ContactsActivity.this, R.layout.dialog_contacts_detail, null);
+
+                TextView tvName = view.findViewById(R.id.tv_name);
+                TextView tvPosition = view.findViewById(R.id.tv_position);
+                TextView tvPhone = view.findViewById(R.id.tv_phone);
+                TextView tvQQ = view.findViewById(R.id.tv_qq);
+                TextView tvWeiXin = view.findViewById(R.id.tv_wei_xin);
+                TextView tvDing = view.findViewById(R.id.tv_ding);
+                TextView tvMail = view.findViewById(R.id.tv_mail);
+                TextView tvEntryTime = view.findViewById(R.id.tv_entry_time);
+                TextView tvQuitTime = view.findViewById(R.id.tv_quit_time);
+                ContactsEntity.DIRECTORIESBean.DepartmentUserListBean bean = list.get(groupPosition).departmentUserList.get(childPosition);
+
+                tvName.setText(bean.name);
+                tvPosition.setText(bean.position);
+                tvPhone.setText(bean.phone);
+                tvQQ.setText(bean.qqNumber);
+                tvWeiXin.setText(bean.weixinNumber);
+                tvDing.setText(bean.dingNumber);
+                tvMail.setText(bean.email);
+
+                if (bean.createTime == 0) {
+                    tvEntryTime.setText("");
+                } else {
+                    String entryTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, bean.createTime);
+                    tvEntryTime.setText(entryTime);
+                }
+                if (bean.correctionTime == 0) {
+                    tvQuitTime.setText("");
+                } else {
+                    String quitTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, bean.correctionTime);
+                    tvQuitTime.setText(quitTime);
+                }
+
+                builder.setView(view);
+                builder.show();
+                return true;
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.tv_title})

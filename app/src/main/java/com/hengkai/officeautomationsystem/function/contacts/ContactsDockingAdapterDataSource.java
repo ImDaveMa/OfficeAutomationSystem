@@ -1,6 +1,12 @@
 package com.hengkai.officeautomationsystem.function.contacts;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -10,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.function.login.LoginActivity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
@@ -17,6 +24,7 @@ import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.adapter.IDockingAdapterDataSource;
 import com.squareup.picasso.Picasso;
+import com.unistrong.yang.zb_permission.ZbPermission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +35,7 @@ import java.util.List;
  */
 public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSource {
 
-    private Context mContext;
+    private Activity mContext;
 
     //标题栏数据源
     private HashMap<Integer, String> mGroups = new HashMap<>();
@@ -35,7 +43,7 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
     private SparseArray<List<ContactsEntity.DIRECTORIESBean.DepartmentUserListBean>> mGroupData = new SparseArray<>();
     private int mCurrentGroup = -1;
 
-    public ContactsDockingAdapterDataSource(Context context) {
+    public ContactsDockingAdapterDataSource(Activity context) {
         this.mContext = context;
     }
 
@@ -96,7 +104,14 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.child_view_item, parent, false);
         }
-        ContactsEntity.DIRECTORIESBean.DepartmentUserListBean bean = children.get(childPosition);
+
+        setupChildData(childPosition, convertView, children);
+
+        return convertView;
+    }
+
+    private void setupChildData(int childPosition, View convertView, List<ContactsEntity.DIRECTORIESBean.DepartmentUserListBean> children) {
+        final ContactsEntity.DIRECTORIESBean.DepartmentUserListBean bean = children.get(childPosition);
         ImageView ivContactHeader = convertView.findViewById(R.id.iv_contact_header);
         ImageView ivCallPhone = convertView.findViewById(R.id.iv_call_phone);
         TextView tvContactName = convertView.findViewById(R.id.tv_contact_name);
@@ -142,11 +157,9 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
         ivCallPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showToast("aaaaa");
+                callPhone(bean.phone);
             }
         });
-
-        return convertView;
     }
 
     // Helper method to add group
@@ -167,5 +180,37 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
         }
 
         return this;
+    }
+
+    /**
+     * 拨打电话（直接拨打电话）
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        //检测并且注册权限
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission();
+        }
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        mContext.startActivity(intent);
+    }
+
+    private void requestPermission() {
+        ZbPermission.with(mContext)
+                .addRequestCode(1002)
+                .permissions(Manifest.permission.CALL_PHONE)
+                .request(new ZbPermission.ZbPermissionCallback() {
+                    @Override
+                    public void permissionSuccess(int requestCode) {
+                        ToastUtil.showToast("权限申请成功");
+                    }
+
+                    @Override
+                    public void permissionFail(int requestCode) {
+                        ToastUtil.showToast("权限申请失败, 有可能直接拨打电话");
+                    }
+                });
     }
 }
