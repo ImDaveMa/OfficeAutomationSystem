@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSource {
 
-    private Activity mContext;
+    private ContactsActivity mContext;
 
     //标题栏数据源
     private HashMap<Integer, String> mGroups = new HashMap<>();
@@ -43,8 +43,8 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
     private SparseArray<List<ContactsEntity.DIRECTORIESBean.DepartmentUserListBean>> mGroupData = new SparseArray<>();
     private int mCurrentGroup = -1;
 
-    public ContactsDockingAdapterDataSource(Activity context) {
-        this.mContext = context;
+    public ContactsDockingAdapterDataSource(ContactsActivity activity) {
+        this.mContext = activity;
     }
 
     @Override
@@ -157,7 +157,7 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
         ivCallPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callPhone(bean.phone);
+                mContext.easyPermission(bean.phone);
             }
         });
     }
@@ -182,35 +182,4 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
         return this;
     }
 
-    /**
-     * 拨打电话（直接拨打电话）
-     * @param phoneNum 电话号码
-     */
-    public void callPhone(String phoneNum) {
-        //检测并且注册权限
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission();
-        }
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        Uri data = Uri.parse("tel:" + phoneNum);
-        intent.setData(data);
-        mContext.startActivity(intent);
-    }
-
-    private void requestPermission() {
-        ZbPermission.with(mContext)
-                .addRequestCode(1002)
-                .permissions(Manifest.permission.CALL_PHONE)
-                .request(new ZbPermission.ZbPermissionCallback() {
-                    @Override
-                    public void permissionSuccess(int requestCode) {
-                        ToastUtil.showToast("权限申请成功");
-                    }
-
-                    @Override
-                    public void permissionFail(int requestCode) {
-                        ToastUtil.showToast("权限申请失败, 有可能直接拨打电话");
-                    }
-                });
-    }
 }
