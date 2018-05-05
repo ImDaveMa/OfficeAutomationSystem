@@ -158,6 +158,7 @@ public class ContactsDockingAdapterDataSource implements IDockingAdapterDataSour
             @Override
             public void onClick(View v) {
                 mContext.easyPermission(bean.phone);
+
             }
         });
     }
