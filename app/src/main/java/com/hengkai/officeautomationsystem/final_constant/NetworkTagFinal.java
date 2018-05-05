@@ -14,6 +14,10 @@ public class NetworkTagFinal {
      * ContactsActivity
      */
     public static final String CONTACTS_ACTIVITY_GET_CONTACTS_LIST = "CONTACTS_ACTIVITY_GET_CONTACTS_LIST";
+    /**
+     * UnitLibraryActivity
+     */
+    public static final String UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST = "UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST";
 
 
 }

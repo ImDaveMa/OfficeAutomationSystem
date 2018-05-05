@@ -32,6 +32,7 @@
         <activity android:name=".function.setting.SettingActivity" />
         <activity android:name=".function.go_out.GoOutActivity" />
         <activity android:name=".function.go_out.GoOutPreviewActivity" />
+        <activity android:name=".function.unit_library.UnitLibraryActivity" />
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
+import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivity;
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
 import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 
@@ -33,8 +34,8 @@ public class OpenActivityUtils {
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tag = holder.item.getTag()+"";
-                int rId = ResourcesUtils.getResource(activity,tag);
+                String tag = holder.item.getTag() + "";
+                int rId = ResourcesUtils.getResource(activity, tag);
                 int dbId = new MenuDbHelper(activity).getIDByImage(tag);
                 switch (rId) {
                     case R.drawable.ic_schedule://日程
@@ -48,6 +49,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_go_out: //外出
                         onClickMethod(activity, GoOutActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_unit_library: //单位库
+                        onClickMethod(activity, UnitLibraryActivity.class, dbId);
                         break;
                     default:
                         break;

@@ -25,4 +25,8 @@ public class URLFinal {
      * 获取联系人列表
      */
     public static final String GET_CONTACTS_LIST = "mobile/user/selectDirectories";
+    /**
+     * 获取单位库列表
+     */
+    public static final String GET_UNIT_LIST = "mobile/visit/companyList";
 }
