@@ -1,12 +1,5 @@
 package com.hengkai.officeautomationsystem.function.contacts;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,15 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
-import com.hengkai.officeautomationsystem.function.login.LoginActivity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
-import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.adapter.IDockingAdapterDataSource;
 import com.squareup.picasso.Picasso;
-import com.unistrong.yang.zb_permission.ZbPermission;
 
 import java.util.ArrayList;
 import java.util.HashMap;

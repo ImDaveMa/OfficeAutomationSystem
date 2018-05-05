@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
-import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
@@ -31,7 +29,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 

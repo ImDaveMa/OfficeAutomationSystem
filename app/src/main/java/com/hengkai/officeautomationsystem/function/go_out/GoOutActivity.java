@@ -2,7 +2,8 @@ package com.hengkai.officeautomationsystem.function.go_out;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,16 +17,13 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
-import com.hengkai.officeautomationsystem.utils.ImageUtil;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.compress.Luban;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.unistrong.yang.zb_permission.ZbPermission;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -37,12 +35,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Harry on 2018/5/3.
  * 外出页面
  */
-public class GoOutActivity extends BaseActivity {
+public class GoOutActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -87,6 +87,10 @@ public class GoOutActivity extends BaseActivity {
     private int endYear, endMonth, endDay, endHour, endMinute;
     private String startTimeStr, endTimeStr;
     private GoOutActivityImageListAdapter adapter;
+    /**
+     * 加载图片的数量
+     */
+    private int imageCount;
 
     @Override
     protected int setupView() {
@@ -121,12 +125,13 @@ public class GoOutActivity extends BaseActivity {
         adapter.setOnImageViewClickListener(new GoOutActivityImageListAdapter.OnImageViewClickListener() {
             @Override
             public void click() {
-                int imgCount = adapter.getItemCount();
-                if(imgCount > 9){
+                imageCount = adapter.getItemCount();
+                if (imageCount > 9) {
                     ToastUtil.showToast("最多可以选择9张图片");
                     return;
                 }
-                addImage(10 - imgCount);
+                easyPermission();
+//                addImage(10 - imgCount);
             }
         });
     }
@@ -176,15 +181,15 @@ public class GoOutActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_commit:
-                if(TextUtils.isEmpty(tvStartTime.getText())){
+                if (TextUtils.isEmpty(tvStartTime.getText())) {
                     ToastUtil.showToast("请选择开始时间");
                     return;
                 }
-                if(TextUtils.isEmpty(tvEndTime.getText())){
+                if (TextUtils.isEmpty(tvEndTime.getText())) {
                     ToastUtil.showToast("请选择结束时间");
                     return;
                 }
-                if(TextUtils.isEmpty(etGoOutReason.getText())){
+                if (TextUtils.isEmpty(etGoOutReason.getText())) {
                     ToastUtil.showToast("请输入外出事由");
                     etGoOutReason.requestFocus();
                     return;
@@ -208,7 +213,7 @@ public class GoOutActivity extends BaseActivity {
                 startTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
 
                 //判断结束时间是否存在
-                if(!TextUtils.isEmpty(endTimeStr)) {
+                if (!TextUtils.isEmpty(endTimeStr)) {
                     String formatType = "yyyy-MM-dd HH:mm";
                     SimpleDateFormat format = new SimpleDateFormat(formatType);
                     try {
@@ -243,7 +248,7 @@ public class GoOutActivity extends BaseActivity {
                 endTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
 
                 //判断开始时间是否存在
-                if(!TextUtils.isEmpty(startTimeStr)) {
+                if (!TextUtils.isEmpty(startTimeStr)) {
                     String formatType = "yyyy-MM-dd HH:mm";
                     SimpleDateFormat format = new SimpleDateFormat(formatType);
                     try {
@@ -344,25 +349,45 @@ public class GoOutActivity extends BaseActivity {
             } else {
                 adapter.addItems(medias);
             }
+        } else if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            //拒绝授权后，从系统设置了授权后，返回APP进行相应的操作
+            addImage(10 - imageCount);
         }
     }
 
-    private void requestPermission() {
-        ZbPermission.with(this)
-                .addRequestCode(1001)
-                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA)
-                .request(new ZbPermission.ZbPermissionCallback() {
-                    @Override
-                    public void permissionSuccess(int requestCode) {
-                        ToastUtil.showToast("权限申请成功");
-                    }
-
-                    @Override
-                    public void permissionFail(int requestCode) {
-                        ToastUtil.showToast("权限申请失败, 有可能造成拍照或者读取图片失败");
-                    }
-                });
+    public void easyPermission() {
+        String[] permissionList = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA};
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (EasyPermissions.hasPermissions(this, permissionList)) {
+                addImage(10 - imageCount);
+            } else {
+                EasyPermissions.requestPermissions(this, "需要访问手机内存以及照相机相关权限", 1001, permissionList);
+            }
+        } else {
+            addImage(10 - imageCount);
+        }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        //同意了授权
+        addImage(10 - imageCount);
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        //拒绝了授权
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
 }

@@ -2,9 +2,9 @@ package com.hengkai.officeautomationsystem.function.login;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,21 +19,23 @@ import com.hengkai.officeautomationsystem.function.MainActivity;
 import com.hengkai.officeautomationsystem.utils.EditTextFilterUtil;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
-import com.unistrong.yang.zb_permission.ZbPermission;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Harry on 2018/4/26.
  * 登录页面
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyPermissions.PermissionCallbacks {
 
-    private final int REQUEST_PHONE_STATE = 100;
+    private static final int REQUEST_PHONE_STATE = 100;
 
     @BindView(R.id.et_account)
     EditText etAccount;
@@ -58,10 +60,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         ButterKnife.bind(this);
 
         initText();
-        //检测并且注册权限
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission();
-        }
     }
 
     /**
@@ -89,7 +87,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                goToLogin();
+                easyPermission();
                 break;
             case R.id.tv_forget_password:
 
@@ -125,20 +123,46 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         finish();
     }
 
-    private void requestPermission() {
-        ZbPermission.with(LoginActivity.this)
-                .addRequestCode(REQUEST_PHONE_STATE)
-                .permissions(Manifest.permission.READ_PHONE_STATE)
-                .request(new ZbPermission.ZbPermissionCallback() {
-                    @Override
-                    public void permissionSuccess(int requestCode) {
-                        ToastUtil.showToast("权限申请成功");
-                    }
+    public void easyPermission() {
+        String[] permissionList = new String[]{Manifest.permission.READ_PHONE_STATE};
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (EasyPermissions.hasPermissions(this, permissionList)) {
+                goToLogin();
+            } else {
+                EasyPermissions.requestPermissions(this, "需要读取手机状态的权限, 如果拒绝可能造成无法正常登陆", REQUEST_PHONE_STATE, permissionList);
+            }
+        } else {
+            goToLogin();
+        }
+    }
 
-                    @Override
-                    public void permissionFail(int requestCode) {
-                        ToastUtil.showToast("权限申请失败, 有可能造成登录失败");
-                    }
-                });
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        //同意了授权
+        goToLogin();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        //拒绝了授权
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            //拒绝授权后，从系统设置了授权后，返回APP进行相应的操作
+            goToLogin();
+        }
+
     }
 }

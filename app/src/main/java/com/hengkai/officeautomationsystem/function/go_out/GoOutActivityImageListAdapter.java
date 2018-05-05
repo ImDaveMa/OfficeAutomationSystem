@@ -1,8 +1,6 @@
 package com.hengkai.officeautomationsystem.function.go_out;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -13,10 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hengkai.officeautomationsystem.R;
-import com.hengkai.officeautomationsystem.function.login.LoginActivity;
-import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.unistrong.yang.zb_permission.ZbPermission;
 
 import java.util.ArrayList;
 import java.util.List;
