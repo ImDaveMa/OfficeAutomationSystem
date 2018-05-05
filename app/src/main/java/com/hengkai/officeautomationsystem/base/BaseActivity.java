@@ -1,6 +1,9 @@
 package com.hengkai.officeautomationsystem.base;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import com.hengkai.officeautomationsystem.application.OfficeAutomationSystemAppl
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.base.view.BaseActivityImpl;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
+import com.hengkai.officeautomationsystem.function.login.LoginActivity;
 import com.hengkai.officeautomationsystem.utils.LoadingDialogType;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
@@ -50,15 +54,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
 
         // 增加点击次数
-        if(getIntent().hasExtra(CommonFinal.MENU_ID)) {
+        if (getIntent().hasExtra(CommonFinal.MENU_ID)) {
             int dbId = getIntent().getIntExtra(CommonFinal.MENU_ID, 0);
             if (dbId > 0) {
                 new MenuDbHelper(this).setCount(dbId, System.currentTimeMillis());
             }
         }
-     }
+    }
 
-     /**
+    /**
      * @return 布局文件的ID
      */
     protected abstract int setupView();
@@ -109,6 +113,23 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
         if (dialog != null) {
             dialog.cancel();
         }
+    }
+
+    public void showLoginDialog(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                context.startActivity(new Intent(context, LoginActivity.class));
+                dialog.dismiss();
+                //看需求, 是否需要发送消息在重新登录后刷新当前列表的数据, 这里暂时先不添加了
+            }
+        }).setNegativeButton("否", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setMessage("您目前尚未登录，是否前往登录界面").show();
     }
 
     @Override

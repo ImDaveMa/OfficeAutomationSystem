@@ -37,9 +37,8 @@ public class ContactsActivityPresenter extends BasePresenter<ContactsActivity> {
                     view.initListChildClickListener(list);
                 } else if (contactsEntity.CODE == -1) {
                     ToastUtil.showToast("获取通讯录失败(原因是系统里没有部门)");
-                } else if (contactsEntity.CODE == 0) {
-                    ToastUtil.showToast("TOKEN无效");
-                    // TODO: 2018/5/4 去登录
+                } else if (contactsEntity.CODE == 0) {//TOKEN失效
+                    view.showLoginDialog(view);
                 }
             }
 
