@@ -121,7 +121,12 @@ public class GoOutActivity extends BaseActivity {
         adapter.setOnImageViewClickListener(new GoOutActivityImageListAdapter.OnImageViewClickListener() {
             @Override
             public void click() {
-                addImage();
+                int imgCount = adapter.getItemCount();
+                if(imgCount > 9){
+                    ToastUtil.showToast("最多可以选择9张图片");
+                    return;
+                }
+                addImage(10 - imgCount);
             }
         });
     }
@@ -276,11 +281,11 @@ public class GoOutActivity extends BaseActivity {
     /**
      * 添加图片
      */
-    private void addImage() {
+    private void addImage(int count) {
         PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()
                 .theme(R.style.picture_default_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
-                .maxSelectNum(9)// 最大图片选择数量 int
+                .maxSelectNum(count)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
                 .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
