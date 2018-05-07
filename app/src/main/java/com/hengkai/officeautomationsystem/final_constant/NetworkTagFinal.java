@@ -18,6 +18,10 @@ public class NetworkTagFinal {
      * UnitLibraryActivity
      */
     public static final String UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST = "UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST";
+    /**
+     * ManagementOfGoodsActivity
+     */
+    public static final String MANAGEMENT_OF_GOODS_ACTIVITY_GET_GOODS_LIST = "MANAGEMENT_OF_GOODS_ACTIVITY_GET_GOODS_LIST";
 
 
 }

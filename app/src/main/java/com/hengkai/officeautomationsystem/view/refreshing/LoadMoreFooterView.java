@@ -16,6 +16,7 @@ public class LoadMoreFooterView extends RefreshingLayout implements SwipeTrigger
 
     private static final int REFRESH_STATE_SUCCESS = 1;
     private static final int REFRESH_STATE_ERROR = 2;
+    public static final int REFRESH_STATE_NONE = 3;
     private int loadMoreStateCode = 1;
 
     public LoadMoreFooterView(Context context) {
@@ -63,6 +64,8 @@ public class LoadMoreFooterView extends RefreshingLayout implements SwipeTrigger
             setText("加载成功....");
         } else if (loadMoreStateCode == REFRESH_STATE_ERROR) {
             setText("加载失败....");
+        } else if (loadMoreStateCode == REFRESH_STATE_NONE) {
+            setText("没有更多数据");
         } else {
             setText("");
         }

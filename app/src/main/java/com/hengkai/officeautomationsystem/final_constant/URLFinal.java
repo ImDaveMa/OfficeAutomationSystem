@@ -29,4 +29,8 @@ public class URLFinal {
      * 获取单位库列表
      */
     public static final String GET_UNIT_LIST = "mobile/visit/companyList";
+    /**
+     * 获取物品列表
+     */
+    public static final String GET_GOODS_LIST = "mgoods/toGoodsList";
 }
