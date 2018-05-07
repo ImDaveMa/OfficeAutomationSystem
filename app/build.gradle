@@ -16,6 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main { //百度地图配置
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = [] //disable automatic ndk-build
+        }
+    }
+
+
 }
 
 dependencies {
@@ -60,7 +69,7 @@ dependencies {
     //CalendarView
     implementation 'com.haibin:calendarview:3.2.8'
     //MaterialDateTimePicker
-    implementation ('com.wdullaer:materialdatetimepicker:3.5.1'){
+    implementation('com.wdullaer:materialdatetimepicker:3.5.1') {
         //因为这个库里面的support包的版本低于当前项目的, 所以忽略这个库里的支持包
         exclude group: 'com.android.support'
     }

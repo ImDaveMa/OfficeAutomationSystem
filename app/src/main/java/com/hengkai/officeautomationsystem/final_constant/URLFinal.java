@@ -21,14 +21,22 @@ public class URLFinal {
      * 登录
      */
     public static final String LOGIN_URL = "mobile/login/password";
+
     /**
      * 获取联系人列表
      */
     public static final String GET_CONTACTS_LIST = "mobile/user/selectDirectories";
+
     /**
      * 获取单位库列表
      */
     public static final String GET_UNIT_LIST = "mobile/visit/companyList";
+
+    /**
+     * 获取拜访跟进列表
+     */
+    public static final String GET_VISIT_RECORD_LIST = "mobile/visit/list";
+
     /**
      * 获取物品列表
      */

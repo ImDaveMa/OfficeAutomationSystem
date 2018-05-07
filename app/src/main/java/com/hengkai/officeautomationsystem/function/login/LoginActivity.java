@@ -117,9 +117,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyP
      * 登录成功
      */
     public void loginSuccess() {
-        ToastUtil.showToast("登录成功");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        ToastUtil.showToast("登录成功");
         finish();
     }
 
