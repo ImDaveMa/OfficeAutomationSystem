@@ -32,8 +32,9 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
                     List<GoodsEntity.GoodsBean> list = goodsEntity.getList();
                     view.prepareData(list);
                     view.initListChildClickListener(list);
-                } else if (goodsEntity.getCODE() == -1) {
-                    ToastUtil.showToast("获取物品失败");
+                } else if (goodsEntity.getCODE() == -2) {
+                    List<GoodsEntity.GoodsBean> list = goodsEntity.getList();
+                    view.prepareData(list);
                 } else if (goodsEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
                 }

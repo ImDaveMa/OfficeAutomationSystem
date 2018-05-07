@@ -15,5 +15,5 @@ public class CommonFinal {
     /**
      * 公用分页每页数量
      */
-    public static final int PAGE_SIZE = 15;
+    public static final int PAGE_SIZE = 4;
 }
