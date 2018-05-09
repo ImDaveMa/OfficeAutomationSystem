@@ -4,14 +4,31 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingLeft="20dp"
-        android:paddingBottom="5dp"
-        android:textSize="10dp"
-        android:text="物品明细(1)"/>
+        android:paddingBottom="5dp">
+        <TextView
+            android:id="@+id/tv_goods_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="物品明细(1)"/>
+
+        <TextView
+            android:id="@+id/tv_goods_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:textSize="10dp"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:textColor="@color/blue"
+            android:text="删除"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,14 +49,14 @@
             android:text="物品名称"
             android:textColor="@color/black" />
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_goods_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@color/transparent"
             android:gravity="right"
             android:hint="请选择物品名称"
-            android:enabled="false"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -53,15 +70,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/red1"
+            android:text="*"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="数量"
             android:textColor="@color/black" />
 
         <EditText
+            android:id="@+id/et_goods_num"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@color/transparent"
+            android:inputType="number"
             android:gravity="right"
             android:hint="请输入数量"
             android:textSize="14sp" />

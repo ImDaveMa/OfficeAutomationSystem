@@ -26,6 +26,10 @@ public class NetworkTagFinal {
      * ManagementOfGoodsActivity
      */
     public static final String MANAGEMENT_OF_GOODS_ACTIVITY_GET_GOODS_LIST = "MANAGEMENT_OF_GOODS_ACTIVITY_GET_GOODS_LIST";
+    /**
+     * ManagementOfGoodsActivity
+     */
+    public static final String USE_GOODS_ACTIVITY_SAVE_GOODS = "USE_GOODS_ACTIVITY_SAVE_GOODS";
 
 
 }

@@ -41,4 +41,8 @@ public class URLFinal {
      * 获取物品列表
      */
     public static final String GET_GOODS_LIST = "mgoods/toGoodsList";
+    /**
+     * 领用物品
+     */
+    public static final String USE_GOODS = "out/insertOutStorage";
 }

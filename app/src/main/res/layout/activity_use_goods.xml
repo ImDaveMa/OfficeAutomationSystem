@@ -16,6 +16,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -38,6 +39,7 @@
                     android:text="物品用途"/>
 
                 <EditText
+                    android:id="@+id/et_goods_use_for"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -48,19 +50,45 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:text="项目"/>
+
+                <TextView
+                    android:id="@+id/tv_project"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:textSize="14sp"
+                    android:hint="请选择项目"/>
+
+            </RelativeLayout>
+
             <LinearLayout
+                android:id="@+id/ll_goods_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <include layout="@layout/item_add_goods_detail"/>
-
-                <include layout="@layout/item_add_goods_detail"/>
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_goods_add_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blue"
+                android:clickable="true"
                 android:padding="10dp"
                 android:text="+ 增加物品明细"
                 android:background="@drawable/selector_text_view_pressed_normal"
@@ -79,30 +107,15 @@
                     android:textColor="@color/black"
                     android:text="领用详情"/>
                 <EditText
+                    android:id="@+id/et_goods_summary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:textSize="14sp"
+                    android:hint="请填写详情"
+                    android:gravity="top"
                     android:lines="3"
                     android:background="@color/transparent"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:padding="15dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="图片"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/ic_add128"/>
             </LinearLayout>
 
             <LinearLayout
@@ -129,17 +142,34 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="12dp"
+                        android:textColor="@color/mdtp_light_gray"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="10dp"
                         android:text="审批人已由管理员预设，并将自动去重复"/>
                 </LinearLayout>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/ic_add128"/>
-            </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/ic_user64"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="审批甲"/>
+
+                    <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/ic_user64"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="审批乙"/>
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,26 +195,51 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey"
-                        android:textSize="12dp"
+                        android:textColor="@color/mdtp_light_gray"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="10dp"
                         android:text="审批通过后，通知抄送人"/>
                 </LinearLayout>
-                <ImageView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/ic_add128"/>
+                    android:paddingTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/ic_user64"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="抄送甲"/>
+
+                    <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/ic_user64"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:text="抄送乙"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/shape_btn_bg"
-                android:text="提交"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:padding="15dp">
 
+                <TextView
+                    android:id="@+id/tv_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:background="@drawable/selector_text_view_btn_pressed"
+                    android:text="提交申请"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
