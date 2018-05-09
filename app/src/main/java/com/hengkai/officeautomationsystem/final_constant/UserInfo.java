@@ -10,6 +10,7 @@ public enum UserInfo {
     TOKEN,
     USER_ID,
     LOGIN_NAME,
+    PHONE,
     JOB_NUMBER,
     LAST_LOGIN_TIME,
     STATUS,

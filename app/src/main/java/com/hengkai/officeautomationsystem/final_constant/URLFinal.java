@@ -14,7 +14,8 @@ public class URLFinal {
      * baseURL
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/";
-    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
+//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
+    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
 
 
     /**
@@ -45,4 +46,32 @@ public class URLFinal {
      * 领用物品
      */
     public static final String USE_GOODS = "out/insertOutStorage";
+    /**
+     * 拜访跟进详情页面 - 获取单位列表
+     */
+    public static final String GET_VISIT_UNIT_LIST = "mobile/visit/companyList";
+    /**
+     * 拜访跟进详情页面 - 获取该单位下的联系人列表
+     */
+    public static final String GET_VISIT_UNIT_CUSTOMER_LIST = "mobile/visit/companyDetails";
+    /**
+     * 拜访跟进详情页面 - 获取该联系人下的项目列表
+     */
+    public static final String GET_VISIT_UNIT_PROJECT_LIST = "mobile/visit/contactsDetails";
+    /**
+     * 拜访跟进详情页面 - 从新增按钮进入到当前页面去保存当前页面
+     */
+    public static final String TO_SAVE_ON_NEW_ADD = "mobile/visit/ar";
+    /**
+     * 拜访跟进详情页面 - 从列表item点击进入
+     */
+    public static final String GET_VISIT_RECORD_DETAIL = "mobile/visit/details";
+    /**
+     * 拜访跟进详情页面 - 结束的接口
+     */
+    public static final String TO_END = "mobile/visit/se";
+    /**
+     * 拜访跟进详情页面 - 列表页进入点击保存, 或者提交的接口
+     */
+    public static final String TO_SAVE_OR_COMMIT = "mobile/visit/ps";
 }

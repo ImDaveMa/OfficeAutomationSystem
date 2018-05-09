@@ -39,8 +39,10 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
                     view.loginSuccess();
                 } else if (loginEntity.CODE == 2) {
                     ToastUtil.showToast("登陆失败，账号密码错误");
+                    view.setLoginButtonStatus(true);
                 } else if (loginEntity.CODE == 3) {
                     ToastUtil.showToast("登陆失败，账号不可用");
+                    view.setLoginButtonStatus(true);
                 }
 
             }
@@ -48,11 +50,13 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
             @Override
             public void onError(Throwable e) {
                 view.dismissDialog();
+                view.setLoginButtonStatus(true);
                 ToastUtil.showToast("登陆失败:" + e.getMessage());
             }
 
             @Override
             public void onComplete() {
+                view.setLoginButtonStatus(true);
                 view.dismissDialog();
             }
         });
@@ -69,8 +73,9 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         SPUtils.putBoolean(UserInfo.IS_LOGIN.name(), true);
 
         SPUtils.putString(UserInfo.TOKEN.name(), loginEntity.TOKEN);
-        SPUtils.putInt(UserInfo.USER_ID.name(), loginEntity.USER.id);
+        SPUtils.putString(UserInfo.USER_ID.name(), String.valueOf(loginEntity.USER.id));
         SPUtils.putString(UserInfo.LOGIN_NAME.name(), loginEntity.USER.loginName);
+        SPUtils.putString(UserInfo.PHONE.name(), loginEntity.USER.phone);
         SPUtils.putString(UserInfo.JOB_NUMBER.name(), loginEntity.USER.jobNumber);
         SPUtils.putLong(UserInfo.LAST_LOGIN_TIME.name(), loginEntity.USER.lastLoginTime);
         SPUtils.putInt(UserInfo.STATUS.name(), loginEntity.USER.status);

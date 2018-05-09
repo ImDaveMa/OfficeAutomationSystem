@@ -8,4 +8,5 @@ public class CommonReceiveMessageEntity {
 
     public int CODE;
     public String MES;
+    public int DATA;
 }

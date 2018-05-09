@@ -49,6 +49,7 @@ public class LoginEntity {
 
         public int id;
         public String loginName;
+        public String phone;
         public int status;
         public String jobNumber;
         public long lastLoginTime;

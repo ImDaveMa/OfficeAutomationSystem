@@ -109,6 +109,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyP
             ToastUtil.showToast("密码不能为空");
             return;
         }
+        setLoginButtonStatus(false);
         showDialog();
         mPresenter.login(account, password);
     }
@@ -121,6 +122,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyP
         startActivity(intent);
         ToastUtil.showToast("登录成功");
         finish();
+    }
+
+    public void setLoginButtonStatus(boolean enabled) {
+        btnLogin.setEnabled(enabled);
     }
 
     public void easyPermission() {

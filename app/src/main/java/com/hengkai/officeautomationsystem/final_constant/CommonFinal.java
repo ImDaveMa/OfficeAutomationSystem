@@ -15,5 +15,13 @@ public class CommonFinal {
     /**
      * 公用分页每页数量
      */
-    public static final int PAGE_SIZE = 4;
+    public static final int PAGE_SIZE = 15;
+    /**
+     * 拜访跟进页面的ResultCode
+     */
+    public static final int VISIT_RECORD_RESULT_CODE = 1001;
+    /**
+     * 拜访跟进页面的RequestCode
+     */
+    public static final int VISIT_RECORD_REQUEST_CODE = 1002;
 }
