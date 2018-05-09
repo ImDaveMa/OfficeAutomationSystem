@@ -69,7 +69,7 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         setupRecyclerView();
 
         //请求网络
-        mPresenter.getGoodsList(1);
+        mPresenter.getGoodsList(0);
     }
 
     /**
@@ -126,7 +126,6 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
             // 没有更多数据
             swipeLoadMoreFooter.setloadMoreState(LoadMoreFooterView.REFRESH_STATE_NONE);
             swipeToLoadLayout.setLoadingMore(false);
-
         }
         stopRefreshing();
     }
@@ -159,8 +158,8 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
             @Override
             public void onRefresh() {
                 // 清空历史数据
-                goodsList = new ArrayList<>();
-                mPresenter.getGoodsList(1);
+                goodsList.clear();
+                mPresenter.getGoodsList(0);
                 swipeLoadMoreFooter.onReset();
             }
         });

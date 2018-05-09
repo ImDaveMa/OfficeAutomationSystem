@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.function.management_of_goods;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class ManagementOfGoodsAdapter extends RecyclerView.Adapter<ManagementOfG
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GoodsEntity.GoodsBean bean = goodsList.get(position);
         holder.tvName.setText(bean.getName());
-        holder.tvCount.setText(String.format("库存数量：%d%s", bean.getNum(), bean.getGoodsTypeName()));
+        holder.tvCount.setText(Html.fromHtml(String.format("库存数量：<font color='red'>%d</font>%s", bean.getNum(), bean.getUnit())));
         holder.tvType.setText(String.format("类别：%s", bean.getGoodsTypeName()));
     }
 

@@ -28,8 +28,8 @@ public class ManagementOfGoodsModel {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("id", id + "");
-        params.put("pagesize", CommonFinal.PAGE_SIZE + "");
+        params.put("searchId", id + "");
+        params.put("pageSize", CommonFinal.PAGE_SIZE + "");
 
         service.getGoodsList(URLFinal.GET_GOODS_LIST, params)
                 .subscribeOn(Schedulers.io())
