@@ -28,6 +28,7 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
 
             @Override
             public void onNext(GoodsEntity goodsEntity) {
+                view.stopRefreshing();
                 if (goodsEntity.getCODE() == 1) {
                     List<GoodsEntity.GoodsBean> list = goodsEntity.getList();
                     view.prepareData(list);
@@ -42,7 +43,8 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.showToast("请求网络失败");
+                view.stopRefreshing();
+                ToastUtil.showToast("请求网络失败:" + e.getMessage());
             }
 
             @Override
