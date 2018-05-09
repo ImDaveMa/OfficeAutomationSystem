@@ -52,7 +52,7 @@ public class GoodsEntity {
         private int num;
         private String name;
         private int id;
-        private int cost;
+        private double cost;
 
         public String getUnit() {
             return unit;
@@ -94,7 +94,7 @@ public class GoodsEntity {
             this.id = id;
         }
 
-        public int getCost() {
+        public double getCost() {
             return cost;
         }
 
