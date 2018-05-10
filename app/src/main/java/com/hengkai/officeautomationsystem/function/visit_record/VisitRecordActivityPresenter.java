@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.function.visit_record;
 
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
@@ -45,6 +46,34 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
             @Override
             public void onComplete() {
                 view.stopRefreshing();
+            }
+        });
+    }
+
+    public void deleteItem(int ID) {
+        model.deleteItem(ID, new Observer<CommonReceiveMessageEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST, d);
+            }
+
+            @Override
+            public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
+                if (commonReceiveMessageEntity.CODE == 2) {
+                    view.deleteItem();
+                } else if (commonReceiveMessageEntity.CODE == 0) {
+                    view.showLoginDialog(view);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtil.showToast("请求网络失败");
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

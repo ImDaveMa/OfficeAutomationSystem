@@ -22,6 +22,7 @@ public class NetworkTagFinal {
      * VisitRecordActivity
      */
     public static final String VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST = "VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST";
+    public static final String VISIT_RECORD_ACTIVITY_DELETE_ITEM = "VISIT_RECORD_ACTIVITY_DELETE_ITEM";
     /**
      * VisitRecordDetailActivity
      */

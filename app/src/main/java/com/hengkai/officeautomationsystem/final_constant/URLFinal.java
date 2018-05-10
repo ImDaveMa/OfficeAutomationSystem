@@ -14,8 +14,8 @@ public class URLFinal {
      * baseURL
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/";
-//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
-    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
+    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
+//    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
 
 
     /**
@@ -37,6 +37,10 @@ public class URLFinal {
      * 获取拜访跟进列表
      */
     public static final String GET_VISIT_RECORD_LIST = "mobile/visit/list";
+    /**
+     * 拜访跟进列表 - 删除未提交的item
+     */
+    public static final String VISIT_RECORD_ACTIVITY_DELETE_ITEM = "mobile/visit/del";
 
     /**
      * 获取物品列表

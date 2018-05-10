@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.function.visit_record;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -60,6 +62,10 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
     private boolean isLoadMore = false;
     private VisitRecordActivityAdapter adapter;
     private List<VisitRecordEntity.DATABean> mList;
+    /**
+     * 当前列表, 长按点击要删除的position
+     */
+    private int position;
 
     @Override
     protected int setupView() {
@@ -84,6 +90,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST);
+        tags.add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_DELETE_ITEM);
         return tags;
     }
 
@@ -109,12 +116,42 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 intent.putExtra("currentID", bean.id);
                 startActivityForResult(intent, CommonFinal.VISIT_RECORD_REQUEST_CODE);
             }
+
+            @Override
+            public void onLongClick(final VisitRecordEntity.DATABean bean, final int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(VisitRecordActivity.this);
+                if (!bean.isSubmission) {
+                    builder.setMessage("已提交的工作不可删除!");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+                } else {
+                    builder.setMessage("是否删除当前项?");
+                    builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            VisitRecordActivity.this.position = position;
+                            mPresenter.deleteItem(bean.id);
+                            dialog.dismiss();
+                        }
+                    }).setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+                }
+            }
         });
 
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
 //                pageNum = 1;
+                // TODO: 2018/5/10 没有分页, 需要加入分页的逻辑
                 mPresenter.getVisitRecordList();
                 isLoadMore = false;
             }
@@ -241,5 +278,12 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         if (resultCode == CommonFinal.VISIT_RECORD_RESULT_CODE) {
             swipeToLoadLayout.setRefreshing(true);//保存或者新增后刷新列表
         }
+    }
+
+    /**
+     * 删除长按的item, 更新数据刷新列表
+     */
+    public void deleteItem() {
+        adapter.updateData(position);
     }
 }

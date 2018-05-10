@@ -41,7 +41,7 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final VisitRecordEntity.DATABean bean = mList.get(position);
         holder.tvUnitName.setText(bean.companyName);
         if (!bean.isSubmission) {
@@ -73,6 +73,16 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
                 if (mListener != null) {
                     mListener.onClick(bean);
                 }
+            }
+        });
+
+        holder.container.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mListener != null) {
+                    mListener.onLongClick(bean, holder.getAdapterPosition());
+                }
+                return true;
             }
         });
     }
@@ -110,6 +120,8 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
 
     public interface OnItemClickListener {
         void onClick(VisitRecordEntity.DATABean bean);
+
+        void onLongClick(VisitRecordEntity.DATABean bean, int position);
     }
 
     private OnItemClickListener mListener;
@@ -118,4 +130,8 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
         mListener = listener;
     }
 
+    public void updateData(int position) {
+        mList.remove(position);
+        notifyDataSetChanged();
+    }
 }

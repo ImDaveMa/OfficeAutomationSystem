@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.network.service;
 
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
 
 import java.util.Map;
@@ -18,4 +19,8 @@ public interface VisitRecordService {
     @FormUrlEncoded
     @POST
     Observable<VisitRecordEntity> getVisitRecordList(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<CommonReceiveMessageEntity> deleteItem(@Url String url, @FieldMap Map<String, String> params);
 }
