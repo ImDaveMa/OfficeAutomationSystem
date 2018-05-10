@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:padding="10dp"
-                android:background="@color/white">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/lr_project_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -69,10 +70,18 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
                     android:gravity="right"
                     android:textSize="14sp"
                     android:hint="请选择项目"/>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="image"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_arrow_gray32" />
             </RelativeLayout>
 
             <LinearLayout

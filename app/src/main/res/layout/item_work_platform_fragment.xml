@@ -28,6 +28,7 @@
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
+                android:layout_marginLeft="5dp"
                 tools:ignore="HardcodedText" />
 
             <android.support.v7.widget.RecyclerView

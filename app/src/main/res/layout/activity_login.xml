@@ -76,6 +76,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:text="记住密码"
+                android:checked="true"
                 android:textColor="@color/white"
                 android:theme="@style/MyCheckBox" />
 

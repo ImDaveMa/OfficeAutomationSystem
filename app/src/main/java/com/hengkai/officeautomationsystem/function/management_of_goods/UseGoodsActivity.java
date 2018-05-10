@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -65,9 +66,13 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     @BindView(R.id.ll_approval_container)
-    LinearLayout llApprovalContaienr;
+    LinearLayout llApprovalContainer;
     @BindView(R.id.ll_copy_container)
     LinearLayout llCopyContainer;
+    @BindView(R.id.lr_project_selector)
+    RelativeLayout lrProjectSelector;
+    @BindView(R.id.lr_goods_selector)
+    RelativeLayout lrGoodsSelector;
 
     @Override
     protected int setupView() {
@@ -97,7 +102,7 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
         return tags;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_goods_add_item, R.id.tv_goods_delete, R.id.tv_goods_name, R.id.tv_project, R.id.tv_submit})
+    @OnClick({R.id.iv_back, R.id.tv_goods_add_item, R.id.tv_goods_delete, R.id.lr_goods_selector, R.id.lr_project_selector, R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -115,12 +120,12 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                 llGoodsList.removeView(child);
                 setGoodsIndex();
                 break;
-            case R.id.tv_goods_name: // 第一项选择物品
+            case R.id.lr_goods_selector: // 第一项选择物品
                 Intent intent = new Intent(UseGoodsActivity.this, SelectGoodsActivity.class);
                 intent.putExtra(SelectGoodsActivity.KEY_POSITION, 0);
                 startActivityForResult(intent, REQUEST_CODE_SELECT_GOODS);
                 break;
-            case R.id.tv_project: // 选择所有参数
+            case R.id.lr_project_selector: // 选择项目参数
                 showProjectList();
                 break;
             case R.id.tv_submit:
@@ -212,7 +217,7 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                     tvName.setText(bean.getUserName());
                     // 审批人
                     if (bean.getType() == 1) {
-                        llApprovalContaienr.addView(view);
+                        llApprovalContainer.addView(view);
                     } else if (bean.getType() == 2) { // 抄送人
                         llCopyContainer.addView(view);
                     }
@@ -272,8 +277,8 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                 setGoodsIndex();
             }
         });
-        TextView name = view.findViewById(R.id.tv_goods_name);
-        name.setOnClickListener(new View.OnClickListener() {
+        RelativeLayout lrGSelector = view.findViewById(R.id.lr_goods_selector);
+        lrGSelector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UseGoodsActivity.this, SelectGoodsActivity.class);

@@ -34,4 +34,11 @@
         <item name="android:windowEnterAnimation">@anim/anim_pop_enter</item>
         <item name="android:windowExitAnimation">@anim/anim_pop_exit</item>
     </style>
+
+    <style name="AppTheme.NoActionBarWithBackGround">
+        <item name="windowActionBar">false</item><!--取消Actionbar-->
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item> <!--设置全屏-->
+        <item name="android:windowBackground">@drawable/splash</item> <!--设置背景-->
+    </style>
 </resources>

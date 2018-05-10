@@ -54,13 +54,15 @@
         <activity android:name=".function.MainActivity" />
         <activity android:name=".function.schedule.ScheduleActivity" />
         <activity android:name=".function.ask_for_leave.AskForLeaveActivity" />
-        <activity android:name=".function.login.LoginActivity">
+        <activity android:name=".function.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBarWithBackGround">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".function.login.LoginActivity"></activity>
         <activity android:name=".function.contacts.ContactsActivity" />
         <activity android:name=".function.management_of_goods.ManagementOfGoodsActivity" />
         <activity android:name=".function.setting.SettingActivity" />
@@ -70,7 +72,7 @@
         <activity android:name=".function.visit_record.VisitRecordActivity" />
         <activity android:name=".function.visit_record.detail.VisitRecordDetailActivity" />
         <activity android:name=".function.management_of_goods.UseGoodsActivity" />
-        <activity android:name=".function.management_of_goods.SelectGoodsActivity"></activity>
+        <activity android:name=".function.management_of_goods.SelectGoodsActivity" />
     </application>
 
 </manifest>

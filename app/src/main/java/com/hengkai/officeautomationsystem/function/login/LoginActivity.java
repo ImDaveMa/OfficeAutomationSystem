@@ -18,8 +18,10 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.MainActivity;
 import com.hengkai.officeautomationsystem.utils.EditTextFilterUtil;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
@@ -122,6 +124,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyP
      * 登录成功
      */
     public void loginSuccess() {
+        // 保存自动登录信息
+        if(checkBox.isChecked()){
+            SPUtils.putBoolean(UserInfo.IS_LOGIN.name(), true);
+        } else {
+            SPUtils.putBoolean(UserInfo.IS_LOGIN.name(), false);
+        }
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         ToastUtil.showToast("登录成功");

@@ -6,7 +6,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="3dp"
+    android:paddingBottom="5dp"
     tools:ignore="HardcodedText">
 
     <ImageView
@@ -21,7 +21,8 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="6dp"
         android:text="请假" />
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.function.setting;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.function.login.LoginActivity;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.jaeger.library.StatusBarUtil;
 
@@ -75,12 +77,16 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //标记登录状态为false, 同时清空token和图片地址
-                SPUtils.getBoolean(UserInfo.IS_LOGIN.name(), false);
-                SPUtils.getString(UserInfo.TOKEN.name(), "");
-                SPUtils.getString(UserInfo.ICON_LINK.name(), "");
+                SPUtils.putBoolean(UserInfo.IS_LOGIN.name(), false);
+                SPUtils.putString(UserInfo.TOKEN.name(), "");
+                SPUtils.putString(UserInfo.ICON_LINK.name(), "");
                 dialog.dismiss();
-                finish();
                 // TODO: 2018/5/3 退出登录, 变更当前用户的头像为默认的空头像, 清空头像下方的名字, 并把改textView改为登录的字样
+
+                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         }).setNegativeButton("否", new DialogInterface.OnClickListener() {
             @Override
