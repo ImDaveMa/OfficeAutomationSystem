@@ -19,6 +19,7 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,8 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+        //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         tvTitle.setText("领用申请");
     }
 
