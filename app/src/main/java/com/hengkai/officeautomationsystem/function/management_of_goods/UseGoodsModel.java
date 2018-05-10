@@ -15,6 +15,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ *
+ */
 public class UseGoodsModel {
 
     private final GoodsService service;
@@ -24,6 +27,14 @@ public class UseGoodsModel {
         service = retrofit.create(GoodsService.class);
     }
 
+    /**
+     * 保存领用申请
+     * @param observer
+     * @param price 价格
+     * @param reason 事由
+     * @param details 物品详情
+     * @param projectId 项目ID（可为空）
+     */
     public void saveGoods(Observer observer, double price, String reason, String details, int projectId) {
         Map<String, String> params = new HashMap<>();
 
@@ -38,6 +49,22 @@ public class UseGoodsModel {
         params.put("pageSize", CommonFinal.PAGE_SIZE + "");
 
         service.submitUse(URLFinal.USE_GOODS, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取页面所需参数
+     * @param observer
+     */
+    public void getParams(Observer observer) {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        // params.put("USERID", SPUtils.getInt(UserInfo.USER_ID.name(), 0) + "");
+
+        service.getParams(URLFinal.USE_GOODS_PARAMS, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -4,6 +4,7 @@ import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsParamsEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
@@ -54,5 +55,43 @@ public class UseGoodsPresenter extends BasePresenter<UseGoodsActivity> {
 
             }
         }, price, reason, details, projectId);
+    }
+
+    public void getParams() {
+        view.showDialog();
+        model.getParams(new Observer<GoodsParamsEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS, d);
+            }
+
+            @Override
+            public void onNext(GoodsParamsEntity goodsParamsEntity) {
+                if (goodsParamsEntity.getCODE() == 1) {
+                    view.dismissDialog();
+                    view.getParamsSuccess(goodsParamsEntity);
+                } else if (goodsParamsEntity.getCODE() == 3) {
+                    view.dismissDialog();
+                    ToastUtil.showToast("系统异常，获取参数失败");
+                    view.finish();
+                } else if (goodsParamsEntity.getCODE() == 0) {//TOKEN失效
+                    view.dismissDialog();
+                    ToastUtil.showToast("登录失效，请重新登录");
+                    view.showLoginDialog(view);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.dismissDialog();
+                ToastUtil.showToast("请求网络失败");
+                view.finish();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

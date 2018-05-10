@@ -149,25 +149,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_approval_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:drawablePadding="5dp"
-                        android:gravity="center"
-                        android:text="审批甲"/>
-
-                    <TextView
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:drawablePadding="5dp"
-                        android:gravity="center"
-                        android:text="审批乙"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -201,25 +187,11 @@
                         android:text="审批通过后，通知抄送人"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_copy_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:drawablePadding="5dp"
-                        android:gravity="center"
-                        android:text="抄送甲"/>
-
-                    <TextView
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:drawablePadding="5dp"
-                        android:gravity="center"
-                        android:text="抄送乙"/>
                 </LinearLayout>
             </LinearLayout>
 

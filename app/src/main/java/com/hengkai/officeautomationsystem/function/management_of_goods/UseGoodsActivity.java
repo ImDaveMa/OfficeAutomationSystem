@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +22,9 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.visit_record.detail.BottomDialogAdapter;
+import com.hengkai.officeautomationsystem.network.entity.GoodsParamsEntity;
+import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
@@ -33,7 +40,11 @@ import butterknife.OnClick;
  */
 public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
 
+    /**
+     * 选择物品回调请求码
+     */
     private final int REQUEST_CODE_SELECT_GOODS = 10230;
+    private GoodsParamsEntity mGoodsParamsEntity;
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -53,6 +64,10 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
     TextView tvProject;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
+    @BindView(R.id.ll_approval_container)
+    LinearLayout llApprovalContaienr;
+    @BindView(R.id.ll_copy_container)
+    LinearLayout llCopyContainer;
 
     @Override
     protected int setupView() {
@@ -65,16 +80,14 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         tvTitle.setText("领用申请");
+
+        // 请求页面参数
+        mPresenter.getParams();
     }
 
     @Override
     protected UseGoodsPresenter bindPresenter() {
         return new UseGoodsPresenter();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -91,7 +104,7 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                 finish();
                 break;
             case R.id.tv_goods_add_item: // 添加项
-                if(llGoodsList.getChildCount() >= 10){
+                if (llGoodsList.getChildCount() >= 10) {
                     ToastUtil.showToast("最多选择10种物品");
                     return;
                 }
@@ -107,8 +120,8 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                 intent.putExtra(SelectGoodsActivity.KEY_POSITION, 0);
                 startActivityForResult(intent, REQUEST_CODE_SELECT_GOODS);
                 break;
-            case R.id.tv_project: // 选择项目
-
+            case R.id.tv_project: // 选择所有参数
+                showProjectList();
                 break;
             case R.id.tv_submit:
                 submitForm();
@@ -173,10 +186,75 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
     /**
      * 提交成功
      */
-    protected void submitSuccess(){
+    protected void submitSuccess() {
         ToastUtil.showToast("申请成功");
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    /**
+     * 获取页面参数成功
+     */
+    protected void getParamsSuccess(GoodsParamsEntity goodsParamsEntity) {
+        mGoodsParamsEntity = goodsParamsEntity == null ? new GoodsParamsEntity() : goodsParamsEntity;
+
+        // 添加界面上的内容
+        List<GoodsParamsEntity.ApsBean> beans = mGoodsParamsEntity.getAps();
+        if (beans != null && beans.size() > 0) {
+            for (int i = 0; i < beans.size(); i++) {
+                GoodsParamsEntity.ApsBean bean = beans.get(i);
+                if(bean != null) {
+                    View view = LayoutInflater.from(this).inflate(R.layout.item_person, null);
+                    ImageView ivHeader = view.findViewById(R.id.iv_header);
+                    // TODO: 2018/5/10 没有添加头像信息
+
+                    TextView tvName = view.findViewById(R.id.tv_name);
+                    tvName.setText(bean.getUserName());
+                    // 审批人
+                    if (bean.getType() == 1) {
+                        llApprovalContaienr.addView(view);
+                    } else if (bean.getType() == 2) { // 抄送人
+                        llCopyContainer.addView(view);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 显示项目列表
+     */
+    private void showProjectList() {
+        //呈现选择Project
+        GoodsBottomDialogAdapter adapter = new GoodsBottomDialogAdapter(mGoodsParamsEntity.getProjectlist());
+        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
+        adapter.setOnItemClickListener(new GoodsBottomDialogAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(GoodsParamsEntity.ProjectBean bean) {
+                tvProject.setText(bean.getName());
+                tvProject.setTag(bean.getId());
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+    /**
+     * 获取底部弹窗并且弹出
+     */
+    private BottomSheetDialog getBottomSheetDialog(GoodsBottomDialogAdapter adapter) {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setCanceledOnTouchOutside(true);
+        View view = View.inflate(this, R.layout.dialog_visit_record_detail, null);
+        dialog.setContentView(view);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        return dialog;
     }
 
     /**

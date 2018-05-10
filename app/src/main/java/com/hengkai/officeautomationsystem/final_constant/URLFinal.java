@@ -14,8 +14,8 @@ public class URLFinal {
      * baseURL
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/";
-//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
-    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
+    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
+//    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
 
 
     /**
@@ -50,6 +50,10 @@ public class URLFinal {
      * 领用物品
      */
     public static final String USE_GOODS = "out/insertOutStorage";
+    /**
+     * 领用物品 参数请求
+     */
+    public static final String USE_GOODS_PARAMS = "out/insertOutPage";
     /**
      * 拜访跟进详情页面 - 获取单位列表
      */
