@@ -83,7 +83,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         setupRecyclerView();
 
         //请求网络 获取列表数据
-        mPresenter.getVisitRecordList();
+        mPresenter.getVisitRecordList(0);
     }
 
     @Override
@@ -150,17 +150,15 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                pageNum = 1;
-                // TODO: 2018/5/10 没有分页, 需要加入分页的逻辑
-                mPresenter.getVisitRecordList();
+                mPresenter.getVisitRecordList(0);
                 isLoadMore = false;
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-//                pageNum++;
-                mPresenter.getVisitRecordList();
+                VisitRecordEntity.DATABean bean = mList.get(mList.size() - 1);
+                mPresenter.getVisitRecordList(bean.id);
                 isLoadMore = true;
             }
         });

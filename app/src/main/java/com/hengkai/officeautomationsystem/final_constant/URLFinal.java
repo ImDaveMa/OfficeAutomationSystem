@@ -14,8 +14,8 @@ public class URLFinal {
      * baseURL
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/";
-    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
-//    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
+//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/";
+    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/";
 
 
     /**

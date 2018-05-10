@@ -21,8 +21,8 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
         model = new VisitRecordActivityModel();
     }
 
-    public void getVisitRecordList() {
-        model.getVisitRecordList(new Observer<VisitRecordEntity>() {
+    public void getVisitRecordList(int pageNum) {
+        model.getVisitRecordList(pageNum, new Observer<VisitRecordEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST, d);
@@ -31,7 +31,11 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
             @Override
             public void onNext(VisitRecordEntity visitRecordEntity) {
                 if (visitRecordEntity.CODE == 1) {
-                    view.getVisitRecordList(visitRecordEntity.DATA);
+                    if (visitRecordEntity.DATA.size() == 0) {
+                        ToastUtil.showToast("没有更多数据了");
+                    } else {
+                        view.getVisitRecordList(visitRecordEntity.DATA);
+                    }
                 } else if (visitRecordEntity.CODE == 0) {
                     view.showLoginDialog(view);
                 }
