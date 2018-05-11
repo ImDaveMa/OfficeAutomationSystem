@@ -108,7 +108,11 @@ public class BaseDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
         sql = "insert into tbl_menus(name, image, count, last_time, target) values('入库申请','ic_application_for_warehousing',0,0,'application_for_warehousing');";
         sqLiteDatabase.execSQL(sql);
+        sql = "insert into tbl_menus(name, image, count, last_time, target) values('入库记录','ic_application_for_warehousing_list',0,0,'application_for_warehousing_list');";
+        sqLiteDatabase.execSQL(sql);
         sql = "insert into tbl_menus(name, image, count, last_time, target) values('领用申请','ic_application_for_use',0,0,'application_for_use');";
+        sqLiteDatabase.execSQL(sql);
+        sql = "insert into tbl_menus(name, image, count, last_time, target) values('领用记录','ic_application_for_use_list',0,0,'application_for_use_list');";
         sqLiteDatabase.execSQL(sql);
         sql = "insert into tbl_menus(name, image, count, last_time, target) values('统计分析','ic_statistical_analysis',0,0,'statistical_analysis');";
         sqLiteDatabase.execSQL(sql);

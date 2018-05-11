@@ -25,7 +25,7 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
     private String[] commonNames = {"日程", "日程提醒", "通讯录", "完善个人信息", "找回密码", "问题反馈", "修改密码", "更多"};
     private String[] employeeNames = {"日报", "周报", "员工档案库", "请假申请单", "补卡", "外出", "报销", "分配工作", "我的工作", "分配开发", "我的开发", "更多"};
     private String[] projectNames = {"单位库", "新增单位", "我的单位", "联系人库", "项目库", "新增项目", "拜访跟进记录", "方案需求", "新增方案", "合同预览", "售后续费", "更多"};
-    private String[] resourceNames = {"物品管理", "物品单位管理", "供应商管理", "采购合同管理", "合作合同管理", "入库申请", "领用申请", "统计分析"};
+    private String[] resourceNames = {"物品管理", "物品单位管理", "供应商管理", "采购合同管理", "合作合同管理", "入库申请", "入库记录", "领用申请", "领用记录", "统计分析"};
 
     private int[] commonImageResources = {R.drawable.ic_schedule, R.drawable.ic_schedule_reminding,
             R.drawable.ic_contacts, R.drawable.ic_improve_personal_information,
@@ -45,8 +45,8 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
             R.drawable.ic_aftermarket_renewal, R.drawable.ic_more_project};
     private int[] resourceImageResources = {R.drawable.ic_management_of_goods, R.drawable.ic_item_management_of_goods,
             R.drawable.ic_supplier_management, R.drawable.ic_procurement_contract_management,
-            R.drawable.ic_cooperation_contract_management, R.drawable.ic_application_for_warehousing,
-            R.drawable.ic_application_for_use, R.drawable.ic_statistical_analysis};
+            R.drawable.ic_cooperation_contract_management, R.drawable.ic_application_for_warehousing,R.drawable.ic_application_for_warehousing_list,
+            R.drawable.ic_application_for_use, R.drawable.ic_application_for_use_list, R.drawable.ic_statistical_analysis};
 
     public WorkPlatformFragmentGridLayoutAdapter(Activity activity, int itemPosition) {
         this.activity = activity;
@@ -102,13 +102,13 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
     public int getItemCount() {
         switch (itemPosition) {
             case 0://通用
-                return 8;
+                return commonNames.length;
             case 1://员工
-                return 12;
+                return employeeNames.length;
             case 2://项目
-                return 12;
+                return projectNames.length;
             case 3://物品
-                return 8;
+                return resourceNames.length;
 
             default:
                 return 0;
