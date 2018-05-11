@@ -1,6 +1,7 @@
-package com.hengkai.officeautomationsystem.function.goods_unit;
+package com.hengkai.officeautomationsystem.function.management_of_goods;
 
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -70,6 +71,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
     private void setupRecyclerView() {
         //初始化数据列表
         unitList = new ArrayList<>();
+        swipeTarget.setLayoutManager(new LinearLayoutManager(this));
         gUnitAdapter = new GoodsUnitAdapter(this, unitList);
         swipeTarget.setAdapter(gUnitAdapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));

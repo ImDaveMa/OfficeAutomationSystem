@@ -1,10 +1,7 @@
-package com.hengkai.officeautomationsystem.function.goods_unit;
+package com.hengkai.officeautomationsystem.function.management_of_goods;
 
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
-import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsModel;
-import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;

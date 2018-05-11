@@ -1,8 +1,7 @@
-package com.hengkai.officeautomationsystem.function.goods_unit;
+package com.hengkai.officeautomationsystem.function.management_of_goods;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
 
 import java.util.List;
@@ -27,7 +25,6 @@ public class GoodsUnitAdapter extends RecyclerView.Adapter<GoodsUnitAdapter.View
     private OnItemClickListener mOnItemClickListener;
 
     public GoodsUnitAdapter(OnItemClickListener onItemClickListener, List<GoodsUnitEntity.UnitBean> unitList) {
-        super();
         mUnitList = unitList;
         mOnItemClickListener = onItemClickListener;
     }

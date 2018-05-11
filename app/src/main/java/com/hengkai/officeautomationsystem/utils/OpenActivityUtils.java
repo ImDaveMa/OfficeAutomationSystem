@@ -1,7 +1,6 @@
 package com.hengkai.officeautomationsystem.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
@@ -9,7 +8,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
-import com.hengkai.officeautomationsystem.function.goods_unit.GoodsUnitActivity;
+import com.hengkai.officeautomationsystem.function.management_of_goods.GoodsUnitActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.UseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
