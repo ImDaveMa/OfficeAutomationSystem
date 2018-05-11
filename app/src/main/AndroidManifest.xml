@@ -74,6 +74,7 @@
         <activity android:name=".function.management_of_goods.UseGoodsActivity" />
         <activity android:name=".function.management_of_goods.SelectGoodsActivity" />
         <activity android:name=".function.management_of_goods.GoodsUnitActivity" />
+        <activity android:name=".function.management_of_goods.GoodsSupplierActivity" />
     </application>
 
 </manifest>

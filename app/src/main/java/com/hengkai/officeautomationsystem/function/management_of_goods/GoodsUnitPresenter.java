@@ -27,15 +27,14 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
             }
 
             @Override
-            public void onNext(GoodsUnitEntity goodsEntity) {
+            public void onNext(GoodsUnitEntity unitEntity) {
                 view.stopRefreshing();
-                if (goodsEntity.getCODE() == 1) {
-                    List<GoodsUnitEntity.UnitBean> list = goodsEntity.getList();
+                if (unitEntity.getCODE() == 1) {
+                    List<GoodsUnitEntity.UnitBean> list = unitEntity.getList();
                     view.prepareData(list);
-                } else if (goodsEntity.getCODE() == -2) {
-                    List<GoodsUnitEntity.UnitBean> list = goodsEntity.getList();
-                    view.prepareData(list);
-                } else if (goodsEntity.getCODE() == 0) {//TOKEN失效
+                } else if (unitEntity.getCODE() == -2) {
+                    // 返回的数据是空，所以不能处理列表
+                } else if (unitEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
                 }
             }

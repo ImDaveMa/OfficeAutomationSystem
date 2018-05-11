@@ -34,8 +34,7 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
                     view.prepareData(list);
                     view.initListChildClickListener(list);
                 } else if (goodsEntity.getCODE() == -2) {
-                    List<GoodsEntity.GoodsBean> list = goodsEntity.getList();
-                    view.prepareData(list);
+                    // 返回的数据是空，所以不能处理列表
                 } else if (goodsEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
                 }

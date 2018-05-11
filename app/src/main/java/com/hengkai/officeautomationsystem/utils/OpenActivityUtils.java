@@ -8,6 +8,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
+import com.hengkai.officeautomationsystem.function.management_of_goods.GoodsSupplierActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.GoodsUnitActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.UseGoodsActivity;
@@ -63,6 +64,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_item_management_of_goods: //物品单位列表
                         onClickMethod(activity, GoodsUnitActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_supplier_management: //物品单位列表
+                        onClickMethod(activity, GoodsSupplierActivity.class, dbId);
                         break;
                     default:
                         break;

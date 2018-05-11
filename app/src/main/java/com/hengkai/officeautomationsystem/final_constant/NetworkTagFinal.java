@@ -44,6 +44,10 @@ public class NetworkTagFinal {
      * GOODS_UNIT_ACTIVITY
      */
     public static final String GOODS_UNIT_ACTIVITY_LIST = "GOODS_UNIT_ACTIVITY_LIST";
+    /**
+     * GOODS_SUPPLIER_ACTIVITY
+     */
+    public static final String GOODS_SUPPLIER_ACTIVITY_LIST = "GOODS_SUPPLIER_ACTIVITY_LIST";
 
 
 }
