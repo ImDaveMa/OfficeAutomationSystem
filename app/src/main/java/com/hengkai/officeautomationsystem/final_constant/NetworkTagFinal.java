@@ -40,6 +40,10 @@ public class NetworkTagFinal {
      * USE_GOODS_ACTIVITY
      */
     public static final String USE_GOODS_ACTIVITY_SAVE_GOODS = "USE_GOODS_ACTIVITY_SAVE_GOODS";
+    /**
+     * GOODS_UNIT_ACTIVITY
+     */
+    public static final String GOODS_UNIT_ACTIVITY_LIST = "GOODS_UNIT_ACTIVITY_LIST";
 
 
 }

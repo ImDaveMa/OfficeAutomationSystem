@@ -39,7 +39,7 @@ public class UseGoodsModel {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("USERID", SPUtils.getInt(UserInfo.USER_ID.name(), 0) + "");
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         if (projectId > 0) {
             params.put("PRODUCTID", projectId + ""); // 项目ID
         }

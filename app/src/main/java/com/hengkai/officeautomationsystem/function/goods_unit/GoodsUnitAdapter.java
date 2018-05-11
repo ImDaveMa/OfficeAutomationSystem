@@ -1,7 +1,8 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_unit;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
 
 import java.util.List;
 
@@ -19,51 +21,45 @@ import butterknife.ButterKnife;
 /**
  * Created by Harry on 2018/4/28.
  */
-public class SelectGoodsAdapter extends RecyclerView.Adapter<SelectGoodsAdapter.ViewHolder> {
+public class GoodsUnitAdapter extends RecyclerView.Adapter<GoodsUnitAdapter.ViewHolder> {
 
-    private List<GoodsEntity.GoodsBean> goodsList;
+    private List<GoodsUnitEntity.UnitBean> mUnitList;
     private OnItemClickListener mOnItemClickListener;
 
-    public SelectGoodsAdapter(OnItemClickListener onItemClickListener, List<GoodsEntity.GoodsBean> goodsList) {
+    public GoodsUnitAdapter(OnItemClickListener onItemClickListener, List<GoodsUnitEntity.UnitBean> unitList) {
         super();
-        this.goodsList = goodsList;
+        mUnitList = unitList;
         mOnItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_goods, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_name, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final GoodsEntity.GoodsBean bean = goodsList.get(position);
+        final GoodsUnitEntity.UnitBean bean = mUnitList.get(position);
         holder.tvName.setText(bean.getName());
-        holder.tvPrice.setText(bean.getCost() + "元");
-        holder.tvNum.setText(String.format("(库存%d%s)", bean.getNum(),bean.getUnit()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.onItemClick(holder.itemView, bean, holder.getAdapterPosition());
+                mOnItemClickListener.onItemClick(v, bean, holder.getAdapterPosition());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return goodsList.size();
+        return mUnitList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_name)
         TextView tvName;
-        @BindView(R.id.tv_price)
-        TextView tvPrice;
-        @BindView(R.id.tv_num)
-        TextView tvNum;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -301,8 +301,9 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                     int position = data.getExtras().getInt(SelectGoodsActivity.KEY_POSITION);
                     String name = data.getExtras().getString(SelectGoodsActivity.KEY_NAME);
                     int id = data.getExtras().getInt(SelectGoodsActivity.KEY_ID);
-                    int price = data.getExtras().getInt(SelectGoodsActivity.KEY_PRICE);
+                    double price = data.getExtras().getInt(SelectGoodsActivity.KEY_PRICE);
                     int num = data.getExtras().getInt(SelectGoodsActivity.KEY_NUM);
+                    String unit = data.getExtras().getString(SelectGoodsActivity.KEY_UNIT);
 
                     // 判断选择并且合并
                     for (int i = 0; i < llGoodsList.getChildCount(); i++) {
@@ -324,6 +325,8 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                     EditText etNum = parentView.findViewById(R.id.et_goods_num);
                     // 数量Tag 保存单价
                     etNum.setTag(price);
+                    // 显示库存
+                    etNum.setHint(String.format("库存数：%d%s", num, unit));
                     // 删除Tag 保存库存
                     TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
                     tvDelete.setTag(num);

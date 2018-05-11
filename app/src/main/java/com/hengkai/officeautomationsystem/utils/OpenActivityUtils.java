@@ -9,6 +9,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
+import com.hengkai.officeautomationsystem.function.goods_unit.GoodsUnitActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.UseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
@@ -60,6 +61,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_application_for_use: //拜访跟进
                         onClickMethod(activity, UseGoodsActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_item_management_of_goods: //物品单位列表
+                        onClickMethod(activity, GoodsUnitActivity.class, dbId);
                         break;
                     default:
                         break;

@@ -36,6 +36,7 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
     public static final String KEY_ID = "KEY_ID";
     public static final String KEY_PRICE = "KEY_PRICE";
     public static final String KEY_NUM = "KEY_NUM";
+    public static final String KEY_UNIT = "KEY_UNIT";
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -175,6 +176,7 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
         intent.putExtra(KEY_ID, bean.getId());
         intent.putExtra(KEY_PRICE, bean.getCost());
         intent.putExtra(KEY_NUM, bean.getNum());
+        intent.putExtra(KEY_UNIT, bean.getUnit());
         intent.putExtra(KEY_POSITION, listPosition);
 
         // 返回成功并关闭窗口
