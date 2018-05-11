@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.function.visit_record.detail;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -123,6 +124,11 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
      */
     private int currentID = -1;
 
+    /**
+     * 判断当前是开启状态还是结束状态
+     */
+    private boolean isStart;
+
     @Override
     protected int setupView() {
         return R.layout.activity_visit_record_detail;
@@ -236,37 +242,15 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 }
                 break;
             case R.id.btn_start:    //开始
+                isStart = true;
                 easyPermission();
                 break;
             case R.id.btn_end:      //结束
+                isStart = false;
                 mLocationClient.start();
-                if (locationLatitude == 0 || locationLongitude == 0 || TextUtils.isEmpty(locationAddress)) {
-                    ToastUtil.showToast("获取地址失败, 请重新点击开始");
-                    return;
-                }
-
-                verificationTextView();
-
-                Map<String, String> params = new HashMap<>();
-                params.put("ID", String.valueOf(currentID));
-                params.put("typeYM", "end");
-                params.put("companyId", String.valueOf(unitID));
-                params.put("type", String.valueOf(visitTypeID));
-                if (projectID != -1) {
-                    params.put("projectId", String.valueOf(projectID));
-                }
-                params.put("contactsId", String.valueOf(customerID));
-                params.put("department", tvVisitDepartment.getText().toString().trim());
-                params.put("endLongitude", String.valueOf(locationLongitude));
-                params.put("endLatitude", String.valueOf(locationLatitude));
-                params.put("address", locationAddress);
-                params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
-
-                showDialog();
-                mPresenter.toEnd(params);
                 break;
             case R.id.btn_commit:   //提交
-                params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("ID", String.valueOf(currentID));
                 params.put("typeYM", "approval");
                 params.put("companyId", String.valueOf(unitID));
@@ -282,6 +266,36 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 mPresenter.toSaveOrCommit(true, params);
                 break;
         }
+    }
+
+    /**
+     * 拜访结束是点击 执行这个方法
+     */
+    private void toEndVisit() {
+        if (locationLatitude == 0 || locationLongitude == 0 || TextUtils.isEmpty(locationAddress)) {
+            ToastUtil.showToast("获取地址失败, 请重新点击开始");
+            return;
+        }
+
+        verificationTextView();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("ID", String.valueOf(currentID));
+        params.put("typeYM", "end");
+        params.put("companyId", String.valueOf(unitID));
+        params.put("type", String.valueOf(visitTypeID));
+        if (projectID != -1) {
+            params.put("projectId", String.valueOf(projectID));
+        }
+        params.put("contactsId", String.valueOf(customerID));
+        params.put("department", tvVisitDepartment.getText().toString().trim());
+        params.put("endLongitude", String.valueOf(locationLongitude));
+        params.put("endLatitude", String.valueOf(locationLatitude));
+        params.put("address", locationAddress);
+        params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+        params.put("summary", etVisitSummary.getText().toString().trim());
+
+        mPresenter.toEnd(params);
     }
 
 
@@ -339,6 +353,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             params.put("startLatitude", String.valueOf(locationLatitude));
             params.put("address", locationAddress);
             params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+            params.put("summary", etVisitSummary.getText().toString().trim());
 
             showDialog();
             mPresenter.toStartCurrentPageOnNewAdd(params);
@@ -362,6 +377,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             params.put("startLatitude", String.valueOf(locationLatitude));
             params.put("address", locationAddress);
             params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+            params.put("summary", etVisitSummary.getText().toString().trim());
 
             showDialog();
             mPresenter.toStart(params);
@@ -592,6 +608,40 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         option.setIsNeedAddress(true);
     }
 
+    public class MyLocationListener extends BDAbstractLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取经纬度相关（常用）的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
+
+            //获取纬度信息
+            locationLatitude = location.getLatitude();
+            //获取经度信息
+            locationLongitude = location.getLongitude();
+            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
+
+            String coorType = location.getCoorType();
+            //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
+
+            int errorCode = location.getLocType();
+            //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
+
+            locationAddress = location.getAddrStr();//获取详细地址
+            Log.i("666", "经度" + locationLongitude);
+            Log.i("666", "纬度" + locationLatitude);
+            Log.i("666", "详细地址" + locationAddress);
+
+            if (isStart) {
+                toStartVisit();
+            } else {
+                toEndVisit();
+            }
+
+            mLocationClient.stop();//定位获得到结果后停止定位
+        }
+    }
+
     /**
      * 通过列表进入当前页面, 并传值给各个控件
      */
@@ -651,36 +701,6 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         llProject.setEnabled(false);
     }
 
-    public class MyLocationListener extends BDAbstractLocationListener {
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
-            //以下只列举部分获取经纬度相关（常用）的结果信息
-            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
-
-            //获取纬度信息
-            locationLatitude = location.getLatitude();
-            //获取经度信息
-            locationLongitude = location.getLongitude();
-            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
-
-            String coorType = location.getCoorType();
-            //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
-
-            int errorCode = location.getLocType();
-            //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
-
-            locationAddress = location.getAddrStr();//获取详细地址
-            Log.i("666", "经度" + locationLongitude);
-            Log.i("666", "纬度" + locationLatitude);
-            Log.i("666", "详细地址" + locationAddress);
-
-            toStartVisit();
-
-            mLocationClient.stop();//定位获得到结果后停止定位
-        }
-    }
-
     /**
      * 运行时权限
      */
@@ -692,12 +712,11 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         if (Build.VERSION.SDK_INT >= 23) {
             if (EasyPermissions.hasPermissions(this, permissionList)) {
                 mLocationClient.start();
-                showDialog();
             } else {
                 EasyPermissions.requestPermissions(this, "需要手机定位相关权限", 1001, permissionList);
             }
         } else {
-            toStartVisit();
+            mLocationClient.start();
         }
     }
 
@@ -720,6 +739,16 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            //拒绝授权后，从系统设置了授权后，返回APP进行相应的操作
+            mLocationClient.start();
+        }
+
     }
 
     @Override

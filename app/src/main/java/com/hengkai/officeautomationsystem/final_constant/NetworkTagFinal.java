@@ -18,6 +18,7 @@ public class NetworkTagFinal {
      * UnitLibraryActivity
      */
     public static final String UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST = "UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST";
+    public static final String CONTACTS_LIBRARY_ACTIVITY_GET_CONTACTS_LIST = "CONTACTS_LIBRARY_ACTIVITY_GET_CONTACTS_LIST";
     /**
      * VisitRecordActivity
      */

@@ -32,6 +32,10 @@ public class URLFinal {
      * 获取单位库列表
      */
     public static final String GET_UNIT_LIST = "mobile/conAcom/comList";
+    /**
+     * 项目 - 联系人库列表
+     */
+    public static final String GET_CONTACTS_LIBRARY_LIST = "mobile/conAcom/conList";
 
     /**
      * 获取拜访跟进列表
