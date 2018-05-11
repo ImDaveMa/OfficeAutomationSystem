@@ -21,8 +21,41 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
         model = new VisitRecordActivityModel();
     }
 
-    public void getVisitRecordList(int pageNum) {
-        model.getVisitRecordList(pageNum, new Observer<VisitRecordEntity>() {
+    public void getVisitRecordList(String userID, int pageNum) {
+        model.getVisitRecordList(userID, pageNum, new Observer<VisitRecordEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST, d);
+            }
+
+            @Override
+            public void onNext(VisitRecordEntity visitRecordEntity) {
+                if (visitRecordEntity.CODE == 1) {
+                    if (visitRecordEntity.DATA.size() == 0) {
+                        ToastUtil.showToast("没有更多数据了");
+                    } else {
+                        view.getVisitRecordList(visitRecordEntity.DATA);
+                    }
+                } else if (visitRecordEntity.CODE == 0) {
+                    view.showLoginDialog(view);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtil.showToast("请求网络失败");
+                view.stopRefreshing();
+            }
+
+            @Override
+            public void onComplete() {
+                view.stopRefreshing();
+            }
+        });
+    }
+
+    public void getVisitRecordListByDay(int day, String userID, int pageNum) {
+        model.getVisitRecordListByDay(day, userID, pageNum, new Observer<VisitRecordEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST, d);

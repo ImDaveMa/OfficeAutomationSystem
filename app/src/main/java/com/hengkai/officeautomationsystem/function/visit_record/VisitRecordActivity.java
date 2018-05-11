@@ -22,8 +22,10 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
@@ -67,6 +69,19 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
      */
     private int position;
 
+    /**
+     * 判断当前列表状态 1. 全部天数, 2. 1天内, 3. 7天内, 4. 15天内, 5. 查看自己, 6. 查看全部
+     */
+    private int listStatus = -10;
+    /**
+     * 是否查看自己
+     */
+    private boolean isMySelf = false;
+    /**
+     * 记录查看的是哪一天 1. 全部天数, 2. 1天内, 3. 7天内, 4. 15天内
+     */
+    private int whichDay = -1;
+
     @Override
     protected int setupView() {
         return R.layout.activity_visit_record;
@@ -83,7 +98,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         setupRecyclerView();
 
         //请求网络 获取列表数据
-        mPresenter.getVisitRecordList(0);
+        mPresenter.getVisitRecordList(String.valueOf(0), 0);
     }
 
     @Override
@@ -150,7 +165,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getVisitRecordList(0);
+                mPresenter.getVisitRecordList(String.valueOf(0), 0);
                 isLoadMore = false;
             }
         });
@@ -158,7 +173,67 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
             @Override
             public void onLoadMore() {
                 VisitRecordEntity.DATABean bean = mList.get(mList.size() - 1);
-                mPresenter.getVisitRecordList(bean.id);
+                String userID = SPUtils.getString(UserInfo.USER_ID.name(), "");
+                switch (listStatus) {
+                    case 1:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordList(userID, bean.id);
+                        } else {
+                            mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                        }
+                        break;
+                    case 2:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordListByDay(1, userID, bean.id);
+                        } else {
+                            mPresenter.getVisitRecordListByDay(1, String.valueOf(0), bean.id);
+                        }
+                        break;
+                    case 3:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordListByDay(7, userID, bean.id);
+                        } else {
+                            mPresenter.getVisitRecordListByDay(7, String.valueOf(0), bean.id);
+                        }
+                        break;
+                    case 4:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordListByDay(15, userID, bean.id);
+                        } else {
+                            mPresenter.getVisitRecordListByDay(15, String.valueOf(0), bean.id);
+                        }
+                        break;
+                    case 5:
+                        if (whichDay == 1) {
+                            mPresenter.getVisitRecordList(userID, bean.id);
+                        } else if (whichDay == 2) {
+                            mPresenter.getVisitRecordListByDay(1, userID, bean.id);
+                        } else if (whichDay == 3) {
+                            mPresenter.getVisitRecordListByDay(7, userID, bean.id);
+                        } else if (whichDay == 4) {
+                            mPresenter.getVisitRecordListByDay(15, userID, bean.id);
+                        } else {
+                            mPresenter.getVisitRecordList(userID, bean.id);
+                        }
+                        break;
+                    case 6:
+                        if (whichDay == 1) {
+                            mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                        } else if (whichDay == 2) {
+                            mPresenter.getVisitRecordListByDay(1, String.valueOf(0), bean.id);
+                        } else if (whichDay == 3) {
+                            mPresenter.getVisitRecordListByDay(7, String.valueOf(0), bean.id);
+                        } else if (whichDay == 4) {
+                            mPresenter.getVisitRecordListByDay(15, String.valueOf(0), bean.id);
+                        } else {
+                            mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                        }
+                        break;
+
+                    default:
+                        mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                        break;
+                }
                 isLoadMore = true;
             }
         });
@@ -166,6 +241,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
 
     /**
      * 跳转到详情页面
+     *
      * @param extra 需要携带的标识
      */
     private void goToDetailPage(String extra) {
@@ -210,8 +286,10 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
      */
     private void setupPopWindow() {
         View popView = View.inflate(this, R.layout.view_visit_record_pop_window, null);
+
+
         PopupWindow popupWindow = new PopupWindow(popView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        initPopupWindowListener(popView, popupWindow);
+        setupChildView(popView, popupWindow);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             popupWindow.setElevation(8);//设置Z轴的高度
@@ -224,7 +302,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         popupWindow.setFocusable(true);
         //设置可以触摸弹出框以外的区域
         popupWindow.setOutsideTouchable(true);
-        //更新popupwindow的状态
+        //更新popupWindow的状态
         popupWindow.update();
         //获取状态栏以及标题栏的高度
         TypedArray actionbarSizeTypedArray = obtainStyledAttributes(new int[]{android.R.attr.actionBarSize});
@@ -235,36 +313,106 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
     }
 
     /**
-     * 初始化PopupWindow内部控件的监听事件
+     * PopupWindow子view相关的配置
      */
-    private void initPopupWindowListener(View view, final PopupWindow popupWindow) {
-        final TextView tv_pop_one_day = view.findViewById(R.id.tv_pop_one_day);
-        final TextView tv_pop_seven_day = view.findViewById(R.id.tv_pop_seven_day);
-        final TextView tv_pop_Fifteen_day = view.findViewById(R.id.tv_pop_Fifteen_day);
+    private void setupChildView(View view, final PopupWindow popupWindow) {
+        TextView tv_pop_all_day = view.findViewById(R.id.tv_pop_all_day);
+        TextView tv_pop_one_day = view.findViewById(R.id.tv_pop_one_day);
+        TextView tv_pop_seven_day = view.findViewById(R.id.tv_pop_seven_day);
+        TextView tv_pop_Fifteen_day = view.findViewById(R.id.tv_pop_Fifteen_day);
+        TextView tv_pop_current = view.findViewById(R.id.tv_pop_current);
+        TextView tv_pop_all = view.findViewById(R.id.tv_pop_all);
+        final String userID = SPUtils.getString(UserInfo.USER_ID.name(), "");
 
+        tv_pop_all_day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listStatus = 1;
+                whichDay = 1;
+                if (isMySelf) {
+                    mPresenter.getVisitRecordList(userID, 0);
+                } else {
+                    mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                }
+                popupWindow.dismiss();
+            }
+        });
         tv_pop_one_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = tv_pop_one_day.getText().toString().trim();
-                ToastUtil.showToast(str);
+                listStatus = 2;
+                whichDay = 2;
+                if (isMySelf) {
+                    mPresenter.getVisitRecordListByDay(1, userID, 0);
+                } else {
+                    mPresenter.getVisitRecordListByDay(1, String.valueOf(0), 0);
+                }
                 popupWindow.dismiss();
             }
         });
-
         tv_pop_seven_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = tv_pop_seven_day.getText().toString().trim();
-                ToastUtil.showToast(str);
+                listStatus = 3;
+                whichDay = 3;
+                if (isMySelf) {
+                    mPresenter.getVisitRecordListByDay(7, userID, 0);
+                } else {
+                    mPresenter.getVisitRecordListByDay(7, String.valueOf(0), 0);
+                }
                 popupWindow.dismiss();
             }
         });
-
         tv_pop_Fifteen_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = tv_pop_Fifteen_day.getText().toString().trim();
-                ToastUtil.showToast(str);
+                listStatus = 4;
+                whichDay = 4;
+                if (isMySelf) {
+                    mPresenter.getVisitRecordListByDay(15, userID, 0);
+                } else {
+                    mPresenter.getVisitRecordListByDay(15, String.valueOf(0), 0);
+                }
+                popupWindow.dismiss();
+            }
+        });
+        tv_pop_current.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listStatus = 5;
+                isMySelf = true;
+
+                if (whichDay == 1) {
+                    mPresenter.getVisitRecordList(userID, 0);
+                } else if (whichDay == 2) {
+                    mPresenter.getVisitRecordListByDay(1, userID, 0);
+                } else if (whichDay == 3) {
+                    mPresenter.getVisitRecordListByDay(7, userID, 0);
+                } else if (whichDay == 4) {
+                    mPresenter.getVisitRecordListByDay(15, userID, 0);
+                } else {
+                    mPresenter.getVisitRecordList(userID, 0);
+                }
+                popupWindow.dismiss();
+            }
+        });
+        tv_pop_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listStatus = 6;
+                isMySelf = false;
+
+                if (whichDay == 1) {
+                    mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                } else if (whichDay == 2) {
+                    mPresenter.getVisitRecordListByDay(1, String.valueOf(0), 0);
+                } else if (whichDay == 3) {
+                    mPresenter.getVisitRecordListByDay(7, String.valueOf(0), 0);
+                } else if (whichDay == 4) {
+                    mPresenter.getVisitRecordListByDay(15, String.valueOf(0), 0);
+                } else {
+                    mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                }
                 popupWindow.dismiss();
             }
         });

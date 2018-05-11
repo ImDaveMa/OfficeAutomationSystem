@@ -24,7 +24,7 @@ public class WorkPlatformFragmentGridLayoutAdapter extends RecyclerView.Adapter<
     private Activity activity;
     private String[] commonNames = {"日程", "日程提醒", "通讯录", "完善个人信息", "找回密码", "问题反馈", "修改密码", "更多"};
     private String[] employeeNames = {"日报", "周报", "员工档案库", "请假申请单", "补卡", "外出", "报销", "分配工作", "我的工作", "分配开发", "我的开发", "更多"};
-    private String[] projectNames = {"单位库", "新增单位", "单位列表", "联系人库", "项目库", "新增项目", "拜访跟进记录", "方案需求", "新增方案", "合同预览", "售后续费", "更多"};
+    private String[] projectNames = {"单位库", "新增单位", "我的单位", "联系人库", "项目库", "新增项目", "拜访跟进记录", "方案需求", "新增方案", "合同预览", "售后续费", "更多"};
     private String[] resourceNames = {"物品管理", "物品单位管理", "供应商管理", "采购合同管理", "合作合同管理", "入库申请", "领用申请", "统计分析"};
 
     private int[] commonImageResources = {R.drawable.ic_schedule, R.drawable.ic_schedule_reminding,
