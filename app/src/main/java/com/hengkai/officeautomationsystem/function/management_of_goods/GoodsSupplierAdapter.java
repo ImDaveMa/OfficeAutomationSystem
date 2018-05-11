@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.GoodsSupplierEntity;
-import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class GoodsSupplierAdapter extends RecyclerView.Adapter<GoodsSupplierAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_name_type, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_supplier_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -42,6 +41,7 @@ public class GoodsSupplierAdapter extends RecyclerView.Adapter<GoodsSupplierAdap
         final GoodsSupplierEntity.SupplierBean bean = mUnitList.get(position);
         holder.tvName.setText(bean.getName());
         holder.tvType.setText(bean.getSupplierTypeName());
+        holder.tvAddress.setText(String.format("供应商地址：%s", bean.getCity()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +61,8 @@ public class GoodsSupplierAdapter extends RecyclerView.Adapter<GoodsSupplierAdap
         TextView tvName;
         @BindView(R.id.tv_type)
         TextView tvType;
+        @BindView(R.id.tv_address)
+        TextView tvAddress;
 
         public ViewHolder(View itemView) {
             super(itemView);

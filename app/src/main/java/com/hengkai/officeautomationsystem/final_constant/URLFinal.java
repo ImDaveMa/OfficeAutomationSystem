@@ -67,6 +67,10 @@ public class URLFinal {
      */
     public static final String GOODS_SUPPLIER_LIST = "msupplier/toSupplierList";
     /**
+     * 获取物品入库列表
+     */
+    public static final String GET_GOODS_IN_LIST = "mIn/mInList";
+    /**
      * 拜访跟进详情页面 - 获取单位列表
      */
     public static final String GET_VISIT_UNIT_LIST = "mobile/visit/companyList";
