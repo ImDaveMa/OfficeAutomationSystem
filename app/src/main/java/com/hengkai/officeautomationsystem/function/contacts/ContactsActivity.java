@@ -34,7 +34,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Harry on 2018/4/26.
- * 联系人列表
+ * 通讯录
  */
 public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> implements EasyPermissions.PermissionCallbacks {
 
