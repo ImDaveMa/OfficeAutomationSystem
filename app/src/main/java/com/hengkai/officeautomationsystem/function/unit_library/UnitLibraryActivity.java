@@ -45,7 +45,6 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
 
     private List<UnitLibraryEntity.DATABean> mList;
     private boolean isLoadMore = false;
-    private int pageNum = 1;
     private UnitLibraryActivityAdapter adapter;
 
     @Override
@@ -64,7 +63,7 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
         initTitle();
         setupRecyclerView();
 
-        mPresenter.getUnitList();
+        mPresenter.getUnitList(0);
 
     }
 
@@ -102,16 +101,14 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                pageNum = 1;
-                mPresenter.getUnitList();
+                mPresenter.getUnitList(0);
                 isLoadMore = false;
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                pageNum++;
-                mPresenter.getUnitList();
+                mPresenter.getUnitList(mList.get(mList.size() - 1).id);
                 isLoadMore = true;
             }
         });

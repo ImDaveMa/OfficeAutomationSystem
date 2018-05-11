@@ -31,7 +31,7 @@ public class URLFinal {
     /**
      * 获取单位库列表
      */
-    public static final String GET_UNIT_LIST = "mobile/visit/companyList";
+    public static final String GET_UNIT_LIST = "mobile/conAcom/comList";
 
     /**
      * 获取拜访跟进列表

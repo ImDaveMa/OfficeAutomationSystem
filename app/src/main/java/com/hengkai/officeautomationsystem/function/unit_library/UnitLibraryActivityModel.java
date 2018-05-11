@@ -1,8 +1,10 @@
 package com.hengkai.officeautomationsystem.function.unit_library;
 
 import com.hengkai.officeautomationsystem.base.model.BaseModel;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
 import com.hengkai.officeautomationsystem.network.service.UnitLibraryService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
@@ -27,11 +29,16 @@ public class UnitLibraryActivityModel extends BaseModel {
         service = retrofit.create(UnitLibraryService.class);
     }
 
-    public void getUnitList(Observer observer) {
+    /**
+     * @param ID 用于分页, 查询次ID之后的数据, 0为默认
+     */
+    public void getUnitList(int ID, Observer<UnitLibraryEntity> observer) {
 
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("pageSize", String.valueOf(CommonFinal.PAGE_SIZE));
+        params.put("ID", String.valueOf(ID));
 
         service.getUnitList(URLFinal.GET_UNIT_LIST, params)
                 .subscribeOn(Schedulers.io())

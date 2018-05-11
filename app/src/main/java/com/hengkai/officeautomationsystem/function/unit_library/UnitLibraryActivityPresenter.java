@@ -20,8 +20,8 @@ public class UnitLibraryActivityPresenter extends BasePresenter<UnitLibraryActiv
         model = new UnitLibraryActivityModel();
     }
 
-    public void getUnitList() {
-        model.getUnitList(new Observer<UnitLibraryEntity>() {
+    public void getUnitList(int ID) {
+        model.getUnitList(ID, new Observer<UnitLibraryEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST, d);
