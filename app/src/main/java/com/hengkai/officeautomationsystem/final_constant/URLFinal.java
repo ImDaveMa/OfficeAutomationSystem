@@ -127,6 +127,10 @@ public class URLFinal {
      */
     public static final String NEW_UNIT_COMMIT = "conAcom/ar";
     /**
+     * 项目列表
+     */
+    public static final String GET_PROJECT_LIST = "mproject/toList";
+    /**
      * 我的单位
      */
     public static final String MY_UNIT_GET_UNIT_LIST = "conAcom/userList";

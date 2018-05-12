@@ -71,6 +71,10 @@ public class NetworkTagFinal {
      * ManagementUseGoodsActivity
      */
     public static final String MANAGEMENT_USE_GOODS_ACTIVITY_GET_USE_GOODS_LIST = "MANAGEMENT_USE_GOODS_ACTIVITY_GET_USE_GOODS_LIST";
+    /**
+     * ProjectLibraryActivity
+     */
+    public static final String PROJECT_LIBRARY_ACTIVITY_GET_PROJECT_LIST = "PROJECT_LIBRARY_ACTIVITY_GET_PROJECT_LIST";
 
 
 }

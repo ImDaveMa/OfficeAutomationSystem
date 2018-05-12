@@ -18,6 +18,7 @@ import com.hengkai.officeautomationsystem.function.management_of_goods.Managemen
 import com.hengkai.officeautomationsystem.function.management_of_goods.UseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.my_unit.MyUnitActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
+import com.hengkai.officeautomationsystem.function.project.ProjectLibraryActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.VisitRecordActivity;
@@ -91,6 +92,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_application_for_warehousing_list: // 入库列表
                         onClickMethod(activity, ManagementGoodsInActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_project_library: // 项目库
+                        onClickMethod(activity, ProjectLibraryActivity.class, dbId);
                         break;
                     case R.drawable.ic_unit_list: // 我的单位
                         onClickMethod(activity, MyUnitActivity.class, dbId);

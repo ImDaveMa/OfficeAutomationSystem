@@ -170,7 +170,8 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
             TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
             int num = tvDelete.getTag() == null ? 0 : Integer.parseInt(tvDelete.getTag().toString());
             if (inputNum > num) {
-                ToastUtil.showToast(String.format("物品%s库存不足，剩余%d", tvName.getText(), num));
+                String unit = tvName.getTag(R.id.tv_goods_name) + "";
+                ToastUtil.showToast(String.format("物品%s库存不足，剩余%d%s", tvName.getText(), num, unit));
                 etNum.requestFocus();
                 return;
             }
@@ -317,16 +318,25 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                     // 获取对象并保存参数
                     View parentView = llGoodsList.getChildAt(position);
                     TextView tvGoodsName = parentView.findViewById(R.id.tv_goods_name);
+                    EditText etNum = parentView.findViewById(R.id.et_goods_num);
+                    TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
+
+                    // 如果当前项原来是有值的，那么清空原来的数量
+                    if(!TextUtils.isEmpty(tvGoodsName.getText())){
+                        etNum.setText("");
+                    }
+
+                    // 页面赋值
                     tvGoodsName.setText(name);
                     // 名称Tag 保存ID
                     tvGoodsName.setTag(id);
-                    EditText etNum = parentView.findViewById(R.id.et_goods_num);
+                    // 名称Tag Key：R.id.tv_goods_name 保存单位
+                    tvGoodsName.setTag(R.id.tv_goods_name, unit);
                     // 数量Tag 保存单价
                     etNum.setTag(price);
                     // 显示库存
                     etNum.setHint(String.format("库存数：%d%s", num, unit));
                     // 删除Tag 保存库存
-                    TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
                     tvDelete.setTag(num);
                 }
                 break;
