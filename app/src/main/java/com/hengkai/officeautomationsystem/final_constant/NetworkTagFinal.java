@@ -50,6 +50,12 @@ public class NetworkTagFinal {
      */
     public static final String GOODS_SUPPLIER_ACTIVITY_LIST = "GOODS_SUPPLIER_ACTIVITY_LIST";
     /**
+     * NewUnitActivity
+     */
+    public static final String NEW_UNIT_ACTIVITY_GET_KEYWORD_LIST = "NEW_UNIT_ACTIVITY_GET_KEYWORD_LIST";
+    public static final String NEW_UNIT_ACTIVITY_GET_TYPE_LIST = "NEW_UNIT_ACTIVITY_GET_TYPE_LIST";
+    public static final String NEW_UNIT_ACTIVITY_COMMIT = "NEW_UNIT_ACTIVITY_COMMIT";
+    /**
      * ManagementGoodsInActivity
      */
     public static final String MANAGEMENT_GOODS_IN_ACTIVITY_GET_GOODS_LIST = "MANAGEMENT_GOODS_IN_ACTIVITY_GET_GOODS_LIST";

@@ -98,4 +98,16 @@ public class URLFinal {
      * 拜访跟进详情页面 - 列表页进入点击保存, 或者提交的接口
      */
     public static final String TO_SAVE_OR_COMMIT = "mobile/visit/ps";
+    /**
+     * 新增单位 - 获取关键词列表
+     */
+    public static final String GET_KEYWORD_LIST = "mobile/conAcom/keyType";
+    /**
+     * 新增单位 - 获取类型列表
+     */
+    public static final String GET_TYPE_LIST = "mobile/conAcom/comType";
+    /**
+     * 新增单位 - 提交
+     */
+    public static final String NEW_UNIT_COMMIT = "mobile/conAcom/ar";
 }
