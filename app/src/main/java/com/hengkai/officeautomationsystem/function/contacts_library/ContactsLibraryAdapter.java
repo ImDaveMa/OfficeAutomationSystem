@@ -1,14 +1,18 @@
 package com.hengkai.officeautomationsystem.function.contacts_library;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.function.contacts_library.detail.ContactsLibraryDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsLibraryEntity;
 
 import java.util.List;
@@ -22,6 +26,7 @@ import butterknife.ButterKnife;
 public class ContactsLibraryAdapter extends RecyclerView.Adapter<ContactsLibraryAdapter.ViewHolder> {
 
     private List<ContactsLibraryEntity.DATABean> mList;
+    private Context context;
 
     public ContactsLibraryAdapter(List<ContactsLibraryEntity.DATABean> list) {
         mList = list;
@@ -30,7 +35,8 @@ public class ContactsLibraryAdapter extends RecyclerView.Adapter<ContactsLibrary
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contacts_library, parent, false);
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_contacts_library, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,6 +54,15 @@ public class ContactsLibraryAdapter extends RecyclerView.Adapter<ContactsLibrary
                 if (mListener != null) {
                     mListener.onClick(bean.phone);
                 }
+            }
+        });
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ContactsLibraryDetailActivity.class);
+                intent.putExtra("ID", bean.id);
+                context.startActivity(intent);
             }
         });
     }
@@ -69,11 +84,12 @@ public class ContactsLibraryAdapter extends RecyclerView.Adapter<ContactsLibrary
         TextView tvPhone;
         @BindView(R.id.iv_call_phone)
         ImageView ivCallPhone;
+        FrameLayout container;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
+            container = (FrameLayout) itemView;
         }
     }
 

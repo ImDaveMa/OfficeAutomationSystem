@@ -134,4 +134,8 @@ public class URLFinal {
      * 我的单位
      */
     public static final String MY_UNIT_GET_UNIT_LIST = "conAcom/userList";
+    /**
+     * 联系人库列表详情
+     */
+    public static final String GET_CONTACTS_DETAIL = "conAcom/conDetails";
 }
