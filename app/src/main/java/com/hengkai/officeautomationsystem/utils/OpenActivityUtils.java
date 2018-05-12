@@ -9,10 +9,12 @@ import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.contacts_library.ContactsLibraryActivity;
 import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
+import com.hengkai.officeautomationsystem.function.management_of_goods.GoodsInActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.GoodsSupplierActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.GoodsUnitActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementGoodsInActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementOfGoodsActivity;
+import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementUseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.management_of_goods.UseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
@@ -21,6 +23,9 @@ import com.hengkai.officeautomationsystem.function.visit_record.VisitRecordActiv
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
 import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 
+/**
+ * 菜单跳转页面公用类
+ */
 public class OpenActivityUtils {
 
     public static final int REQUEST_CODE = 100;
@@ -78,6 +83,10 @@ public class OpenActivityUtils {
                         onClickMethod(activity, NewUnitActivity.class, dbId);
                         break;
                     case R.drawable.ic_application_for_use_list: //领用列表
+                        onClickMethod(activity, ManagementUseGoodsActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_application_for_warehousing: // 入库申请
+                        onClickMethod(activity, GoodsInActivity.class, dbId);
                         break;
                     case R.drawable.ic_application_for_warehousing_list: // 入库列表
                         onClickMethod(activity, ManagementGoodsInActivity.class, dbId);

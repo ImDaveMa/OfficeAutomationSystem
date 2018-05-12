@@ -3,6 +3,7 @@ package com.hengkai.officeautomationsystem.function.management_of_goods;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.network.service.GoodsInService;
 import com.hengkai.officeautomationsystem.network.service.GoodsService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
@@ -20,35 +21,31 @@ import retrofit2.Retrofit;
  */
 public class GoodsInModel {
 
-    private final GoodsService service;
+    private final GoodsInService service;
 
     public GoodsInModel() {
         Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        service = retrofit.create(GoodsService.class);
+        service = retrofit.create(GoodsInService.class);
     }
 
     /**
-     * 保存领用申请
+     * 保存入库申请
      * @param observer
      * @param price 价格
      * @param reason 事由
      * @param details 物品详情
-     * @param projectId 项目ID（可为空）
      */
-    public void saveGoods(Observer observer, double price, String reason, String details, int projectId) {
+    public void saveGoodsIn(Observer observer, double price, String reason, String details) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
-        if (projectId > 0) {
-            params.put("PRODUCTID", projectId + ""); // 项目ID
-        }
         params.put("TOTALMONEY", price + ""); // 总价
         params.put("PURPOSE", reason + ""); // 领用原因
         params.put("OUTGOODSVO", details + ""); // 领用详情
         params.put("pageSize", CommonFinal.PAGE_SIZE + "");
 
-        service.submitUse(URLFinal.USE_GOODS, params)
+        service.submitGoodsIn(URLFinal.GOODS_IN_URL, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -64,7 +61,7 @@ public class GoodsInModel {
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         // params.put("USERID", SPUtils.getInt(UserInfo.USER_ID.name(), 0) + "");
 
-        service.getParams(URLFinal.USE_GOODS_PARAMS, params)
+        service.getParams(URLFinal.GET_GOODS_IN_PARAMS, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

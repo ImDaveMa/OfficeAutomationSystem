@@ -2,10 +2,6 @@ package com.hengkai.officeautomationsystem.function.management_of_goods;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +29,7 @@ import butterknife.OnClick;
 /**
  * 物品领用Activity
  */
-public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
+public class GoodsInActivity extends BaseActivity<GoodsInPresenter> {
 
     /**
      * 选择物品回调请求码
@@ -45,8 +41,6 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.et_goods_use_for)
-    EditText etGoodsUseFor;
     @BindView(R.id.tv_goods_name)
     TextView tvGoodsName;
     @BindView(R.id.ll_goods_list)
@@ -55,22 +49,18 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
     TextView tvGoodsAddItem;
     @BindView(R.id.et_goods_summary)
     EditText etGoodsSummary;
-    @BindView(R.id.tv_project)
-    TextView tvProject;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     @BindView(R.id.ll_approval_container)
     LinearLayout llApprovalContainer;
     @BindView(R.id.ll_copy_container)
     LinearLayout llCopyContainer;
-    @BindView(R.id.lr_project_selector)
-    RelativeLayout lrProjectSelector;
     @BindView(R.id.lr_goods_selector)
     RelativeLayout lrGoodsSelector;
 
     @Override
     protected int setupView() {
-        return R.layout.activity_use_goods;
+        return R.layout.activity_goods_in;
     }
 
     @Override
@@ -78,15 +68,15 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
         ButterKnife.bind(this);
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
-        tvTitle.setText("领用申请");
+        tvTitle.setText("入库申请");
 
         // 请求页面参数
         mPresenter.getParams();
     }
 
     @Override
-    protected UseGoodsPresenter bindPresenter() {
-        return new UseGoodsPresenter();
+    protected GoodsInPresenter bindPresenter() {
+        return new GoodsInPresenter();
     }
 
     @Override
@@ -96,7 +86,7 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
         return tags;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_goods_add_item, R.id.tv_goods_delete, R.id.lr_goods_selector, R.id.lr_project_selector, R.id.tv_submit})
+    @OnClick({R.id.iv_back, R.id.tv_goods_add_item, R.id.tv_goods_delete, R.id.lr_goods_selector, R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -119,9 +109,6 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
                 intent.putExtra(SelectGoodsActivity.KEY_POSITION, 0);
                 startActivityForResult(intent, REQUEST_CODE_SELECT_GOODS);
                 break;
-            case R.id.lr_project_selector: // 选择项目参数
-                showProjectList();
-                break;
             case R.id.tv_submit:
                 submitForm();
                 break;
@@ -132,15 +119,6 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
      * 验证并提交表单
      */
     private void submitForm() {
-
-        String goodsUseFor = etGoodsUseFor.getText().toString();
-        //验证
-        if (TextUtils.isEmpty(goodsUseFor)) {
-            ToastUtil.showToast("请填写物品用途");
-            etGoodsUseFor.requestFocus();
-            return;
-        }
-
         // 总价
         double countPrice = 0;
         // 验证列表
@@ -162,24 +140,22 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
             // 获取单价
             double cost = etNum.getTag() == null ? 0 : Double.parseDouble(etNum.getTag().toString());
             int inputNum = Integer.parseInt(etNum.getText().toString());
-            // 验证数量是否超出
-            TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
-            int num = tvDelete.getTag() == null ? 0 : Integer.parseInt(tvDelete.getTag().toString());
-            if (inputNum > num) {
-                ToastUtil.showToast(String.format("物品%s库存不足，剩余%d", tvName.getText(), num));
-                etNum.requestFocus();
-                return;
-            }
+
             // 累加总价
             countPrice += inputNum * cost;
         }
 
-        // 获取项目ID
-        int projectId = tvProject.getTag() == null ? 0 : Integer.parseInt(tvProject.getTag().toString());
+        EditText etSummary = findViewById(R.id.et_goods_summary);
+        String reason = etSummary.getText().toString();
+        if(TextUtils.isEmpty(reason)){
+            ToastUtil.showToast("请输填写入库说明");
+            etSummary.requestFocus();
+            return;
+        }
 
         // 输入的列表参数
         String outGoods = getGoodsItemsJSON();
-        mPresenter.saveGoods(countPrice, goodsUseFor, outGoods, projectId);
+        mPresenter.saveGoodsIn(countPrice, reason, outGoods);
     }
 
     /**
@@ -205,7 +181,7 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
                 if(bean != null) {
                     View view = LayoutInflater.from(this).inflate(R.layout.item_person, null);
                     ImageView ivHeader = view.findViewById(R.id.iv_header);
-                    // TODO: 2018/5/10 没有添加头像信息
+                    // TODO: 2018/5/12 没有添加头像信息
 
                     TextView tvName = view.findViewById(R.id.tv_name);
                     tvName.setText(bean.getUserName());
@@ -218,42 +194,6 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
                 }
             }
         }
-    }
-
-    /**
-     * 显示项目列表
-     */
-    private void showProjectList() {
-        //呈现选择Project
-        GoodsBottomDialogAdapter adapter = new GoodsBottomDialogAdapter(mGoodsParamsEntity.getProjectlist());
-        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
-        adapter.setOnItemClickListener(new GoodsBottomDialogAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(GoodsParamsEntity.ProjectBean bean) {
-                tvProject.setText(bean.getName());
-                tvProject.setTag(bean.getId());
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-    }
-
-    /**
-     * 获取底部弹窗并且弹出
-     */
-    private BottomSheetDialog getBottomSheetDialog(GoodsBottomDialogAdapter adapter) {
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        dialog.setCanceledOnTouchOutside(true);
-        View view = View.inflate(this, R.layout.dialog_visit_record_detail, null);
-        dialog.setContentView(view);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-        return dialog;
     }
 
     /**
@@ -319,8 +259,6 @@ public class GoodsInActivity extends BaseActivity<UseGoodsPresenter> {
                     EditText etNum = parentView.findViewById(R.id.et_goods_num);
                     // 数量Tag 保存单价
                     etNum.setTag(price);
-                    // 显示库存
-                    etNum.setHint(String.format("库存数：%d%s", num, unit));
                     // 删除Tag 保存库存
                     TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
                     tvDelete.setTag(num);

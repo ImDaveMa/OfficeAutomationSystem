@@ -21,7 +21,7 @@ public interface GoodsInService {
 
     @FormUrlEncoded
     @POST
-    Observable<CommonReceiveMessageEntity> submitUse(@Url String url, @FieldMap Map<String, String> params);
+    Observable<CommonReceiveMessageEntity> submitGoodsIn(@Url String url, @FieldMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST

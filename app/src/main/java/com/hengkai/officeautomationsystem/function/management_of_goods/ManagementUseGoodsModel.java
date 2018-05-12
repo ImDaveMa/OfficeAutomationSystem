@@ -16,16 +16,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class ManagementGoodsInModel {
+public class ManagementUseGoodsModel {
 
-    private final GoodsInService service;
+    private final GoodsService service;
 
-    public ManagementGoodsInModel() {
+    public ManagementUseGoodsModel() {
         Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        service = retrofit.create(GoodsInService.class);
+        service = retrofit.create(GoodsService.class);
     }
 
-    public void getGoodsList(Observer observer, int id) {
+    public void getUseGoodsList(Observer observer, int id) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
@@ -33,7 +33,7 @@ public class ManagementGoodsInModel {
         params.put("searchId", id + "");
         params.put("pageSize", CommonFinal.PAGE_SIZE + "");
 
-        service.getGoodsInList(URLFinal.GET_GOODS_IN_LIST, params)
+        service.getUseGoodsList(URLFinal.GET_USE_GOODS_LIST, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

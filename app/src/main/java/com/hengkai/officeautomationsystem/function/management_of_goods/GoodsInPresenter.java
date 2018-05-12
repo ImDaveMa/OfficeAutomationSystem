@@ -10,17 +10,17 @@ import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class GoodsInPresenter extends BasePresenter<UseGoodsActivity> {
+public class GoodsInPresenter extends BasePresenter<GoodsInActivity> {
 
-    private final UseGoodsModel model;
+    private final GoodsInModel model;
 
     public GoodsInPresenter() {
-        model = new UseGoodsModel();
+        model = new GoodsInModel();
     }
 
-    public void saveGoods(double price, String reason, String details, int projectId) {
+    public void saveGoodsIn(double price, String reason, String details) {
         view.showDialog();
-        model.saveGoods(new Observer<CommonReceiveMessageEntity>() {
+        model.saveGoodsIn(new Observer<CommonReceiveMessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS, d);
@@ -51,7 +51,7 @@ public class GoodsInPresenter extends BasePresenter<UseGoodsActivity> {
             public void onComplete() {
 
             }
-        }, price, reason, details, projectId);
+        }, price, reason, details);
     }
 
     public void getParams() {

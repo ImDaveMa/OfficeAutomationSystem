@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsInEntity;
+import com.hengkai.officeautomationsystem.network.entity.UseGoodsEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 
 import java.text.DecimalFormat;
@@ -22,14 +22,14 @@ import butterknife.ButterKnife;
 /**
  * Created by Harry on 2018/4/28.
  */
-public class ManagementGoodsInAdapter extends RecyclerView.Adapter<ManagementGoodsInAdapter.ViewHolder> {
+public class ManagementUseGoodsAdapter extends RecyclerView.Adapter<ManagementUseGoodsAdapter.ViewHolder> {
 
-    private List<GoodsInEntity.InStorageBean> goodsInList;
+    private List<UseGoodsEntity.OutStorageBean> mGoodsOutList;
     private OnItemClickListener mOnItemClickListener;
 
-    public ManagementGoodsInAdapter(OnItemClickListener onItemClickListener, List<GoodsInEntity.InStorageBean> goodsInList) {
+    public ManagementUseGoodsAdapter(OnItemClickListener onItemClickListener, List<UseGoodsEntity.OutStorageBean> goodsOutList) {
         super();
-        this.goodsInList = goodsInList;
+        this.mGoodsOutList = goodsOutList;
         mOnItemClickListener = onItemClickListener;
     }
 
@@ -42,7 +42,7 @@ public class ManagementGoodsInAdapter extends RecyclerView.Adapter<ManagementGoo
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final GoodsInEntity.InStorageBean bean = goodsInList.get(position);
+        final UseGoodsEntity.OutStorageBean bean = mGoodsOutList.get(position);
         holder.tvPurpose.setText(bean.getPurpose());
         DecimalFormat df = new DecimalFormat("#.00");
         String total = df.format(bean.getTotal());
@@ -74,7 +74,7 @@ public class ManagementGoodsInAdapter extends RecyclerView.Adapter<ManagementGoo
 
     @Override
     public int getItemCount() {
-        return goodsInList.size();
+        return mGoodsOutList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

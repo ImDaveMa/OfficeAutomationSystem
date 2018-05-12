@@ -80,6 +80,7 @@
         <activity android:name=".function.new_unit.NewUnitActivity" />
         <activity android:name=".function.management_of_goods.ManagementGoodsInActivity" />
         <activity android:name=".function.management_of_goods.GoodsInActivity" />
+        <activity android:name=".function.management_of_goods.ManagementUseGoodsActivity" />
 
 
     </application>

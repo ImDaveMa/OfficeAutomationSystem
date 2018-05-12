@@ -59,8 +59,6 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
     LinearLayout llGoodsList;
     @BindView(R.id.tv_goods_add_item)
     TextView tvGoodsAddItem;
-    @BindView(R.id.et_goods_summary)
-    EditText etGoodsSummary;
     @BindView(R.id.tv_project)
     TextView tvProject;
     @BindView(R.id.tv_submit)
