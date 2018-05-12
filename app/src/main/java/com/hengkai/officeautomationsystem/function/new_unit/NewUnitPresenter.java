@@ -102,8 +102,10 @@ public class NewUnitPresenter extends BasePresenter<NewUnitActivity> {
                 if (commonReceiveMessageEntity.CODE == 1) {
                     ToastUtil.showToast("提交成功");
                     view.finish();
-                } else {
-                    ToastUtil.showToast(commonReceiveMessageEntity.MES);
+                } else if (commonReceiveMessageEntity.CODE == 2) {
+                    ToastUtil.showToast("参数不完整");
+                } else if (commonReceiveMessageEntity.CODE == -1) {
+                    ToastUtil.showToast("单位名称重复");
                 }
             }
 

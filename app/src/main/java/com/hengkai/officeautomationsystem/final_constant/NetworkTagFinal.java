@@ -20,6 +20,10 @@ public class NetworkTagFinal {
     public static final String UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST = "UNIT_LIBRARY_ACTIVITY_GET_UNIT_LIST";
     public static final String CONTACTS_LIBRARY_ACTIVITY_GET_CONTACTS_LIST = "CONTACTS_LIBRARY_ACTIVITY_GET_CONTACTS_LIST";
     /**
+     * UnitLibraryDetailActivity
+     */
+    public static final String UNIT_LIBRARY_DETAIL_ACTIVITY_GET_UNIT_DETAIL = "UNIT_LIBRARY_DETAIL_ACTIVITY_GET_UNIT_DETAIL";
+    /**
      * VisitRecordActivity
      */
     public static final String VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST = "VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST";
@@ -59,6 +63,10 @@ public class NetworkTagFinal {
      * ManagementGoodsInActivity
      */
     public static final String MANAGEMENT_GOODS_IN_ACTIVITY_GET_GOODS_LIST = "MANAGEMENT_GOODS_IN_ACTIVITY_GET_GOODS_LIST";
+    /**
+     * MyUnitActivity
+     */
+    public static final String MY_UNIT_ACTIVITY_GET_UNIT_LIST = "MY_UNIT_ACTIVITY_GET_UNIT_LIST";
     /**
      * ManagementUseGoodsActivity
      */

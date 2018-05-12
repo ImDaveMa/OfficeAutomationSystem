@@ -133,16 +133,16 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
         params.put("name", name);
         params.put("type", unitType);
         params.put("keywordId", String.valueOf(keywordID));
-        if (TextUtils.isEmpty(titAddress.getText().toString().trim())) {
+        if (!TextUtils.isEmpty(titAddress.getText().toString().trim())) {
             params.put("address", titAddress.getText().toString().trim());
         }
-        if (TextUtils.isEmpty(titDescription.getText().toString().trim())) {
+        if (!TextUtils.isEmpty(titDescription.getText().toString().trim())) {
             params.put("text", titDescription.getText().toString().trim());
         }
-        if (TextUtils.isEmpty(titWebsite.getText().toString().trim())) {
+        if (!TextUtils.isEmpty(titWebsite.getText().toString().trim())) {
             params.put("website", titWebsite.getText().toString().trim());
         }
-        if (TextUtils.isEmpty(titNumber.getText().toString().trim())) {
+        if (!TextUtils.isEmpty(titNumber.getText().toString().trim())) {
             params.put("creditCode", titNumber.getText().toString().trim());
         }
         mPresenter.commit(params);

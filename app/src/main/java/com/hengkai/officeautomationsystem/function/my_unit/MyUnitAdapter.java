@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.unit_library;
+package com.hengkai.officeautomationsystem.function.my_unit;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.function.unit_library.detail.UnitLibraryDetailActivity;
-import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
+import com.hengkai.officeautomationsystem.network.entity.MyUnitEntity;
 
 import java.util.List;
 
@@ -20,28 +20,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Harry on 2018/5/5.
+ * Created by Harry on 2018/5/12.
  */
-public class UnitLibraryActivityAdapter extends RecyclerView.Adapter<UnitLibraryActivityAdapter.ViewHolder> {
+public class MyUnitAdapter extends RecyclerView.Adapter<MyUnitAdapter.ViewHolder> {
 
-    private List<UnitLibraryEntity.DATABean> mList;
+    private List<MyUnitEntity.DATABean> mList;
     private Context context;
 
-    public UnitLibraryActivityAdapter(List<UnitLibraryEntity.DATABean> list) {
-        this.mList = list;
+    public MyUnitAdapter(List<MyUnitEntity.DATABean> list) {
+        mList = list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.item_unit_library, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_my_unit, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final UnitLibraryEntity.DATABean bean = mList.get(position);
+        final MyUnitEntity.DATABean bean = mList.get(position);
         holder.tvUnitName.setText(bean.name);
         holder.tvUnitAddress.setText(bean.address);
 
@@ -60,7 +60,7 @@ public class UnitLibraryActivityAdapter extends RecyclerView.Adapter<UnitLibrary
         return mList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_unit_name)
         TextView tvUnitName;

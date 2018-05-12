@@ -33,6 +33,10 @@ public class URLFinal {
      */
     public static final String GET_UNIT_LIST = "conAcom/comList";
     /**
+     * 单位列表的详情
+     */
+    public static final String GET_UNIT_DETAIL = "mobile/conAcom/comDetails";
+    /**
      * 项目 - 联系人库列表
      */
     public static final String GET_CONTACTS_LIBRARY_LIST = "conAcom/conList";
@@ -122,4 +126,8 @@ public class URLFinal {
      * 新增单位 - 提交
      */
     public static final String NEW_UNIT_COMMIT = "conAcom/ar";
+    /**
+     * 我的单位
+     */
+    public static final String MY_UNIT_GET_UNIT_LIST = "conAcom/userList";
 }

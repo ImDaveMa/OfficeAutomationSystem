@@ -1,14 +1,18 @@
 package com.hengkai.officeautomationsystem.function.visit_record.detail;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -140,10 +144,23 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
+        getCurrentPhoneNumber();
+
         initButtonStatus();
         judgeType();
         initBaiDuLocation();
 
+    }
+
+    /**
+     * @return 获取硬件上的电话号码
+     */
+    private String getCurrentPhoneNumber() {
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
+        }
+        return tm.getLine1Number();
     }
 
     @Override
@@ -292,7 +309,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         params.put("endLongitude", String.valueOf(locationLongitude));
         params.put("endLatitude", String.valueOf(locationLatitude));
         params.put("address", locationAddress);
-        params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+//        params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+        params.put("phone", getCurrentPhoneNumber());
         params.put("summary", etVisitSummary.getText().toString().trim());
 
         mPresenter.toEnd(params);
@@ -352,7 +370,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             params.put("startLongitude", String.valueOf(locationLongitude));
             params.put("startLatitude", String.valueOf(locationLatitude));
             params.put("address", locationAddress);
-            params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+            params.put("phone", getCurrentPhoneNumber());
             params.put("summary", etVisitSummary.getText().toString().trim());
 
             showDialog();
@@ -376,7 +394,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             params.put("startLongitude", String.valueOf(locationLongitude));
             params.put("startLatitude", String.valueOf(locationLatitude));
             params.put("address", locationAddress);
-            params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
+            params.put("phone", getCurrentPhoneNumber());
             params.put("summary", etVisitSummary.getText().toString().trim());
 
             showDialog();
