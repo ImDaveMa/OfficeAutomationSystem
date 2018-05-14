@@ -13,23 +13,9 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginBottom="5dp"
             android:text="物品明细(1)"/>
-
-        <TextView
-            android:id="@+id/tv_goods_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="15dp"
-            android:paddingBottom="5dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="15dp"
-            android:textSize="10sp"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone"
-            android:textColor="@color/blue"
-            android:text="删除"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -42,34 +28,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="*"
-            android:textColor="@color/red1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:text="物品名称"
-            android:textColor="@color/black" />
+            android:textColor="@color/black1" />
 
         <TextView
             android:id="@+id/tv_goods_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
-            android:background="@color/transparent"
             android:gravity="right"
-            android:hint="请选择物品名称"
-            android:textSize="14sp" />
+            android:text="测试物品"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="image"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_arrow_gray32" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -81,25 +53,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/red1"
-            android:text="*"/>
+            android:layout_marginStart="5dp"
+            android:text="数量"
+            android:textColor="@color/black1" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="数量"
-            android:textColor="@color/black" />
-
-        <EditText
-            android:id="@+id/et_goods_num"
+            android:id="@+id/tv_goods_num"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:background="@color/transparent"
-            android:inputType="number"
+            android:text="18件"
+            android:textColor="@color/black"
             android:gravity="right"
-            android:hint="请输入数量"
             android:textSize="14sp" />
 
     </RelativeLayout>

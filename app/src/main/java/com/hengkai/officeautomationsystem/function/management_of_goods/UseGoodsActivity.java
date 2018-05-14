@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -300,7 +301,7 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                     int position = data.getExtras().getInt(SelectGoodsActivity.KEY_POSITION);
                     String name = data.getExtras().getString(SelectGoodsActivity.KEY_NAME);
                     int id = data.getExtras().getInt(SelectGoodsActivity.KEY_ID);
-                    double price = data.getExtras().getInt(SelectGoodsActivity.KEY_PRICE);
+                    double price = data.getExtras().getDouble(SelectGoodsActivity.KEY_PRICE);
                     int num = data.getExtras().getInt(SelectGoodsActivity.KEY_NUM);
                     String unit = data.getExtras().getString(SelectGoodsActivity.KEY_UNIT);
 
@@ -336,6 +337,7 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
                     etNum.setTag(price);
                     // 显示库存
                     etNum.setHint(String.format("库存数：%d%s", num, unit));
+                    etNum.requestFocus();
                     // 删除Tag 保存库存
                     tvDelete.setTag(num);
                 }
@@ -379,8 +381,10 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
             bean.setGOODSID(tvName.getTag() == null ? 0 : Integer.parseInt(tvName.getTag().toString()));
             // 获取单价
             double price = etNum.getTag() == null ? 0 : Double.parseDouble(etNum.getTag().toString());
+            // 获取数量
+            int num = etNum.getTag() == null ? 0 : Integer.parseInt(etNum.getText().toString());
             // 算总价
-            bean.setTOTAL(bean.getNUM() * price);
+            bean.setTOTAL(num * price);
 
             beans.add(bean);
         }

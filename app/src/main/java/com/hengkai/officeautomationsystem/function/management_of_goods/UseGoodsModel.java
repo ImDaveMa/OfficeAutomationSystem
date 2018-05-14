@@ -4,6 +4,7 @@ import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.service.GoodsService;
+import com.hengkai.officeautomationsystem.network.service.UseGoodsService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
 
@@ -20,11 +21,11 @@ import retrofit2.Retrofit;
  */
 public class UseGoodsModel {
 
-    private final GoodsService service;
+    private final UseGoodsService service;
 
     public UseGoodsModel() {
         Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        service = retrofit.create(GoodsService.class);
+        service = retrofit.create(UseGoodsService.class);
     }
 
     /**

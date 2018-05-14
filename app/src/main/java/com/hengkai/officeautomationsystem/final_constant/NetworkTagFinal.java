@@ -46,6 +46,10 @@ public class NetworkTagFinal {
      */
     public static final String USE_GOODS_ACTIVITY_SAVE_GOODS = "USE_GOODS_ACTIVITY_SAVE_GOODS";
     /**
+     * UseGoodsDetailActivity
+     */
+    public static final String USE_GOODS_DETAIL_ACTIVITY_GET_DETAIL = "USE_GOODS_DETAIL_ACTIVITY_GET_DETAIL";
+    /**
      * GOODS_UNIT_ACTIVITY
      */
     public static final String GOODS_UNIT_ACTIVITY_LIST = "GOODS_UNIT_ACTIVITY_LIST";
@@ -75,6 +79,10 @@ public class NetworkTagFinal {
      * ProjectLibraryActivity
      */
     public static final String PROJECT_LIBRARY_ACTIVITY_GET_PROJECT_LIST = "PROJECT_LIBRARY_ACTIVITY_GET_PROJECT_LIST";
+    /**
+     * GOODS_IN_DETAIL_ACTIVITY
+     */
+    public static final String GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL = "GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL";
 
 
 }

@@ -1,10 +1,9 @@
 package com.hengkai.officeautomationsystem.network.service;
 
 import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
-import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
-import com.hengkai.officeautomationsystem.network.entity.GoodsInDetailEntity;
-import com.hengkai.officeautomationsystem.network.entity.GoodsInEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsOutDetailEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsParamsEntity;
+import com.hengkai.officeautomationsystem.network.entity.UseGoodsEntity;
 
 import java.util.Map;
 
@@ -14,15 +13,15 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Url;
 
-public interface GoodsInService {
+public interface UseGoodsService {
 
     @FormUrlEncoded
     @POST
-    Observable<GoodsInEntity> getGoodsInList(@Url String url, @FieldMap Map<String, String> params);
+    Observable<UseGoodsEntity> getUseGoodsList(@Url String url, @FieldMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST
-    Observable<CommonReceiveMessageEntity> submitGoodsIn(@Url String url, @FieldMap Map<String, String> params);
+    Observable<CommonReceiveMessageEntity> submitUse(@Url String url, @FieldMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST
@@ -30,5 +29,6 @@ public interface GoodsInService {
 
     @FormUrlEncoded
     @POST
-    Observable<GoodsInDetailEntity> getGoodsInDetail(@Url String url, @FieldMap Map<String, String> params);
+    Observable<GoodsOutDetailEntity> getUseGoodsDetail(@Url String url, @FieldMap Map<String, String> params);
+
 }

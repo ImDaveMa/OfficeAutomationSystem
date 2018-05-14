@@ -100,6 +100,7 @@ public class OpenActivityUtils {
                         onClickMethod(activity, MyUnitActivity.class, dbId);
                         break;
                     default:
+                        ToastUtil.showToast("敬请期待！");
                         break;
                 }
             }

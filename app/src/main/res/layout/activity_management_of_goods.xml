@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText">
 
-    <include layout="@layout/layout_title_bar_normal" />
+    <include layout="@layout/layout_title_bar_more" />
 
     <TextView
         android:id="@+id/tv_search"

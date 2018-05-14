@@ -235,7 +235,7 @@ public class GoodsInActivity extends BaseActivity<GoodsInPresenter> {
                     int position = data.getExtras().getInt(SelectGoodsActivity.KEY_POSITION);
                     String name = data.getExtras().getString(SelectGoodsActivity.KEY_NAME);
                     int id = data.getExtras().getInt(SelectGoodsActivity.KEY_ID);
-                    double price = data.getExtras().getInt(SelectGoodsActivity.KEY_PRICE);
+                    double price = data.getExtras().getDouble(SelectGoodsActivity.KEY_PRICE);
                     int num = data.getExtras().getInt(SelectGoodsActivity.KEY_NUM);
                     String unit = data.getExtras().getString(SelectGoodsActivity.KEY_UNIT);
 
@@ -259,6 +259,7 @@ public class GoodsInActivity extends BaseActivity<GoodsInPresenter> {
                     EditText etNum = parentView.findViewById(R.id.et_goods_num);
                     // 数量Tag 保存单价
                     etNum.setTag(price);
+                    etNum.requestFocus();
                     // 删除Tag 保存库存
                     TextView tvDelete = parentView.findViewById(R.id.tv_goods_delete);
                     tvDelete.setTag(num);
@@ -303,8 +304,10 @@ public class GoodsInActivity extends BaseActivity<GoodsInPresenter> {
             bean.setGOODSID(tvName.getTag() == null ? 0 : Integer.parseInt(tvName.getTag().toString()));
             // 获取单价
             double price = etNum.getTag() == null ? 0 : Double.parseDouble(etNum.getTag().toString());
+            // 获取数量
+            int num = etNum.getTag() == null ? 0 : Integer.parseInt(etNum.getText().toString());
             // 算总价
-            bean.setTOTAL(bean.getNUM() * price);
+            bean.setTOTAL(num * price);
 
             beans.add(bean);
         }

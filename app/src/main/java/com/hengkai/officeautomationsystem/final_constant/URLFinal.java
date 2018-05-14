@@ -59,6 +59,10 @@ public class URLFinal {
      */
     public static final String USE_GOODS = "out/insertOutStorage";
     /**
+     * 领用物品详情
+     */
+    public static final String USE_GOODS_DETAIL = "out/mOutDetail";
+    /**
      * 领用物品 参数请求
      */
     public static final String USE_GOODS_PARAMS = "out/insertOutPage";
@@ -86,6 +90,10 @@ public class URLFinal {
      * 物品入库
      */
     public static final String GOODS_IN_URL = "mIn/insertInStorage";
+    /**
+     * 物品入库详情
+     */
+    public static final String GOODS_IN_DETAIL_URL = "mIn/mOutDetail";
     /**
      * 拜访跟进详情页面 - 获取单位列表
      */

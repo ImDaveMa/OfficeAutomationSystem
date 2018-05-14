@@ -17,6 +17,7 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsInDetailEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsInEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
@@ -32,10 +33,14 @@ import butterknife.OnClick;
 
 public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPresenter> implements OnItemClickListener<GoodsInEntity.InStorageBean> {
 
+    private static final int REQUEST_CODE_FOR_ADD = 1000;
+
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.swipe_refresh_header)
@@ -63,6 +68,7 @@ public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPre
         ButterKnife.bind(this);
 
         tvTitle.setText("入库记录");
+        ivAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
@@ -103,7 +109,7 @@ public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPre
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.tv_search,R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -111,6 +117,10 @@ public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPre
                 break;
             case R.id.tv_search:
 
+                break;
+            case R.id.iv_add:
+                Intent intent = new Intent(this, GoodsInActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FOR_ADD);
                 break;
         }
     }
@@ -160,6 +170,18 @@ public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPre
      */
     @Override
     public void onItemClick(View v, GoodsInEntity.InStorageBean bean, int position) {
-        ToastUtil.showToast(bean.getPurpose());
+        Intent intent = new Intent(this, GoodsInDetailActivity.class);
+        intent.putExtra(GoodsInDetailActivity.EXTRA_KEY_ID,bean.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_FOR_ADD){
+            if(resultCode == Activity.RESULT_OK){
+                swipeToLoadLayout.setRefreshing(true);
+            }
+        }
     }
 }

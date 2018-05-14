@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.function.management_of_goods;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +16,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.GoodsInEntity;
 import com.hengkai.officeautomationsystem.network.entity.UseGoodsEntity;
-import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
 import com.jaeger.library.StatusBarUtil;
@@ -30,10 +30,14 @@ import butterknife.OnClick;
 
 public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsPresenter> implements OnItemClickListener<UseGoodsEntity.OutStorageBean> {
 
+    private static final int REQUEST_CODE_FOR_ADD = 1000;
+
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.swipe_refresh_header)
@@ -60,7 +64,8 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("入库记录");
+        tvTitle.setText("领用记录");
+        ivAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
@@ -101,7 +106,7 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.tv_search, R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -109,6 +114,10 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
                 break;
             case R.id.tv_search:
 
+                break;
+            case R.id.iv_add:
+                Intent intent = new Intent(this, UseGoodsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FOR_ADD);
                 break;
         }
     }
@@ -158,6 +167,18 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
      */
     @Override
     public void onItemClick(View v, UseGoodsEntity.OutStorageBean bean, int position) {
-        ToastUtil.showToast(bean.getPurpose());
+        Intent intent = new Intent(this, UseGoodsDetailActivity.class);
+        intent.putExtra(UseGoodsDetailActivity.EXTRA_KEY_ID, bean.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_FOR_ADD){
+            if(resultCode == Activity.RESULT_OK){
+                swipeToLoadLayout.setRefreshing(true);
+            }
+        }
     }
 }

@@ -4,8 +4,6 @@ import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.service.GoodsInService;
-import com.hengkai.officeautomationsystem.network.service.GoodsService;
-import com.hengkai.officeautomationsystem.network.service.UseGoodsService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
 
@@ -17,24 +15,30 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class ManagementUseGoodsModel {
+/**
+ *
+ */
+public class GoodsInDetailModel {
 
-    private final UseGoodsService service;
+    private final GoodsInService service;
 
-    public ManagementUseGoodsModel() {
+    public GoodsInDetailModel() {
         Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        service = retrofit.create(UseGoodsService.class);
+        service = retrofit.create(GoodsInService.class);
     }
 
-    public void getUseGoodsList(Observer observer, int id) {
+    /**
+     * 保存入库申请
+     * @param observer
+     * @param id 主键ID
+     */
+    public void getGoodsInDetail(Observer observer, int id) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("userId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
-        params.put("searchId", id + "");
-        params.put("pageSize", CommonFinal.PAGE_SIZE + "");
+        params.put("id", id + "");
 
-        service.getUseGoodsList(URLFinal.GET_USE_GOODS_LIST, params)
+        service.getGoodsInDetail(URLFinal.GOODS_IN_DETAIL_URL, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
