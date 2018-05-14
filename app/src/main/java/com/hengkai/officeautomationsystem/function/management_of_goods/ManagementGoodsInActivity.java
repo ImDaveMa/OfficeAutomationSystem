@@ -133,7 +133,7 @@ public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPre
         //初始化数据列表
         goodsInList = new ArrayList<>();
         //创建数据适配器
-        adapter = new ManagementGoodsInAdapter(this, goodsInList);
+        adapter = new ManagementGoodsInAdapter(this, this, goodsInList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 

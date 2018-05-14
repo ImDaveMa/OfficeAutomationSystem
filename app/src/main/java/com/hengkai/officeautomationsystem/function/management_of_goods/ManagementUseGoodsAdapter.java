@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.function.management_of_goods;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,11 +26,13 @@ import butterknife.ButterKnife;
  */
 public class ManagementUseGoodsAdapter extends RecyclerView.Adapter<ManagementUseGoodsAdapter.ViewHolder> {
 
+    private Context mContext;
     private List<UseGoodsEntity.OutStorageBean> mGoodsOutList;
     private OnItemClickListener mOnItemClickListener;
 
-    public ManagementUseGoodsAdapter(OnItemClickListener onItemClickListener, List<UseGoodsEntity.OutStorageBean> goodsOutList) {
+    public ManagementUseGoodsAdapter(Context context, OnItemClickListener onItemClickListener, List<UseGoodsEntity.OutStorageBean> goodsOutList) {
         super();
+        mContext = context;
         this.mGoodsOutList = goodsOutList;
         mOnItemClickListener = onItemClickListener;
     }
@@ -49,21 +53,27 @@ public class ManagementUseGoodsAdapter extends RecyclerView.Adapter<ManagementUs
         holder.tvPrice.setText(String.format("总价值：%s元", total));
         holder.tvTime.setText(String.format("入库时间：%s", DateFormatUtils.getFormatedNewsTime(bean.getCreateTime())));
         String state = "";
+        int color = R.color.blue;
         switch (bean.getState()){
             case 0:
                 state = "待审核";
+                color = R.color.state_orange;
                 break;
             case 1:
                 state = "已通过";
+                color = R.color.state_green;
                 break;
             case 2:
                 state = "已拒绝";
+                color = R.color.state_red;
                 break;
             case 3:
                 state = "已撤销";
+                color = R.color.state_blue;
                 break;
         }
         holder.tvType.setText(state);
+        holder.tvType.setTextColor(mContext.getResources().getColor(color));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

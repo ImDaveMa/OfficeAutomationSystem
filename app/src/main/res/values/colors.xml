@@ -40,4 +40,12 @@
     <color name="transparent2">#55000000</color>
     <color name="transparent3">#08000000</color>
     <color name="content_background">#f2f2f2</color>
+    <color name="transparent_blue">#552196f3</color>
+    <color name="transparent_orange">#55F57C00</color>
+    <color name="transparent_red">#55e13b25</color>
+    <color name="transparent_green">#55008000</color>
+    <color name="state_blue">#2196f3</color>
+    <color name="state_orange">#F57C00</color>
+    <color name="state_red">#e13b25</color>
+    <color name="state_green">#008000</color>
 </resources>

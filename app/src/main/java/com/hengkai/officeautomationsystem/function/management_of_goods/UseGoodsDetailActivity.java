@@ -42,6 +42,8 @@ public class UseGoodsDetailActivity extends BaseActivity<UseGoodsDetailPresenter
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_state)
+    TextView tvState;
     @BindView(R.id.tv_goods_use_for)
     TextView tvGoodsUseFor;
     @BindView(R.id.ll_goods_list)
@@ -142,6 +144,29 @@ public class UseGoodsDetailActivity extends BaseActivity<UseGoodsDetailPresenter
         tvGoodsUseFor.setText(bean.getPurpose());
         // 绑定项目信息
         tvProject.setText(bean.getProductName());
+        // 设置状态
+        String state = "";
+        int color = R.color.blue;
+        switch (bean.getState()){
+            case 0:
+                state = "待审核";
+                color = R.color.transparent_orange;
+                break;
+            case 1:
+                state = "已通过";
+                color = R.color.transparent_green;
+                break;
+            case 2:
+                state = "已拒绝";
+                color = R.color.transparent_red;
+                break;
+            case 3:
+                state = "已撤销";
+                color = R.color.transparent_blue;
+                break;
+        }
+        tvState.setText(state);
+        tvState.setTextColor(getResources().getColor(color));
     }
 
     /**

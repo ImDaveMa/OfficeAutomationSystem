@@ -1,127 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white4"
-    android:orientation="vertical"
-    tools:ignore="HardcodedText">
-
-    <include layout="@layout/layout_title_bar_normal" />
-
-    <ScrollView
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white4"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/layout_title_bar_normal" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:padding="10dp"
-                android:background="@drawable/layer_list_border_bottom">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/black1"
-                    android:text="物品用途"/>
-
-                <TextView
-                    android:id="@+id/tv_goods_use_for"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:text=""/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/lr_project_selector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/black1"
-                    android:text="项目"/>
-
-                <TextView
-                    android:id="@+id/tv_project"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="right"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:text=""/>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_goods_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:padding="15dp"
+                android:paddingBottom="20dp"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black1"
-                    android:text="审批人"/>
 
-                <LinearLayout
-                    android:id="@+id/ll_approval_container"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:orientation="horizontal">
-                </LinearLayout>
-            </LinearLayout>
+                    android:layout_marginTop="15dp"
+                    android:padding="10dp"
+                    android:background="@drawable/layer_list_border_bottom">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:padding="15dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="抄送人"/>
-                <LinearLayout
-                    android:id="@+id/ll_copy_container"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black1"
+                        android:text="物品用途"/>
+
+                    <TextView
+                        android:id="@+id/tv_goods_use_for"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="right"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text=""/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/lr_project_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:orientation="horizontal">
+                    android:padding="10dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black1"
+                        android:text="项目"/>
+
+                    <TextView
+                        android:id="@+id/tv_project"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="right"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:text=""/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_goods_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black1"
+                        android:text="审批人"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_approval_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="抄送人"/>
+                    <LinearLayout
+                        android:id="@+id/ll_copy_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:orientation="horizontal">
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
-</LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:textColor="@color/transparent_blue"
+        android:rotation="-30"
+        android:text=""/>
+</FrameLayout>
