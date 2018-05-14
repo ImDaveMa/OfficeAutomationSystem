@@ -1,19 +1,30 @@
 package com.hengkai.officeautomationsystem.function.unit_library.detail;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.final_constant.URLFinal;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.entity.UnitLibraryDetailEntity;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.jaeger.library.StatusBarUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by Harry on 2018/5/12.
@@ -86,4 +97,5 @@ public class UnitLibraryDetailActivity extends BaseActivity<UnitLibraryDetailPre
         tvWebsite.setText(bean.website);
         tvDescription.setText(bean.text);
     }
+
 }

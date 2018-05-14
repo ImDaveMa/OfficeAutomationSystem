@@ -35,7 +35,7 @@ public class URLFinal {
     /**
      * 单位列表的详情
      */
-    public static final String GET_UNIT_DETAIL = "mobile/conAcom/comDetails";
+    public static final String GET_UNIT_DETAIL = "conAcom/comDetails";
     /**
      * 项目 - 联系人库列表
      */

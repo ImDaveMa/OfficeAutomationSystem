@@ -96,7 +96,7 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
 
             @Override
             public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
-                if (commonReceiveMessageEntity.CODE == 2) {
+                if (commonReceiveMessageEntity.CODE == 1) {
                     view.deleteItem();
                 } else if (commonReceiveMessageEntity.CODE == 0) {
                     view.showLoginDialog(view);
