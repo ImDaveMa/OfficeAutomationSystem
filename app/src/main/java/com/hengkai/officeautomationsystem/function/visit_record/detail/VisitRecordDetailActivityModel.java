@@ -53,11 +53,11 @@ public class VisitRecordDetailActivityModel extends BaseModel {
                 .subscribe(observer);
     }
 
-    public void getVisitProjectList(int customerID, Observer<VisitRecordDetailGetVisitUnitEntity> observer) {
+    public void getVisitProjectList(String customerID, Observer<VisitRecordDetailGetVisitUnitEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("ID", String.valueOf(customerID));
+        params.put("ID", customerID);
 
         service.getVisitUnitList(URLFinal.GET_VISIT_UNIT_PROJECT_LIST, params)
                 .subscribeOn(Schedulers.io())

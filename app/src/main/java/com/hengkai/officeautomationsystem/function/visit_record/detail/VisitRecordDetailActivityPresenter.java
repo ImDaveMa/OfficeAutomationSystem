@@ -94,7 +94,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
         });
     }
 
-    public void getVisitProjectList(int customerID) {
+    public void getVisitProjectList(String customerID) {
         model.getVisitProjectList(customerID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
             @Override
             public void onSubscribe(Disposable d) {

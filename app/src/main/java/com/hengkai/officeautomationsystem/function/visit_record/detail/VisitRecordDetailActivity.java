@@ -70,6 +70,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     TextView tvVisitDepartment;
     @BindView(R.id.tv_project)
     TextView tvProject;
+    @BindView(R.id.tv_save)
+    TextView tvSave;
     @BindView(R.id.iv_project)
     ImageView ivProject;
     @BindView(R.id.et_visit_summary)
@@ -102,7 +104,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     /**
      * 所选拜访人的ID
      */
-    private int customerID = -1;
+    private String customerID = "-1";
     /**
      * 拜访类型的ID
      */
@@ -218,7 +220,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 mPresenter.getVisitCustomerList(unitID);
                 break;
             case R.id.ll_project:   //跟进的项目
-                if (customerID == -1) {
+                if (customerID.equals("-1")) {
                     ToastUtil.showToast("请先选择拜访人");
                     return;
                 }
@@ -232,7 +234,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                     params.put("typeYM", "add");
                     params.put("companyId", String.valueOf(unitID));
                     params.put("type", String.valueOf(visitTypeID));
-                    params.put("contactsId", String.valueOf(customerID));
+                    params.put("contactsId", customerID);
                     params.put("department", tvVisitDepartment.getText().toString().trim());
                     if (projectID != -1) {
                         params.put("projectId", String.valueOf(projectID));
@@ -250,7 +252,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                     if (projectID != -1) {
                         params.put("projectId", String.valueOf(projectID));
                     }
-                    params.put("contactsId", String.valueOf(customerID));
+                    params.put("contactsId", customerID);
                     params.put("department", tvVisitDepartment.getText().toString().trim());
                     params.put("summary", etVisitSummary.getText().toString().trim());
 
@@ -275,7 +277,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 if (projectID != -1) {
                     params.put("projectId", String.valueOf(projectID));
                 }
-                params.put("contactsId", String.valueOf(customerID));
+                params.put("contactsId", customerID);
                 params.put("department", tvVisitDepartment.getText().toString().trim());
                 params.put("summary", etVisitSummary.getText().toString().trim());
 
@@ -304,7 +306,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         if (projectID != -1) {
             params.put("projectId", String.valueOf(projectID));
         }
-        params.put("contactsId", String.valueOf(customerID));
+        params.put("contactsId", customerID);
         params.put("department", tvVisitDepartment.getText().toString().trim());
         params.put("endLongitude", String.valueOf(locationLongitude));
         params.put("endLatitude", String.valueOf(locationLatitude));
@@ -362,7 +364,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             params.put("typeYM", "addS");
             params.put("companyId", String.valueOf(unitID));
             params.put("type", String.valueOf(visitTypeID));
-            params.put("contactsId", String.valueOf(customerID));
+            params.put("contactsId", customerID);
             params.put("department", tvVisitDepartment.getText().toString().trim());
             if (projectID != -1) {
                 params.put("projectId", String.valueOf(projectID));
@@ -389,7 +391,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             if (projectID != -1) {
                 params.put("projectId", String.valueOf(projectID));
             }
-            params.put("contactsId", String.valueOf(customerID));
+            params.put("contactsId", customerID);
             params.put("department", tvVisitDepartment.getText().toString().trim());
             params.put("startLongitude", String.valueOf(locationLongitude));
             params.put("startLatitude", String.valueOf(locationLatitude));
@@ -458,7 +460,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         adapter.setOnItemClickListener(new BottomDialogAdapter.OnItemClickListener() {
             @Override
             public void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean) {
-                customerID = bean.id;
+                customerID = String.valueOf(bean.id);
                 tvVisitCustomer.setText(bean.name);
                 tvVisitCustomer.setTextColor(getResources().getColor(R.color.black1));
                 ivVisitCustomer.setVisibility(View.GONE);
@@ -687,7 +689,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         tvProject.setText(bean.projectName);
         etVisitSummary.setText(bean.summary);
         unitID = bean.companyId;
-        customerID = Integer.valueOf(bean.contactsId);
+        customerID = bean.contactsId;
         projectID = bean.projectId;
         tvVisitType.setTextColor(getResources().getColor(R.color.black1));
         tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));
@@ -706,6 +708,13 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             btnEnd.setText(String.format("结束 %s", endTime));
             btnEnd.setEnabled(false);
             btnCommit.setEnabled(true);
+        }
+        if (!bean.isSubmission) {//如果已提交, 则所有按钮都不能点
+            btnCommit.setEnabled(false);
+            btnStart.setEnabled(false);
+            btnEnd.setEnabled(false);
+            tvSave.setEnabled(false);
+            tvSave.setVisibility(View.GONE);
         }
     }
 
