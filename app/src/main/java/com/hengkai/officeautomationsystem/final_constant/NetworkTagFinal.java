@@ -83,6 +83,9 @@ public class NetworkTagFinal {
      * GOODS_IN_DETAIL_ACTIVITY
      */
     public static final String GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL = "GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL";
-
+    /**
+     * GoodsDetailActivity
+     */
+    public static final String GOODS_DETAIL_ACTIVITY_GET_DETAIL = "GOODS_DETAIL_ACTIVITY_GET_DETAIL";
 
 }

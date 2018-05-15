@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function.management_of_goods;
 
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
@@ -33,7 +35,7 @@ import butterknife.OnClick;
  * Created by Harry on 2018/4/28.
  * 物品管理(物品列表)页面
  */
-public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPresenter> {
+public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPresenter> implements OnItemClickListener<GoodsEntity.GoodsBean> {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -89,30 +91,6 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         return new ManagementOfGoodsPresenter();
     }
 
-
-    /**
-     * 设置子列表每一项的点击事件
-     */
-    public void initListChildClickListener(final List<GoodsEntity.GoodsBean> list) {
-        swipeTarget.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-                View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                TextView tvName = childView.findViewById(R.id.tv_name);
-                ToastUtil.showToast(tvName.getText().toString());
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-            }
-        });
-    }
-
     /**
      * @param list
      */
@@ -150,7 +128,7 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         //初始化数据列表
         goodsList = new ArrayList<>();
         //创建数据适配器
-        adapter = new ManagementOfGoodsAdapter(goodsList);
+        adapter = new ManagementOfGoodsAdapter(this, goodsList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -179,4 +157,10 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         swipeToLoadLayout.setRefreshing(false);
     }
 
+    @Override
+    public void onItemClick(View v, GoodsEntity.GoodsBean goodsBean, int position) {
+        Intent intent = new Intent(this, GoodsDetailActivity.class);
+        intent.putExtra(GoodsDetailActivity.EXTRA_KEY_ID, goodsBean.getId());
+        startActivity(intent);
+    }
 }

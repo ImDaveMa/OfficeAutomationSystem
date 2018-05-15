@@ -82,6 +82,7 @@
         <activity android:name=".function.management_of_goods.GoodsInActivity" />
         <activity android:name=".function.management_of_goods.UseGoodsDetailActivity" />
         <activity android:name=".function.management_of_goods.GoodsInDetailActivity" />
+        <activity android:name=".function.management_of_goods.GoodsDetailActivity" />
         <activity android:name=".function.my_unit.MyUnitActivity" />
         <activity android:name=".function.unit_library.detail.UnitLibraryDetailActivity" />
         <activity android:name=".function.management_of_goods.ManagementUseGoodsActivity" />

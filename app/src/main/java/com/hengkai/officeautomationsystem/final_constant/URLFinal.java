@@ -95,6 +95,10 @@ public class URLFinal {
      */
     public static final String GOODS_IN_DETAIL_URL = "mIn/mOutDetail";
     /**
+     * 物品详情
+     */
+    public static final String GOODS_DETAIL_URL = "mgoods/toDetail";
+    /**
      * 拜访跟进详情页面 - 获取单位列表
      */
     public static final String GET_VISIT_UNIT_LIST = "visit/companyList";

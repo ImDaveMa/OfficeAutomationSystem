@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
 
 import java.util.List;
@@ -22,9 +23,11 @@ import butterknife.ButterKnife;
 public class ManagementOfGoodsAdapter extends RecyclerView.Adapter<ManagementOfGoodsAdapter.ViewHolder> {
 
     private List<GoodsEntity.GoodsBean> goodsList;
+    private OnItemClickListener mOnItemClickListener;
 
-    public ManagementOfGoodsAdapter(List<GoodsEntity.GoodsBean> goodsList) {
+    public ManagementOfGoodsAdapter(OnItemClickListener onItemClickListener, List<GoodsEntity.GoodsBean> goodsList) {
         super();
+        this.mOnItemClickListener = onItemClickListener;
         this.goodsList = goodsList;
     }
 
@@ -36,11 +39,17 @@ public class ManagementOfGoodsAdapter extends RecyclerView.Adapter<ManagementOfG
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        GoodsEntity.GoodsBean bean = goodsList.get(position);
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        final GoodsEntity.GoodsBean bean = goodsList.get(position);
         holder.tvName.setText(bean.getName());
         holder.tvCount.setText(Html.fromHtml(String.format("库存数量：<font color='red'>%d</font>%s", bean.getNum(), bean.getUnit())));
         holder.tvType.setText(String.format("类别：%s", bean.getGoodsTypeName()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickListener.onItemClick(v, bean, holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
