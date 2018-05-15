@@ -59,7 +59,7 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("物品单位管理");
+        tvTitle.setText("供应商管理");
         setupRecyclerView();
 
         //请求网络
