@@ -23,6 +23,7 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.function.visit_record.comment.CommentVisitActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
@@ -126,10 +127,19 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         adapter.setOnItemClickListener(new VisitRecordActivityAdapter.OnItemClickListener() {
             @Override
             public void onClick(VisitRecordEntity.DATABean bean) {
-                Intent intent = new Intent(VisitRecordActivity.this, VisitRecordDetailActivity.class);
-                intent.putExtra("type", "item");
-                intent.putExtra("currentID", bean.id);
-                startActivityForResult(intent, CommonFinal.VISIT_RECORD_REQUEST_CODE);
+                if (!bean.isSubmission) {
+                    //已提交
+                    Intent intent = new Intent(VisitRecordActivity.this, CommentVisitActivity.class);
+                    intent.putExtra("currentID", bean.id);
+                    startActivity(intent);
+                } else {
+                    //保存中
+                    Intent intent = new Intent(VisitRecordActivity.this, VisitRecordDetailActivity.class);
+                    intent.putExtra("type", "item");
+                    intent.putExtra("currentID", bean.id);
+                    startActivityForResult(intent, CommonFinal.VISIT_RECORD_REQUEST_CODE);
+                }
+
             }
 
             @Override

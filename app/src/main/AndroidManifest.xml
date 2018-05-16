@@ -88,6 +88,7 @@
         <activity android:name=".function.management_of_goods.ManagementUseGoodsActivity" />
         <activity android:name=".function.contacts_library.detail.ContactsLibraryDetailActivity" />
         <activity android:name=".function.project.ProjectLibraryActivity" />
+        <activity android:name=".function.visit_record.comment.CommentVisitActivity" />
 
 
     </application>

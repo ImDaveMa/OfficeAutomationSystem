@@ -38,6 +38,11 @@ public class NetworkTagFinal {
     public static final String VISIT_RECORD_DETAIL_ACTIVITY_GET = "VISIT_RECORD_DETAIL_ACTIVITY_GET";
     public static final String VISIT_RECORD_DETAIL_ACTIVITY_TO_END = "VISIT_RECORD_DETAIL_ACTIVITY_TO_END";
     /**
+     * CommentVisitActivity
+     */
+    public static final String COMMENT_VISIT_ACTIVITY_GET_VISIT_DETAIL = "COMMENT_VISIT_ACTIVITY_GET_VISIT_DETAIL";
+
+    /**
      * ManagementOfGoodsActivity
      */
     public static final String MANAGEMENT_OF_GOODS_ACTIVITY_GET_GOODS_LIST = "MANAGEMENT_OF_GOODS_ACTIVITY_GET_GOODS_LIST";
