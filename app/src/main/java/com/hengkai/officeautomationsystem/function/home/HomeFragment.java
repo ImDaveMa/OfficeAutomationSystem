@@ -130,6 +130,21 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
         adapter = new HomeFragmentGridLayoutAdapter(mActivity);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
+
+        // 绑定审批事件
+        cvHomeApproveContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showToast("跳转到审批列表");
+            }
+        });
+        // 绑定消息事件
+        cvHomeMsgContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showToast("跳转到消息列表");
+            }
+        });
     }
 
     @OnClick({R.id.rl_schedule})
@@ -161,12 +176,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
             MessageEntity.MsgBean bean = list.get(0);
             tvReceiveMessage.setText(String.format("您收到了一条%s，请尽快处理", bean.getTypeName()));
         }
-        cvHomeApproveContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("跳转到审批列表");
-            }
-        });
     }
 
     protected void prepareMsgList(List<MessageEntity.MsgBean> list) {
@@ -180,11 +189,5 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
             tvMessage2.setText(String.format("您收到了一条%s消息", bean.getTypeName()));
             tvMessage2Time.setText(DateFormatUtils.getFormatedNewsTime(bean.getCreateTime()));
         }
-        cvHomeMsgContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("跳转到消息列表");
-            }
-        });
     }
 }
