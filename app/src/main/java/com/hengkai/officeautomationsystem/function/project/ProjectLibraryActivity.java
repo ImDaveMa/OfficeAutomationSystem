@@ -62,7 +62,7 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("入库记录");
+        tvTitle.setText("项目库");
         setupRecyclerView();
 
         //请求网络
@@ -160,6 +160,6 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
      */
     @Override
     public void onItemClick(View v, ProjectEntity.ProjectBean bean, int position) {
-        ToastUtil.showToast(bean.getCreateName());
+        ToastUtil.showToast(bean.getProjectName());
     }
 }

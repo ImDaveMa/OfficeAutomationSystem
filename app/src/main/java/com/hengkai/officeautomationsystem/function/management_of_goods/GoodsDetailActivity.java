@@ -1,7 +1,11 @@
 package com.hengkai.officeautomationsystem.function.management_of_goods;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -120,7 +124,10 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailPresenter> {
             tvGoodsSupplier.setText(bean.getSupplier());
             tvGoodsCreateUser.setText(bean.getCreateUserName());
             tvGoodsCreateTime.setText(DateFormatUtils.getFormatedNewsTime(bean.getCreateTime()));
-            tvGoodsSummary.setText(bean.getRemark());
+            SpannableStringBuilder span = new SpannableStringBuilder("缩进"+bean.getRemark());
+            span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 2,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            tvGoodsSummary.setText(span);
         } else {
             ToastUtil.showToast("物品不存在或者已经被删除");
             finish();

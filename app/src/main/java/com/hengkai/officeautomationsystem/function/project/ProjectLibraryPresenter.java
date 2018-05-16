@@ -39,6 +39,8 @@ public class ProjectLibraryPresenter extends BasePresenter<ProjectLibraryActivit
                     // 返回的数据是空，所以不能处理列表
                 } else if (projectEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else if(projectEntity.getCODE() == -1){ //缺少参数
+                    ToastUtil.showToast("请求缺少参数，列表加载失败");
                 }
             }
 

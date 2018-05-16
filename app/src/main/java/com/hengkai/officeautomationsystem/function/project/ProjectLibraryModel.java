@@ -29,9 +29,9 @@ public class ProjectLibraryModel {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("userId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
-        params.put("searchId", id + "");
-        params.put("pageSize", CommonFinal.PAGE_SIZE + "");
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("PAGEID", id + "");
+        params.put("PAGESIZE", CommonFinal.PAGE_SIZE + "");
 
         service.getProjectList(URLFinal.GET_PROJECT_LIST, params)
                 .subscribeOn(Schedulers.io())

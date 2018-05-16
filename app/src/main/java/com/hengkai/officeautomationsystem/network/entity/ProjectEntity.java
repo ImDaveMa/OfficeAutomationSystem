@@ -67,14 +67,14 @@ public class ProjectEntity {
         private String projectSummarize;
         private int CZquan;
         private String projectType;
-        private String opened;
+        private boolean opened;
         private String principalUserName;
         private String projectName;
         private int projectId;
         private String updateName;
         private String qualifiedTime;
         private String createName;
-        private double dealMoney;
+        private String dealMoney;
 
         public String getCreateTime() {
             return createTime;
@@ -108,11 +108,11 @@ public class ProjectEntity {
             this.projectType = projectType;
         }
 
-        public String getOpened() {
+        public boolean getOpened() {
             return opened;
         }
 
-        public void setOpened(String opened) {
+        public void setOpened(boolean opened) {
             this.opened = opened;
         }
 
@@ -164,11 +164,11 @@ public class ProjectEntity {
             this.createName = createName;
         }
 
-        public double getDealMoney() {
+        public String getDealMoney() {
             return dealMoney;
         }
 
-        public void setDealMoney(double dealMoney) {
+        public void setDealMoney(String dealMoney) {
             this.dealMoney = dealMoney;
         }
     }

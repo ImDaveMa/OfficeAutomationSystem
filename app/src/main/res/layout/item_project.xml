@@ -14,18 +14,63 @@
             android:id="@+id/tv_project_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="工作原因"
-            android:textSize="16dp"
+            android:text="人工智能设计"
+            android:textSize="18dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_project_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="总价值：" />
+            android:textColor="@color/orange"
+            android:text="物联网类型" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/tv_project_principal_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:layout_centerVertical="true"
+            android:text="负责人：张三"/>
+
+        <TextView
+            android:id="@+id/tv_project_create_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:text="发布人：李四"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_project_summaries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black2"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_centerVertical="true"
+        android:text="概述：这里是概述概述概述概述概述概述概述概述概述概述概述概述概述概述"/>
+
+    <TextView
+        android:id="@+id/tv_project_create_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black2"
+        android:layout_centerVertical="true"
+        android:text="发布时间：2018-02-02 12:00"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,20 +78,23 @@
         android:layout_marginTop="5dp">
 
         <TextView
-            android:id="@+id/tv_time"
+            android:id="@+id/tv_project_qualified_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black2"
             android:layout_centerVertical="true"
-            android:text="入库时间："/>
+            android:text="验收时间：2018-05-02 12:00"/>
 
         <TextView
-            android:id="@+id/tv_type"
+            android:id="@+id/tv_project_dealMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/red3"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:text="状态"
-            android:textSize="16dp"
-            android:textColor="@color/blue"/>
-    </RelativeLayout>
+            android:text="成交金额：20000￥"/>
 
+    </RelativeLayout>
 </LinearLayout>
