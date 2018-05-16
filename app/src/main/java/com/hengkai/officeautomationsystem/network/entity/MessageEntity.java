@@ -63,7 +63,7 @@ public class MessageEntity {
          */
 
         private int news_type;
-        private String createTime;
+        private long createTime;
         private int project_id;
         private String adoptName;
         private String typeName;
@@ -81,11 +81,11 @@ public class MessageEntity {
             this.news_type = news_type;
         }
 
-        public String getCreateTime() {
+        public long getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(String createTime) {
+        public void setCreateTime(long createTime) {
             this.createTime = createTime;
         }
 

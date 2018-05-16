@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
-import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
+import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
@@ -58,6 +58,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
     @BindView(R.id.tv_statistics2)
     TextView tvStatistics2;
     Unbinder unbinder1;
+    @BindView(R.id.tv_message1_time)
+    TextView tvMessage1Time;
+    @BindView(R.id.tv_message2_time)
+    TextView tvMessage2Time;
 
     private HomeFragmentGridLayoutAdapter adapter;
 
@@ -151,19 +155,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder1 = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    protected void prepareApproveList(List<MessageEntity.MsgBean> list, int total){
+    protected void prepareApproveList(List<MessageEntity.MsgBean> list, int total) {
         tvToDo.setText(String.format("您有%d条待办事项", total));
-        if(list != null && list.size() > 0){
+        if (list != null && list.size() > 0) {
             MessageEntity.MsgBean bean = list.get(0);
-            tvReceiveMessage.setText(String.format("您收到了一条%s，请尽快处理",bean.getTypeName()));
+            tvReceiveMessage.setText(String.format("您收到了一条%s，请尽快处理", bean.getTypeName()));
         }
         cvHomeApproveContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,14 +169,16 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
         });
     }
 
-    protected void prepareMsgList(List<MessageEntity.MsgBean> list){
-        if(list != null && list.size() > 0){
+    protected void prepareMsgList(List<MessageEntity.MsgBean> list) {
+        if (list != null && list.size() > 0) {
             MessageEntity.MsgBean bean = list.get(0);
-            tvMessage1.setText(String.format("您收到了一条%s消息",bean.getTypeName()));
+            tvMessage1.setText(String.format("您收到了一条%s消息", bean.getTypeName()));
+            tvMessage1Time.setText(DateFormatUtils.getFormatedNewsTime(bean.getCreateTime()));
         }
-        if(list != null && list.size() > 1){
+        if (list != null && list.size() > 1) {
             MessageEntity.MsgBean bean = list.get(1);
-            tvMessage1.setText(String.format("您收到了一条%s消息",bean.getTypeName()));
+            tvMessage2.setText(String.format("您收到了一条%s消息", bean.getTypeName()));
+            tvMessage2Time.setText(DateFormatUtils.getFormatedNewsTime(bean.getCreateTime()));
         }
         cvHomeMsgContainer.setOnClickListener(new View.OnClickListener() {
             @Override
