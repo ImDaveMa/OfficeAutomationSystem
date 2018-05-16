@@ -52,6 +52,7 @@ public class WorkPlatformFragmentAdapter extends RecyclerView.Adapter<WorkPlatfo
             }
         });
         holder.rvCommon.setAdapter(new WorkPlatformFragmentGridLayoutAdapter(activity, position));
+        holder.rvCommon.setFocusable(false);
     }
 
     @Override

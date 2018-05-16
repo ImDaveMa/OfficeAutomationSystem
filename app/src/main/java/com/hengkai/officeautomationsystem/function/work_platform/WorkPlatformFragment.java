@@ -63,4 +63,10 @@ public class WorkPlatformFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setFocusable(false);
+    }
 }
