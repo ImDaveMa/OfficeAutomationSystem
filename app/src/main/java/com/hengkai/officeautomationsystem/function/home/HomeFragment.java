@@ -140,7 +140,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
     /**
      * 更新列表
      */
-    public void modifyMenus() {
+    public void updateAll() {
+        // 更新消息
+        mPresenter.getApproveList();
+        mPresenter.getMsgList();
+
+        // 更新菜单
         if (adapter != null) {
             adapter.updateDataSet();
         }

@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity {
                             ft.add(R.id.fl_container, homeFragment);
                         } else {
                             // 调用刷新
-                            homeFragment.modifyMenus();
+                            homeFragment.updateAll();
                             ft.show(homeFragment);
                         }
                         break;
@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onTabReselected(int position) {
-                homeFragment.modifyMenus();
+                homeFragment.updateAll();
             }
         });
     }
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == OpenActivityUtils.REQUEST_CODE){
             if(homeFragment!=null) {
-                homeFragment.modifyMenus();
+                homeFragment.updateAll();
             }
         }
     }
