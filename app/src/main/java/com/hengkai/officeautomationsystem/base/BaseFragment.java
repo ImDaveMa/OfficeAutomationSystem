@@ -1,7 +1,11 @@
 package com.hengkai.officeautomationsystem.base;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -14,6 +18,7 @@ import android.view.WindowManager;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.base.view.BaseFragmentImpl;
+import com.hengkai.officeautomationsystem.function.login.LoginActivity;
 import com.hengkai.officeautomationsystem.utils.LoadingDialogType;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
@@ -117,4 +122,21 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseFragment
     }
 
     protected abstract ArrayList<String> cancelNetWork();
+
+    public void showLoginDialog(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                context.startActivity(new Intent(context, LoginActivity.class));
+                dialog.dismiss();
+                //看需求, 是否需要发送消息在重新登录后刷新当前列表的数据, 这里暂时先不添加了
+            }
+        }).setNegativeButton("否", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setMessage("您目前尚未登录，是否前往登录界面").show();
+    }
 }

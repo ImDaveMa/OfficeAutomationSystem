@@ -98,6 +98,7 @@ public class UseGoodsActivity extends BaseActivity<UseGoodsPresenter> {
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS);
+        tags.add(NetworkTagFinal.USE_GOODS_ACTIVITY_GET_GOODS_PARAMS);
         return tags;
     }
 

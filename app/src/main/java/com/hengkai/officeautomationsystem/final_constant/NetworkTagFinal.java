@@ -46,6 +46,18 @@ public class NetworkTagFinal {
      */
     public static final String USE_GOODS_ACTIVITY_SAVE_GOODS = "USE_GOODS_ACTIVITY_SAVE_GOODS";
     /**
+     * USE_GOODS_ACTIVITY
+     */
+    public static final String USE_GOODS_ACTIVITY_GET_GOODS_PARAMS = "USE_GOODS_ACTIVITY_GET_GOODS_PARAMS";
+    /**
+     * GOODS_IN_ACTIVITY
+     */
+    public static final String GOODS_IN_ACTIVITY_SAVE_GOODS_IN = "GOODS_IN_ACTIVITY_SAVE_GOODS_IN";
+    /**
+     * GOODS_IN_ACTIVITY
+     */
+    public static final String GOODS_IN_ACTIVITY_GET_GOODS_PARAMS = "GOODS_IN_ACTIVITY_GET_GOODS_PARAMS";
+    /**
      * UseGoodsDetailActivity
      */
     public static final String USE_GOODS_DETAIL_ACTIVITY_GET_DETAIL = "USE_GOODS_DETAIL_ACTIVITY_GET_DETAIL";
@@ -88,4 +100,13 @@ public class NetworkTagFinal {
      */
     public static final String GOODS_DETAIL_ACTIVITY_GET_DETAIL = "GOODS_DETAIL_ACTIVITY_GET_DETAIL";
 
+    /**
+     * HomeFragment
+     */
+    public static final String HOME_FRAGMENT_GET_APPROVE_DATA = "HOME_FRAGMENT_GET_APPROVE_DATA";
+
+    /**
+     * HomeFragment
+     */
+    public static final String HOME_FRAGMENT_GET_MSG_DATA = "HOME_FRAGMENT_GET_MSG_DATA";
 }

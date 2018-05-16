@@ -23,7 +23,7 @@ public class GoodsInPresenter extends BasePresenter<GoodsInActivity> {
         model.saveGoodsIn(new Observer<CommonReceiveMessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS, d);
+                RxApiManager.get().add(NetworkTagFinal.GOODS_IN_ACTIVITY_SAVE_GOODS_IN, d);
             }
 
             @Override
@@ -59,7 +59,7 @@ public class GoodsInPresenter extends BasePresenter<GoodsInActivity> {
         model.getParams(new Observer<GoodsParamsEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS, d);
+                RxApiManager.get().add(NetworkTagFinal.GOODS_IN_ACTIVITY_GET_GOODS_PARAMS, d);
             }
 
             @Override

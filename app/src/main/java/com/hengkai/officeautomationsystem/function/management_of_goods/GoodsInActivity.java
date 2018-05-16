@@ -82,7 +82,8 @@ public class GoodsInActivity extends BaseActivity<GoodsInPresenter> {
     @Override
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS);
+        tags.add(NetworkTagFinal.GOODS_IN_ACTIVITY_SAVE_GOODS_IN);
+        tags.add(NetworkTagFinal.GOODS_IN_ACTIVITY_GET_GOODS_PARAMS);
         return tags;
     }
 

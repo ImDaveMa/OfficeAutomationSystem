@@ -22,6 +22,14 @@ public class URLFinal {
      * 登录
      */
     public static final String LOGIN_URL = "login/password";
+    /**
+     * 获取待办事项列表
+     */
+    public static final String GET_APPROVE_LIST = "mapprovalInf/toList";
+    /**
+     * 获取消息列表
+     */
+    public static final String GET_MSG_LIST = "mapprovalInf/newstoList";
 
     /**
      * 获取联系人列表

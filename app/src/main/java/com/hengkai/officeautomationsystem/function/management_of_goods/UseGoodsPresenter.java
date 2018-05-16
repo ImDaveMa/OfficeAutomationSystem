@@ -62,7 +62,7 @@ public class UseGoodsPresenter extends BasePresenter<UseGoodsActivity> {
         model.getParams(new Observer<GoodsParamsEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.USE_GOODS_ACTIVITY_SAVE_GOODS, d);
+                RxApiManager.get().add(NetworkTagFinal.USE_GOODS_ACTIVITY_GET_GOODS_PARAMS, d);
             }
 
             @Override
