@@ -1,10 +1,14 @@
 package com.hengkai.officeautomationsystem.function.goods_unit;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -17,6 +21,13 @@ import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
 import com.jaeger.library.StatusBarUtil;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +46,12 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_search)
-    TextView tvSearch;
+    @BindView(R.id.iv_add)
+    ImageView tvAdd;
     @BindView(R.id.swipe_refresh_header)
     RefreshHeaderView swipeRefreshHeader;
     @BindView(R.id.swipe_target)
-    RecyclerView swipeTarget;
+    SwipeMenuRecyclerView swipeTarget;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
@@ -59,6 +70,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         ButterKnife.bind(this);
 
         tvTitle.setText("物品单位管理");
+        tvAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
@@ -66,9 +78,58 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
     }
 
     /**
-     *  初始化数据列表
+     * 初始化数据列表
      */
     private void setupRecyclerView() {
+
+        // 创建菜单
+        SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {
+            @Override
+            public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int viewType) {
+                SwipeMenuItem editItem = new SwipeMenuItem(getApplicationContext());
+                // 各种文字和图标属性设置。
+                editItem.setText("编辑");
+                editItem.setTextColorResource(R.color.white);
+                editItem.setBackgroundColorResource(R.color.orange);
+                editItem.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+                editItem.setWidth(200);
+                rightMenu.addMenuItem(editItem); // 在Item左侧添加一个菜单。
+
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
+                // 各种文字和图标属性设置。
+                deleteItem.setText("删除");
+                deleteItem.setTextColorResource(R.color.white);
+                deleteItem.setBackgroundColorResource(R.color.red1);
+                deleteItem.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+                deleteItem.setWidth(200);
+                rightMenu.addMenuItem(deleteItem); // 在Item右侧添加一个菜单。
+
+            }
+        };
+        swipeTarget.setSwipeMenuCreator(mSwipeMenuCreator);
+
+        // 菜单点击监听。
+        SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener() {
+            @Override
+            public void onItemClick(SwipeMenuBridge menuBridge) {
+                // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
+                menuBridge.closeMenu();
+
+                int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
+                int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+                int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
+            }
+        };
+        swipeTarget.setSwipeMenuItemClickListener(mMenuItemClickListener);
+
+
+//        swipeTarget.setSwipeItemClickListener(new SwipeItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                // TODO 事件
+//            }
+//        });
+
         //初始化数据列表
         unitList = new ArrayList<>();
         swipeTarget.setLayoutManager(new LinearLayoutManager(this));
@@ -93,6 +154,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.GOODS_UNIT_ACTIVITY_LIST);
+        tags.add(NetworkTagFinal.GOODS_UNIT_ACTIVITY_ADD);
         return tags;
     }
 
@@ -103,6 +165,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
 
     /**
      * 加载数据
+     *
      * @param list
      */
     public void prepareData(List<GoodsUnitEntity.UnitBean> list) {
@@ -112,16 +175,56 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_search:
-
+            case R.id.iv_add:
+                addUnit();
                 break;
         }
+    }
+
+    /**
+     * 增加单位
+     */
+    private void addUnit() {
+        LinearLayout llUnit = new LinearLayout(this);
+        llUnit.setPadding(40, 15, 40, 15);
+        final EditText etUnit = new EditText(this);
+        etUnit.setHint("请填写物品单位");
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        etUnit.setLayoutParams(params);
+        llUnit.addView(etUnit);
+        etUnit.setBackgroundResource(R.drawable.shape_edit_text_border);
+        etUnit.setPadding(20, 20, 20, 20);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("增加单位").setView(llUnit)
+                .setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (TextUtils.isEmpty(etUnit.getText())) {
+                    ToastUtil.showToast("物品单位不能为空");
+                    return;
+                }
+
+                // 网络请求
+                mPresenter.addGoodsUnit(etUnit.getText().toString());
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * 添加物品单位成功
+     */
+    protected void addSuccess(){
+        ToastUtil.showToast("添加物品单位成功");
+        swipeToLoadLayout.setRefreshing(true);
     }
 
     /**
@@ -133,6 +236,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
 
     /**
      * 点击事假
+     *
      * @param v
      * @param unitBean
      * @param position

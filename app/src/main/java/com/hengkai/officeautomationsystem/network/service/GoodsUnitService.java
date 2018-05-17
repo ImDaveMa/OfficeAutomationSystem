@@ -19,4 +19,7 @@ public interface GoodsUnitService {
     @POST
     Observable<GoodsUnitEntity> getGoodsUnitList(@Url String url, @FieldMap Map<String, String> params);
 
+    @FormUrlEncoded
+    @POST
+    Observable<CommonReceiveMessageEntity> addGoodsUnit(@Url String url, @FieldMap Map<String, String> params);
 }

@@ -35,4 +35,17 @@ public class GoodsUnitModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+    public void addGoodsUnit(Observer observer, String name) {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("NAME", name);
+
+        service.addGoodsUnit(URLFinal.ADD_GOODS_UNIT, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 }

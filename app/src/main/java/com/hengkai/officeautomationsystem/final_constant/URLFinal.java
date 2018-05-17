@@ -83,6 +83,10 @@ public class URLFinal {
      */
     public static final String GOODS_UNIT_LIST = "mgoods/toUnitList";
     /**
+     * 新增物品单位
+     */
+    public static final String ADD_GOODS_UNIT = "mgoods/doAddUnit";
+    /**
      * 物品供货商列表
      */
     public static final String GOODS_SUPPLIER_LIST = "msupplier/toSupplierList";

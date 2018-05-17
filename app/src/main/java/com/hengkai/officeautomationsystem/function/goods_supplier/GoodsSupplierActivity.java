@@ -49,7 +49,7 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
 
     @Override
     protected int setupView() {
-        return R.layout.activity_goods_unit;
+        return R.layout.activity_goods_supplier;
     }
 
     @Override
