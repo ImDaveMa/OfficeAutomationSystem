@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_out;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.network.entity.GoodsParamsEntity;
-import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 
 import java.util.List;
 

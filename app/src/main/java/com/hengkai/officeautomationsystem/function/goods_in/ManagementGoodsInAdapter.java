@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_in;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.GoodsEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsInEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 

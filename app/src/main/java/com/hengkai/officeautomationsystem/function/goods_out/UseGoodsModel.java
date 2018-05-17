@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_out;
 
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;

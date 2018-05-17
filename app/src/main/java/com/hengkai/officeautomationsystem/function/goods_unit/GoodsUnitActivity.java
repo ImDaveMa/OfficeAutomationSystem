@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_unit;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +13,6 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.GoodsSupplierEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
@@ -30,7 +29,7 @@ import butterknife.OnClick;
  * Created by Harry on 2018/4/28.
  * 物品管理(物品列表)页面
  */
-public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> implements OnItemClickListener<GoodsSupplierEntity.SupplierBean> {
+public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implements OnItemClickListener<GoodsUnitEntity.UnitBean> {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -45,8 +44,8 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
-    private List<GoodsSupplierEntity.SupplierBean> supplierList;
-    private GoodsSupplierAdapter gUnitAdapter;
+    private List<GoodsUnitEntity.UnitBean> unitList;
+    private GoodsUnitAdapter gUnitAdapter;
 
     @Override
     protected int setupView() {
@@ -59,11 +58,11 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("供应商管理");
+        tvTitle.setText("物品单位管理");
         setupRecyclerView();
 
         //请求网络
-        mPresenter.getGoodsSupplierList("",0,0);
+        mPresenter.getGoodsUnitList();
     }
 
     /**
@@ -71,16 +70,16 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
      */
     private void setupRecyclerView() {
         //初始化数据列表
-        supplierList = new ArrayList<>();
+        unitList = new ArrayList<>();
         swipeTarget.setLayoutManager(new LinearLayoutManager(this));
-        gUnitAdapter = new GoodsSupplierAdapter(this, supplierList);
+        gUnitAdapter = new GoodsUnitAdapter(this, unitList);
         swipeTarget.setAdapter(gUnitAdapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getGoodsSupplierList("",0,0);
+                mPresenter.getGoodsUnitList();
             }
         });
     }
@@ -98,21 +97,17 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
     }
 
     @Override
-    protected GoodsSupplierPresenter bindPresenter() {
-        return new GoodsSupplierPresenter();
+    protected GoodsUnitPresenter bindPresenter() {
+        return new GoodsUnitPresenter();
     }
 
     /**
      * 加载数据
      * @param list
      */
-    public void prepareData(List<GoodsSupplierEntity.SupplierBean> list, List<GoodsSupplierEntity.ParamBean> paramList) {
-        // 保存参数 paramList
-
-
-        // 展示列表
-        supplierList.clear();
-        supplierList.addAll(list);
+    public void prepareData(List<GoodsUnitEntity.UnitBean> list) {
+        unitList.clear();
+        unitList.addAll(list);
         gUnitAdapter.notifyDataSetChanged();
         stopRefreshing();
     }
@@ -143,7 +138,7 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
      * @param position
      */
     @Override
-    public void onItemClick(View v, GoodsSupplierEntity.SupplierBean unitBean, int position) {
+    public void onItemClick(View v, GoodsUnitEntity.UnitBean unitBean, int position) {
         ToastUtil.showToast(unitBean.getName());
     }
 }

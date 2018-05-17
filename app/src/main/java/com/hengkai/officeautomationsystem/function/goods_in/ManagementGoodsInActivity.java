@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_in;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.UseGoodsEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsInEntity;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
 import com.jaeger.library.StatusBarUtil;
@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsPresenter> implements OnItemClickListener<UseGoodsEntity.OutStorageBean> {
+public class ManagementGoodsInActivity extends BaseActivity<ManagementGoodsInPresenter> implements OnItemClickListener<GoodsInEntity.InStorageBean> {
 
     private static final int REQUEST_CODE_FOR_ADD = 1000;
 
@@ -49,8 +49,8 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
-    private List<UseGoodsEntity.OutStorageBean> goodsOutList;
-    private ManagementUseGoodsAdapter adapter;
+    private List<GoodsInEntity.InStorageBean> goodsInList;
+    private ManagementGoodsInAdapter adapter;
     private int lastID;
 
     @Override
@@ -64,12 +64,12 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("领用记录");
+        tvTitle.setText("入库记录");
         ivAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
-        mPresenter.getUseGoodsList(0);
+        mPresenter.getGoodsInList(0);
     }
 
     /**
@@ -80,21 +80,21 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
     @Override
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.MANAGEMENT_USE_GOODS_ACTIVITY_GET_USE_GOODS_LIST);
+        tags.add(NetworkTagFinal.MANAGEMENT_GOODS_IN_ACTIVITY_GET_GOODS_LIST);
         return tags;
     }
 
     @Override
-    protected ManagementUseGoodsPresenter bindPresenter() {
-        return new ManagementUseGoodsPresenter();
+    protected ManagementGoodsInPresenter bindPresenter() {
+        return new ManagementGoodsInPresenter();
     }
 
     /**
      * @param list
      */
-    public void prepareData(List<UseGoodsEntity.OutStorageBean> list) {
-        if (goodsOutList != null && list != null && list.size() > 0) {
-            goodsOutList.addAll(list);
+    public void prepareData(List<GoodsInEntity.InStorageBean> list) {
+        if (goodsInList != null && list != null && list.size() > 0) {
+            goodsInList.addAll(list);
             adapter.notifyDataSetChanged();
             // 获取最后一个ID
             lastID = list.get(list.size() - 1).getId();
@@ -106,7 +106,7 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search, R.id.iv_add})
+    @OnClick({R.id.iv_back, R.id.tv_search,R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -116,7 +116,7 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
 
                 break;
             case R.id.iv_add:
-                Intent intent = new Intent(this, UseGoodsActivity.class);
+                Intent intent = new Intent(this, GoodsInActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_FOR_ADD);
                 break;
         }
@@ -128,9 +128,9 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
     private void setupRecyclerView() {
         swipeTarget.setLayoutManager(new LinearLayoutManager(this));
         //初始化数据列表
-        goodsOutList = new ArrayList<>();
+        goodsInList = new ArrayList<>();
         //创建数据适配器
-        adapter = new ManagementUseGoodsAdapter(this, this, goodsOutList);
+        adapter = new ManagementGoodsInAdapter(this, this, goodsInList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -138,15 +138,15 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
             @Override
             public void onRefresh() {
                 // 清空历史数据
-                goodsOutList.clear();
-                mPresenter.getUseGoodsList(0);
+                goodsInList.clear();
+                mPresenter.getGoodsInList(0);
                 swipeLoadMoreFooter.onReset();
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.getUseGoodsList(lastID);
+                mPresenter.getGoodsInList(lastID);
             }
         });
     }
@@ -166,9 +166,9 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
      * @param position
      */
     @Override
-    public void onItemClick(View v, UseGoodsEntity.OutStorageBean bean, int position) {
-        Intent intent = new Intent(this, UseGoodsDetailActivity.class);
-        intent.putExtra(UseGoodsDetailActivity.EXTRA_KEY_ID, bean.getId());
+    public void onItemClick(View v, GoodsInEntity.InStorageBean bean, int position) {
+        Intent intent = new Intent(this, GoodsInDetailActivity.class);
+        intent.putExtra(GoodsInDetailActivity.EXTRA_KEY_ID,bean.getId());
         startActivity(intent);
     }
 

@@ -1,9 +1,10 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_in;
 
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
-import com.hengkai.officeautomationsystem.network.service.UseGoodsService;
+import com.hengkai.officeautomationsystem.network.service.GoodsInService;
+import com.hengkai.officeautomationsystem.network.service.GoodsService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
 
@@ -15,33 +16,26 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-/**
- *
- */
-public class UseGoodsDetailModel {
+public class ManagementGoodsInModel {
 
-    private final UseGoodsService service;
+    private final GoodsInService service;
 
-    public UseGoodsDetailModel() {
+    public ManagementGoodsInModel() {
         Retrofit retrofit = RetrofitHelper.getInstance().getRetrofit();
-        service = retrofit.create(UseGoodsService.class);
+        service = retrofit.create(GoodsInService.class);
     }
 
-    /**
-     * 保存领用申请
-     * @param observer
-     * @param id
-     */
-    public void getUseGoodsDetail(Observer observer, int id) {
+    public void getGoodsList(Observer observer, int id) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("id", id + "");
+        params.put("userId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("searchId", id + "");
+        params.put("pageSize", CommonFinal.PAGE_SIZE + "");
 
-        service.getUseGoodsDetail(URLFinal.USE_GOODS_DETAIL, params)
+        service.getGoodsInList(URLFinal.GET_GOODS_IN_LIST, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
-
 }

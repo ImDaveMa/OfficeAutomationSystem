@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_supplier;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
-import com.hengkai.officeautomationsystem.network.entity.GoodsUnitEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsSupplierEntity;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ import butterknife.ButterKnife;
 /**
  * Created by Harry on 2018/4/28.
  */
-public class GoodsUnitAdapter extends RecyclerView.Adapter<GoodsUnitAdapter.ViewHolder> {
+public class GoodsSupplierAdapter extends RecyclerView.Adapter<GoodsSupplierAdapter.ViewHolder> {
 
-    private List<GoodsUnitEntity.UnitBean> mUnitList;
+    private List<GoodsSupplierEntity.SupplierBean> mUnitList;
     private OnItemClickListener mOnItemClickListener;
 
-    public GoodsUnitAdapter(OnItemClickListener onItemClickListener, List<GoodsUnitEntity.UnitBean> unitList) {
+    public GoodsSupplierAdapter(OnItemClickListener onItemClickListener, List<GoodsSupplierEntity.SupplierBean> unitList) {
         mUnitList = unitList;
         mOnItemClickListener = onItemClickListener;
     }
@@ -32,14 +32,16 @@ public class GoodsUnitAdapter extends RecyclerView.Adapter<GoodsUnitAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_name, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_supplier_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final GoodsUnitEntity.UnitBean bean = mUnitList.get(position);
+        final GoodsSupplierEntity.SupplierBean bean = mUnitList.get(position);
         holder.tvName.setText(bean.getName());
+        holder.tvType.setText(bean.getSupplierTypeName());
+        holder.tvAddress.setText(String.format("供应商地址：%s", bean.getCity()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +59,10 @@ public class GoodsUnitAdapter extends RecyclerView.Adapter<GoodsUnitAdapter.View
 
         @BindView(R.id.tv_name)
         TextView tvName;
+        @BindView(R.id.tv_type)
+        TextView tvType;
+        @BindView(R.id.tv_address)
+        TextView tvAddress;
 
         public ViewHolder(View itemView) {
             super(itemView);

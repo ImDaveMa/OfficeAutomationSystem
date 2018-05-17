@@ -1,37 +1,35 @@
-package com.hengkai.officeautomationsystem.function.management_of_goods;
+package com.hengkai.officeautomationsystem.function.goods_in;
 
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
-import com.hengkai.officeautomationsystem.network.entity.GoodsOutDetailEntity;
-import com.hengkai.officeautomationsystem.network.entity.GoodsParamsEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoodsInDetailEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class UseGoodsDetailPresenter extends BasePresenter<UseGoodsDetailActivity> {
+public class GoodsInDetailPresenter extends BasePresenter<GoodsInDetailActivity> {
 
-    private final UseGoodsDetailModel model;
+    private final GoodsInDetailModel model;
 
-    public UseGoodsDetailPresenter() {
-        model = new UseGoodsDetailModel();
+    public GoodsInDetailPresenter() {
+        model = new GoodsInDetailModel();
     }
 
-    public void getUseGoodsDetail(int id) {
+    public void getGoodsInDetail(int id) {
         view.showDialog();
-        model.getUseGoodsDetail(new Observer<GoodsOutDetailEntity>() {
+        model.getGoodsInDetail(new Observer<GoodsInDetailEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.USE_GOODS_DETAIL_ACTIVITY_GET_DETAIL, d);
+                RxApiManager.get().add(NetworkTagFinal.GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL, d);
             }
 
             @Override
-            public void onNext(GoodsOutDetailEntity msgEntity) {
+            public void onNext(GoodsInDetailEntity msgEntity) {
                 if (msgEntity.getCODE() == 1) {
                     view.dismissDialog();
-                    view.getSuccess(msgEntity.getOutStorage());
+                    view.getSuccess(msgEntity.getInStorage());
                 } else if (msgEntity.getCODE() == 3) {
                     view.dismissDialog();
                     ToastUtil.showToast("系统异常，获取内容失败");
@@ -54,4 +52,5 @@ public class UseGoodsDetailPresenter extends BasePresenter<UseGoodsDetailActivit
             }
         }, id);
     }
+
 }

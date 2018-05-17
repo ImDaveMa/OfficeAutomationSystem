@@ -2,10 +2,7 @@ package com.hengkai.officeautomationsystem.function.project;
 
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementUseGoodsActivity;
-import com.hengkai.officeautomationsystem.function.management_of_goods.ManagementUseGoodsModel;
 import com.hengkai.officeautomationsystem.network.entity.ProjectEntity;
-import com.hengkai.officeautomationsystem.network.entity.UseGoodsEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
