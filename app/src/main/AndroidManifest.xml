@@ -89,7 +89,7 @@
         <activity android:name=".function.contacts_library.detail.ContactsLibraryDetailActivity" />
         <activity android:name=".function.project.ProjectLibraryActivity" />
         <activity android:name=".function.visit_record.comment.CommentVisitActivity" />
-        <activity android:name=".function.visit_record.comment.CommentActivity" />
+        <activity android:name=".function.visit_record.comment.GoToCommentActivity" />
 
 
     </application>

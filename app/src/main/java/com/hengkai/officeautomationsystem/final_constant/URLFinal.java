@@ -158,4 +158,12 @@ public class URLFinal {
      * 联系人库列表详情
      */
     public static final String GET_CONTACTS_DETAIL = "conAcom/conDetails";
+    /**
+     * 拜访跟进 - 评论列表
+     */
+    public static final String GET_COMMENT_LIST = "mcomment/commentList";
+    /**
+     * 拜访跟进 - 评论
+     */
+    public static final String VISIT_COMMENT = "mcomment/insertComment";
 }

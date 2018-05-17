@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.widget.Toast;
 
 import com.hengkai.officeautomationsystem.application.OfficeAutomationSystemApplication;
@@ -18,6 +19,7 @@ public class ToastUtil {
             mToast = Toast.makeText(OfficeAutomationSystemApplication.getAppContext(), text, Toast.LENGTH_SHORT);
         }
         mToast.setText(text);
+        View view = mToast.getView();
         mToast.show();
     }
 

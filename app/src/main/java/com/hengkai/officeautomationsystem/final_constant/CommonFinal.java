@@ -24,4 +24,12 @@ public class CommonFinal {
      * 拜访跟进页面的RequestCode
      */
     public static final int VISIT_RECORD_REQUEST_CODE = 1002;
+    /**
+     * 通用的请求码
+     */
+    public static final int COMMON_REQUEST_CODE = 1003;
+    /**
+     * 通用的结果码
+     */
+    public static final int COMMON_RESULT_CODE = 1004;
 }

@@ -1,17 +1,22 @@
 package com.hengkai.officeautomationsystem.function.visit_record.comment;
 
+import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +44,14 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
     TextView tvEndTime;
     @BindView(R.id.tv_visit_summary)
     TextView tvVisitSummary;
+    @BindView(R.id.tv_not_comment)
+    TextView tvNotComment;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    private List<CommentVisitEntity.DATEBean> mList;
+    private CommentVisitAdapter adapter;
+    private int currentID;
 
     @Override
     protected int setupView() {
@@ -53,13 +64,17 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        mPresenter.getVisitRecordDetail(getIntent().getIntExtra("currentID", 0));
+        mList = new ArrayList<>();
+        setupRecyclerView();
+        currentID = getIntent().getIntExtra("currentID", 0);
+        mPresenter.getVisitRecordDetail(currentID);
     }
 
     @Override
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_GET_VISIT_DETAIL);
+        tags.add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_GET_COMMENT_LIST);
         return tags;
     }
 
@@ -76,15 +91,48 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                 break;
             case R.id.tv_comment:
                 //跳转到评论页面, 评论完成后返回并更新列表信息
-
+                Intent intent = new Intent(this, GoToCommentActivity.class);
+                intent.putExtra("currentID", currentID);
+                startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == CommonFinal.COMMON_RESULT_CODE && requestCode == CommonFinal.COMMON_REQUEST_CODE) {
+            mPresenter.getCommentList(currentID);
+        }
+    }
+
+    /**
+     * 配置列表
+     */
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new CommentVisitAdapter(mList);
+        recyclerView.setAdapter(adapter);
     }
 
     /**
      * @param bean 从服务器上获取到页面的详情信息
      */
     public void getVisitRecordDetail(VisitRecordDetailEntity.DATABean bean) {
+        //优先获取信息, 在获取评价
+        mPresenter.getCommentList(currentID);
+
         switch (bean.type) {
             case "0":
                 tvVisitType.setText("跟进");
@@ -115,5 +163,19 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         tvStartTime.setText(startTime);
         String endTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, bean.endTime);
         tvEndTime.setText(endTime);
+    }
+
+    public void getCommentList(List<CommentVisitEntity.DATEBean> list) {
+        if (list == null || list.size() == 0) {
+            tvNotComment.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            tvNotComment.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            mList.clear();
+            mList.addAll(list);
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }

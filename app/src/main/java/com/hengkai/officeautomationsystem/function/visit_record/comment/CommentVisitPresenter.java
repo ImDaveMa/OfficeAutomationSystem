@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.function.visit_record.comment;
 
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
@@ -36,6 +37,51 @@ public class CommentVisitPresenter extends BasePresenter<CommentVisitActivity> {
                 } else {
                     //传入ID为空
                     ToastUtil.showToast("获取信息出错了");
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtil.showToast("网络连接错误");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void getCommentList(int currentID) {
+        model.getCommentList(currentID, new Observer<CommentVisitEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_GET_COMMENT_LIST, d);
+            }
+
+            @Override
+            public void onNext(CommentVisitEntity commentVisitEntity) {
+                switch (commentVisitEntity.CODE) {
+                    case 1:
+                        view.getCommentList(commentVisitEntity.DATE);
+                        break;
+                    case 0:
+                        view.showLoginDialog(view);
+                        break;
+                    case -1:
+                        //缺少参数
+                        ToastUtil.showToast("查询评论失败");
+                        break;
+                    case 2:
+                        //查询结果为空
+                        view.getCommentList(commentVisitEntity.DATE);
+                        break;
+                    case 3:
+                        //操作失败
+                        ToastUtil.showToast("查询评论失败");
+                        break;
+                    default:
+                        break;
                 }
             }
 
