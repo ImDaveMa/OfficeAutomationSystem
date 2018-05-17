@@ -46,7 +46,7 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.showToast("请求网络失败");
+//                ToastUtil.showToast("请求网络失败");
             }
 
             @Override
@@ -77,7 +77,7 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.showToast("请求网络失败");
+//                ToastUtil.showToast("请求网络失败");
             }
 
             @Override

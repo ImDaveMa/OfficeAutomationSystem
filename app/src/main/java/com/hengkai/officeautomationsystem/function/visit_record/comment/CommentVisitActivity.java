@@ -76,6 +76,7 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                 break;
             case R.id.tv_comment:
                 //跳转到评论页面, 评论完成后返回并更新列表信息
+
                 break;
         }
     }
@@ -111,8 +112,8 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         tvEndTime.setTextColor(getResources().getColor(R.color.black1));
 
         String startTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, bean.startTime);
-        tvStartTime.setText(String.format("开始 %s", startTime));
+        tvStartTime.setText(startTime);
         String endTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, bean.endTime);
-        tvEndTime.setText(String.format("结束 %s", endTime));
+        tvEndTime.setText(endTime);
     }
 }
