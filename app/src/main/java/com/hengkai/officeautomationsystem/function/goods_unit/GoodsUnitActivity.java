@@ -77,7 +77,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        if(intent != null){
+        if(intent != null && intent.hasExtra(REQUEST_EXTRA_KEY_TITLE)){
             tvTitle.setText(intent.getStringExtra(REQUEST_EXTRA_KEY_TITLE));
         } else {
             tvTitle.setText("物品单位管理");
@@ -284,9 +284,8 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
      */
     @Override
     public void onItemClick(View v, GoodsUnitEntity.UnitBean unitBean, int position) {
-        Intent request = getIntent();
-        if(request != null) {
-            tvTitle.setText(request.getStringExtra(REQUEST_EXTRA_KEY_TITLE));
+        Intent requestIntent = getIntent();
+        if(requestIntent != null && requestIntent.hasExtra(REQUEST_EXTRA_KEY_TITLE)) {
             Intent intent = new Intent();
             intent.putExtra(EXTRA_KEY_ID, unitBean.getId());
             intent.putExtra(EXTRA_KEY_NAME, unitBean.getName());

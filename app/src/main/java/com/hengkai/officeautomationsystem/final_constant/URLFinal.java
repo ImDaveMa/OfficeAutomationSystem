@@ -182,4 +182,20 @@ public class URLFinal {
      * 拜访跟进 - 评论
      */
     public static final String VISIT_COMMENT = "mcomment/insertComment";
+    /**
+     * 添加物品 参数请求
+     */
+    public static final String ADD_GOODS_PARAMS = "mgoods/toInsert";
+    /**
+     * 新增物品
+     */
+    public static final String ADD_GOODS_URL = "mgoods/doInsert";
+    /**
+     * 修改物品 参数请求
+     */
+    public static final String UPDATE_GOODS_PARAMS = "mgoods/toUpdate";
+    /**
+     * 修改物品
+     */
+    public static final String UPDATE_GOODS_URL = "mgoods/doUpdate";
 }

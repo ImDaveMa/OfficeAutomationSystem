@@ -45,10 +45,14 @@ import butterknife.OnClick;
  */
 public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPresenter> implements OnItemClickListener<GoodsEntity.GoodsBean> {
 
+    private static final int REQUEST_CODE_ADD_OR_EDIT_GOODS = 10002;
+
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.swipe_refresh_header)
@@ -76,6 +80,7 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         ButterKnife.bind(this);
 
         tvTitle.setText("物品管理");
+        ivAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
@@ -117,7 +122,7 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.tv_search, R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -125,6 +130,10 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
                 break;
             case R.id.tv_search:
 
+                break;
+            case R.id.iv_add:
+                Intent intent = new Intent(this, AddGoodsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_ADD_OR_EDIT_GOODS);
                 break;
         }
     }
@@ -174,7 +183,9 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
                 final GoodsEntity.GoodsBean bean = goodsList.get(adapterPosition);
                 switch (menuPosition){
                     case 0:
-                        ToastUtil.showToast("编辑物品：" + bean.getName());
+                        Intent intent = new Intent(ManagementOfGoodsActivity.this, AddGoodsActivity.class);
+                        intent.putExtra(AddGoodsActivity.EXTRA_KEY_ID,bean.getId());
+                        startActivityForResult(intent, REQUEST_CODE_ADD_OR_EDIT_GOODS);
                         break;
                     case 1:
                         AlertDialog.Builder builder = new AlertDialog.Builder(ManagementOfGoodsActivity.this);
@@ -245,5 +256,15 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
         Intent intent = new Intent(this, GoodsDetailActivity.class);
         intent.putExtra(GoodsDetailActivity.EXTRA_KEY_ID, goodsBean.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_CODE_ADD_OR_EDIT_GOODS){
+                swipeToLoadLayout.setRefreshing(true);
+            }
+        }
     }
 }

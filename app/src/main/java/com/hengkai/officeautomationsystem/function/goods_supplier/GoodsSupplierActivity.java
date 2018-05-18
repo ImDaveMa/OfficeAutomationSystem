@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.function.goods_supplier;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,11 @@ import butterknife.OnClick;
  */
 public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> implements OnItemClickListener<GoodsSupplierEntity.SupplierBean> {
 
+    public static final String  REQUEST_EXTRA_KEY_TITLE = "REQUEST_EXTRA_KEY_TITLE";
+
+    public static final String EXTRA_KEY_ID = "EXTRA_KEY_ID";
+    public static final String  EXTRA_KEY_NAME = "EXTRA_KEY_NAME";
+
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
@@ -58,7 +65,13 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("供应商管理");
+        Intent intent = getIntent();
+        if(intent != null && intent.hasExtra(REQUEST_EXTRA_KEY_TITLE)){
+            tvTitle.setText(intent.getStringExtra(REQUEST_EXTRA_KEY_TITLE));
+        } else {
+            tvTitle.setText("供应商管理");
+        }
+
         setupRecyclerView();
 
         //请求网络
@@ -136,13 +149,21 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
     }
 
     /**
-     * 点击事假
+     * 点击事件
      * @param v
      * @param unitBean
      * @param position
      */
     @Override
     public void onItemClick(View v, GoodsSupplierEntity.SupplierBean unitBean, int position) {
-        ToastUtil.showToast(unitBean.getName());
+        Intent requestIntent = getIntent();
+        if(requestIntent != null && requestIntent.hasExtra(REQUEST_EXTRA_KEY_TITLE)) {
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_KEY_ID, unitBean.getId());
+            intent.putExtra(EXTRA_KEY_NAME, unitBean.getName());
+            setResult(Activity.RESULT_OK, intent);
+
+            finish();
+        }
     }
 }
