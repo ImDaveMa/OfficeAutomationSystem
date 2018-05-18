@@ -87,9 +87,10 @@
         <activity android:name=".function.unit_library.detail.UnitLibraryDetailActivity" />
         <activity android:name=".function.goods_out.ManagementUseGoodsActivity" />
         <activity android:name=".function.contacts_library.detail.ContactsLibraryDetailActivity" />
-        <activity android:name=".function.project.ProjectLibraryActivity" />
+        <activity android:name=".function.project_library.ProjectLibraryActivity" />
         <activity android:name=".function.visit_record.comment.CommentVisitActivity" />
         <activity android:name=".function.visit_record.comment.GoToCommentActivity" />
+        <activity android:name=".function.project_library.detail.ProjectLibraryDetailActivity" />
 
 
     </application>

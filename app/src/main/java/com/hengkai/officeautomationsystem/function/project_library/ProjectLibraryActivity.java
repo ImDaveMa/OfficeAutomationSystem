@@ -1,5 +1,6 @@
-package com.hengkai.officeautomationsystem.function.project;
+package com.hengkai.officeautomationsystem.function.project_library;
 
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.project_library.detail.ProjectLibraryDetailActivity;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.ProjectEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
@@ -160,6 +162,8 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
      */
     @Override
     public void onItemClick(View v, ProjectEntity.ProjectBean bean, int position) {
-        ToastUtil.showToast(bean.getProjectName());
+        Intent intent = new Intent(this, ProjectLibraryDetailActivity.class);
+        intent.putExtra("projectID", bean.getProjectId());
+        startActivity(intent);
     }
 }

@@ -114,6 +114,10 @@ public class NetworkTagFinal {
      */
     public static final String PROJECT_LIBRARY_ACTIVITY_GET_PROJECT_LIST = "PROJECT_LIBRARY_ACTIVITY_GET_PROJECT_LIST";
     /**
+     * ProjectLibraryDetailActivity
+     */
+    public static final String PROJECT_LIBRARY_DETAIL_ACTIVITY_GET_PROJECT_DETAIL = "PROJECT_LIBRARY_DETAIL_ACTIVITY_GET_PROJECT_DETAIL";
+    /**
      * GOODS_IN_DETAIL_ACTIVITY
      */
     public static final String GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL = "GOODS_IN_DETAIL_ACTIVITY_GET_DETAIL";

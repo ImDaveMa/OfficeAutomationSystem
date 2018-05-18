@@ -163,6 +163,10 @@ public class URLFinal {
      */
     public static final String GET_PROJECT_LIST = "mproject/toList";
     /**
+     * 获取项目库详情
+     */
+    public static final String GET_PROJECT_DETAIL = "mproject/getDetailProject";
+    /**
      * 我的单位
      */
     public static final String MY_UNIT_GET_UNIT_LIST = "conAcom/userList";

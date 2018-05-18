@@ -1,10 +1,9 @@
-package com.hengkai.officeautomationsystem.function.project;
+package com.hengkai.officeautomationsystem.function.project_library;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,9 +11,9 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.ProjectEntity;
+import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.MoneyUtils;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,14 +57,14 @@ public class ProjectLibraryAdapter extends RecyclerView.Adapter<ProjectLibraryAd
         if(TextUtils.isEmpty(createTime)) {
             createTime = "暂无";
         } else {
-            createTime = createTime.substring(0, createTime.lastIndexOf(':'));
+            createTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, Long.valueOf(bean.getCreateTime()));
         }
         holder.tvProjectCreateTime.setText(String.format("发布时间：%s",createTime));
         String qualifiedTime = bean.getQualifiedTime();
         if(TextUtils.isEmpty(qualifiedTime)) {
             qualifiedTime = "暂无";
         } else {
-            qualifiedTime = qualifiedTime.substring(0, qualifiedTime.lastIndexOf(':'));
+            qualifiedTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, Long.valueOf(bean.getQualifiedTime()));
         }
         holder.tvProjectQualifiedTime.setText(String.format("验收时间：%s",qualifiedTime));
         String money = bean.getDealMoney();
