@@ -45,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@color/transparent"
-                    android:inputType="number"
                     android:gravity="right"
                     android:hint="请输入物品名称"
                     android:textSize="14sp" />

@@ -32,7 +32,7 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
             public void onNext(CommonReceiveMessageEntity msgEntity) {
                 if (msgEntity.CODE == 1) {
                     view.dismissDialog();
-//                    view.submitSuccess();
+                    view.addSuccess();
                 } else if (msgEntity.CODE == 3) {
                     view.dismissDialog();
                     ToastUtil.showToast("系统异常，申请提交失败");
@@ -68,7 +68,7 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
             public void onNext(CommonReceiveMessageEntity msgEntity) {
                 if (msgEntity.CODE == 1) {
                     view.dismissDialog();
-//                    view.getParamsSuccess(goodsParamsEntity);
+                    view.editSuccess();
                 } else if (msgEntity.CODE == 3) {
                     view.dismissDialog();
                     ToastUtil.showToast("系统异常，获取参数失败");

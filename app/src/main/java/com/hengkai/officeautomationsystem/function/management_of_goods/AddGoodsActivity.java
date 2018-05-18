@@ -5,6 +5,9 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -76,6 +79,27 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
     @BindView(R.id.rl_edit_container)
     LinearLayout rlEditContainer;
 
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        @Override
+        public void afterTextChanged(Editable s) {
+            // 如果一个为空，则总价为空
+            if(TextUtils.isEmpty(etGoodsCost.getText()) || TextUtils.isEmpty(etGoodsNum.getText())){
+                tvGoodsTotal.setText("");
+                return;
+            }
+            double cost = Double.parseDouble(etGoodsCost.getText().toString());
+            int num = Integer.parseInt(etGoodsNum.getText() + "");
+            double total = cost * num;
+
+            DecimalFormat df = new DecimalFormat("#.00");
+            tvGoodsTotal.setText(df.format(total));
+        }
+    };
+
     @Override
     protected int setupView() {
         return R.layout.activity_add_goods;
@@ -102,6 +126,8 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
         }
 
         etGoodsName.requestFocus();
+        etGoodsCost.addTextChangedListener(textWatcher);
+        etGoodsNum.addTextChangedListener(textWatcher);
     }
 
     @Override
@@ -147,10 +173,56 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
         Intent intent = getIntent();
         int id = intent.getIntExtra(EXTRA_KEY_ID, 0);
 
+        String name = etGoodsName.getText().toString();
+        if(TextUtils.isEmpty(name)){
+            ToastUtil.showToast("请输入物品名称");
+            etGoodsName.requestFocus();
+            return;
+        }
+
+        if(TextUtils.isEmpty(tvGoodsType.getText())){
+            ToastUtil.showToast("请选择物品类型");
+            return;
+        }
+        int type = Integer.parseInt(tvGoodsType.getTag()+"");
+
+        // 供货商
+        int supplier = 0;
+        if(!TextUtils.isEmpty(tvGoodsSupplierName.getText())) {
+            supplier = Integer.parseInt(tvGoodsSupplierName.getTag() + "");
+        }
+
+        if(TextUtils.isEmpty(tvGoodsUnitName.getText())){
+            ToastUtil.showToast("请选择物品单位");
+            return;
+        }
+        int unit = Integer.parseInt(tvGoodsUnitName.getTag()+"");
+
+        // 品牌
+        String band = etGoodsBand.getText().toString();
+        // 规格
+        String spec = etGoodsSpec.getText().toString();
+
+        if(TextUtils.isEmpty(etGoodsCost.getText())){
+            ToastUtil.showToast("请输入单价");
+            return;
+        }
+        double cost = Double.parseDouble(etGoodsCost.getText().toString());
+
+        // 备注
+        String remark = etGoodsRemark.getText().toString();
+
+        int num = 0;
+        if(!TextUtils.isEmpty(etGoodsNum.getText())) {
+            num = Integer.parseInt(etGoodsNum.getText() + "");
+        }
+        // 这里不能用显示的值，必须重新计算
+        double total = cost * num;
+
         if (id <= 0) {
-//            mPresenter.addGoods();
+            mPresenter.addGoods(name, type, supplier, unit, band, spec, cost, remark);
         } else {
-//            mPresenter.updateGoods();
+            mPresenter.updateGoods(id,name, type, supplier, unit, band, spec, cost, remark, num, total);
         }
     }
 
@@ -309,5 +381,23 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
                 tvGoodsSupplierName.setTag(id);
             }
         }
+    }
+
+    /**
+     * 添加成功
+     */
+    protected void addSuccess(){
+        ToastUtil.showToast("物品添加成功");
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    /**
+     * 编辑成功
+     */
+    protected void editSuccess(){
+        ToastUtil.showToast("物品编辑成功");
+        setResult(RESULT_OK);
+        finish();
     }
 }
