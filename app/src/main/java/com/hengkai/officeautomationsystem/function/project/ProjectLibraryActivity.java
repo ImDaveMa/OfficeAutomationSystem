@@ -53,7 +53,7 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
 
     @Override
     protected int setupView() {
-        return R.layout.activity_management_of_goods;
+        return R.layout.activity_common_search_list;
     }
 
     @Override

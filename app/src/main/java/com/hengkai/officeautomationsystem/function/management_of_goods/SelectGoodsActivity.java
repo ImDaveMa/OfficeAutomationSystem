@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,7 +58,7 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
 
     @Override
     protected int setupView() {
-        return R.layout.activity_management_of_goods;
+        return R.layout.activity_common_search_list;
     }
 
     @Override

@@ -84,6 +84,10 @@ public class NetworkTagFinal {
      */
     public static final String GOODS_UNIT_ACTIVITY_DELETE = "GOODS_UNIT_ACTIVITY_DELETE";
     /**
+     * ManagementOfGoodsActivity
+     */
+    public static final String MANAGEMENT_OF_GOODS_ACTIVITY_DELETE = "MANAGEMENT_OF_GOODS_ACTIVITY_DELETE";
+    /**
      * GOODS_SUPPLIER_ACTIVITY
      */
     public static final String GOODS_SUPPLIER_ACTIVITY_LIST = "GOODS_SUPPLIER_ACTIVITY_LIST";
