@@ -1,6 +1,8 @@
 package com.hengkai.officeautomationsystem.function.goods_unit;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +44,11 @@ import butterknife.OnClick;
  */
 public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implements OnItemClickListener<GoodsUnitEntity.UnitBean> {
 
+    public static final String  REQUEST_EXTRA_KEY_TITLE = "REQUEST_EXTRA_KEY_TITLE";
+
+    public static final String EXTRA_KEY_ID = "EXTRA_KEY_ID";
+    public static final String  EXTRA_KEY_NAME = "EXTRA_KEY_NAME";
+
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
@@ -69,7 +76,12 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("物品单位管理");
+        Intent intent = getIntent();
+        if(intent != null){
+            tvTitle.setText(intent.getStringExtra(REQUEST_EXTRA_KEY_TITLE));
+        } else {
+            tvTitle.setText("物品单位管理");
+        }
         tvAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
@@ -86,14 +98,14 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {
             @Override
             public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int viewType) {
-                SwipeMenuItem editItem = new SwipeMenuItem(getApplicationContext());
-                // 各种文字和图标属性设置。
-                editItem.setText("编辑");
-                editItem.setTextColorResource(R.color.white);
-                editItem.setBackgroundColorResource(R.color.orange);
-                editItem.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
-                editItem.setWidth(200);
-                rightMenu.addMenuItem(editItem); // 在Item左侧添加一个菜单。
+//                SwipeMenuItem editItem = new SwipeMenuItem(getApplicationContext());
+//                // 各种文字和图标属性设置。
+//                editItem.setText("编辑");
+//                editItem.setTextColorResource(R.color.white);
+//                editItem.setBackgroundColorResource(R.color.orange);
+//                editItem.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+//                editItem.setWidth(200);
+//                rightMenu.addMenuItem(editItem); // 在Item左侧添加一个菜单。
 
                 SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
                 // 各种文字和图标属性设置。
@@ -115,9 +127,25 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
                 // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
                 menuBridge.closeMenu();
 
-                int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
-                int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+                // int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
+                final int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
                 int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
+
+                final GoodsUnitEntity.UnitBean bean = unitList.get(adapterPosition);
+                switch (menuPosition){
+                    case 0:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GoodsUnitActivity.this);
+                        builder.setTitle("删除提示").setMessage(String.format("确定删除物品单位【%s】",bean.getName())).setNegativeButton("取消", null);
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 网络请求
+                                mPresenter.deleteGoodsUnit(bean.getId(), adapterPosition);
+                            }
+                        });
+                        builder.show();
+                        break;
+                }
             }
         };
         swipeTarget.setSwipeMenuItemClickListener(mMenuItemClickListener);
@@ -155,6 +183,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.GOODS_UNIT_ACTIVITY_LIST);
         tags.add(NetworkTagFinal.GOODS_UNIT_ACTIVITY_ADD);
+        tags.add(NetworkTagFinal.GOODS_UNIT_ACTIVITY_DELETE);
         return tags;
     }
 
@@ -228,6 +257,18 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
     }
 
     /**
+     * 删除物品单位成功
+     */
+    protected void deleteSuccess(int position){
+        ToastUtil.showToast("物品单位删除成功");
+        // 重载数据源
+        unitList.remove(position);
+        swipeTarget.getAdapter().notifyDataSetChanged();
+//        // 刷新列表
+//        swipeToLoadLayout.setRefreshing(true);
+    }
+
+    /**
      * 停止下拉刷新和上拉刷新
      */
     public void stopRefreshing() {
@@ -235,14 +276,23 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
     }
 
     /**
-     * 点击事假
-     *
+     * 点击事件
+     * 传出ID和名称
      * @param v
      * @param unitBean
      * @param position
      */
     @Override
     public void onItemClick(View v, GoodsUnitEntity.UnitBean unitBean, int position) {
-        ToastUtil.showToast(unitBean.getName());
+        Intent request = getIntent();
+        if(request != null) {
+            tvTitle.setText(request.getStringExtra(REQUEST_EXTRA_KEY_TITLE));
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_KEY_ID, unitBean.getId());
+            intent.putExtra(EXTRA_KEY_NAME, unitBean.getName());
+            setResult(Activity.RESULT_OK, intent);
+
+            finish();
+        }
     }
 }

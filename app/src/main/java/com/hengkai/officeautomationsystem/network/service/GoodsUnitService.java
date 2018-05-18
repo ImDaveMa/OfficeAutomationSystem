@@ -22,4 +22,8 @@ public interface GoodsUnitService {
     @FormUrlEncoded
     @POST
     Observable<CommonReceiveMessageEntity> addGoodsUnit(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<CommonReceiveMessageEntity> deleteGoodsUnit(@Url String url, @FieldMap Map<String, String> params);
 }

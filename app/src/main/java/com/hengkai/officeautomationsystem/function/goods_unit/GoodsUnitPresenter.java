@@ -85,4 +85,37 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
             }
         }, name);
     }
+
+    public void deleteGoodsUnit(int id, final int position) {
+        view.showDialog();
+        model.deleteGoodsUnit(new Observer<CommonReceiveMessageEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.GOODS_UNIT_ACTIVITY_DELETE, d);
+            }
+
+            @Override
+            public void onNext(CommonReceiveMessageEntity entity) {
+                view.dismissDialog();
+                if (entity.CODE == 1) {
+                    view.deleteSuccess(position);
+                } else if (entity.CODE == -2 || entity.CODE == 3) {
+                    ToastUtil.showToast(entity.MES);
+                } else if (entity.CODE == 0) {//TOKEN失效
+                    view.showLoginDialog(view);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.dismissDialog();
+                ToastUtil.showToast("请求网络失败:" + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }, id);
+    }
 }
