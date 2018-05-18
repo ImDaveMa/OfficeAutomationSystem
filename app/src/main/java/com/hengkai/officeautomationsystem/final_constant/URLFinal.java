@@ -183,6 +183,10 @@ public class URLFinal {
      */
     public static final String VISIT_COMMENT = "mcomment/insertComment";
     /**
+     * 员工 - 报表列表(周报日报)
+     */
+    public static final String GET_REPORT_LIST = "report/toList";
+    /**
      * 添加物品 参数请求
      */
     public static final String ADD_GOODS_PARAMS = "mgoods/toInsert";

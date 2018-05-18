@@ -19,6 +19,7 @@ import com.hengkai.officeautomationsystem.function.goods_out.UseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.my_unit.MyUnitActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.function.project_library.ProjectLibraryActivity;
+import com.hengkai.officeautomationsystem.function.report.ReportActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.VisitRecordActivity;
@@ -35,6 +36,13 @@ public class OpenActivityUtils {
     private static void onClickMethod(Activity activity, Class aClass, int id) {
         Intent intent = new Intent(activity, aClass);
         intent.putExtra(CommonFinal.MENU_ID, id);
+        activity.startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    private static void onClickMethod(Activity activity, Class aClass, int id, String name, String value) {
+        Intent intent = new Intent(activity, aClass);
+        intent.putExtra(CommonFinal.MENU_ID, id);
+        intent.putExtra(name, value);
         activity.startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -98,6 +106,12 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_unit_list: // 我的单位
                         onClickMethod(activity, MyUnitActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_daily_report: // 日报
+                        onClickMethod(activity, ReportActivity.class, dbId, "reportType", "day");
+                        break;
+                    case R.drawable.ic_weekly_report: // 周报
+                        onClickMethod(activity, ReportActivity.class, dbId, "reportType", "week");
                         break;
                     default:
                         ToastUtil.showToast("敬请期待！");

@@ -92,6 +92,8 @@
         <activity android:name=".function.visit_record.comment.CommentVisitActivity" />
         <activity android:name=".function.visit_record.comment.GoToCommentActivity" />
         <activity android:name=".function.project_library.detail.ProjectLibraryDetailActivity" />
+        <activity android:name=".function.report.ReportActivity" />
+        <activity android:name=".function.report.add.AddReportActivity" />
 
 
     </application>
