@@ -55,7 +55,7 @@ public class GoodsDetailEntity {
          */
 
         private String unit;
-        private double total;
+        private String total;
         private double cost;
         private long createTime;
         private String goodsTypeName;
@@ -75,11 +75,11 @@ public class GoodsDetailEntity {
             this.unit = unit;
         }
 
-        public double getTotal() {
+        public String getTotal() {
             return total;
         }
 
-        public void setTotal(double total) {
+        public void setTotal(String total) {
             this.total = total;
         }
 

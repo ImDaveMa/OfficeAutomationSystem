@@ -84,7 +84,7 @@ public class AddGoodsModel {
         params.put("GOODSTYPE", type + ""); // 物品类型
         params.put("SUPPLIERID", supplier + ""); // 供货商
         params.put("UNITID", unit + ""); // 单位
-        params.put("BAND", band); // 品牌
+        params.put("BRAND", band); // 品牌
         params.put("SPEC", spec); // 规格
         params.put("COST", cost + ""); // 单价
         params.put("REMARK", remark); // 备注

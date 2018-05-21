@@ -34,7 +34,7 @@
             android:layout_height="100dp"
             android:gravity="center" />
 
-        <android.support.v7.widget.RecyclerView
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
             android:id="@id/swipe_target"
             android:background="@color/white"
             android:layout_width="match_parent"

@@ -138,7 +138,10 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
     @Override
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.GOODS_DETAIL_ACTIVITY_GET_DETAIL);
+        tags.add(NetworkTagFinal.ADD_GOODS_ACTIVITY_DO_ADD);
+        tags.add(NetworkTagFinal.UPDATE_GOODS_ACTIVITY_DO_UPDATE);
+        tags.add(NetworkTagFinal.ADD_GOODS_ACTIVITY_GET_PARAMS);
+        tags.add(NetworkTagFinal.UPDATE_GOODS_ACTIVITY_GET_PARAMS);
         return tags;
     }
 

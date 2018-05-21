@@ -148,6 +148,38 @@ public class NetworkTagFinal {
      */
     public static final String HOME_FRAGMENT_GET_MSG_DATA = "HOME_FRAGMENT_GET_MSG_DATA";
     /**
+     * AddGoodsActivity
+     */
+    public static final String ADD_GOODS_ACTIVITY_GET_PARAMS = "ADD_GOODS_ACTIVITY_GET_PARAMS";
+    /**
+     * AddGoodsActivity
+     */
+    public static final String ADD_GOODS_ACTIVITY_DO_ADD = "ADD_GOODS_ACTIVITY_DO_ADD";
+    /**
+     * AddGoodsActivity
+     */
+    public static final String UPDATE_GOODS_ACTIVITY_GET_PARAMS = "HOME_FRAGMENT_GET_MSG_DATA";
+    /**
+     * AddGoodsActivity
+     */
+    public static final String UPDATE_GOODS_ACTIVITY_DO_UPDATE = "UPDATE_GOODS_ACTIVITY_DO_UPDATE";
+    /**
+     * AddGoodsSupplierActivity
+     */
+    public static final String ADD_GOODS_SUPPLIER_ACTIVITY_GET_PARAMS = "ADD_GOODS_SUPPLIER_ACTIVITY_GET_PARAMS";
+    /**
+     * AddGoodsSupplierActivity
+     */
+    public static final String ADD_GOODS_SUPPLIER_ACTIVITY_DO_ADD = "ADD_GOODS_SUPPLIER_ACTIVITY_DO_ADD";
+    /**
+     * AddGoodsSupplierActivity
+     */
+    public static final String UPDATE_GOODS_SUPPLIER_ACTIVITY_GET_PARAMS = "UPDATE_GOODS_SUPPLIER_ACTIVITY_GET_PARAMS";
+    /**
+     * AddGoodsSupplierActivity
+     */
+    public static final String UPDATE_GOODS_SUPPLIER_ACTIVITY_DO_UPDATE = "UPDATE_GOODS_SUPPLIER_ACTIVITY_DO_UPDATE";
+    /**
      * AskForLeaveActivity
      */
     public static final String ASK_FOR_LEAVE_ACTIVITY_ADD = "ASK_FOR_LEAVE_ACTIVITY_ADD";

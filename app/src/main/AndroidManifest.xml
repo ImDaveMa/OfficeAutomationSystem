@@ -78,6 +78,7 @@
         <activity android:name=".function.contacts_library.ContactsLibraryActivity" />
         <activity android:name=".function.goods_unit.GoodsUnitActivity" />
         <activity android:name=".function.goods_supplier.GoodsSupplierActivity" />
+        <activity android:name=".function.goods_supplier.AddGoodsSupplierActivity" />
         <activity android:name=".function.new_unit.NewUnitActivity" />
         <activity android:name=".function.goods_in.ManagementGoodsInActivity" />
         <activity android:name=".function.goods_in.GoodsInActivity" />

@@ -211,6 +211,22 @@ public class URLFinal {
      */
     public static final String UPDATE_GOODS_URL = "mgoods/doUpdate";
     /**
+     * 新增物品供应商页面参数
+     */
+    public static final String ADD_GOODS_SUPPLIER_PARAMS = "msupplier/toInsert";
+    /**
+     * 新增物品供应商
+     */
+    public static final String ADD_GOODS_SUPPLIER_URL = "msupplier/doInsert";
+    /**
+     * 修改物品供应商页面参数
+     */
+    public static final String UPDATE_GOODS_SUPPLIER_PARAMS = "msupplier/toUpdate";
+    /**
+     * 修改物品供应商
+     */
+    public static final String UPDATE_GOODS_SUPPLIER_URL = "msupplier/doUpdate";
+    /**
      * 新增请假外出的接口
      */
     public static final String ADD_GO_OUT = "mattendance/addAttendance";

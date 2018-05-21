@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,7 +121,12 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailPresenter> {
             tvGoodsBrand.setText(bean.getBrand());
             tvGoodsCost.setText(df.format(bean.getCost()) + "￥");
             tvGoodsNum.setText(String.format("%d%s", bean.getNum(), bean.getUnit()));
-            tvGoodsTotalPrice.setText(df.format(bean.getTotal()) + "￥");
+            String total = bean.getTotal();
+            if(!TextUtils.isEmpty(total)) {
+                tvGoodsTotalPrice.setText(df.format(Double.parseDouble(total)) + "￥");
+            } else {
+                tvGoodsTotalPrice.setText("0￥");
+            }
             tvGoodsSupplier.setText(bean.getSupplier());
             tvGoodsCreateUser.setText(bean.getCreateUserName());
             tvGoodsCreateTime.setText(DateFormatUtils.getFormatedNewsTime(bean.getCreateTime()));

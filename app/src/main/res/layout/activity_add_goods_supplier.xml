@@ -40,100 +40,19 @@
                     android:textColor="@color/black" />
 
                 <EditText
-                    android:id="@+id/et_goods_name"
+                    android:id="@+id/et_goods_supplier_name"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@color/transparent"
                     android:gravity="right"
-                    android:hint="请输入物品名称"
+                    android:hint="请输入供应商名称"
                     android:textSize="14sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/lr_goods_type_selector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@color/red1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="分类"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_goods_type"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:background="@color/transparent"
-                    android:gravity="right"
-                    android:textColor="@color/black"
-                    android:hint="请选择物品分类"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="image"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_arrow_gray32" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/lr_goods_unit_selector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@color/red1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="物品单位"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_goods_unit_name"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:background="@color/transparent"
-                    android:gravity="right"
-                    android:textColor="@color/black"
-                    android:hint="请选择单位"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="image"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_arrow_gray32" />
-            </RelativeLayout>
-
-            <RelativeLayout
+                android:id="@+id/lr_goods_supplier_type_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -142,86 +61,92 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/red1"
-                    android:text="*"/>
+                    android:text="*"
+                    android:textColor="@color/red1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="单价"
+                    android:text="类型"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_goods_supplier_type"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请选择供应商类型"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="image"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_arrow_gray32" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/red1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="所在城市"
                     android:textColor="@color/black" />
 
                 <EditText
-                    android:id="@+id/et_goods_cost"
+                    android:id="@+id/et_goods_supplier_city"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入所在城市"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="地址"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_address"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@color/transparent"
                     android:inputType="number"
                     android:gravity="right"
-                    android:hint="请输入单价"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/lr_goods_supplier_selector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="供货商"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_goods_supplier_name"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:background="@color/transparent"
-                    android:gravity="right"
-                    android:textColor="@color/black"
-                    android:hint="请选择供货商"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="image"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_arrow_gray32" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="品牌"
-                    android:textColor="@color/black" />
-
-                <EditText
-                    android:id="@+id/et_goods_band"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:background="@color/transparent"
-                    android:gravity="right"
-                    android:hint="请输入物品品牌"
+                    android:hint="请输入地址"
                     android:textSize="14sp" />
 
             </RelativeLayout>
@@ -236,80 +161,201 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="规格参数"
+                    android:text="邮政编码"
                     android:textColor="@color/black" />
 
                 <EditText
-                    android:id="@+id/et_goods_spec"
+                    android:id="@+id/et_goods_supplier_postal_code"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@color/transparent"
                     android:gravity="right"
-                    android:hint="请输入物品规格"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:hint="请输入邮政编码"
                     android:textSize="14sp" />
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/rl_edit_container"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/layer_list_border_bottom"
-                    android:padding="10dp">
+                    android:layout_marginStart="10dp"
+                    android:text="联系人"
+                    android:textColor="@color/black" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="数量"
-                        android:textColor="@color/black" />
-
-                    <EditText
-                        android:id="@+id/et_goods_num"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:background="@color/transparent"
-                        android:inputType="number"
-                        android:gravity="right"
-                        android:hint="请输入单价"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <EditText
+                    android:id="@+id/et_goods_supplier_contacts"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/layer_list_border_bottom"
-                    android:padding="10dp">
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入联系人"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="总价值"
-                        android:textColor="@color/black" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_goods_total"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:background="@color/transparent"
-                        android:gravity="right"
-                        android:textColor="@color/black"
-                        android:hint="总价值"
-                        android:textSize="14sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
 
-                </RelativeLayout>
-            </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="电话"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_phone"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入电话号码"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="传真"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_fax"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入传真"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="电子邮箱"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_mailbox"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:inputType="textEmailAddress"
+                    android:hint="请输入电子邮箱地址"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layer_list_border_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="QQ号"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_qq"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:inputType="number"
+                    android:hint="请输入QQ号码"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="微信号"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_wechat"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入微信号码"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="来源"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/et_goods_supplier_source"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入来源"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -326,10 +372,39 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:text="业务描述"/>
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/et_goods_supplier_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14sp"
+                    android:hint="请填写业务描述"
+                    android:gravity="top"
+                    android:minLines="5"
+                    android:background="@color/transparent"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:padding="15dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:text="备注"/>
                 </LinearLayout>
                 <EditText
-                    android:id="@+id/et_goods_remark"
+                    android:id="@+id/et_goods_supplier_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
