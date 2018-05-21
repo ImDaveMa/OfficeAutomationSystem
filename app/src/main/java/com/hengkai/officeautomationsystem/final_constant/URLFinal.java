@@ -210,4 +210,12 @@ public class URLFinal {
      * 修改物品
      */
     public static final String UPDATE_GOODS_URL = "mgoods/doUpdate";
+    /**
+     * 新增请假外出的接口
+     */
+    public static final String ADD_GO_OUT = "mattendance/addAttendance";
+    /**
+     * 计算请假或者外出时长的接口
+     */
+    public static final String DURATION = "mattendance/computationTime";
 }

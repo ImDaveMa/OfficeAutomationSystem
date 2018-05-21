@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
+import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
@@ -22,6 +23,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +34,7 @@ import butterknife.OnClick;
  * Created by Harry on 2018/4/26.
  * 请假页面
  */
-public class AskForLeaveActivity extends BaseActivity {
+public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -101,16 +104,20 @@ public class AskForLeaveActivity extends BaseActivity {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
+        tvTitle.setText("请假");
     }
 
     @Override
     protected ArrayList<String> cancelNetWork() {
-        return null;
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_ADD);
+        tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_DURATION);
+        return tags;
     }
 
     @Override
-    protected BasePresenter bindPresenter() {
-        return null;
+    protected AskForLeavePresenter bindPresenter() {
+        return new AskForLeavePresenter();
     }
 
     @OnClick({R.id.iv_back, R.id.btn_commit, R.id.ll_leave_type, R.id.iv_leave_type, R.id.ll_start_time,
@@ -121,7 +128,7 @@ public class AskForLeaveActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_commit://提交
-
+                commit();
                 break;
             case R.id.ll_leave_type://选择请假类型
                 showSelectTypeDialog();
@@ -147,6 +154,7 @@ public class AskForLeaveActivity extends BaseActivity {
                 if (!tvStartTime.getText().toString().trim().equals("请选择")) {
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvStartTime, ivStartTime);
                     startTimeStr = "";
+                    tvTime.setText("0.0");
                 }
                 break;
             case R.id.ll_end_time://结束请假时间
@@ -165,9 +173,71 @@ public class AskForLeaveActivity extends BaseActivity {
                 if (!tvEndTime.getText().toString().trim().equals("请选择")) {
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvEndTime, ivEndTime);
                     endTimeStr = "";
+                    tvTime.setText("0.0");
                 }
                 break;
         }
+    }
+
+    /**
+     * 提交
+     */
+    private void commit() {
+        String leaveType = tvLeaveType.getText().toString().trim();
+        String startTime = tvStartTime.getText().toString().trim();
+        String endTime = tvEndTime.getText().toString().trim();
+        String time = tvTime.getText().toString().trim();
+        String leaveReason = etLeaveReason.getText().toString().trim();
+
+        if (TextUtils.isEmpty(leaveType) || leaveType.equals("请选择")) {
+            ToastUtil.showToast("请选择请假类型");
+            return;
+        }
+        if (TextUtils.isEmpty(startTime) || startTime.equals("请选择")) {
+            ToastUtil.showToast("请选择开始时间");
+            return;
+        }
+        if (TextUtils.isEmpty(endTime) || endTime.equals("请选择")) {
+            ToastUtil.showToast("请选择结束时间");
+            return;
+        }
+        if (TextUtils.isEmpty(leaveReason) || leaveReason.equals("请选择")) {
+            ToastUtil.showToast("请填写请假事由");
+            return;
+        }
+
+        Map<String, String> params = new HashMap<>();
+        switch (leaveType) {
+            case "零星假":
+                params.put("LEAVETYPE", String.valueOf(1));
+                break;
+            case "事假":
+                params.put("LEAVETYPE", String.valueOf(2));
+                break;
+            case "病假":
+                params.put("LEAVETYPE", String.valueOf(3));
+                break;
+            case "婚假":
+                params.put("LEAVETYPE", String.valueOf(4));
+                break;
+            case "产假":
+                params.put("LEAVETYPE", String.valueOf(5));
+                break;
+            case "陪产假":
+                params.put("LEAVETYPE", String.valueOf(6));
+                break;
+            case "丧假":
+                params.put("LEAVETYPE", String.valueOf(7));
+                break;
+            default:
+                break;
+        }
+        params.put("TIME", time);
+        params.put("REASON", leaveReason);
+        params.put("STARTTIME", startTime);
+        params.put("ENDTIME", endTime);
+
+        mPresenter.add(params);
     }
 
     /**
@@ -182,10 +252,22 @@ public class AskForLeaveActivity extends BaseActivity {
                 startDay = dayOfMonth;
                 startHour = hourOfDay;
                 startMinute = minute;
-                startTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
+                String newMinute;
+                if (minute < 10) {
+                    newMinute = "0" + minute;
+                } else {
+                    newMinute = minute + "";
+                }
+                String newHour;
+                if (hourOfDay < 10) {
+                    newHour = "0" + hourOfDay;
+                } else {
+                    newHour = "" + hourOfDay;
+                }
+                startTimeStr = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " " + newHour + ":" + newMinute;
 
                 //判断结束时间是否存在
-                if(!TextUtils.isEmpty(endTimeStr)) {
+                if (!TextUtils.isEmpty(endTimeStr)) {
                     String formatType = "yyyy-MM-dd HH:mm";
                     SimpleDateFormat format = new SimpleDateFormat(formatType);
                     try {
@@ -217,10 +299,22 @@ public class AskForLeaveActivity extends BaseActivity {
                 endDay = dayOfMonth;
                 endHour = hourOfDay;
                 endMinute = minute;
-                endTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
+                String newMinute;
+                if (minute < 10) {
+                    newMinute = "0" + minute;
+                } else {
+                    newMinute = minute + "";
+                }
+                String newHour;
+                if (hourOfDay < 10) {
+                    newHour = "0" + hourOfDay;
+                } else {
+                    newHour = "" + hourOfDay;
+                }
+                endTimeStr = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " " + newHour + ":" + newMinute;
 
                 //判断开始时间是否存在
-                if(!TextUtils.isEmpty(startTimeStr)) {
+                if (!TextUtils.isEmpty(startTimeStr)) {
                     String formatType = "yyyy-MM-dd HH:mm";
                     SimpleDateFormat format = new SimpleDateFormat(formatType);
                     try {
@@ -235,41 +329,14 @@ public class AskForLeaveActivity extends BaseActivity {
                     }
                 }
 
-                //计算时间先注释掉
-//                if (!TextUtils.isEmpty(startTimeStr) && !TextUtils.isEmpty(endTimeStr)) {
-//                    calculateLeaveTime();
-//                }
-
                 setTextViewAttribute(endTimeStr, R.drawable.ic_cancel28, R.color.black, tvEndTime, ivEndTime);
+
+                //计算时间先注释掉
+                if (!TextUtils.isEmpty(startTimeStr) && !TextUtils.isEmpty(endTimeStr)) {
+                    mPresenter.duration(startTimeStr, endTimeStr);
+                }
             }
         });
-    }
-
-    /**
-     * 计算请假时间
-     */
-    private void calculateLeaveTime() {
-        // TODO: 2018/4/25 这里的算法很复杂, 需要预设很多参数(每周哪天休息, 节假日, 午休多久等) , 所以暂时先这样写 后期是改成手动输入还是接口获取再说
-        String formatType = "yyyy-MM-dd HH:mm";
-        SimpleDateFormat format = new SimpleDateFormat(formatType);
-        try {
-            long startTime = format.parse(startTimeStr).getTime();
-            long endTime = format.parse(endTimeStr).getTime();
-            float difference = (float)(endTime - startTime) / 1000 / 60 / 60;
-
-            if (endYear == startYear && endMonth == startMonth && endDay == startDay) {
-
-            }
-
-            if (difference <= 0) {
-                ToastUtil.showToast("结束时间不能小于开始时间");
-                return;
-            }
-            DecimalFormat df = new DecimalFormat("0.00");//格式化小数
-            tvTime.setText(df.format(difference));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -281,6 +348,10 @@ public class AskForLeaveActivity extends BaseActivity {
         final TextView text1 = dialogView.findViewById(R.id.tv_text1);
         final TextView text2 = dialogView.findViewById(R.id.tv_text2);
         final TextView text3 = dialogView.findViewById(R.id.tv_text3);
+        final TextView text4 = dialogView.findViewById(R.id.tv_text4);
+        final TextView text5 = dialogView.findViewById(R.id.tv_text5);
+        final TextView text6 = dialogView.findViewById(R.id.tv_text6);
+        final TextView text7 = dialogView.findViewById(R.id.tv_text7);
         builder.setView(dialogView);
         final AlertDialog dialog = builder.show();
         text1.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +375,34 @@ public class AskForLeaveActivity extends BaseActivity {
                 setTextViewAttribute(text3.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
             }
         });
+        text4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                setTextViewAttribute(text4.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
+            }
+        });
+        text5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                setTextViewAttribute(text5.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
+            }
+        });
+        text6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                setTextViewAttribute(text6.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
+            }
+        });
+        text7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                setTextViewAttribute(text7.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
+            }
+        });
     }
 
     /**
@@ -321,4 +420,10 @@ public class AskForLeaveActivity extends BaseActivity {
         textView.setTextColor(getResources().getColor(color));
     }
 
+    /**
+     * @param time 设置时长
+     */
+    public void setDuration(double time) {
+        tvTime.setText(String.valueOf(time));
+    }
 }

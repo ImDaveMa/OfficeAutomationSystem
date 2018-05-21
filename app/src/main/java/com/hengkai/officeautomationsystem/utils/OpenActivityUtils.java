@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
+import com.hengkai.officeautomationsystem.function.ask_for_leave.AskForLeaveActivity;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.contacts_library.ContactsLibraryActivity;
 import com.hengkai.officeautomationsystem.function.go_out.GoOutActivity;
@@ -112,6 +113,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_weekly_report: // 周报
                         onClickMethod(activity, ReportActivity.class, dbId, "reportType", "week");
+                        break;
+                    case R.drawable.ic_ask_for_leave: // 请假
+                        onClickMethod(activity, AskForLeaveActivity.class, dbId);
                         break;
                     default:
                         ToastUtil.showToast("敬请期待！");

@@ -147,4 +147,9 @@ public class NetworkTagFinal {
      * HomeFragment
      */
     public static final String HOME_FRAGMENT_GET_MSG_DATA = "HOME_FRAGMENT_GET_MSG_DATA";
+    /**
+     * AskForLeaveActivity
+     */
+    public static final String ASK_FOR_LEAVE_ACTIVITY_ADD = "ASK_FOR_LEAVE_ACTIVITY_ADD";
+    public static final String ASK_FOR_LEAVE_ACTIVITY_DURATION = "ASK_FOR_LEAVE_ACTIVITY_DURATION";
 }

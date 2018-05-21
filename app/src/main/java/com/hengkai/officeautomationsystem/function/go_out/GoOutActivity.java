@@ -210,7 +210,19 @@ public class GoOutActivity extends BaseActivity implements EasyPermissions.Permi
                 startDay = dayOfMonth;
                 startHour = hourOfDay;
                 startMinute = minute;
-                startTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
+                String newMinute;
+                if (minute < 10) {
+                    newMinute = "0" + minute;
+                } else {
+                    newMinute = minute + "";
+                }
+                String newHour;
+                if (hourOfDay < 10) {
+                    newHour = "0" + hourOfDay;
+                } else {
+                    newHour = "" + hourOfDay;
+                }
+                startTimeStr = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " " + newHour + ":" + newMinute;
 
                 //判断结束时间是否存在
                 if (!TextUtils.isEmpty(endTimeStr)) {
@@ -245,7 +257,19 @@ public class GoOutActivity extends BaseActivity implements EasyPermissions.Permi
                 endDay = dayOfMonth;
                 endHour = hourOfDay;
                 endMinute = minute;
-                endTimeStr = year + "-" + monthOfYear + "-" + dayOfMonth + " " + hourOfDay + ":" + minute;
+                String newMinute;
+                if (minute < 10) {
+                    newMinute = "0" + minute;
+                } else {
+                    newMinute = minute + "";
+                }
+                String newHour;
+                if (hourOfDay < 10) {
+                    newHour = "0" + hourOfDay;
+                } else {
+                    newHour = "" + hourOfDay;
+                }
+                endTimeStr = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " " + newHour + ":" + newMinute;
 
                 //判断开始时间是否存在
                 if (!TextUtils.isEmpty(startTimeStr)) {
@@ -389,7 +413,6 @@ public class GoOutActivity extends BaseActivity implements EasyPermissions.Permi
             new AppSettingsDialog.Builder(this).build().show();
         }
     }
-
 
 
 }
