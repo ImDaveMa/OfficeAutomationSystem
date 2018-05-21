@@ -12,6 +12,7 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.report.add.AddReportActivity;
 import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
@@ -99,7 +100,7 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
             case R.id.tv_add:
                 Intent intent = new Intent(this, AddReportActivity.class);
                 intent.putExtra("type", type);
-                startActivity(intent);
+                startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
                 break;
         }
     }
@@ -143,5 +144,13 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
         }
         mList.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
+            swipeToLoadLayout.setRefreshing(true);
+        }
     }
 }

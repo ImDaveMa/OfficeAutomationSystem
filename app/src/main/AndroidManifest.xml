@@ -94,6 +94,7 @@
         <activity android:name=".function.project_library.detail.ProjectLibraryDetailActivity" />
         <activity android:name=".function.report.ReportActivity" />
         <activity android:name=".function.report.add.AddReportActivity" />
+        <activity android:name=".function.report.add.GroupMemberActivity" />
 
 
     </application>

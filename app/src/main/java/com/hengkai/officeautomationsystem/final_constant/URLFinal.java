@@ -187,6 +187,14 @@ public class URLFinal {
      */
     public static final String GET_REPORT_LIST = "report/toList";
     /**
+     * 员工 - 新增周报或者日报的页面 - 选择发送给谁的接口
+     */
+    public static final String GET_GROUP_MEMBER_LIST = "report/selectTheDepartmentEveryone";
+    /**
+     * 员工 - 新增周报或者日报的页面 - 提交
+     */
+    public static final String ADD_REPORT = "report/insertReport";
+    /**
      * 添加物品 参数请求
      */
     public static final String ADD_GOODS_PARAMS = "mgoods/toInsert";

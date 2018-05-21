@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <include layout="@layout/layout_title_bar_normal" />
+
+    <!--<com.aspsine.swipetoloadlayout.SwipeToLoadLayout-->
+    <!--android:id="@+id/swipeToLoadLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView-->
+    <!--android:id="@id/swipe_refresh_header"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:gravity="center" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/black6" />
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="已选择0/30"
+            android:textColor="@color/blue5" />
+
+        <TextView
+            android:id="@+id/tv_commit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="确定"
+            android:textColor="@color/black1" />
+    </RelativeLayout>
+
+    <!--<com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView-->
+    <!--android:id="@id/swipe_load_more_footer"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:gravity="center" />-->
+    <!--</com.aspsine.swipetoloadlayout.SwipeToLoadLayout>-->
+
+</LinearLayout>

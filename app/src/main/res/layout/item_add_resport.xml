@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    tools:ignore="HardcodedText">
+
+    <ImageView
+        android:id="@+id/iv_header"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="header"
+        android:src="@drawable/ic_user64" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:text="老王"
+        android:textColor="@color/black1"
+        android:textSize="13sp" />
+
+</RelativeLayout>

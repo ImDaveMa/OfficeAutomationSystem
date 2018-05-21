@@ -118,6 +118,14 @@ public class NetworkTagFinal {
      */
     public static final String REPORT_ACTIVITY_GET_REPORT_LIST = "REPORT_ACTIVITY_GET_REPORT_LIST";
     /**
+     * AddReportActivity
+     */
+    public static final String ADD_REPORT_ACTIVITY_ADD_REPORT = "ADD_REPORT_ACTIVITY_ADD_REPORT";
+    /**
+     * GroupMemberActivity
+     */
+    public static final String GROUP_MEMBER_ACTIVITY_GET_GROUP_MEMBER_LIST = "GROUP_MEMBER_ACTIVITY_GET_GROUP_MEMBER_LIST";
+    /**
      * ProjectLibraryDetailActivity
      */
     public static final String PROJECT_LIBRARY_DETAIL_ACTIVITY_GET_PROJECT_DETAIL = "PROJECT_LIBRARY_DETAIL_ACTIVITY_GET_PROJECT_DETAIL";
