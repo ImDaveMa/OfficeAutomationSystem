@@ -33,7 +33,9 @@ public class ApproveListModel {
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("OPERATING", operating + ""); // 0:需要我审批 1:抄送我的2：我发起的审批
-        params.put("SEARCHDAY", searchDay + ""); // 0为今天 1为昨天，依次叠加
+        if(searchDay > -1) {
+            params.put("SEARCHDAY", searchDay + ""); // 0为今天 1为昨天，依次叠加
+        }
         // params.put("SEARCHSTATE", "0"); // 根据审批状态搜索
         params.put("PAGEID", id + "");
         params.put("PAGESIZE", CommonFinal.PAGE_SIZE + "");

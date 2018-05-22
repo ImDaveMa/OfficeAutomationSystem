@@ -70,7 +70,7 @@ public class ApproveListActivity extends BaseActivity<ApproveListPresenter> impl
         setupRecyclerView();
 
         //请求网络
-        mPresenter.getApproveList(0, 0, 0);
+        mPresenter.getApproveList(0, 0, -1);
     }
 
     /**
@@ -136,14 +136,14 @@ public class ApproveListActivity extends BaseActivity<ApproveListPresenter> impl
             public void onRefresh() {
                 // 清空历史数据
                 goodsOutList.clear();
-                mPresenter.getApproveList(0, 0, 0);
+                mPresenter.getApproveList(0, 0, -1);
                 swipeLoadMoreFooter.onReset();
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.getApproveList(lastID, 0, 0);
+                mPresenter.getApproveList(lastID, 0, -1);
             }
         });
     }
