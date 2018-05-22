@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,6 +73,10 @@ public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPrese
     EditText etGoodsSupplierWechat;
     @BindView(R.id.et_goods_supplier_source)
     EditText etGoodsSupplierSource;
+    @BindView(R.id.lr_goods_supplier_state_selector)
+    RelativeLayout lrGoodsSupplierStateSelector;
+    @BindView(R.id.tv_goods_supplier_state)
+    TextView tvGoodsSupplierState;
     @BindView(R.id.et_goods_supplier_description)
     EditText etGoodsSupplierDescription;
     @BindView(R.id.et_goods_supplier_remark)
@@ -124,11 +129,35 @@ public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPrese
         return tags;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_submit})
+    @OnClick({R.id.iv_back, R.id.tv_submit, R.id.lr_goods_supplier_state_selector})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.lr_goods_supplier_state_selector:
+                final BottomSheetDialog dialog = new BottomSheetDialog(this);
+                View contentView = getLayoutInflater().inflate(R.layout.layout_bottom_yes_or_no,null);
+                TextView tvYes = contentView.findViewById(R.id.tv_yes);
+                tvYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvGoodsSupplierState.setText("是");
+                        tvGoodsSupplierState.setTag(1);
+                        dialog.dismiss();
+                    }
+                });
+                TextView tvNo = contentView.findViewById(R.id.tv_no);
+                tvNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvGoodsSupplierState.setText("否");
+                        tvGoodsSupplierState.setTag(0);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setContentView(contentView);
+                dialog.show();
                 break;
             case R.id.tv_submit:
                 saveGoodsSupplier();
@@ -163,17 +192,24 @@ public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPrese
             return;
         }
 
+        if (TextUtils.isEmpty(tvGoodsSupplierState.getTag() + "")) {
+            ToastUtil.showToast("请选择是否是合作商家");
+            etGoodsSupplierCity.requestFocus();
+            return;
+        }
+        int state = Integer.parseInt(tvGoodsSupplierState.getTag() + "");
+
         if (id <= 0) {
             mPresenter.addGoodsSupplier(name, type, etGoodsSupplierCity.getText().toString(), etGoodsSupplierAddress.getText().toString(),
                     etGoodsSupplierPostalCode.getText().toString(), etGoodsSupplierContacts.getText().toString(), etGoodsSupplierPhone.getText().toString(),
                     etGoodsSupplierFax.getText().toString(), etGoodsSupplierMailbox.getText().toString(), etGoodsSupplierQq.getText().toString(),
-                    etGoodsSupplierWechat.getText().toString(), etGoodsSupplierSource.getText().toString(),etGoodsSupplierDescription.getText().toString(),
-                    etGoodsSupplierRemark.getText().toString());
+                    etGoodsSupplierWechat.getText().toString(), etGoodsSupplierSource.getText().toString(), state,
+                    etGoodsSupplierDescription.getText().toString(), etGoodsSupplierRemark.getText().toString());
         } else {
             mPresenter.updateGoodsSupplier(id, name, type, etGoodsSupplierCity.getText().toString(), etGoodsSupplierAddress.getText().toString(),
                     etGoodsSupplierPostalCode.getText().toString(), etGoodsSupplierContacts.getText().toString(), etGoodsSupplierPhone.getText().toString(),
                     etGoodsSupplierFax.getText().toString(), etGoodsSupplierMailbox.getText().toString(), etGoodsSupplierQq.getText().toString(),
-                    etGoodsSupplierWechat.getText().toString(), etGoodsSupplierSource.getText().toString(),etGoodsSupplierDescription.getText().toString(),
+                    etGoodsSupplierWechat.getText().toString(), etGoodsSupplierSource.getText().toString(), state, etGoodsSupplierDescription.getText().toString(),
                     etGoodsSupplierRemark.getText().toString());
         }
     }
@@ -215,8 +251,8 @@ public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPrese
             EditGoodsSupplierEntity.SupplierBean supplierBean = bean.supplier;
             if (supplierBean != null) {
                 etGoodsSupplierName.setText(supplierBean.name);
-                for (int i = 0; i < editParams.size(); i++){
-                    if(supplierBean.supperType == editParams.get(i).id){
+                for (int i = 0; i < editParams.size(); i++) {
+                    if (supplierBean.supperType == editParams.get(i).id) {
                         tvGoodsSupplierType.setText(supplierBean.name);
                     }
                 }
@@ -231,6 +267,8 @@ public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPrese
                 etGoodsSupplierQq.setText(supplierBean.qq);
                 etGoodsSupplierWechat.setText(supplierBean.wechat);
                 etGoodsSupplierSource.setText(supplierBean.source);
+                tvGoodsSupplierState.setText(supplierBean.state == 0 ? "否" : "是");
+                tvGoodsSupplierState.setTag(supplierBean.state);
                 etGoodsSupplierDescription.setText(supplierBean.description);
                 etGoodsSupplierRemark.setText(supplierBean.remark);
             }

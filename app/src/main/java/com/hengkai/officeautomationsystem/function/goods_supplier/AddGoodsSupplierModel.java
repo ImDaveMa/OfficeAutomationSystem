@@ -42,12 +42,13 @@ public class AddGoodsSupplierModel {
      * @param qq QQ
      * @param weChat 微信
      * @param source 来源
+     * @param state 是否是合作商家
      * @param description 描述
      * @param remark 备注
      */
     public void addGoodsSupplier(Observer observer, String name, int supperType, String city, String address,
                                  String postalCode, String contacts, String phone, String fax,String mailBox,
-                                 String qq, String weChat, String source, String description, String remark) {
+                                 String qq, String weChat, String source, int state, String description, String remark) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
@@ -64,6 +65,7 @@ public class AddGoodsSupplierModel {
         params.put("QQ", qq); // QQ
         params.put("WECHAT", weChat); // 微信
         params.put("SOURCE", source); // 来源
+        params.put("STATE", state + ""); // 是否是合作商家
         params.put("DESCRIPTION", description); // 业务描述
         params.put("REMARK", remark); // 备注
 
@@ -90,12 +92,13 @@ public class AddGoodsSupplierModel {
      * @param qq QQ
      * @param weChat 微信
      * @param source 来源
+     * @param state 是否是合作商家
      * @param description 描述
      * @param remark 备注
      */
     public void updateGoodsSupplier(Observer observer, int id, String name, int supperType, String city, String address,
                                     String postalCode, String contacts, String phone, String fax,String mailBox,
-                                    String qq, String weChat, String source, String description, String remark) {
+                                    String qq, String weChat, String source, int state, String description, String remark) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
@@ -113,6 +116,7 @@ public class AddGoodsSupplierModel {
         params.put("QQ", qq); // QQ
         params.put("WECHAT", weChat); // 微信
         params.put("SOURCE", source); // 来源
+        params.put("STATE", state + ""); // 是否是合作商家
         params.put("DESCRIPTION", description); // 业务描述
         params.put("REMARK", remark); // 备注
 

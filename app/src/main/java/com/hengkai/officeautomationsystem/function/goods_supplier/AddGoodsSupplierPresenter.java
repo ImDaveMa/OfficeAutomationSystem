@@ -25,7 +25,7 @@ public class AddGoodsSupplierPresenter extends BasePresenter<AddGoodsSupplierAct
 
     public void addGoodsSupplier(String name, int supperType, String city, String address,
                                  String postalCode, String contacts, String phone, String fax,String mailBox,
-                                 String qq, String weChat, String source, String description, String remark) {
+                                 String qq, String weChat, String source, int state, String description, String remark) {
         view.showDialog();
         model.addGoodsSupplier(new Observer<CommonReceiveMessageEntity>() {
             @Override
@@ -58,12 +58,12 @@ public class AddGoodsSupplierPresenter extends BasePresenter<AddGoodsSupplierAct
             public void onComplete() {
 
             }
-        }, name, supperType, city, address, postalCode, contacts, phone, fax,mailBox, qq, weChat, source, description, remark);
+        }, name, supperType, city, address, postalCode, contacts, phone, fax,mailBox, qq, weChat, source, state, description, remark);
     }
 
     public void updateGoodsSupplier(int id, String name, int supperType, String city, String address,
                                     String postalCode, String contacts, String phone, String fax,String mailBox,
-                                    String qq, String weChat, String source, String description, String remark) {
+                                    String qq, String weChat, String source, int state, String description, String remark) {
         view.showDialog();
         model.updateGoodsSupplier(new Observer<CommonReceiveMessageEntity>() {
             @Override
@@ -100,7 +100,7 @@ public class AddGoodsSupplierPresenter extends BasePresenter<AddGoodsSupplierAct
             public void onComplete() {
 
             }
-        }, id, name, supperType, city, address, postalCode, contacts, phone, fax,mailBox, qq, weChat, source, description, remark);
+        }, id, name, supperType, city, address, postalCode, contacts, phone, fax,mailBox, qq, weChat, source, state, description, remark);
     }
 
     public void getAddSupplierParams() {

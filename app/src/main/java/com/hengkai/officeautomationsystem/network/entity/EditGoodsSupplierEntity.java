@@ -49,6 +49,7 @@ public class EditGoodsSupplierEntity {
         public int id;
         public String fax;
         public String contacts;
+        public int state;
         public List<ParamlistBean> paramlist;
 
         public static class ParamlistBean {
