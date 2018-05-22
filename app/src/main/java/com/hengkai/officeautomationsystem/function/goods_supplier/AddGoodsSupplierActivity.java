@@ -40,9 +40,6 @@ import butterknife.OnClick;
 public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPresenter> {
     public static final String EXTRA_KEY_ID = "EXTRA_KEY_ID";
 
-    private static final int REQUEST_CODE_UNIT = 1001;
-    private static final int REQUEST_CODE_SUPPLIER = 1002;
-
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
