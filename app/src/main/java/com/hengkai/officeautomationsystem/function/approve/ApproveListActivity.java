@@ -167,7 +167,7 @@ public class ApproveListActivity extends BaseActivity<ApproveListPresenter> impl
 //        Intent intent = new Intent(this, UseGoodsDetailActivity.class);
 //        intent.putExtra(UseGoodsDetailActivity.EXTRA_KEY_ID, bean.getId());
 //        startActivity(intent);
-        ToastUtil.showToast(bean.getProject_name());
+        ToastUtil.showToast(bean.getTypeName());
     }
 
 }
