@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.network.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class GetAskForLeaveListEntity {
     public String MES;
     public List<DATABean> DATA;
 
-    public static class DATABean {
+    public static class DATABean implements Serializable {
         /**
          * approval_information_id : 277
          * reason : 阿萨德
@@ -42,7 +43,7 @@ public class GetAskForLeaveListEntity {
         public long end_time;
         public String name;
         public int id;
-        public int time;
+        public float time;
         /**
          * 0未审批 1通过 2未通过 3已撤销
          */

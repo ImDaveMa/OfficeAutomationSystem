@@ -234,4 +234,8 @@ public class URLFinal {
      * 计算请假或者外出时长的接口
      */
     public static final String DURATION = "mattendance/computationTime";
+    /**
+     * 获取请假记录
+     */
+    public static final String GET_ASK_FOR_LEAVE_LIST = "mattendance/toList";
 }

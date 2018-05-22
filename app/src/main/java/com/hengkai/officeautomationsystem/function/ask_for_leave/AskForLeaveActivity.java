@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.function.ask_for_leave;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.ask_for_leave.list.AskForLeaveListActivity;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
@@ -121,7 +123,7 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
     }
 
     @OnClick({R.id.iv_back, R.id.btn_commit, R.id.ll_leave_type, R.id.iv_leave_type, R.id.ll_start_time,
-            R.id.iv_start_time, R.id.ll_end_time, R.id.iv_end_time})
+            R.id.iv_start_time, R.id.ll_end_time, R.id.iv_end_time, R.id.iv_list})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
@@ -175,6 +177,9 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
                     endTimeStr = "";
                     tvTime.setText("0.0");
                 }
+                break;
+            case R.id.iv_list:
+                startActivity(new Intent(this, AskForLeaveListActivity.class));
                 break;
         }
     }

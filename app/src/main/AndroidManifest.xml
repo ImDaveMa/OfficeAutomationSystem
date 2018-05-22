@@ -96,6 +96,10 @@
         <activity android:name=".function.report.ReportActivity" />
         <activity android:name=".function.report.add.AddReportActivity" />
         <activity android:name=".function.report.add.GroupMemberActivity" />
+        <activity android:name=".function.ask_for_leave.list.AskForLeaveListActivity" />
+        <activity android:name=".function.ask_for_leave.list.AskForLeaveListDetailActivity" />
+        <activity android:name=".function.go_out.list.GoOutListActivity" />
+        <activity android:name=".function.go_out.list.GoOutListDetailActivity" />
         <activity android:name=".function.approve.ApproveListActivity" />
         <activity android:name=".function.message.MessageListActivity" />
 

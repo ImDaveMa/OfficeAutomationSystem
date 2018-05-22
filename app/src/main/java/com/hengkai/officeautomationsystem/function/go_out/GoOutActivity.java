@@ -16,7 +16,8 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
-import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
+import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.go_out.list.GoOutListActivity;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
@@ -30,7 +31,9 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +45,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Harry on 2018/5/3.
  * 外出页面
  */
-public class GoOutActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class GoOutActivity extends BaseActivity<GoOutPresenter> implements EasyPermissions.PermissionCallbacks {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -138,15 +141,18 @@ public class GoOutActivity extends BaseActivity implements EasyPermissions.Permi
 
     @Override
     protected ArrayList<String> cancelNetWork() {
-        return null;
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_ADD);
+        tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_DURATION);
+        return tags;
     }
 
     @Override
-    protected BasePresenter bindPresenter() {
-        return null;
+    protected GoOutPresenter bindPresenter() {
+        return new GoOutPresenter();
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_start_time, R.id.ll_end_time, R.id.btn_commit, R.id.iv_start_time, R.id.iv_end_time})
+    @OnClick({R.id.iv_back, R.id.ll_start_time, R.id.ll_end_time, R.id.btn_commit, R.id.iv_start_time, R.id.iv_end_time, R.id.iv_list})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -181,21 +187,51 @@ public class GoOutActivity extends BaseActivity implements EasyPermissions.Permi
                 }
                 break;
             case R.id.btn_commit:
-                if (TextUtils.isEmpty(tvStartTime.getText())) {
-                    ToastUtil.showToast("请选择开始时间");
-                    return;
-                }
-                if (TextUtils.isEmpty(tvEndTime.getText())) {
-                    ToastUtil.showToast("请选择结束时间");
-                    return;
-                }
-                if (TextUtils.isEmpty(etGoOutReason.getText())) {
-                    ToastUtil.showToast("请输入外出事由");
-                    etGoOutReason.requestFocus();
-                    return;
-                }
+                commit();
+                break;
+            case R.id.iv_list:
+                startActivity(new Intent(this, GoOutListActivity.class));
                 break;
         }
+    }
+
+    /**
+     * 提交
+     */
+    private void commit() {
+        String startTime = tvStartTime.getText().toString().trim();
+        String endTime = tvEndTime.getText().toString().trim();
+        String time = tvTime.getText().toString().trim();
+        String leaveReason = etGoOutReason.getText().toString().trim();
+
+        if (TextUtils.isEmpty(startTime) || startTime.equals("请选择")) {
+            ToastUtil.showToast("请选择开始时间");
+            return;
+        }
+        if (TextUtils.isEmpty(endTime) || endTime.equals("请选择")) {
+            ToastUtil.showToast("请选择结束时间");
+            return;
+        }
+        if (TextUtils.isEmpty(leaveReason) || leaveReason.equals("请选择")) {
+            ToastUtil.showToast("请填写请假事由");
+            return;
+        }
+
+        Map<String, String> params = new HashMap<>();
+
+        params.put("TIME", time);
+        params.put("REASON", leaveReason);
+        params.put("STARTTIME", startTime);
+        params.put("ENDTIME", endTime);
+
+        mPresenter.add(params);
+    }
+
+    /**
+     * @param time 设置时长
+     */
+    public void setDuration(double time) {
+        tvTime.setText(String.valueOf(time));
     }
 
     /**
@@ -288,6 +324,11 @@ public class GoOutActivity extends BaseActivity implements EasyPermissions.Permi
                 }
 
                 setTextViewAttribute(endTimeStr, R.drawable.ic_cancel28, R.color.black, tvEndTime, ivEndTime);
+
+                //计算时间先注释掉
+                if (!TextUtils.isEmpty(startTimeStr) && !TextUtils.isEmpty(endTimeStr)) {
+                    mPresenter.duration(startTimeStr, endTimeStr);
+                }
             }
         });
     }
