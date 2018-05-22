@@ -184,4 +184,12 @@ public class NetworkTagFinal {
      */
     public static final String ASK_FOR_LEAVE_ACTIVITY_ADD = "ASK_FOR_LEAVE_ACTIVITY_ADD";
     public static final String ASK_FOR_LEAVE_ACTIVITY_DURATION = "ASK_FOR_LEAVE_ACTIVITY_DURATION";
+    /**
+     * ApproveListActivity
+     */
+    public static final String APPROVE_LIST_ACTIVITY_GET_LIST = "APPROVE_LIST_ACTIVITY_GET_LIST";
+    /**
+     * MessageListActivity
+     */
+    public static final String MESSAGE_LIST_ACTIVITY_GET_LIST = "MESSAGE_LIST_ACTIVITY_GET_LIST";
 }

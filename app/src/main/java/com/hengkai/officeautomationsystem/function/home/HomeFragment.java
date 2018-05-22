@@ -1,13 +1,10 @@
 package com.hengkai.officeautomationsystem.function.home;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,10 +12,11 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.approve.ApproveListActivity;
+import com.hengkai.officeautomationsystem.function.message.MessageListActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
-import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -131,27 +129,19 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        // 绑定审批事件
-        cvHomeApproveContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("跳转到审批列表");
-            }
-        });
-        // 绑定消息事件
-        cvHomeMsgContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast("跳转到消息列表");
-            }
-        });
     }
 
-    @OnClick({R.id.rl_schedule})
+    @OnClick({R.id.rl_schedule, R.id.cv_home_approve_container, R.id.cv_home_msg_container})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_schedule:
                 startActivity(new Intent(mActivity, ScheduleActivity.class));
+                break;
+            case R.id.cv_home_approve_container:
+                startActivity(new Intent(mActivity, ApproveListActivity.class));
+                break;
+            case R.id.cv_home_msg_container:
+                startActivity(new Intent(mActivity, MessageListActivity.class));
                 break;
         }
     }

@@ -96,6 +96,8 @@
         <activity android:name=".function.report.ReportActivity" />
         <activity android:name=".function.report.add.AddReportActivity" />
         <activity android:name=".function.report.add.GroupMemberActivity" />
+        <activity android:name=".function.approve.ApproveListActivity" />
+        <activity android:name=".function.message.MessageListActivity" />
 
 
     </application>

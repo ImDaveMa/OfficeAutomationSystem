@@ -34,8 +34,11 @@ public class HomeModel extends BaseModel {
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("OPERATING", "0"); // 0:需要我审批 1:抄送我的2：我发起的审批
+        params.put("SEARCHDAY", "0"); // 0为今天 1为昨天，依次叠加
         params.put("PAGEID", "0");
         params.put("PAGESIZE", "1");
+        // params.put("SEARCHSTATE", "0"); // 根据审批状态搜索
 
         service.getApproveList(URLFinal.GET_APPROVE_LIST, params)
                 .subscribeOn(Schedulers.io())
@@ -48,10 +51,8 @@ public class HomeModel extends BaseModel {
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
-        params.put("OPERATING", "0"); // 0:需要我审批 1:抄送我的2：我发起的审批
-        params.put("SEARCHSTATE", "0"); // 0为今天 1为昨天，依次叠加
         params.put("PAGEID", "0");
-        params.put("PAGESIZE", CommonFinal.PAGE_SIZE + "");
+        params.put("PAGESIZE", "2");
 
         service.getMsgList(URLFinal.GET_MSG_LIST, params)
                 .subscribeOn(Schedulers.io())
