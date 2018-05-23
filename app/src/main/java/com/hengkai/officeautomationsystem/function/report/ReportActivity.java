@@ -112,7 +112,7 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
         swipeTarget.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ReportAdapter(mList, type);
         swipeTarget.setAdapter(adapter);
-        swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
