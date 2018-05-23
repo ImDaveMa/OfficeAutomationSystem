@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.network.entity.ReportContactsEntity;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.squareup.picasso.Picasso;
@@ -63,7 +64,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         holder.tvName.setText(bean.name);
         if (!TextUtils.isEmpty(bean.iconLink)) {
             Picasso.with(context)
-                    .load(bean.iconLink)
+                    .load(URLFinal.BASE_URL + bean.iconLink)
                     .error(R.drawable.ic_user64)
 //                    .transform(new PicassoCircleTransform())
                     .resize(WindowUtil.dp2px(40, context), WindowUtil.dp2px(40, context))

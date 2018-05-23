@@ -61,6 +61,9 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
     Button btnCommit;
     private int type;
     private AddReportAdapter adapter;
+    /**
+     * 保存点击了哪一些要发送的人的状态, 用来显示在当前页面里面和传递到下一个页面来赋值状态
+     */
     private ArrayList<ReportContactsEntity.DATEBean> statusList;
 
     @Override
@@ -118,6 +121,12 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
                 Intent intent = new Intent(AddReportActivity.this, GroupMemberActivity.class);
                 intent.putParcelableArrayListExtra("status", statusList);
                 startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
+            }
+
+            @Override
+            public void onHeaderClick(int position) {
+                statusList.remove(position - 1);
+                adapter.notifyDataSetChanged();
             }
         });
     }

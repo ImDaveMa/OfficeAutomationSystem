@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
+import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.network.entity.ReportContactsEntity;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -45,7 +46,7 @@ public class AddReportAdapter extends RecyclerView.Adapter<AddReportAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         if (position == 0) {
             holder.ivHeader.setImageResource(R.drawable.ic_add128);
             holder.tvName.setVisibility(View.GONE);
@@ -63,7 +64,7 @@ public class AddReportAdapter extends RecyclerView.Adapter<AddReportAdapter.View
             holder.tvName.setText(bean.name);
             if (!TextUtils.isEmpty(bean.iconLink)) {
                 Picasso.with(context)
-                        .load(bean.iconLink)
+                        .load(URLFinal.BASE_URL + bean.iconLink)
                         .error(R.drawable.ic_user64)
 //                    .transform(new PicassoCircleTransform())
                         .resize(WindowUtil.dp2px(40, context), WindowUtil.dp2px(40, context))
@@ -72,6 +73,15 @@ public class AddReportAdapter extends RecyclerView.Adapter<AddReportAdapter.View
             } else {
                 holder.ivHeader.setImageResource(R.drawable.ic_user64);
             }
+            holder.ivHeader.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mList.remove(holder.getAdapterPosition() - 1);
+                        mListener.onHeaderClick(holder.getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 
@@ -95,6 +105,8 @@ public class AddReportAdapter extends RecyclerView.Adapter<AddReportAdapter.View
 
     public interface OnItemClickListener {
         void onClick();
+
+        void onHeaderClick(int position);
     }
 
     private OnItemClickListener mListener;
