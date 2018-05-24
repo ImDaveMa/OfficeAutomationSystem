@@ -75,30 +75,34 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layer_list_border_bottom"
-        android:padding="10dp">
+        android:background="@drawable/layer_list_border_bottom">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red1"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
             android:text="*"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
             android:text="数量"
             android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/et_goods_num"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:minHeight="40dp"
             android:layout_alignParentEnd="true"
+            android:gravity="end|fill_vertical"
+            android:padding="10dp"
             android:background="@color/transparent"
             android:inputType="number"
-            android:gravity="right"
             android:hint="请输入数量"
             android:textSize="14sp" />
 

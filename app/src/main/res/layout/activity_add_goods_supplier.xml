@@ -23,31 +23,35 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/red1"
                     android:text="*"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="名称"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_name"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入供应商名称"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
 
@@ -96,29 +100,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="*"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/red1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
                     android:text="所在城市"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_city"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入所在城市"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -128,24 +136,27 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="地址"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_address"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
+                    android:paddingEnd="10dp"
                     android:inputType="number"
-                    android:gravity="right"
                     android:hint="请输入地址"
                     android:textSize="14sp" />
 
@@ -154,24 +165,27 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="10dp">
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="邮政编码"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_postal_code"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:inputType="number"
+                    android:paddingEnd="10dp"
                     android:maxLength="5"
                     android:hint="请输入邮政编码"
                     android:textSize="14sp" />
@@ -182,23 +196,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="联系人"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_contacts"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入联系人"
                     android:textSize="14sp" />
 
@@ -207,23 +223,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="电话"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_phone"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入电话号码"
                     android:textSize="14sp" />
 
@@ -232,23 +250,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="传真"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_fax"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入传真"
                     android:textSize="14sp" />
 
@@ -257,23 +277,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="电子邮箱"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_mailbox"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:inputType="textEmailAddress"
                     android:hint="请输入电子邮箱地址"
                     android:textSize="14sp" />
@@ -283,23 +305,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/layer_list_border_bottom"
-                android:padding="10dp">
+                android:background="@drawable/layer_list_border_bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="QQ号"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_qq"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:inputType="number"
                     android:hint="请输入QQ号码"
                     android:textSize="14sp" />
@@ -309,23 +333,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="10dp">
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="微信号"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_wechat"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入微信号码"
                     android:textSize="14sp" />
 
@@ -335,23 +361,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:padding="10dp">
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
                     android:text="来源"
                     android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/et_goods_supplier_source"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end|fill_vertical"
+                    android:padding="10dp"
                     android:background="@color/transparent"
-                    android:gravity="right"
                     android:hint="请输入来源"
                     android:textSize="14sp" />
 
@@ -374,7 +402,7 @@
                 <TextView
                     android:id="@+id/tv_goods_supplier_state"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
                     android:background="@color/transparent"
