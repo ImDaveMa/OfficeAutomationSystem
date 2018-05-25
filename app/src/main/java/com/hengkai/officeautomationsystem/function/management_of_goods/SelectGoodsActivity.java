@@ -30,6 +30,8 @@ import butterknife.OnClick;
 
 public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> implements OnItemClickListener<GoodsEntity.GoodsBean> {
 
+    private static final int REQUEST_CODE_ADD_OR_EDIT_GOODS = 10002;
+
     public static final String KEY_POSITION = "KEY_POSITION";
     public static final String KEY_NAME = "KEY_NAME";
     public static final String KEY_ID = "KEY_ID";
@@ -43,6 +45,8 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
     TextView tvTitle;
     @BindView(R.id.tv_search)
     TextView tvSearch;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.swipe_refresh_header)
     RefreshHeaderView swipeRefreshHeader;
     @BindView(R.id.swipe_target)
@@ -68,6 +72,7 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
         ButterKnife.bind(this);
 
         tvTitle.setText("物品选择");
+        ivAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
@@ -108,7 +113,7 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.iv_add, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -116,6 +121,10 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
                 break;
             case R.id.tv_search:
 
+                break;
+            case R.id.iv_add:
+                Intent intent = new Intent(this, AddGoodsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_ADD_OR_EDIT_GOODS);
                 break;
         }
     }
@@ -181,5 +190,15 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
         // 返回成功并关闭窗口
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_CODE_ADD_OR_EDIT_GOODS){
+                swipeToLoadLayout.setRefreshing(true);
+            }
+        }
     }
 }

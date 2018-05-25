@@ -396,7 +396,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="合作商"
+                    android:text="是否签约"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -407,7 +407,7 @@
                     android:layout_marginEnd="15dp"
                     android:background="@color/transparent"
                     android:gravity="right"
-                    android:hint="请选择是否为合作商家"
+                    android:hint="请选择是否签约"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 

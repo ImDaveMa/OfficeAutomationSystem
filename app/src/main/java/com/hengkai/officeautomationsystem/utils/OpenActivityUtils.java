@@ -24,6 +24,7 @@ import com.hengkai.officeautomationsystem.function.report.ReportActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.VisitRecordActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
 import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 
@@ -75,8 +76,11 @@ public class OpenActivityUtils {
                     case R.drawable.ic_unit_library: //单位库
                         onClickMethod(activity, UnitLibraryActivity.class, dbId);
                         break;
-                    case R.drawable.ic_visit_record: //拜访跟进
+                    case R.drawable.ic_visit_record: //拜访跟进记录
                         onClickMethod(activity, VisitRecordActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_visit_add: //拜访跟进添加
+                        onClickMethod(activity, VisitRecordDetailActivity.class, dbId, "type", "add");
                         break;
                     case R.drawable.ic_application_for_use: //物品领用
                         onClickMethod(activity, UseGoodsActivity.class, dbId);

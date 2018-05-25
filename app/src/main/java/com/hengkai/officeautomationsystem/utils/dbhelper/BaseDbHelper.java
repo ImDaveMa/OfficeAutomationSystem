@@ -116,6 +116,8 @@ public class BaseDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
         sql = "insert into tbl_menus(name, image, count, last_time, target) values('统计分析','ic_statistical_analysis',0,0,'statistical_analysis');";
         sqLiteDatabase.execSQL(sql);
+        sql = "insert into tbl_menus(name, image, count, last_time, target) values('拜访跟进','ic_visit_add',0,0,'ic_visit_add');";
+        sqLiteDatabase.execSQL(sql);
     }
 
     @Override
