@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.function.unit_library.detail;
 
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -85,7 +86,11 @@ public class UnitLibraryDetailActivity extends BaseActivity<UnitLibraryDetailPre
         tvAddress.setText(bean.address);
         tvNumber.setText(bean.creditCode);
         tvWebsite.setText(bean.website);
-        tvDescription.setText(Html.fromHtml(bean.text));
+        if(TextUtils.isEmpty(bean.text)) {
+            tvDescription.setText("");
+        } else {
+            tvDescription.setText(Html.fromHtml(bean.text));
+        }
     }
 
 }

@@ -16,16 +16,16 @@ public class SplashActivity extends AppCompatActivity {
 
     private int timeCount = 0;
     boolean continueCount = true;
-    Handler handler = new Handler() {
+    Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             countNum();
             if (continueCount) {
                 handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
             }
+            return false;
         }
-    };
+    }) ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

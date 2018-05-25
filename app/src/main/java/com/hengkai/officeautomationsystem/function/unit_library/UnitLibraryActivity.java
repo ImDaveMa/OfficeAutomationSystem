@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.function.unit_library;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,8 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
+import com.hengkai.officeautomationsystem.function.unit_library.detail.UnitLibraryDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
@@ -23,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Harry on 2018/5/5.
@@ -42,6 +47,8 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
 
     private List<UnitLibraryEntity.DATABean> mList;
     private boolean isLoadMore = false;
@@ -69,6 +76,7 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
 
     private void initTitle() {
         tvTitle.setText("单位库");
+        ivAdd.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,4 +138,21 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
         adapter.notifyDataSetChanged();
     }
 
+    @OnClick(R.id.iv_add)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.iv_add:
+                Intent intent = new Intent(this, NewUnitActivity.class);
+                startActivityForResult(intent, 1000);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1000 && resultCode == RESULT_OK){
+            swipeToLoadLayout.setRefreshing(true);
+        }
+    }
 }

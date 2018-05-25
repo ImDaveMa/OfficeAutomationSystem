@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.function.new_unit;
 
+import android.app.Activity;
+
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
@@ -101,6 +103,7 @@ public class NewUnitPresenter extends BasePresenter<NewUnitActivity> {
             public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
                 if (commonReceiveMessageEntity.CODE == 1) {
                     ToastUtil.showToast("提交成功");
+                    view.setResult(Activity.RESULT_OK);
                     view.finish();
                 } else if (commonReceiveMessageEntity.CODE == 2) {
                     ToastUtil.showToast("参数不完整");
