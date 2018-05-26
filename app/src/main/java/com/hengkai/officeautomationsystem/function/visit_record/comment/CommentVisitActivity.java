@@ -24,7 +24,7 @@ import butterknife.OnClick;
 
 /**
  * Created by Harry on 2018/5/16.
- * 拜访跟进的评论页面
+ * 拜访跟进(比较后显示的评论页面)的评论页面
  */
 public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
 
@@ -48,6 +48,10 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
     TextView tvNotComment;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_start_address)
+    TextView tvStartAddress;
+    @BindView(R.id.tv_end_address)
+    TextView tvEndAddress;
 
     private List<CommentVisitEntity.DATEBean> mList;
     private CommentVisitAdapter adapter;
@@ -163,6 +167,9 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         tvStartTime.setText(startTime);
         String endTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, bean.endTime);
         tvEndTime.setText(endTime);
+
+        tvStartAddress.setText(bean.startAddress);
+        tvEndAddress.setText(bean.endAddress);
     }
 
     public void getCommentList(List<CommentVisitEntity.DATEBean> list) {

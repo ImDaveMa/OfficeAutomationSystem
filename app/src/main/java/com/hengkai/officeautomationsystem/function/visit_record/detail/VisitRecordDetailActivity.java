@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.function.visit_record.detail;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +27,20 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiAddrInfo;
+import com.baidu.mapapi.search.poi.PoiBoundSearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.search.poi.PoiSortType;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
@@ -51,6 +66,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Harry on 2018/5/8.
+ * 拜访跟进详情页面
  */
 public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailActivityPresenter> implements EasyPermissions.PermissionCallbacks {
 
@@ -90,6 +106,18 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     LinearLayout llVisitCustomer;
     @BindView(R.id.ll_project)
     LinearLayout llProject;
+    @BindView(R.id.ll_start_address)
+    LinearLayout llStartAddress;
+    @BindView(R.id.ll_end_address)
+    LinearLayout llEndAddress;
+    @BindView(R.id.tv_start_address)
+    TextView tvStartAddress;
+    @BindView(R.id.tv_end_address)
+    TextView tvEndAddress;
+    @BindView(R.id.tv_red_dot1)
+    TextView tvRedDot1;
+    @BindView(R.id.tv_red_dot2)
+    TextView tvRedDot2;
     /**
      * 根据type的值判断提交类型(typeYM字段), 以区分是新增按钮进入还是列表item进入当前页面
      */
@@ -134,6 +162,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
      * 判断当前是开启状态还是结束状态
      */
     private boolean isStart;
+    private PoiSearch poiSearch;
 
     @Override
     protected int setupView() {
@@ -262,10 +291,18 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 break;
             case R.id.btn_start:    //开始
                 isStart = true;
+                if (!verificationTextView()) {
+                    return;
+                }
+                showDialog();
                 easyPermission();
                 break;
             case R.id.btn_end:      //结束
                 isStart = false;
+                if (!verificationTextView()) {
+                    return;
+                }
+                showDialog();
                 mLocationClient.start();
                 break;
             case R.id.btn_commit:   //提交
@@ -289,14 +326,13 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     /**
      * 拜访结束是点击 执行这个方法
+     * @param addressName
      */
-    private void toEndVisit() {
+    private void toEndVisit(String addressName) {
         if (locationLatitude == 0 || locationLongitude == 0 || TextUtils.isEmpty(locationAddress)) {
             ToastUtil.showToast("获取地址失败, 请重新点击开始");
             return;
         }
-
-        verificationTextView();
 
         Map<String, String> params = new HashMap<>();
         params.put("ID", String.valueOf(currentID));
@@ -310,7 +346,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         params.put("department", tvVisitDepartment.getText().toString().trim());
         params.put("endLongitude", String.valueOf(locationLongitude));
         params.put("endLatitude", String.valueOf(locationLatitude));
-        params.put("address", locationAddress);
+        params.put("address", addressName);
 //        params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
         params.put("phone", getCurrentPhoneNumber());
         params.put("summary", etVisitSummary.getText().toString().trim());
@@ -349,14 +385,13 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     /**
      * 开始拜访, 在确认了定位权限后调用
+     * @param addressName
      */
-    private void toStartVisit() {
+    private void toStartVisit(String addressName) {
         if (locationLatitude == 0 || locationLongitude == 0 || TextUtils.isEmpty(locationAddress)) {
             ToastUtil.showToast("获取地址失败, 请重新点击");
             return;
         }
-
-        verificationTextView();
 
         if (type == 1001) {
             //点击新增按钮进入当前页面
@@ -371,7 +406,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             }
             params.put("startLongitude", String.valueOf(locationLongitude));
             params.put("startLatitude", String.valueOf(locationLatitude));
-            params.put("address", locationAddress);
+            params.put("address", addressName);
             params.put("phone", getCurrentPhoneNumber());
             params.put("summary", etVisitSummary.getText().toString().trim());
 
@@ -395,7 +430,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             params.put("department", tvVisitDepartment.getText().toString().trim());
             params.put("startLongitude", String.valueOf(locationLongitude));
             params.put("startLatitude", String.valueOf(locationLatitude));
-            params.put("address", locationAddress);
+            params.put("address", addressName);
             params.put("phone", getCurrentPhoneNumber());
             params.put("summary", etVisitSummary.getText().toString().trim());
 
@@ -407,20 +442,31 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     /**
      * 验证必填参数是否为空
      */
-    private void verificationTextView() {
+    private boolean verificationTextView() {
         String visitType = tvVisitType.getText().toString().trim();
         String visitUnit = tvVisitUnit.getText().toString().trim();
         String visitCustomer = tvVisitCustomer.getText().toString().trim();
+        String visitProject = tvProject.getText().toString().trim();
         if (TextUtils.isEmpty(visitType) || visitType.equals("请选择")) {
             ToastUtil.showToast("请选择拜访类型");
-            return;
-        } else if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
-            ToastUtil.showToast("请选择拜访单位");
-            return;
-        } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
-            ToastUtil.showToast("请选择拜访人");
-            return;
+            return false;
         }
+        if (visitType.equals("拜访") || visitType.equals("跟进")){
+            if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访单位");
+                return false;
+            } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访人");
+                return false;
+            }
+        }
+        if (visitType.equals("跟进")) {
+            if (TextUtils.isEmpty(visitProject) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择跟进项目");
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -513,6 +559,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 tvVisitType.setTextColor(getResources().getColor(R.color.black1));
                 ivVisitType.setVisibility(View.GONE);
                 dialog.dismiss();
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
             }
         });
 
@@ -524,6 +572,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 tvVisitType.setTextColor(getResources().getColor(R.color.black1));
                 ivVisitType.setVisibility(View.GONE);
                 dialog.dismiss();
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
             }
         });
 
@@ -535,6 +585,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 tvVisitType.setTextColor(getResources().getColor(R.color.black1));
                 ivVisitType.setVisibility(View.GONE);
                 dialog.dismiss();
+                tvRedDot1.setVisibility(View.INVISIBLE);
+                tvRedDot2.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -574,6 +626,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     private void initBaiDuLocation() {
         //声明LocationClient类
         mLocationClient = new LocationClient(getApplicationContext());
+
+        poiSearch = PoiSearch.newInstance();
+
         //注册监听函数
         mLocationClient.registerLocationListener(myListener);
 
@@ -618,14 +673,17 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         //可选，设置是否需要过滤GPS仿真结果，默认需要，即参数为false
         option.setEnableSimulateGps(false);
 
+        //可选，是否需要地址信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的地址信息，此处必须为true
+        option.setIsNeedAddress(true);
+//        option.setIsNeedLocationPoiList(true);
+//        option.setIsNeedLocationDescribe(true);
+
         //mLocationClient为第二步初始化过的LocationClient对象
         //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
         //更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
         mLocationClient.setLocOption(option);
 
-        //可选，是否需要地址信息，默认为不需要，即参数为false
-        //如果开发者需要获得当前点的地址信息，此处必须为true
-        option.setIsNeedAddress(true);
     }
 
     public class MyLocationListener extends BDAbstractLocationListener {
@@ -648,18 +706,103 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
 
             locationAddress = location.getAddrStr();//获取详细地址
-            Log.i("666", "经度" + locationLongitude);
-            Log.i("666", "纬度" + locationLatitude);
-            Log.i("666", "详细地址" + locationAddress);
 
-            if (isStart) {
-                toStartVisit();
-            } else {
-                toEndVisit();
-            }
+            setupPoiSearch(location.getAddress().street, location.getLatitude(), location.getLongitude());
+
+//            if (isStart) {
+//                toStartVisit();
+//            } else {
+//                toEndVisit();
+//            }
 
             mLocationClient.stop();//定位获得到结果后停止定位
         }
+    }
+
+    private void setupPoiSearch(String keyWord, double latitude, double longitude) {
+
+        poiSearch.setOnGetPoiSearchResultListener(new OnGetPoiSearchResultListener() {
+            @Override
+            public void onGetPoiResult(PoiResult poiResult) {
+                List<PoiInfo> allPoi = poiResult.getAllPoi();
+
+                dismissDialog();
+
+                if (poiResult.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
+                    ToastUtil.showToast("无法获取周边位置信息, 请重新获取");
+                    return;
+                }
+                if (poiResult.error == SearchResult.ERRORNO.NO_ERROR) {
+                    if (allPoi != null && allPoi.size() > 0) {
+                        showBottomDialog(allPoi);
+                    }
+                }
+            }
+
+            @Override
+            public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+
+            }
+
+            @Override
+            public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
+            }
+        });
+
+        PoiNearbySearchOption poiNearBySearchOption = new PoiNearbySearchOption();
+        poiNearBySearchOption.keyword(keyWord);
+        poiNearBySearchOption.location(new LatLng(latitude, longitude));
+        poiNearBySearchOption.sortType(PoiSortType.distance_from_near_to_far);
+
+        poiNearBySearchOption.pageCapacity(10);
+//        poiNearBySearchOption.pageNum(1);
+        poiNearBySearchOption.radius(100);
+
+        poiSearch.searchNearby(poiNearBySearchOption);
+    }
+
+    /**
+     * 底部弹窗, 显示定位结果集
+     * @param allPoi 后边信息集合
+     */
+    private void showBottomDialog(List<PoiInfo> allPoi) {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        View view = View.inflate(this, R.layout.dialog_visit_record_detail, null);
+        initDialogChildView(view, allPoi, dialog);
+        dialog.setContentView(view);
+        dialog.show();
+
+    }
+
+    /**
+     * 初始化底部弹窗的子view
+     * @param view
+     * @param allPoi 后边信息集合
+     * @param bottomDialog
+     */
+    private void initDialogChildView(View view, List<PoiInfo> allPoi, final Dialog bottomDialog) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        BottomPoiDialogAdapter adapter = new BottomPoiDialogAdapter(allPoi);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnAdapterItemClickListener(new BottomPoiDialogAdapter.AdapterItemClickListener() {
+            @Override
+            public void getAddressName(String addressName) {
+                if (isStart) {
+                    tvStartAddress.setText(addressName);
+                    llStartAddress.setVisibility(View.VISIBLE);
+                    toStartVisit(addressName);
+                } else {
+                    tvEndAddress.setText(addressName);
+                    llEndAddress.setVisibility(View.VISIBLE);
+                    toEndVisit(addressName);
+                }
+                bottomDialog.dismiss();
+            }
+        });
     }
 
     /**
@@ -715,6 +858,16 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             btnEnd.setEnabled(false);
             tvSave.setEnabled(false);
             tvSave.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(bean.startAddress)) {
+            llStartAddress.setVisibility(View.VISIBLE);
+            tvStartAddress.setText(bean.startAddress);
+
+            if (!TextUtils.isEmpty(bean.endAddress)) {
+                llEndAddress.setVisibility(View.VISIBLE);
+                tvEndAddress.setText(bean.endAddress);
+            }
         }
     }
 
@@ -782,5 +935,14 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     public void onBackPressed() {
         super.onBackPressed();
         setResult(CommonFinal.VISIT_RECORD_RESULT_CODE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //当页面结束的时候取消注册百度地图
+        mLocationClient.unRegisterLocationListener(myListener);
+        mLocationClient.stop();
+        poiSearch.destroy();
     }
 }

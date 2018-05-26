@@ -3,6 +3,8 @@ package com.hengkai.officeautomationsystem.application;
 import android.app.Activity;
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import java.util.Stack;
 
 /**
@@ -18,6 +20,7 @@ public class OfficeAutomationSystemApplication extends Application {
         super.onCreate();
 
         appContext = this;
+        SDKInitializer.initialize(this);
     }
 
     public static OfficeAutomationSystemApplication getAppContext() {

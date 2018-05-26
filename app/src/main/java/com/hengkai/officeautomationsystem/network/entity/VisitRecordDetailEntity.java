@@ -104,5 +104,7 @@ public class VisitRecordDetailEntity {
          * 备注
          */
         public Object remarks;
+        public String startAddress;
+        public String endAddress;
     }
 }
