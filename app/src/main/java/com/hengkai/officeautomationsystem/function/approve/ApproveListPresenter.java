@@ -31,7 +31,7 @@ public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
 
             @Override
             public void onNext(MessageEntity msgEntity) {
-//                view.stopRefreshing();
+                view.stopRefreshing();
                 if (msgEntity.getCODE() == 1) {
                     view.prepareData(msgEntity.getDATE());
                 } else if (msgEntity.getCODE() == -2) {
@@ -43,7 +43,7 @@ public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
 
             @Override
             public void onError(Throwable e) {
-//                view.stopRefreshing();
+                view.stopRefreshing();
                 ToastUtil.showToast("请求网络失败");
             }
 
