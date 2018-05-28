@@ -57,8 +57,8 @@ public class DateFormatUtils {
             return time;
         }
 
-        //不足三天，取天数
-        if (interval < 60 * 60 * 24 * 3 * 1000) {
+        //不足七天，取天数
+        if (interval < 60 * 60 * 24 * 7 * 1000) {
             long date = interval / (60 * 60 * 24 * 1000);
             if (date < 1) {
                 date = 1;

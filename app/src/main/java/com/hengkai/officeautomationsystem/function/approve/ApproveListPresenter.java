@@ -14,7 +14,7 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class ApproveListPresenter extends BasePresenter<ApproveListActivity> {
+public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
 
     private final ApproveListModel model;
 
@@ -22,7 +22,7 @@ public class ApproveListPresenter extends BasePresenter<ApproveListActivity> {
         model = new ApproveListModel();
     }
 
-    public void getApproveList(int id, int operating, int searchDay) {
+    public void getApproveList(int id, int operating, int searchDay, int state) {
         model.getApproveList(new Observer<MessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -31,19 +31,19 @@ public class ApproveListPresenter extends BasePresenter<ApproveListActivity> {
 
             @Override
             public void onNext(MessageEntity msgEntity) {
-                view.stopRefreshing();
+//                view.stopRefreshing();
                 if (msgEntity.getCODE() == 1) {
                     view.prepareData(msgEntity.getDATE());
                 } else if (msgEntity.getCODE() == -2) {
                     // 返回的数据是空，所以不能处理列表
                 } else if (msgEntity.getCODE() == 0) {//TOKEN失效
-                    view.showLoginDialog(view);
+                    view.showLoginDialog(view.getContext());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                view.stopRefreshing();
+//                view.stopRefreshing();
                 ToastUtil.showToast("请求网络失败");
             }
 
@@ -51,7 +51,7 @@ public class ApproveListPresenter extends BasePresenter<ApproveListActivity> {
             public void onComplete() {
 
             }
-        }, id, operating, searchDay);
+        }, id, operating, searchDay, state);
 
     }
 }

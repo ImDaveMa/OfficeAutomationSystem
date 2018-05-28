@@ -27,7 +27,7 @@ public class ApproveListModel {
         service = retrofit.create(ApproveService.class);
     }
 
-    public void getApproveList(Observer observer, int id, int operating, int searchDay) {
+    public void getApproveList(Observer observer, int id, int operating, int searchDay, int state) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
@@ -36,7 +36,9 @@ public class ApproveListModel {
         if(searchDay > -1) {
             params.put("SEARCHDAY", searchDay + ""); // 0为今天 1为昨天，依次叠加
         }
-        // params.put("SEARCHSTATE", "0"); // 根据审批状态搜索
+        if(state > -1) {
+            params.put("SEARCHSTATE", "0"); // 0：未审批 1通过 2未通过 3 已撤销
+        }
         params.put("PAGEID", id + "");
         params.put("PAGESIZE", CommonFinal.PAGE_SIZE + "");
 

@@ -1,30 +1,18 @@
 package com.hengkai.officeautomationsystem.function.approve;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
-import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.goods_out.ManagementUseGoodsAdapter;
-import com.hengkai.officeautomationsystem.function.goods_out.ManagementUseGoodsPresenter;
-import com.hengkai.officeautomationsystem.function.goods_out.UseGoodsActivity;
-import com.hengkai.officeautomationsystem.function.goods_out.UseGoodsDetailActivity;
-import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
-import com.hengkai.officeautomationsystem.network.entity.UseGoodsEntity;
-import com.hengkai.officeautomationsystem.utils.ToastUtil;
-import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
-import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -34,30 +22,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ApproveListActivity extends BaseActivity<ApproveListPresenter> implements OnItemClickListener<MessageEntity.MsgBean> {
+public class ApproveListActivity extends BaseActivity {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_search)
-    TextView tvSearch;
-    @BindView(R.id.swipe_refresh_header)
-    RefreshHeaderView swipeRefreshHeader;
-    @BindView(R.id.swipe_target)
-    RecyclerView swipeTarget;
-    @BindView(R.id.swipe_load_more_footer)
-    LoadMoreFooterView swipeLoadMoreFooter;
-    @BindView(R.id.swipeToLoadLayout)
-    SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.tab_approve)
+    TabLayout tabApprove;
+    @BindView(R.id.vp_approve)
+    ViewPager vpApprove;
 
-    private List<MessageEntity.MsgBean> goodsOutList;
-    private ApproveListAdapter adapter;
-    private int lastID;
+    private List<Fragment> fragmentList;
 
     @Override
     protected int setupView() {
-        return R.layout.activity_common_search_list;
+        return R.layout.activity_approve;
     }
 
     @Override
@@ -67,10 +47,9 @@ public class ApproveListActivity extends BaseActivity<ApproveListPresenter> impl
         ButterKnife.bind(this);
 
         tvTitle.setText("审批列表");
-        setupRecyclerView();
 
-        //请求网络
-        mPresenter.getApproveList(0, 0, -1);
+        initFragment();
+        initConfig();
     }
 
     /**
@@ -80,9 +59,7 @@ public class ApproveListActivity extends BaseActivity<ApproveListPresenter> impl
      */
     @Override
     protected ArrayList<String> cancelNetWork() {
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.APPROVE_LIST_ACTIVITY_GET_LIST);
-        return tags;
+        return null;
     }
 
     @Override
@@ -94,80 +71,68 @@ public class ApproveListActivity extends BaseActivity<ApproveListPresenter> impl
      * @param list
      */
     public void prepareData(List<MessageEntity.MsgBean> list) {
-        if (goodsOutList != null && list != null && list.size() > 0) {
-            goodsOutList.addAll(list);
-            adapter.notifyDataSetChanged();
-            // 获取最后一个ID
-            lastID = list.get(list.size() - 1).getId();
-        } else {
-            // 没有更多数据
-            swipeLoadMoreFooter.setloadMoreState(LoadMoreFooterView.REFRESH_STATE_NONE);
-            swipeToLoadLayout.setLoadingMore(false);
-        }
-        stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_search:
-
-                break;
         }
+    }
+
+    private void initFragment() {
+        fragmentList = new ArrayList<>();
+
+        //待审核状态
+        ApproveFragment approveFragment = new ApproveFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ApproveFragment.BUNDLE_KEY_STATE, 0);
+        approveFragment.setArguments(bundle);
+        fragmentList.add(approveFragment);
+
+        //全部
+        fragmentList.add(new ApproveFragment());
     }
 
     /**
      * 配置列表相关
      */
-    private void setupRecyclerView() {
-        swipeTarget.setLayoutManager(new LinearLayoutManager(this));
-        //初始化数据列表
-        goodsOutList = new ArrayList<>();
-        //创建数据适配器
-        adapter = new ApproveListAdapter(this, this, goodsOutList);
-        swipeTarget.setAdapter(adapter);
-        swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    private void initConfig() {
+        tabApprove.setTabMode(TabLayout.MODE_FIXED);
+        tabApprove.setSelectedTabIndicatorHeight(5);    // 下方滚动的下划线高度
+        tabApprove.setBackgroundResource(R.color.tab_bg);
+        tabApprove.setTabTextColors(getResources().getColorStateList(R.color.selector_tab_text_color));
+        tabApprove.setSelectedTabIndicatorColor(getResources().getColor(R.color.tab_text_color_selected));  // 下方滚动的下划线颜色
+        tabApprove.setupWithViewPager(vpApprove);
 
-        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // 清空历史数据
-                goodsOutList.clear();
-                mPresenter.getApproveList(0, 0, -1);
-                swipeLoadMoreFooter.onReset();
-            }
-        });
-        swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mPresenter.getApproveList(lastID, 0, -1);
-            }
-        });
+        TrainingRecordPagerAdapter adapter = new TrainingRecordPagerAdapter(getSupportFragmentManager());
+        vpApprove.setAdapter(adapter);
     }
 
-    /**
-     * 停止下拉刷新和上拉刷新
-     */
-    public void stopRefreshing() {
-        swipeToLoadLayout.setLoadingMore(false);
-        swipeToLoadLayout.setRefreshing(false);
-    }
+    private class TrainingRecordPagerAdapter extends FragmentPagerAdapter {
 
-    /**
-     * 列表项点击事件
-     * @param v
-     * @param bean
-     * @param position
-     */
-    @Override
-    public void onItemClick(View v, MessageEntity.MsgBean bean, int position) {
-//        Intent intent = new Intent(this, UseGoodsDetailActivity.class);
-//        intent.putExtra(UseGoodsDetailActivity.EXTRA_KEY_ID, bean.getId());
-//        startActivity(intent);
-        ToastUtil.showToast(bean.getTypeName());
-    }
+        private String[] tabNames;
 
+        public TrainingRecordPagerAdapter(FragmentManager fm) {
+            super(fm);
+            tabNames = getResources().getStringArray(R.array.approve_state);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabNames[position];
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragmentList.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return tabNames.length;
+        }
+    }
 }
