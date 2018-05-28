@@ -102,6 +102,7 @@
         <activity android:name=".function.go_out.list.GoOutListDetailActivity" />
         <activity android:name=".function.approve.ApproveListActivity" />
         <activity android:name=".function.message.MessageListActivity" />
+        <activity android:name=".function.unit_library.search.SearchUnitActivity" />
 
 
     </application>

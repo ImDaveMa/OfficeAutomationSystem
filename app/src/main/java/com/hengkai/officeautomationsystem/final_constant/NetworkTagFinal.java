@@ -196,4 +196,13 @@ public class NetworkTagFinal {
      * MessageListActivity
      */
     public static final String MESSAGE_LIST_ACTIVITY_GET_LIST = "MESSAGE_LIST_ACTIVITY_GET_LIST";
+    /**
+     * SearchUnitActivity
+     */
+    public static final String SEARCH_UNIT_ACTIVITY_GET_KEYWORD_LIST = "SEARCH_UNIT_ACTIVITY_GET_KEYWORD_LIST";
+    public static final String SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST = "SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST";
+    public static final String SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_KEYWORD = "SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_KEYWORD";
+    public static final String SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_NAME = "SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_NAME";
+
+
 }

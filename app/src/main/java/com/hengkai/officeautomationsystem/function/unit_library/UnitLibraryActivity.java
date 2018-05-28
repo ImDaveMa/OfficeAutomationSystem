@@ -17,6 +17,7 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.function.unit_library.detail.UnitLibraryDetailActivity;
+import com.hengkai.officeautomationsystem.function.unit_library.search.SearchUnitActivity;
 import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
@@ -138,12 +139,17 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.iv_add)
+    @OnClick({R.id.iv_add, R.id.tv_search})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        Intent intent;
+        switch (view.getId()) {
             case R.id.iv_add:
-                Intent intent = new Intent(this, NewUnitActivity.class);
+                intent = new Intent(this, NewUnitActivity.class);
                 startActivityForResult(intent, 1000);
+                break;
+            case R.id.tv_search:
+                intent = new Intent(this, SearchUnitActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -151,7 +157,7 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000 && resultCode == RESULT_OK){
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
             swipeToLoadLayout.setRefreshing(true);
         }
     }

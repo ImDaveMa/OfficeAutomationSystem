@@ -79,4 +79,6 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.2.0'
     //SwipeRecyclerView
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    //LabelsView标签view
+    implementation 'com.github.donkingliang:LabelsView:1.4.2'
 }
