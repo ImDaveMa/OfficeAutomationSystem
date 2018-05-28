@@ -1,11 +1,13 @@
 package com.hengkai.officeautomationsystem.function.contacts_library.detail;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsLibraryDetailEntity;
 import com.jaeger.library.StatusBarUtil;
 
@@ -23,6 +25,8 @@ public class ContactsLibraryDetailActivity extends BaseActivity<ContactsLibraryD
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_operation)
+    TextView tvOperation;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_unit)
@@ -48,6 +52,8 @@ public class ContactsLibraryDetailActivity extends BaseActivity<ContactsLibraryD
     @BindView(R.id.tv_car_number)
     TextView tvCarNumber;
 
+    private ContactsLibraryDetailEntity.DATABean mBean;
+
     @Override
     protected int setupView() {
         return R.layout.activity_contacts_library_detail;
@@ -60,6 +66,8 @@ public class ContactsLibraryDetailActivity extends BaseActivity<ContactsLibraryD
         ButterKnife.bind(this);
 
         tvTitle.setText("联系人详情");
+        tvOperation.setText("拜访跟进");
+        tvOperation.setVisibility(View.VISIBLE);
 
         int ID = getIntent().getIntExtra("ID", 0);
         showDialog();
@@ -79,6 +87,8 @@ public class ContactsLibraryDetailActivity extends BaseActivity<ContactsLibraryD
     }
 
     public void setContactsDetail(ContactsLibraryDetailEntity.DATABean bean) {
+        this.mBean = bean;
+
         tvName.setText(bean.name);
         tvUnit.setText(bean.companyName);
         tvDepartment.setText(bean.department);
@@ -97,11 +107,23 @@ public class ContactsLibraryDetailActivity extends BaseActivity<ContactsLibraryD
         tvCarNumber.setText(bean.licensePlate);
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back,R.id.tv_operation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_operation:
+                Intent intent = new Intent(this, VisitRecordDetailActivity.class);
+                intent.putExtra("type", "add");
+                if(mBean != null){
+                    intent.putExtra("companyId", mBean.companyId);
+                    intent.putExtra("companyName", mBean.companyName);
+                    intent.putExtra("userId", mBean.id);
+                    intent.putExtra("userName", mBean.name);
+                    intent.putExtra("department", mBean.department);
+                }
+                startActivity(intent);
                 break;
         }
     }

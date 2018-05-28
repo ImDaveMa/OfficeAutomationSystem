@@ -38,6 +38,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 项目主线 - 联系人库(不是通讯录)
  */
 public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresenter> implements EasyPermissions.PermissionCallbacks{
+    public static final String EXTRA_KEY_UNIT_ID = "EXTRA_KEY_UNIT_ID";
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -55,6 +56,7 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
     private ContactsLibraryAdapter adapter;
 
     private String phoneNum;
+    private int unitID = 0;
 
     @Override
     protected int setupView() {
@@ -72,7 +74,9 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
 
         setupRecyclerView();
 
-        mPresenter.getContactsList(0);
+        // 获取单位ID
+        unitID = getIntent().getIntExtra(EXTRA_KEY_UNIT_ID,0);
+        mPresenter.getContactsList(0, unitID);
     }
 
     @Override
@@ -99,14 +103,14 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getContactsList(0);
+                mPresenter.getContactsList(0, unitID);
                 isLoadMore = false;
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.getContactsList(mList.get(mList.size() - 1).id);
+                mPresenter.getContactsList(mList.get(mList.size() - 1).id, unitID);
                 isLoadMore = true;
             }
         });

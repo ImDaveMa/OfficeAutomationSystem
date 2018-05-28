@@ -29,11 +29,14 @@ public class ContactsLibraryModel extends BaseModel {
         service = retrofit.create(ContactsLibraryService.class);
     }
 
-    public void getContactsList(int ID, Observer<ContactsLibraryEntity> observer) {
+    public void getContactsList(int ID, int unitID, Observer<ContactsLibraryEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("pageSize", String.valueOf(CommonFinal.PAGE_SIZE));
+        if(unitID > 0) {
+            params.put("companyId", String.valueOf(unitID)); // 根据单位筛选
+        }
         params.put("ID", String.valueOf(ID));
 
         service.getContactsList(URLFinal.GET_CONTACTS_LIBRARY_LIST, params)

@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.function.unit_library.detail;
 
+import android.content.Intent;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.contacts_library.ContactsLibraryActivity;
 import com.hengkai.officeautomationsystem.network.entity.UnitLibraryDetailEntity;
 import com.jaeger.library.StatusBarUtil;
 
@@ -27,6 +29,8 @@ public class UnitLibraryDetailActivity extends BaseActivity<UnitLibraryDetailPre
     TextView tvTitle;
     @BindView(R.id.tv_name)
     TextView tvName;
+    @BindView(R.id.tv_operation)
+    TextView tvOperation;
     @BindView(R.id.tv_type)
     TextView tvType;
     @BindView(R.id.tv_address)
@@ -50,6 +54,8 @@ public class UnitLibraryDetailActivity extends BaseActivity<UnitLibraryDetailPre
         ButterKnife.bind(this);
 
         tvTitle.setText("单位详情");
+        tvOperation.setText("联系人");
+        tvOperation.setVisibility(View.VISIBLE);
 
         int ID = getIntent().getIntExtra("ID", 0);
         showDialog();
@@ -68,11 +74,17 @@ public class UnitLibraryDetailActivity extends BaseActivity<UnitLibraryDetailPre
         return new UnitLibraryDetailPresenter();
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back,R.id.tv_operation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_operation:
+                int ID = getIntent().getIntExtra("ID", 0);
+                Intent intent = new Intent(this, ContactsLibraryActivity.class);
+                intent.putExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, ID);
+                startActivity(intent);
                 break;
         }
     }

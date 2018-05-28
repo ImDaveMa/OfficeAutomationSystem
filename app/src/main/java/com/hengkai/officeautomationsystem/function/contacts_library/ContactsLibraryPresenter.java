@@ -20,8 +20,8 @@ public class ContactsLibraryPresenter extends BasePresenter<ContactsLibraryActiv
         model = new ContactsLibraryModel();
     }
 
-    public void getContactsList(int ID) {
-        model.getContactsList(ID, new Observer<ContactsLibraryEntity>() {
+    public void getContactsList(int ID, int unitID) {
+        model.getContactsList(ID, unitID, new Observer<ContactsLibraryEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.CONTACTS_LIBRARY_ACTIVITY_GET_CONTACTS_LIST, d);

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText">
 
-    <include layout="@layout/layout_title_bar_normal" />
+    <include layout="@layout/layout_title_bar_text" />
 
     <ScrollView
         android:layout_width="match_parent"

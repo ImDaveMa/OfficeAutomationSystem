@@ -218,6 +218,20 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         String add = getIntent().getStringExtra("type");
         if (add.equals("add")) {
             type = 1001;    //点击新增按钮进入当前页面
+
+            // 处理参数
+            int companyId = getIntent().getIntExtra("companyId", 0);
+            String companyName = getIntent().getStringExtra("companyName");
+            int userId = getIntent().getIntExtra("userId", 0);
+            String userName = getIntent().getStringExtra("userName");
+            String department = getIntent().getStringExtra("department");
+            tvVisitUnit.setText(companyName);
+            ivVisitUnit.setVisibility(View.GONE);
+            tvVisitCustomer.setText(userName);
+            ivVisitCustomer.setVisibility(View.GONE);
+            tvVisitDepartment.setText(department);
+            unitID = companyId;
+            customerID = String.valueOf(userId);
         } else {
             type = 1002;    //点击列表item进入当前页面
             currentID = getIntent().getIntExtra("currentID", 0);
