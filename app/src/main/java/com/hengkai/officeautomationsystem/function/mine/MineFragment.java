@@ -9,8 +9,11 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.setting.SettingActivity;
+import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.ImageUtil;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.compress.Luban;
@@ -54,6 +57,14 @@ public class MineFragment extends BaseFragment {
         StatusBarUtil.setColor(mActivity, getResources().getColor(R.color.app_theme_color), 0);
         unbinder = ButterKnife.bind(this, view);
 
+        String name = SPUtils.getString(UserInfo.REAL_NAME.name(), "");
+        long joinDate = SPUtils.getLong(UserInfo.CREATE_TIME.name(), 0);
+        String joinDateStr = DateFormatUtils.getFormatedNewsTime(joinDate);
+        String position = SPUtils.getString(UserInfo.POSITION.name(), "");
+        String department = SPUtils.getString(UserInfo.DEPARTMENT_NAME.name(), "");
+        tvUserName.setText(name);
+        tvDepartment.setText(department + "·" + position);
+        tvTimeOfEntry.setText(joinDateStr + "入职");
     }
 
     @Override

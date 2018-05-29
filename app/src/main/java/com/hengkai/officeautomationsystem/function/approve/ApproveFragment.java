@@ -24,6 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class ApproveFragment extends BaseFragment<ApproveListPresenter> implements OnItemClickListener<MessageEntity.MsgBean> {
 
@@ -45,6 +46,8 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
     private int lastID;
     private int state;
 
+    Unbinder unbinder;
+
     @Override
     protected int setupView() {
         return R.layout.fragment_approve_waiting;
@@ -52,7 +55,7 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
 
     @Override
     protected void initView(View view) {
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         setupRecyclerView();
         if (getArguments() != null) {
@@ -153,4 +156,9 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
         ToastUtil.showToast(bean.getTypeName());
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }
