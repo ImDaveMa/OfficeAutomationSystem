@@ -6,9 +6,15 @@
 
     <include layout="@layout/layout_title_bar_normal" />
 
-    <com.hengkai.officeautomationsystem.view.docking_expandable_list_view.view.DockingExpandableListView
-        android:id="@+id/docking_list_view"
+    <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.donkingliang.groupedadapter.widget.StickyHeaderLayout>
 
 </LinearLayout>

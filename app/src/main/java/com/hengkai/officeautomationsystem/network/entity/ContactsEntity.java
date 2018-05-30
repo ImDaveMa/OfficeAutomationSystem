@@ -25,6 +25,7 @@ public class ContactsEntity {
 
         public String departmentName;
         public List<DepartmentUserListBean> departmentUserList;
+        public boolean isExpand;
 
         public static class DepartmentUserListBean {
             /**

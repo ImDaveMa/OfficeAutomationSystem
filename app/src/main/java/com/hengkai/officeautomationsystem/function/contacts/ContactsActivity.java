@@ -6,21 +6,24 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
+import com.donkingliang.groupedadapter.holder.BaseViewHolder;
+import com.donkingliang.groupedadapter.widget.StickyHeaderLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
-import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.adapter.DockingExpandableListViewAdapter;
-import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.controller.IDockingHeaderUpdateListener;
-import com.hengkai.officeautomationsystem.view.docking_expandable_list_view.view.DockingExpandableListView;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -46,15 +49,17 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    private List<String> groupNames;
-    private DockingExpandableListViewAdapter adapter;
-    private ContactsDockingAdapterDataSource listData;
-    private DockingExpandableListView listView;
+    @BindView(R.id.rv_list)
+    RecyclerView rvList;
+    @BindView(R.id.sticky_layout)
+    StickyHeaderLayout stickyLayout;
     /**
      * 需要拨打电话的电话号码
      */
     private String phoneNum;
 
+    private List<ContactsEntity.DIRECTORIESBean> mList;
+    private ContactsAdapter adapter;
 
     @Override
     protected int setupView() {
@@ -67,8 +72,12 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
+        mList = new ArrayList<>();
+
         initTitle();
-        initExpandableListView();
+        setupRecyclerView();
+
+        mPresenter.getContactsList();
     }
 
     /**
@@ -90,64 +99,20 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
         return new ContactsActivityPresenter();
     }
 
-    /**
-     * 初始化列表
-     */
-    private void initExpandableListView() {
-        listData = new ContactsDockingAdapterDataSource(this);
-//        ContactsDockingAdapterDataSource listData = prepareData();
-        listView = findViewById(R.id.docking_list_view);
-        listView.setGroupIndicator(null);
-        listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        adapter = new DockingExpandableListViewAdapter(this, listView, listData);
-        listView.setAdapter(adapter);
-        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+    private void setupRecyclerView() {
+        rvList.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ContactsAdapter(this, mList);
+        rvList.setAdapter(adapter);
+        adapter.setOnCallPhoneClickListener(new ContactsAdapter.OnCallPhoneClickListener() {
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if (parent.isGroupExpanded(groupPosition)) {
-                    parent.collapseGroup(groupPosition);
-                } else {
-                    parent.expandGroup(groupPosition);
-                }
-                return true;
+            public void callPhone(String phone) {
+                easyPermission(phone);
             }
         });
 
-        View headerView = getLayoutInflater().inflate(R.layout.group_view_item, listView, false);
-        listView.setDockingHeader(headerView, new IDockingHeaderUpdateListener() {
+        adapter.setOnChildClickListener(new GroupedRecyclerViewAdapter.OnChildClickListener() {
             @Override
-            public void onUpdate(View headerView, int groupPosition, boolean expanded) {
-                TextView titleView = headerView.findViewById(R.id.group_view_title);
-                titleView.setText(groupNames.get(groupPosition));
-            }
-        });
-
-        //请求网络获取数据
-        mPresenter.getContactsList();
-    }
-
-    /**
-     * @return 准备列表的数据
-     */
-    public void prepareData(List<ContactsEntity.DIRECTORIESBean> list) {
-        groupNames = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            listData.addGroup(list.get(i).departmentName);
-            groupNames.add(list.get(i).departmentName);
-            for (int j = 0; j < list.get(i).departmentUserList.size(); j++) {
-                listData.addChild(list.get(i).departmentUserList.get(j));
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 设置子列表每一项的点击事件
-     */
-    public void initListChildClickListener(final List<ContactsEntity.DIRECTORIESBean> list) {
-        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition, int childPosition) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ContactsActivity.this);
                 View view = View.inflate(ContactsActivity.this, R.layout.dialog_contacts_detail, null);
 
@@ -160,7 +125,7 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
                 TextView tvMail = view.findViewById(R.id.tv_mail);
                 TextView tvEntryTime = view.findViewById(R.id.tv_entry_time);
                 TextView tvQuitTime = view.findViewById(R.id.tv_quit_time);
-                ContactsEntity.DIRECTORIESBean.DepartmentUserListBean bean = list.get(groupPosition).departmentUserList.get(childPosition);
+                ContactsEntity.DIRECTORIESBean.DepartmentUserListBean bean = mList.get(groupPosition).departmentUserList.get(childPosition);
 
                 tvName.setText(bean.name);
                 tvPosition.setText(bean.position);
@@ -185,9 +150,23 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
 
                 builder.setView(view);
                 builder.show();
-                return true;
             }
         });
+
+        adapter.setOnHeaderClickListener(new GroupedRecyclerViewAdapter.OnHeaderClickListener() {
+            @Override
+            public void onHeaderClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition) {
+                ContactsAdapter contactsAdapter = (ContactsAdapter) adapter;
+                if (contactsAdapter.isExpand(groupPosition)) {
+                    contactsAdapter.collapseGroup(groupPosition);
+                } else {
+                    contactsAdapter.expandGroup(groupPosition);
+                }
+            }
+        });
+
+        //是否吸顶，默认为true。
+//        stickyLayout.setSticky(true);
     }
 
     public void easyPermission(String phoneNum) {
@@ -258,5 +237,11 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
             callPhone(phoneNum);
         }
 
+    }
+
+    public void prepareData(List<ContactsEntity.DIRECTORIESBean> list) {
+        mList.clear();
+        mList.addAll(list);
+        adapter.changeDataSet();
     }
 }

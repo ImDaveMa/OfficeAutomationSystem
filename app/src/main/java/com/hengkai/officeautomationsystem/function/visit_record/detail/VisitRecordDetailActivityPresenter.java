@@ -43,7 +43,11 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
             @Override
             public void onNext(VisitRecordDetailGetVisitUnitEntity visitRecordDetailGetVisitUnitEntity) {
                 if (visitRecordDetailGetVisitUnitEntity.CODE == 1) {
-                    view.getVisitUnitList(visitRecordDetailGetVisitUnitEntity.DATA);
+                    if (visitRecordDetailGetVisitUnitEntity.DATA.size() == 0) {
+                        ToastUtil.showToast("暂无单位数据");
+                    } else {
+                        view.getVisitUnitList(visitRecordDetailGetVisitUnitEntity.DATA);
+                    }
                 } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
                     view.showLoginDialog(view);
                 }

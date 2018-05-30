@@ -37,7 +37,7 @@
             android:background="@drawable/shape_edit_text_bg1"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_search38"
-            android:hint="搜索"
+            android:hint="请输入单位名称或地址"
             android:inputType="text"
             android:padding="5dp"
             android:textSize="13sp" />
