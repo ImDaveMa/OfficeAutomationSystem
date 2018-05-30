@@ -59,4 +59,17 @@ public class HomeModel extends BaseModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+    public void getNoticeList(Observer observer) {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("TOP", "5");
+
+        service.getNoticeList(URLFinal.GET_HOME_NOTICE_LIST, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 }

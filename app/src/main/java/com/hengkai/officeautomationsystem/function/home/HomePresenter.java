@@ -6,6 +6,7 @@ import com.hengkai.officeautomationsystem.function.contacts.ContactsActivity;
 import com.hengkai.officeautomationsystem.function.contacts.ContactsActivityModel;
 import com.hengkai.officeautomationsystem.network.entity.ContactsEntity;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
+import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
@@ -38,7 +39,7 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
                     List<MessageEntity.MsgBean> list = contactsEntity.getDATE();
                     view.prepareApproveList(list, contactsEntity.getTOTAL());
                 } else if (contactsEntity.getCODE() == -1) {
-                    ToastUtil.showToast("获取通讯录失败(原因是系统里没有部门)");
+                    ToastUtil.showToast("获取审批列表");
                 } else if (contactsEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
                 }
@@ -69,8 +70,45 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
                     List<MessageEntity.MsgBean> list = contactsEntity.getDATE();
                     view.prepareMsgList(list);
                 } else if (contactsEntity.getCODE() == -1) {
-                    ToastUtil.showToast("获取通讯录失败(原因是系统里没有部门)");
+                    ToastUtil.showToast("获取消息失败");
                 } else if (contactsEntity.getCODE() == 0) {//TOKEN失效
+                    view.showLoginDialog(view.getContext());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+//                ToastUtil.showToast("请求网络失败");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void getNoticeList() {
+        model.getNoticeList(new Observer<NoticeEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.HOME_FRAGMENT_GET_NOTICE_DATA, d);
+            }
+
+            @Override
+            public void onNext(NoticeEntity noticeEntity) {
+                if (noticeEntity.CODE == 1) {
+                    List<NoticeEntity.DATEBean> list = noticeEntity.DATE;
+                    int total = 0;
+                    for (int i = 0; i < list.size(); i++){
+                        if (!list.get(i).readStatus.equals("1")){
+                            total++;
+                        }
+                    }
+                    view.prepareNoticeList(list, total);
+                } else if (noticeEntity.CODE == -1) {
+                    ToastUtil.showToast("获取通知公告失败");
+                } else if (noticeEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
                 }
             }

@@ -177,7 +177,7 @@
                         android:drawablePadding="5dp"
                         android:drawableStart="@drawable/shape_vertical_bar"
                         android:gravity="center_vertical"
-                        android:text="待办事项"
+                        android:text="通知公告"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -189,24 +189,19 @@
                         android:layout_alignBottom="@id/tv_text1"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
-                        android:text="您有0条待办事项"
+                        android:text="0条未读"
                         android:textColor="@color/red3"
                         android:textSize="12sp" />
 
-                    <TextView
+                    <com.paradoxie.autoscrolltextview.VerticalTextview
                         android:id="@+id/tv_receive_message"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignStart="@id/tv_text1"
                         android:layout_below="@id/tv_text1"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="12dp"
-                        android:layout_toStartOf="@id/iv_image1"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="暂无数据"
-                        android:textColor="@color/black1"
-                        android:textSize="14sp" />
+                        android:layout_toStartOf="@id/iv_image1"/>
 
                     <ImageView
                         android:id="@+id/iv_image1"

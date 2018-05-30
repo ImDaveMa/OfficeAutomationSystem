@@ -142,11 +142,8 @@ public class NetworkTagFinal {
      * HomeFragment
      */
     public static final String HOME_FRAGMENT_GET_APPROVE_DATA = "HOME_FRAGMENT_GET_APPROVE_DATA";
-
-    /**
-     * HomeFragment
-     */
     public static final String HOME_FRAGMENT_GET_MSG_DATA = "HOME_FRAGMENT_GET_MSG_DATA";
+    public static final String HOME_FRAGMENT_GET_NOTICE_DATA = "HOME_FRAGMENT_GET_NOTICE_DATA";
     /**
      * AddGoodsActivity
      */

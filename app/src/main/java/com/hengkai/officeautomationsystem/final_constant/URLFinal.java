@@ -31,6 +31,14 @@ public class URLFinal {
      * 获取消息列表
      */
     public static final String GET_MSG_LIST = "mapprovalInf/newstoList";
+    /**
+     * 获取首页通知公告列表
+     */
+    public static final String GET_HOME_NOTICE_LIST = "mnotice/getHomeNotice";
+    /**
+     * 获取通知公告列表
+     */
+    public static final String GET_NOTICE_LIST = "mnotice/getNoticeUserListLimit";
 
     /**
      * 获取联系人列表

@@ -81,6 +81,8 @@ dependencies {
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     //LabelsView标签view
     implementation 'com.github.donkingliang:LabelsView:1.4.2'
+    //AutoVerticalTextview 轮播文本框
+    implementation 'com.github.paradoxie:AutoVerticalTextview:0.1'
     //GroupRecyclerView
     implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.2'
 }
