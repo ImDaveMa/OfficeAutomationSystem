@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.network.service;
 
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
+import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
 
 import java.util.Map;
 
@@ -15,6 +16,6 @@ public interface NoticeService {
 
     @FormUrlEncoded
     @POST
-    Observable<MessageEntity> getNoticeList(@Url String url, @FieldMap Map<String, String> params);
+    Observable<NoticeEntity> getNoticeList(@Url String url, @FieldMap Map<String, String> params);
 
 }

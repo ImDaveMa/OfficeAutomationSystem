@@ -4,4 +4,9 @@
         <item>待审核</item>
         <item>全部</item>
     </string-array>
+    <string-array name="notice_read_state">
+        <item>全部</item>
+        <item>未读</item>
+        <item>已读</item>
+    </string-array>
 </resources>

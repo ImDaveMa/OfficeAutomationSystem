@@ -16,6 +16,7 @@ import com.hengkai.officeautomationsystem.base.BaseFragment;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.approve.ApproveListActivity;
 import com.hengkai.officeautomationsystem.function.message.MessageListActivity;
+import com.hengkai.officeautomationsystem.function.notice.NoticeListActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
@@ -90,6 +91,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
 
         // 初始化滚动文字
         tvReceiveMessage = view.findViewById(R.id.tv_receive_message);
+        tvReceiveMessage.setText(13, 0, getResources().getColor(R.color.black1));//设置属性,具体跟踪源码
+        tvReceiveMessage.setTextStillTime(3000);//设置停留时长间隔
+        tvReceiveMessage.setAnimTime(300);//设置进入和退出的时间间隔
 
         initRecyclerView();
 
@@ -146,7 +150,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
                 startActivity(new Intent(mActivity, ScheduleActivity.class));
                 break;
             case R.id.cv_home_approve_container:
-                startActivity(new Intent(mActivity, ApproveListActivity.class));
+                startActivity(new Intent(mActivity, NoticeListActivity.class));
                 break;
             case R.id.cv_home_msg_container:
                 startActivity(new Intent(mActivity, MessageListActivity.class));
@@ -193,18 +197,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
         } else {
             items.add("暂无数据");
         }
-        tvReceiveMessage.setText(13, 0, getResources().getColor(R.color.black1));//设置属性,具体跟踪源码
-        tvReceiveMessage.setTextStillTime(3000);//设置停留时长间隔
-        tvReceiveMessage.setAnimTime(300);//设置进入和退出的时间间隔
         tvReceiveMessage.setTextList(items);
 
         tvReceiveMessage.startAutoScroll();
     }
 
-    //停止滚动
-    @Override
-    public void onPause() {
-        super.onPause();
-        tvReceiveMessage.stopAutoScroll();
-    }
+//    //停止滚动 报错
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        tvReceiveMessage.stopAutoScroll();
+//    }
 }

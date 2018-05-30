@@ -103,6 +103,8 @@
         <activity android:name=".function.approve.ApproveListActivity" />
         <activity android:name=".function.message.MessageListActivity" />
         <activity android:name=".function.unit_library.search.SearchUnitActivity" />
+        <activity android:name=".function.notice.NoticeListActivity" />
+        <activity android:name=".function.notice.NoticeDetailActivity" />
 
 
     </application>

@@ -38,6 +38,8 @@ public class UseGoodsPresenter extends BasePresenter<UseGoodsActivity> {
                     view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else {
+                    view.dismissDialog();
                 }
             }
 
@@ -75,6 +77,12 @@ public class UseGoodsPresenter extends BasePresenter<UseGoodsActivity> {
                     view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else if (goodsParamsEntity.getCODE() == -2) {
+                    ToastUtil.showToast("系统没有设置参数，请联系管理员");
+                    view.dismissDialog();
+                    view.finish();
+                } else {
+                    view.dismissDialog();
                 }
             }
 

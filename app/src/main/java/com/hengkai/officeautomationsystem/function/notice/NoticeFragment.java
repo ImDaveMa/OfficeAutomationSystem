@@ -1,5 +1,6 @@
-package com.hengkai.officeautomationsystem.function.approve;
+package com.hengkai.officeautomationsystem.function.notice;
 
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +13,11 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.approve.ApproveListAdapter;
+import com.hengkai.officeautomationsystem.function.approve.ApproveListPresenter;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
+import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
@@ -26,14 +30,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ApproveFragment extends BaseFragment<ApproveListPresenter> implements OnItemClickListener<MessageEntity.MsgBean> {
+public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements OnItemClickListener<NoticeEntity.DATEBean> {
 
     public static final String BUNDLE_KEY_STATE = "BUNDLE_KEY_STATE";
 
-    @BindView(R.id.tv_search)
-    TextView tvSearch;
-    @BindView(R.id.swipe_refresh_header)
-    RefreshHeaderView swipeRefreshHeader;
     @BindView(R.id.swipe_target)
     RecyclerView swipeTarget;
     @BindView(R.id.swipe_load_more_footer)
@@ -41,14 +41,14 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
-    private List<MessageEntity.MsgBean> goodsOutList;
-    private ApproveListAdapter adapter;
+    private List<NoticeEntity.DATEBean> mList;
+    private NoticeListAdapter adapter;
     private int lastID;
     private int state;
 
     @Override
     protected int setupView() {
-        return R.layout.fragment_approve_waiting;
+        return R.layout.fragment_notice_list;
     }
 
     @Override
@@ -57,12 +57,12 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
 
         setupRecyclerView();
         if (getArguments() != null) {
-            state = getArguments().getInt(BUNDLE_KEY_STATE, -1); // 分类状态
+            state = getArguments().getInt(BUNDLE_KEY_STATE, NoticeListModel.SEARCHSTATUS_NORMAL); // 分类状态，默认全部
         } else {
-            state = -1; // 全部
+            state = NoticeListModel.SEARCHSTATUS_NORMAL; // 全部
         }
         //请求网络
-        mPresenter.getApproveList(0, 0, -1, state);
+        mPresenter.getNoticeList(0, state);
     }
 
     @Override
@@ -73,19 +73,19 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
     }
 
     @Override
-    protected ApproveListPresenter bindPresenter() {
-        return new ApproveListPresenter();
+    protected NoticeListPresenter bindPresenter() {
+        return new NoticeListPresenter();
     }
 
     /**
      * @param list
      */
-    public void prepareData(List<MessageEntity.MsgBean> list) {
-        if (goodsOutList != null && list != null && list.size() > 0) {
-            goodsOutList.addAll(list);
+    public void prepareData(List<NoticeEntity.DATEBean> list) {
+        if (mList != null && list != null && list.size() > 0) {
+            mList.addAll(list);
             adapter.notifyDataSetChanged();
             // 获取最后一个ID
-            lastID = list.get(list.size() - 1).getId();
+            lastID = list.get(list.size() - 1).id;
         } else {
             // 没有更多数据
             swipeLoadMoreFooter.setloadMoreState(LoadMoreFooterView.REFRESH_STATE_NONE);
@@ -94,24 +94,15 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
         stopRefreshing();
     }
 
-    @OnClick({R.id.tv_search})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_search:
-
-                break;
-        }
-    }
-
     /**
      * 配置列表相关
      */
     private void setupRecyclerView() {
         swipeTarget.setLayoutManager(new LinearLayoutManager(getContext()));
         //初始化数据列表
-        goodsOutList = new ArrayList<>();
+        mList = new ArrayList<>();
         //创建数据适配器
-        adapter = new ApproveListAdapter(getContext(), this, goodsOutList);
+        adapter = new NoticeListAdapter(getContext(), this, mList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
@@ -119,15 +110,15 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
             @Override
             public void onRefresh() {
                 // 清空历史数据
-                goodsOutList.clear();
-                mPresenter.getApproveList(0, 0, -1, state);
+                mList.clear();
+                mPresenter.getNoticeList(0, state);
                 swipeLoadMoreFooter.onReset();
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.getApproveList(lastID, 0, -1, state);
+                mPresenter.getNoticeList(lastID, state);
             }
         });
     }
@@ -147,10 +138,8 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
      * @param position
      */
     @Override
-    public void onItemClick(View v, MessageEntity.MsgBean bean, int position) {
-//        Intent intent = new Intent(this, UseGoodsDetailActivity.class);
-//        intent.putExtra(UseGoodsDetailActivity.EXTRA_KEY_ID, bean.getId());
-//        startActivity(intent);
-        ToastUtil.showToast(bean.getTypeName());
+    public void onItemClick(View v, NoticeEntity.DATEBean bean, int position) {
+        Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
+        startActivity(intent);
     }
 }
