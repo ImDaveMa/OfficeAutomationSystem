@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.network.service;
 
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsLibraryEntity;
 
 import java.util.Map;
@@ -18,4 +19,8 @@ public interface ContactsLibraryService {
     @FormUrlEncoded
     @POST
     Observable<ContactsLibraryEntity> getContactsList(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<CommonReceiveMessageEntity> saveContact(@Url String url, @FieldMap Map<String, String> params);
 }

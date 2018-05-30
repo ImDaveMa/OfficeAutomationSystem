@@ -228,6 +228,10 @@ public class URLFinal {
      */
     public static final String ADD_GOODS_SUPPLIER_URL = "msupplier/doInsert";
     /**
+     * 新增项目联系人
+     */
+    public static final String ADD_CONTACT_URL = "conAcom/arCon";
+    /**
      * 修改物品供应商页面参数
      */
     public static final String UPDATE_GOODS_SUPPLIER_PARAMS = "msupplier/toUpdate";

@@ -201,5 +201,9 @@ public class NetworkTagFinal {
     public static final String SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_KEYWORD = "SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_KEYWORD";
     public static final String SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_NAME = "SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_NAME";
 
+    /**
+     * AddContactActivity
+     */
+    public static final String ADD_CONTACT_ACTIVITY_ADD_CONTACT = "ADD_CONTACT_ACTIVITY_ADD_CONTACT";
 
 }
