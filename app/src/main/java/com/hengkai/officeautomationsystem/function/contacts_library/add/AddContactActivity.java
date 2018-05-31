@@ -78,6 +78,7 @@ public class AddContactActivity extends BaseActivity<AddContactPresenter> {
         ButterKnife.bind(this);
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
+        tvTitle.setText("添加联系人");
 
         unitID = getIntent().getIntExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, 0);
         String unitName = getIntent().getStringExtra("unitName");
