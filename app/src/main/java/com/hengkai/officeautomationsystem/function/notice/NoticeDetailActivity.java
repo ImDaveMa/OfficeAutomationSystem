@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.function.notice;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
@@ -43,6 +45,8 @@ public class NoticeDetailActivity extends BaseActivity<NoticeDetailPresenter> {
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.sv_main)
+    ScrollView svMain;
     @BindView(R.id.iv_header)
     ImageView ivHeader;
     @BindView(R.id.tv_name)
@@ -260,7 +264,13 @@ public class NoticeDetailActivity extends BaseActivity<NoticeDetailPresenter> {
         TextView tvTime = view.findViewById(R.id.tv_time);
         tvTime.setText(DateFormatUtils.getFormatedNewsTime(new Date().getTime()));
 
-        llCommentList.addView(view,0);
+        llCommentList.addView(view);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                svMain.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
 
         // 输入框置为空
         etComment.setText("");

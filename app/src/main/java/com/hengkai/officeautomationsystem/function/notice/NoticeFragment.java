@@ -141,6 +141,14 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
     public void onItemClick(View v, NoticeEntity.DATEBean bean, int position) {
         Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
         intent.putExtra(NoticeDetailActivity.EXTRA_KEY_ID, bean.id);
-        startActivity(intent);
+        startActivityForResult(intent, 1000);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000){
+            swipeToLoadLayout.setRefreshing(true);
+        }
     }
 }

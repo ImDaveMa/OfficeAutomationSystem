@@ -99,6 +99,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
 
         mPresenter.getNoticeList();
         mPresenter.getMsgList();
+
+        tvReceiveMessage.startAutoScroll();
     }
 
     @Override
@@ -198,8 +200,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
             items.add("暂无数据");
         }
         tvReceiveMessage.setTextList(items);
-
-        tvReceiveMessage.startAutoScroll();
     }
 
 //    //停止滚动 报错

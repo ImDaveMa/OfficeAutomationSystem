@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -114,6 +115,7 @@ public class NoticeListActivity extends BaseActivity {
         tabApprove.setBackgroundResource(R.color.tab_bg);
         tabApprove.setTabTextColors(getResources().getColorStateList(R.color.selector_tab_text_color));
         tabApprove.setSelectedTabIndicatorColor(getResources().getColor(R.color.tab_text_color_selected));  // 下方滚动的下划线颜色
+        vpApprove.setOffscreenPageLimit(3);
         tabApprove.setupWithViewPager(vpApprove);
 
         TrainingRecordPagerAdapter adapter = new TrainingRecordPagerAdapter(getSupportFragmentManager());
