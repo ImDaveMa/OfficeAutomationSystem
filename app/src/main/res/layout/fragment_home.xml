@@ -15,24 +15,24 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:contentDescription="image"
-            android:src="@drawable/ic_user" />
+            android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/iv_logo"
             android:padding="5dp"
-            android:text="洛阳恒凯科技有限公司"
+            android:text="洛阳市恒凯信息科技有限公司"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <ScrollView

@@ -88,7 +88,7 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
             tvToday.setText("本周完成");
             tvTomorrow.setText("下周计划");
         }
-        SpannableString spannableString = new SpannableString("发给谁 (点击头像删除)");
+        SpannableString spannableString = new SpannableString("通知给 (点击头像删除)");
         RelativeSizeSpan sizeSpan01 = new RelativeSizeSpan(1.0f);
         RelativeSizeSpan sizeSpan02 = new RelativeSizeSpan(0.8f);
         spannableString.setSpan(sizeSpan01, 0, 3, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -153,7 +153,7 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
                 String ids = "";
                 if (statusList != null) {
                     for (int i = 0; i < statusList.size(); i++) {
-                        if(ids != ""){
+                        if (ids != "") {
                             ids += ",";
                         }
                         ids += statusList.get(i).userId;
@@ -162,10 +162,36 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
                 String today = etToday.getText().toString().trim();
                 String tomorrow = etTomorrow.getText().toString().trim();
                 String needHelp = etNeedHelp.getText().toString().trim();
-                if (TextUtils.isEmpty(today) || TextUtils.isEmpty(tomorrow) || TextUtils.isEmpty(needHelp) || TextUtils.isEmpty(ids)) {
-                    ToastUtil.showToast("您有内容未输入, 请补全");
-                    return;
+                if (type == 0) {    //日报
+                    if (TextUtils.isEmpty(today)) {
+                        ToastUtil.showToast("今日完成未填写, 请补全");
+                        return;
+                    } else if (TextUtils.isEmpty(tomorrow)) {
+                        ToastUtil.showToast("明日计划未填写, 请补全");
+                        return;
+                    } else if (TextUtils.isEmpty(needHelp)) {
+                        ToastUtil.showToast("需协调的工作未填写, 请补全");
+                        return;
+                    } else if (TextUtils.isEmpty(ids)) {
+                        ToastUtil.showToast("您还未选择通知人, 请选择");
+                        return;
+                    }
+                } else {    //周报
+                    if (TextUtils.isEmpty(today)) {
+                        ToastUtil.showToast("本周完成未填写, 请补全");
+                        return;
+                    } else if (TextUtils.isEmpty(tomorrow)) {
+                        ToastUtil.showToast("下周计划未填写, 请补全");
+                        return;
+                    } else if (TextUtils.isEmpty(needHelp)) {
+                        ToastUtil.showToast("需协调的工作未填写, 请补全");
+                        return;
+                    } else if (TextUtils.isEmpty(ids)) {
+                        ToastUtil.showToast("您还未选择通知人, 请选择");
+                        return;
+                    }
                 }
+
                 Map<String, String> params = new HashMap<>();
                 params.put("REMARK", ids);
                 params.put("PRESENTCONTENT", today);
