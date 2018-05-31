@@ -66,6 +66,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyP
 
         initText();
         fullScreen();
+
+        // 设置hint color
+        etAccount.setHintTextColor(getResources().getColor(R.color.white2));
+        etPassword.setHintTextColor(getResources().getColor(R.color.white2));
     }
 
     /**
