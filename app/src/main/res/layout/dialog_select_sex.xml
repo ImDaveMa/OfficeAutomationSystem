@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:id="@+id/tv_man"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_man"
+        android:gravity="center"
+        android:text="男"
+        android:textColor="@color/black1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black5" />
+
+    <TextView
+        android:id="@+id/tv_woman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_women"
+        android:gravity="center"
+        android:text="女"
+        android:textColor="@color/black1" />
+
+</LinearLayout>

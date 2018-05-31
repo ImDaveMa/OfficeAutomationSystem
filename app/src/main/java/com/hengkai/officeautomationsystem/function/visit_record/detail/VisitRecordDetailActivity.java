@@ -46,6 +46,8 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.function.visit_record.select_visit_person.SelectVisitPersonActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit.SelectVisitUnitActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
@@ -225,13 +227,15 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             int userId = getIntent().getIntExtra("userId", 0);
             String userName = getIntent().getStringExtra("userName");
             String department = getIntent().getStringExtra("department");
-            tvVisitUnit.setText(companyName);
-            ivVisitUnit.setVisibility(View.GONE);
-            tvVisitCustomer.setText(userName);
-            ivVisitCustomer.setVisibility(View.GONE);
-            tvVisitDepartment.setText(department);
-            unitID = companyId;
-            customerID = String.valueOf(userId);
+            if (companyId > 0) {
+                tvVisitUnit.setText(companyName);
+                ivVisitUnit.setVisibility(View.GONE);
+                tvVisitCustomer.setText(userName);
+                ivVisitCustomer.setVisibility(View.GONE);
+                tvVisitDepartment.setText(department);
+                unitID = companyId;
+                customerID = String.valueOf(userId);
+            }
         } else {
             type = 1002;    //点击列表item进入当前页面
             currentID = getIntent().getIntExtra("currentID", 0);
@@ -242,6 +246,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     @OnClick({R.id.iv_back, R.id.tv_save, R.id.ll_visit_type, R.id.ll_visit_unit, R.id.ll_visit_customer, R.id.ll_project, R.id.btn_start, R.id.btn_end, R.id.btn_commit})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.iv_back:  //返回
                 setResult(CommonFinal.VISIT_RECORD_RESULT_CODE);
@@ -250,17 +255,18 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             case R.id.ll_visit_type:    //拜访类型
                 visitType();
                 break;
-            case R.id.ll_visit_unit:    //拜访单位
-                showDialog();
-                mPresenter.getVisitUnitList();
+            case R.id.ll_visit_unit:    //拜访单位:
+                intent = new Intent(this, SelectVisitUnitActivity.class);
+                startActivityForResult(intent, CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE);
                 break;
             case R.id.ll_visit_customer:    //拜访人
                 if (unitID == -1) {
                     ToastUtil.showToast("请先选择拜访单位");
                     return;
                 }
-                showDialog();
-                mPresenter.getVisitCustomerList(unitID);
+                intent = new Intent(this, SelectVisitPersonActivity.class);
+                intent.putExtra("unitID", unitID);
+                startActivityForResult(intent, CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
                 break;
             case R.id.ll_project:   //跟进的项目
                 if (customerID.equals("-1")) {
@@ -340,6 +346,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     /**
      * 拜访结束是点击 执行这个方法
+     *
      * @param addressName
      */
     private void toEndVisit(String addressName) {
@@ -399,6 +406,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     /**
      * 开始拜访, 在确认了定位权限后调用
+     *
      * @param addressName
      */
     private void toStartVisit(String addressName) {
@@ -465,7 +473,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             ToastUtil.showToast("请选择拜访类型");
             return false;
         }
-        if (visitType.equals("拜访") || visitType.equals("跟进")){
+        if (visitType.equals("拜访") || visitType.equals("跟进")) {
             if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
                 ToastUtil.showToast("请选择拜访单位");
                 return false;
@@ -507,52 +515,31 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         dialog.show();
     }
 
-    /**
-     * 从服务器上通过拜访单位的ID获取到客户列表
-     */
-    public void getVisitCustomerList(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
-        if (list.size() == 0) {
-            ToastUtil.showToast("当前单位没有相关联系人");
-            return;
-        }
-        BottomDialogAdapter adapter = new BottomDialogAdapter(list);
-        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
-        adapter.setOnItemClickListener(new BottomDialogAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean) {
-                customerID = String.valueOf(bean.id);
-                tvVisitCustomer.setText(bean.name);
-                tvVisitCustomer.setTextColor(getResources().getColor(R.color.black1));
-                ivVisitCustomer.setVisibility(View.GONE);
-                tvVisitDepartment.setText(bean.department);
-                tvVisitDepartment.setTextColor(getResources().getColor(R.color.black1));
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-    }
-
-    /**
-     * 从服务器上获取拜访单位列表
-     */
-    public void getVisitUnitList(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
-        BottomDialogAdapter adapter = new BottomDialogAdapter(list);
-        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
-        adapter.setOnItemClickListener(new BottomDialogAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean) {
-                unitID = bean.id;
-                tvVisitUnit.setText(bean.name);
-                tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));
-                ivVisitUnit.setVisibility(View.GONE);
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-    }
-
+//    /**
+//     * 从服务器上通过拜访单位的ID获取到客户列表
+//     */
+//    public void getVisitCustomerList(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
+//        if (list.size() == 0) {
+//            ToastUtil.showToast("当前单位没有相关联系人");
+//            return;
+//        }
+//        BottomDialogAdapter adapter = new BottomDialogAdapter(list);
+//        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
+//        adapter.setOnItemClickListener(new BottomDialogAdapter.OnItemClickListener() {
+//            @Override
+//            public void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean) {
+//                customerID = String.valueOf(bean.id);
+//                tvVisitCustomer.setText(bean.name);
+//                tvVisitCustomer.setTextColor(getResources().getColor(R.color.black1));
+//                ivVisitCustomer.setVisibility(View.GONE);
+//                tvVisitDepartment.setText(bean.department);
+//                tvVisitDepartment.setTextColor(getResources().getColor(R.color.black1));
+//                dialog.cancel();
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
     /**
      * 拜访类型
@@ -778,6 +765,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     /**
      * 底部弹窗, 显示定位结果集
+     *
      * @param allPoi 后边信息集合
      */
     private void showBottomDialog(List<PoiInfo> allPoi) {
@@ -791,8 +779,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     /**
      * 初始化底部弹窗的子view
+     *
      * @param view
-     * @param allPoi 后边信息集合
+     * @param allPoi       后边信息集合
      * @param bottomDialog
      */
     private void initDialogChildView(View view, List<PoiInfo> allPoi, final Dialog bottomDialog) {
@@ -941,6 +930,33 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             //拒绝授权后，从系统设置了授权后，返回APP进行相应的操作
             mLocationClient.start();
+        } else if (requestCode == CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE) {
+            String name = data.getStringExtra("name");
+            unitID = data.getIntExtra("ID", 0);
+            tvVisitUnit.setText(name);
+            tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));
+            ivVisitUnit.setVisibility(View.GONE);
+
+            tvVisitCustomer.setText("请选择");
+            tvVisitCustomer.setTextColor(getResources().getColor(R.color.black3));
+            ivVisitCustomer.setVisibility(View.VISIBLE);
+            tvVisitDepartment.setText("");
+            tvProject.setText("请选择");
+            tvProject.setTextColor(getResources().getColor(R.color.black3));
+            ivProject.setVisibility(View.VISIBLE);
+        } else if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE) {
+            String name = data.getStringExtra("name");
+            String department = data.getStringExtra("department");
+            customerID = data.getStringExtra("ID");
+            tvVisitCustomer.setText(name);
+            tvVisitCustomer.setTextColor(getResources().getColor(R.color.black1));
+            ivVisitCustomer.setVisibility(View.GONE);
+            tvVisitDepartment.setText(department);
+            tvVisitDepartment.setTextColor(getResources().getColor(R.color.black1));
+
+            tvProject.setText("请选择");
+            tvProject.setTextColor(getResources().getColor(R.color.black3));
+            ivProject.setVisibility(View.VISIBLE);
         }
 
     }

@@ -32,4 +32,16 @@ public class CommonFinal {
      * 通用的结果码
      */
     public static final int COMMON_RESULT_CODE = 1004;
+    /**
+     * 拜访跟进详情页面 - 选择拜访单位和拜访人的请求码和结果码
+     */
+    public static final int SELECT_VISIT_UNIT_REQUEST_CODE = 1005;
+    public static final int SELECT_VISIT_UNIT_RESULT_CODE = 1006;
+    public static final int SELECT_VISIT_PERSON_REQUEST_CODE = 1007;
+    public static final int SELECT_VISIT_PERSON_RESULT_CODE = 1008;
+    /**
+     * 添加联系人的请求码和结果码
+     */
+    public static final int ADD_CONTACT_REQUEST_CODE = 1009;
+    public static final int ADD_CONTACT_RESULT_CODE = 1010;
 }

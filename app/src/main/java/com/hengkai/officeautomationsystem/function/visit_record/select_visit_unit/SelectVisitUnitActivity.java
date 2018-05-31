@@ -1,5 +1,7 @@
-package com.hengkai.officeautomationsystem.function.unit_library.search;
+package com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +17,9 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.donkingliang.labels.LabelsView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivityAdapter;
+import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitKeywordEntity;
 import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
@@ -31,13 +34,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Harry on 2018/5/28.
- * 单位库的搜索页面
+ * Created by Harry on 2018/5/30.
+ * 拜访跟进详情页面点击选择拜访单位, 跳转到此页面
  */
-public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
+public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresenter> {
 
-    @BindView(R.id.et_search)
-    EditText etSearch;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_operation)
+    TextView tvOperation;
     @BindView(R.id.swipe_refresh_header)
     RefreshHeaderView swipeRefreshHeader;
     @BindView(R.id.swipe_target)
@@ -46,39 +51,43 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.et_search)
+    EditText etSearch;
     @BindView(R.id.labels_view)
     LabelsView labelsView;
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
 
-    private boolean isLoadMore = false;
-    private List<NewUnitKeywordEntity.DATABean> mKeywordList;
-    private UnitLibraryActivityAdapter adapter;
     private List<UnitLibraryEntity.DATABean> mList;
+    private boolean isLoadMore = false;
+    private SelectVisitUnitAdapter adapter;
     /**
      * 搜索关键字 - 1
      * 搜索名字 - 2
      * 空搜索 - 3
      */
     private int requestCode = -1;
-    private String searchContent;
+    private List<NewUnitKeywordEntity.DATABean> mKeywordList;
     private int keywordId;
+    private String searchContent;
 
     @Override
     protected int setupView() {
-        return R.layout.activity_search_unit;
+        return R.layout.activity_select_visit_unit;
     }
 
     @Override
     protected void initView() {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.black3), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
         mList = new ArrayList<>();
 
+        initTitleBar();
+        setupRecyclerView();
+
         mPresenter.getKeywordList();
-        setupSwipeRefresh();
     }
 
     /**
@@ -103,12 +112,61 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
         });
     }
 
+    private void initTitleBar() {
+        tvTitle.setText("拜访单位");
+        tvOperation.setVisibility(View.VISIBLE);
+        tvOperation.setText("新增");
+    }
+
+    @Override
+    protected ArrayList<String> cancelNetWork() {
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_KEYWORD_LIST);
+        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST);
+        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_KEYWORD);
+        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_NAME);
+        return tags;
+    }
+
+    @Override
+    protected SelectVisitUnitPresenter bindPresenter() {
+        return new SelectVisitUnitPresenter();
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_operation, R.id.tv_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_operation:
+                Intent intent = new Intent(this, NewUnitActivity.class);
+                startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
+                break;
+            case R.id.tv_search:
+                searchContent = etSearch.getText().toString().trim();
+                if (TextUtils.isEmpty(searchContent)) {
+                    mPresenter.getUnitList(0);
+                    requestCode = 3;
+                } else {
+                    mPresenter.getUnitListWithName(searchContent, 0);
+                    requestCode = 2;
+                }
+                break;
+        }
+    }
+
+    public void getKeywordList(List<NewUnitKeywordEntity.DATABean> list) {
+        mKeywordList = list;
+        setupKeywordList();
+    }
+
     /**
-     * 配置列表的滑动监听
+     * 配置列表相关
      */
-    private void setupSwipeRefresh() {
+    private void setupRecyclerView() {
         swipeTarget.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new UnitLibraryActivityAdapter(mList);
+        adapter = new SelectVisitUnitAdapter(mList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -150,46 +208,17 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
                 isLoadMore = true;
             }
         });
-    }
 
-    @Override
-    protected ArrayList<String> cancelNetWork() {
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_KEYWORD_LIST);
-        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST);
-        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_KEYWORD);
-        tags.add(NetworkTagFinal.SEARCH_UNIT_ACTIVITY_GET_UNIT_LIST_WITH_NAME);
-        return tags;
-    }
-
-
-    @Override
-    protected SearchUnitPresenter bindPresenter() {
-        return new SearchUnitPresenter();
-    }
-
-    @OnClick({R.id.iv_back, R.id.tv_search})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
+        adapter.setOnItemClickListener(new SelectVisitUnitAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int ID, String name) {
+                Intent intent = new Intent();
+                intent.putExtra("ID", ID);
+                intent.putExtra("name", name);
+                setResult(CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE, intent);
                 finish();
-                break;
-            case R.id.tv_search:
-                searchContent = etSearch.getText().toString().trim();
-                if (TextUtils.isEmpty(searchContent)) {
-                    mPresenter.getUnitList(0);
-                    requestCode = 3;
-                } else {
-                    mPresenter.getUnitListWithName(searchContent, 0);
-                    requestCode = 2;
-                }
-                break;
-        }
-    }
-
-    public void getKeywordList(List<NewUnitKeywordEntity.DATABean> list) {
-        mKeywordList = list;
-        setupKeywordList();
+            }
+        });
     }
 
     /**
@@ -222,4 +251,13 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (swipeToLoadLayout.getVisibility() == View.VISIBLE) {
+                swipeToLoadLayout.setRefreshing(true);
+            }
+        }
+    }
 }

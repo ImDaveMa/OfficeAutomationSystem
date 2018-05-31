@@ -35,13 +35,10 @@ public class AddContactPresenter extends BasePresenter<AddContactActivity> {
             @Override
             public void onNext(CommonReceiveMessageEntity msgEntity) {
                 if (msgEntity.CODE == 1) {
-                    view.dismissDialog();
                     view.addSuccess();
                 } else if (msgEntity.CODE == 3) {
-                    view.dismissDialog();
                     ToastUtil.showToast("系统异常，新增联系人失败");
                 } else if (msgEntity.CODE == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
                 }
@@ -55,7 +52,7 @@ public class AddContactPresenter extends BasePresenter<AddContactActivity> {
 
             @Override
             public void onComplete() {
-
+                view.dismissDialog();
             }
         });
     }

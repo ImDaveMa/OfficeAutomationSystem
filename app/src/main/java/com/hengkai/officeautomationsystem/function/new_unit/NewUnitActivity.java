@@ -1,6 +1,5 @@
 package com.hengkai.officeautomationsystem.function.new_unit;
 
-import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.visit_record.detail.BottomDialogAdapter;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitKeywordEntity;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitTypeEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;

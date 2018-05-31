@@ -30,73 +30,37 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
         model = new VisitRecordDetailActivityModel();
     }
 
-    /**
-     * 获取拜访单位列表
-     */
-    public void getVisitUnitList() {
-        model.getVisitUnitList(new Observer<VisitRecordDetailGetVisitUnitEntity>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_LIST, d);
-            }
-
-            @Override
-            public void onNext(VisitRecordDetailGetVisitUnitEntity visitRecordDetailGetVisitUnitEntity) {
-                if (visitRecordDetailGetVisitUnitEntity.CODE == 1) {
-                    if (visitRecordDetailGetVisitUnitEntity.DATA.size() == 0) {
-                        ToastUtil.showToast("暂无单位数据");
-                    } else {
-                        view.getVisitUnitList(visitRecordDetailGetVisitUnitEntity.DATA);
-                    }
-                } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
-                    view.showLoginDialog(view);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                view.dismissDialog();
-                ToastUtil.showToast("网络连接错误");
-            }
-
-            @Override
-            public void onComplete() {
-                view.dismissDialog();
-            }
-        });
-    }
-
-    public void getVisitCustomerList(int unitID) {
-        model.getVisitCustomerList(unitID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_CUSTOMER_LIST, d);
-            }
-
-            @Override
-            public void onNext(VisitRecordDetailGetVisitUnitEntity visitRecordDetailGetVisitUnitEntity) {
-                if (visitRecordDetailGetVisitUnitEntity.CODE == 1) {
-                    view.getVisitCustomerList(visitRecordDetailGetVisitUnitEntity.DATA);
-                } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
-                    view.showLoginDialog(view);
-                } else {
-                    //code=-2
-                    ToastUtil.showToast("暂无相关联系人");
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                view.dismissDialog();
-                ToastUtil.showToast("网络连接错误");
-            }
-
-            @Override
-            public void onComplete() {
-                view.dismissDialog();
-            }
-        });
-    }
+//    public void getVisitCustomerList(int unitID) {
+//        model.getVisitCustomerList(unitID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_CUSTOMER_LIST, d);
+//            }
+//
+//            @Override
+//            public void onNext(VisitRecordDetailGetVisitUnitEntity visitRecordDetailGetVisitUnitEntity) {
+//                if (visitRecordDetailGetVisitUnitEntity.CODE == 1) {
+//                    view.getVisitCustomerList(visitRecordDetailGetVisitUnitEntity.DATA);
+//                } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
+//                    view.showLoginDialog(view);
+//                } else {
+//                    //code=-2
+//                    ToastUtil.showToast("暂无相关联系人");
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                view.dismissDialog();
+//                ToastUtil.showToast("网络连接错误");
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                view.dismissDialog();
+//            }
+//        });
+//    }
 
     public void getVisitProjectList(String customerID) {
         model.getVisitProjectList(customerID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {

@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.function.contacts_library.add;
 
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.service.AddGoodsSupplierService;
 import com.hengkai.officeautomationsystem.network.service.ContactsLibraryService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
@@ -46,7 +47,7 @@ public class AddContactModel {
      */
     public void saveContact(String name, String phone, int companyId, String birthday, boolean sex,
                             String department, String rank, String weChat, String landline, String mailBox,
-                            String hobby,  String licensePlate, Observer observer) {
+                            String hobby,  String licensePlate, Observer<CommonReceiveMessageEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
@@ -69,5 +70,7 @@ public class AddContactModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+
 
 }

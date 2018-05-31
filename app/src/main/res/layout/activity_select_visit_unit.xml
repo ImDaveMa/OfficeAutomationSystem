@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white4"
-    android:orientation="vertical"
-    tools:ignore="HardcodedText">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,15 +17,6 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="image"
-            android:padding="3dp"
-            android:rotation="180"
-            android:src="@drawable/ic_arrow_gray40" />
-
         <EditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
@@ -37,7 +27,7 @@
             android:background="@drawable/shape_edit_text_bg1"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_search38"
-            android:hint="请输入单位名称或地址"
+            android:hint="请输入单位名称"
             android:inputType="text"
             android:padding="5dp"
             android:textSize="13sp" />
@@ -117,6 +107,5 @@
         </ScrollView>
 
     </FrameLayout>
-
 
 </LinearLayout>

@@ -84,6 +84,7 @@ public class UnitLibraryDetailActivity extends BaseActivity<UnitLibraryDetailPre
                 int ID = getIntent().getIntExtra("ID", 0);
                 Intent intent = new Intent(this, ContactsLibraryActivity.class);
                 intent.putExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, ID);
+                intent.putExtra("unitName", tvName.getText().toString().trim());
                 startActivity(intent);
                 break;
         }

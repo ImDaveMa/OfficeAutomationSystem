@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +20,9 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.contacts_library.add.AddContactActivity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsLibraryEntity;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
@@ -37,7 +41,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Harry on 2018/5/11.
  * 项目主线 - 联系人库(不是通讯录)
  */
-public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresenter> implements EasyPermissions.PermissionCallbacks{
+public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresenter> implements EasyPermissions.PermissionCallbacks {
     public static final String EXTRA_KEY_UNIT_ID = "EXTRA_KEY_UNIT_ID";
 
     @BindView(R.id.tv_title)
@@ -50,6 +54,8 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.tv_operation)
+    TextView tvOperation;
 
     private boolean isLoadMore = false;
     private List<ContactsLibraryEntity.DATABean> mList;
@@ -69,13 +75,15 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
         tvTitle.setText("联系人库");
+        tvOperation.setVisibility(View.VISIBLE);
+        tvOperation.setText("新增");
 
         mList = new ArrayList<>();
 
         setupRecyclerView();
 
         // 获取单位ID
-        unitID = getIntent().getIntExtra(EXTRA_KEY_UNIT_ID,0);
+        unitID = getIntent().getIntExtra(EXTRA_KEY_UNIT_ID, 0);
         mPresenter.getContactsList(0, unitID);
     }
 
@@ -123,11 +131,21 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
         });
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back, R.id.tv_operation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_operation:
+                int unitID = getIntent().getIntExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, 0);
+                String unitName = getIntent().getStringExtra("unitName");
+                Intent intent = new Intent(this, AddContactActivity.class);
+                if (unitID != 0 && !TextUtils.isEmpty(unitName)) {
+                    intent.putExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, unitID);
+                    intent.putExtra("unitName", unitName);
+                }
+                startActivityForResult(intent, CommonFinal.ADD_CONTACT_REQUEST_CODE);
                 break;
         }
     }
@@ -201,6 +219,8 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             //拒绝授权后，从系统设置了授权后，返回APP进行相应的操作
             callPhone();
+        } else if (requestCode == CommonFinal.ADD_CONTACT_REQUEST_CODE && resultCode == RESULT_OK) {
+            swipeToLoadLayout.setRefreshing(true);
         }
 
     }

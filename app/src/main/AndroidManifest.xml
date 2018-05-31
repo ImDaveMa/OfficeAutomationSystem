@@ -103,8 +103,11 @@
         <activity android:name=".function.approve.ApproveListActivity" />
         <activity android:name=".function.message.MessageListActivity" />
         <activity android:name=".function.unit_library.search.SearchUnitActivity" />
+        <activity android:name=".function.visit_record.select_visit_unit.SelectVisitUnitActivity" />
+        <activity android:name=".function.visit_record.select_visit_person.SelectVisitPersonActivity" />
         <activity android:name=".function.notice.NoticeListActivity" />
         <activity android:name=".function.notice.NoticeDetailActivity" />
+        <activity android:name=".function.contacts_library.add.AddContactActivity" />
 
 
     </application>
