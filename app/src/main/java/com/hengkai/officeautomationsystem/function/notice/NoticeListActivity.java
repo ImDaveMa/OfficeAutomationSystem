@@ -49,7 +49,7 @@ public class NoticeListActivity extends BaseActivity {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        tvTitle.setText("审批列表");
+        tvTitle.setText("通知公告");
 
         initFragment();
         initConfig();
