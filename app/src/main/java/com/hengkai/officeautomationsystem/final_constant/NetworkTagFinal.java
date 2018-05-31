@@ -206,4 +206,11 @@ public class NetworkTagFinal {
      */
     public static final String ADD_CONTACT_ACTIVITY_ADD_CONTACT = "ADD_CONTACT_ACTIVITY_ADD_CONTACT";
 
+    /**
+     * NoticeDetailActivity
+     */
+    public static final String NOTICE_DETAIL_ACTIVITY_GET_NOTICE_LIST = "NOTICE_DETAIL_ACTIVITY_GET_NOTICE_LIST";
+    public static final String NOTICE_DETAIL_ACTIVITY_GET_COMMENT_LIST = "NOTICE_DETAIL_ACTIVITY_GET_COMMENT_LIST";
+    public static final String NOTICE_DETAIL_ACTIVITY_COMMENT_LIST = "NOTICE_DETAIL_ACTIVITY_COMMENT_LIST";
+
 }

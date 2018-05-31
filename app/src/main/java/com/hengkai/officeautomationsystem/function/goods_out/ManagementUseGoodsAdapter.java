@@ -28,9 +28,8 @@ public class ManagementUseGoodsAdapter extends RecyclerView.Adapter<ManagementUs
     private List<UseGoodsEntity.OutStorageBean> mGoodsOutList;
     private OnItemClickListener mOnItemClickListener;
 
-    public ManagementUseGoodsAdapter(Context context, OnItemClickListener onItemClickListener, List<UseGoodsEntity.OutStorageBean> goodsOutList) {
+    public ManagementUseGoodsAdapter(OnItemClickListener onItemClickListener, List<UseGoodsEntity.OutStorageBean> goodsOutList) {
         super();
-        mContext = context;
         this.mGoodsOutList = goodsOutList;
         mOnItemClickListener = onItemClickListener;
     }
@@ -38,6 +37,7 @@ public class ManagementUseGoodsAdapter extends RecyclerView.Adapter<ManagementUs
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_in, parent, false);
         return new ViewHolder(view);
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
+import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CommentVisitAdapter extends RecyclerView.Adapter<CommentVisitAdapte
         CommentVisitEntity.DATEBean bean = mList.get(position);
         holder.tvContent.setText(bean.comment_content);
         holder.tvName.setText(bean.createUserName);
-        holder.tvTime.setText(bean.comment_time);
+        holder.tvTime.setText(DateFormatUtils.getFormatedNewsTime(bean.comment_time));
     }
 
     @Override

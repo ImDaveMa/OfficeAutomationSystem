@@ -31,6 +31,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/iv_header"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/ic_user64"/>
@@ -41,37 +42,41 @@
                             android:layout_marginLeft="15dp"
                             android:padding="5dp">
                             <TextView
+                                android:id="@+id/tv_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:text="管理员"/>
+                                android:text=""/>
                             <TextView
+                                android:id="@+id/tv_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:textColor="@color/black2"
-                                android:text="2018-05-30 15:30:22"/>
+                                android:text=""/>
                         </LinearLayout>
                     </LinearLayout>
 
                     <!-- 标题 -->
                     <TextView
+                        android:id="@+id/tv_notice_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:textSize="16sp"
                         android:textColor="@color/black"
-                        android:text="关于App上线测试的通知"/>
+                        android:text=""/>
 
                     <!-- 内容 -->
                     <TextView
+                        android:id="@+id/tv_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="20dp"
                         android:textSize="14sp"
                         android:textColor="@color/black1"
-                        android:text="关于App上线测试的通知,关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，，关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，关于App上线测试的通知，"/>
+                        android:text=""/>
 
                 </LinearLayout>
 
@@ -85,32 +90,36 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
+                            android:id="@+id/tv_read_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
                             android:paddingEnd="15dp"
-                            android:text="已读 5"/>
+                            android:text="已读 0"/>
                         <TextView
+                            android:id="@+id/tv_unread_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/app_theme_color"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
                             android:paddingEnd="15dp"
-                            android:text="未读 15" />
+                            android:text="未读 0" />
                     </LinearLayout>
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_read_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                         </android.support.v7.widget.RecyclerView>
 
                         <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_unread_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone">
@@ -126,22 +135,27 @@
                     android:padding="10dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/tv_comment_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="5dp"
-                        android:text="评论 5"/>
+                        android:text="评论 0"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_comment_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <include layout="@layout/item_comment_visit" />
-                        <include layout="@layout/item_comment_visit" />
-                        <include layout="@layout/item_comment_visit" />
-                        <include layout="@layout/item_comment_visit" />
-                        <include layout="@layout/item_comment_visit" />
+                        <!--<include layout="@layout/item_comment_visit" />-->
+                        <TextView
+                            android:id="@+id/tv_no_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black2"
+                            android:text="暂无评论"
+                            android:padding="5dp"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

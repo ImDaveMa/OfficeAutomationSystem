@@ -29,9 +29,8 @@ public class ApproveListAdapter extends RecyclerView.Adapter<ApproveListAdapter.
     private List<MessageEntity.MsgBean> mApproveList;
     private OnItemClickListener mOnItemClickListener;
 
-    public ApproveListAdapter(Context context, OnItemClickListener onItemClickListener, List<MessageEntity.MsgBean> approveList) {
+    public ApproveListAdapter(OnItemClickListener onItemClickListener, List<MessageEntity.MsgBean> approveList) {
         super();
-        mContext = context;
         this.mApproveList = approveList;
         mOnItemClickListener = onItemClickListener;
     }
@@ -39,6 +38,7 @@ public class ApproveListAdapter extends RecyclerView.Adapter<ApproveListAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_approve, parent, false);
         return new ViewHolder(view);
     }

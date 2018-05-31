@@ -28,9 +28,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     private List<MessageEntity.MsgBean> mMessageList;
     private OnItemClickListener mOnItemClickListener;
 
-    public MessageListAdapter(Context context, OnItemClickListener onItemClickListener, List<MessageEntity.MsgBean> msgList) {
+    public MessageListAdapter(OnItemClickListener onItemClickListener, List<MessageEntity.MsgBean> msgList) {
         super();
-        mContext = context;
         this.mMessageList = msgList;
         mOnItemClickListener = onItemClickListener;
     }
@@ -38,6 +37,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
         return new ViewHolder(view);
     }

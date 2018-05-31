@@ -30,7 +30,7 @@ public class CommentVisitEntity {
          * is_delete : false
          */
 
-        public String comment_time;
+        public long comment_time;
         public String function_name;
         public String comment_content;
         public String createUserName;

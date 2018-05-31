@@ -37,7 +37,7 @@ public class GoToCommentModel extends BaseModel {
         params.put("FUNCTIONNAME", "approval_bfgj");
         params.put("COMMENTCONTENT", commentContent);
 
-        service.comment(URLFinal.VISIT_COMMENT, params)
+        service.comment(URLFinal.COMMENT_URL, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

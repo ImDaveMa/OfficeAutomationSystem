@@ -14,9 +14,9 @@ public class URLFinal {
      * baseURL
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/mobile/";
-//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/";
+    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/";
 //    public static final String BASE_URL = "http://192.168.2.105:8080/OA_inside/mobile/";
-    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/";
+//    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/";
 
 
     /**
@@ -39,6 +39,10 @@ public class URLFinal {
      * 获取通知公告列表
      */
     public static final String GET_NOTICE_LIST = "mnotice/getNoticeUserListLimit";
+    /**
+     * 获取通知公告详情
+     */
+    public static final String GET_NOTICE_DETAIL = "mnotice/getUserNotice";
 
     /**
      * 获取联系人列表
@@ -184,13 +188,13 @@ public class URLFinal {
      */
     public static final String GET_CONTACTS_DETAIL = "conAcom/conDetails";
     /**
-     * 拜访跟进 - 评论列表
+     * 评论列表
      */
     public static final String GET_COMMENT_LIST = "mcomment/commentList";
     /**
-     * 拜访跟进 - 评论
+     * 评论
      */
-    public static final String VISIT_COMMENT = "mcomment/insertComment";
+    public static final String COMMENT_URL = "mcomment/insertComment";
     /**
      * 员工 - 报表列表(周报日报)
      */

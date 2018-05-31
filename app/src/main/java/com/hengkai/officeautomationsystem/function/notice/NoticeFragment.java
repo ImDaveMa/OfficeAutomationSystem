@@ -140,6 +140,7 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
     @Override
     public void onItemClick(View v, NoticeEntity.DATEBean bean, int position) {
         Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
+        intent.putExtra(NoticeDetailActivity.EXTRA_KEY_ID, bean.id);
         startActivity(intent);
     }
 }

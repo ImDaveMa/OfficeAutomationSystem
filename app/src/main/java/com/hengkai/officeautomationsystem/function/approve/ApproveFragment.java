@@ -111,7 +111,7 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
         //初始化数据列表
         goodsOutList = new ArrayList<>();
         //创建数据适配器
-        adapter = new ApproveListAdapter(getContext(), this, goodsOutList);
+        adapter = new ApproveListAdapter(this, goodsOutList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 

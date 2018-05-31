@@ -125,7 +125,7 @@ public class MessageListActivity extends BaseActivity<MessageListPresenter> impl
         //初始化数据列表
         goodsOutList = new ArrayList<>();
         //创建数据适配器
-        adapter = new MessageListAdapter(this, this, goodsOutList);
+        adapter = new MessageListAdapter(this, goodsOutList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
