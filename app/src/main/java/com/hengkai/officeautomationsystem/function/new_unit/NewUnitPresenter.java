@@ -59,39 +59,6 @@ public class NewUnitPresenter extends BasePresenter<NewUnitActivity> {
         });
     }
 
-    public void getKeywordList() {
-        model.getKeywordList(new Observer<NewUnitKeywordEntity>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.NEW_UNIT_ACTIVITY_GET_KEYWORD_LIST, d);
-            }
-
-            @Override
-            public void onNext(NewUnitKeywordEntity newUnitKeywordEntity) {
-                if (newUnitKeywordEntity.CODE == 1) {
-                    if (newUnitKeywordEntity.DATA.size() == 0) {
-                        ToastUtil.showToast("暂无单位类型数据");
-                    } else {
-                        view.getKeywordList(newUnitKeywordEntity.DATA);
-                    }
-                } else if (newUnitKeywordEntity.CODE == 0) {
-                    view.showLoginDialog(view);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                ToastUtil.showToast("请求网络失败");
-                view.dismissDialog();
-            }
-
-            @Override
-            public void onComplete() {
-                view.dismissDialog();
-            }
-        });
-    }
-
     public void commit(Map<String, String> params) {
         model.commit(params, new Observer<CommonReceiveMessageEntity>() {
             @Override

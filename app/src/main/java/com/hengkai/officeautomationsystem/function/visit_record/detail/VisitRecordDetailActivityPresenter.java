@@ -106,6 +106,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                 switch (commonReceiveMessageEntity.CODE) {
                     case 1:
                         currentVisitRecordID = commonReceiveMessageEntity.DATA;
+                        view.setNewState(commonReceiveMessageEntity.DATA);
                         view.setupStartButton();
                         view.setupLinearLayout();
                         break;
@@ -156,6 +157,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                     case 1:
                         ToastUtil.showToast("保存成功");
                         currentVisitRecordID = commonReceiveMessageEntity.DATA;
+                        view.setNewState(commonReceiveMessageEntity.DATA);
                         break;
                     case -1:
                         ToastUtil.showToast("服务器异常");

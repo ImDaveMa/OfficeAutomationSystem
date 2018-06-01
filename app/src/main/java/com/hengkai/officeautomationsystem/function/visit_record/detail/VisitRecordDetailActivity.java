@@ -165,6 +165,10 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
      */
     private boolean isStart;
     private PoiSearch poiSearch;
+    /**
+     * 新增开始或者新增保存从服务器上获取到的ID, 以便于判断当前是不是在新增开始后又点保存的状态
+     */
+    private int newState;
 
     @Override
     protected int setupView() {
@@ -290,7 +294,13 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                     }
                     params.put("summary", etVisitSummary.getText().toString().trim());
                     showDialog();
-                    mPresenter.toSaveCurrentPageOnNewAdd(params);
+                    if (newState != 0) {
+                        params.put("typeYM", "pro");
+                        params.put("ID", String.valueOf(newState));
+                        mPresenter.toSaveOrCommit(false, params);
+                    } else {
+                        mPresenter.toSaveCurrentPageOnNewAdd(params);
+                    }
                 } else {
                     //点击列表item进入当前页面
                     Map<String, String> params = new HashMap<>();
@@ -515,32 +525,6 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         dialog.show();
     }
 
-//    /**
-//     * 从服务器上通过拜访单位的ID获取到客户列表
-//     */
-//    public void getVisitCustomerList(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
-//        if (list.size() == 0) {
-//            ToastUtil.showToast("当前单位没有相关联系人");
-//            return;
-//        }
-//        BottomDialogAdapter adapter = new BottomDialogAdapter(list);
-//        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
-//        adapter.setOnItemClickListener(new BottomDialogAdapter.OnItemClickListener() {
-//            @Override
-//            public void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean) {
-//                customerID = String.valueOf(bean.id);
-//                tvVisitCustomer.setText(bean.name);
-//                tvVisitCustomer.setTextColor(getResources().getColor(R.color.black1));
-//                ivVisitCustomer.setVisibility(View.GONE);
-//                tvVisitDepartment.setText(bean.department);
-//                tvVisitDepartment.setTextColor(getResources().getColor(R.color.black1));
-//                dialog.cancel();
-//            }
-//        });
-//
-//        dialog.show();
-//    }
-
     /**
      * 拜访类型
      */
@@ -685,6 +669,10 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         //更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
         mLocationClient.setLocOption(option);
 
+    }
+
+    public void setNewState(int newState) {
+        this.newState = newState;
     }
 
     public class MyLocationListener extends BDAbstractLocationListener {

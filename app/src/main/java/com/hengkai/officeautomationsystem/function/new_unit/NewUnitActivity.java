@@ -1,18 +1,25 @@
 package com.hengkai.officeautomationsystem.function.new_unit;
 
+import android.content.Intent;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.new_unit.search_keyword.SearchKeywordActivity;
+import com.hengkai.officeautomationsystem.function.new_unit.search_keyword.SearchKeywordAdapter;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitKeywordEntity;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitTypeEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
@@ -41,10 +48,8 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
     TextView tvUnitType;
     @BindView(R.id.iv_unit_type)
     ImageView ivUnitType;
-    @BindView(R.id.tv_keyword)
-    TextView tvKeyword;
-    @BindView(R.id.iv_keyword)
-    ImageView ivKeyword;
+    @BindView(R.id.et_keyword)
+    EditText etKeyword;
     @BindView(R.id.tit_number)
     TextInputEditText titNumber;
     @BindView(R.id.tit_address)
@@ -75,7 +80,26 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
 
         tvTitle.setText("新增单位");
 
+        setEditTextListener();
+    }
 
+    private void setEditTextListener() {
+        etKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                keywordID = 0;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -103,8 +127,8 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
                 showDialog();
                 break;
             case R.id.ll_keyword:
-                mPresenter.getKeywordList();
-                showDialog();
+                Intent intent = new Intent(this, SearchKeywordActivity.class);
+                startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
                 break;
             case R.id.btn_commit:
                 commit();
@@ -114,7 +138,7 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
 
     private void commit() {
         String unitType = tvUnitType.getText().toString().trim();
-        String keyword = tvKeyword.getText().toString().trim();
+        String keyword = etKeyword.getText().toString().trim();
         String name = titName.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             ToastUtil.showToast("填写单位名称");
@@ -122,7 +146,7 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
         } else if (TextUtils.isEmpty(unitType) || unitType.equals("请选择")) {
             ToastUtil.showToast("请选择单位类型");
             return;
-        } else if (TextUtils.isEmpty(keyword) || keyword.equals("请选择")) {
+        } else if (TextUtils.isEmpty(keyword)) {
             ToastUtil.showToast("请选择单位关键字");
             return;
         }
@@ -131,6 +155,7 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
         params.put("name", name);
         params.put("type", unitType);
         params.put("keywordId", String.valueOf(keywordID));
+        params.put("keywordName", keyword);
         if (!TextUtils.isEmpty(titAddress.getText().toString().trim())) {
             params.put("address", titAddress.getText().toString().trim());
         }
@@ -185,23 +210,13 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
         dialog.show();
     }
 
-    /**
-     * @param list 获取单位关键字的数据
-     */
-    public void getKeywordList(List<NewUnitKeywordEntity.DATABean> list) {
-        KeywordBottomDialogAdapter adapter = new KeywordBottomDialogAdapter(list);
-        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
-
-        adapter.setOnItemClickListener(new KeywordBottomDialogAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(NewUnitKeywordEntity.DATABean bean) {
-                tvKeyword.setText(bean.name);
-                ivKeyword.setVisibility(View.GONE);
-                tvKeyword.setTextColor(getResources().getColor(R.color.black1));
-                keywordID = bean.id;
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
+            etKeyword.setText(data.getStringExtra("name"));
+            etKeyword.setTextColor(getResources().getColor(R.color.black1));
+            keywordID = data.getIntExtra("ID", 0);
+        }
     }
 }

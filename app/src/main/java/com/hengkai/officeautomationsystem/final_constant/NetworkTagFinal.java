@@ -46,6 +46,10 @@ public class NetworkTagFinal {
      * GoToCommentActivity
      */
     public static final String GO_TO_COMMENT_ACTIVITY = "GO_TO_COMMENT_ACTIVITY";
+    /**
+     * ReportActivity
+     */
+    public static final String REPORT_ACTIVITY_COMMENT = "REPORT_ACTIVITY_COMMENT";
 
     /**
      * ManagementOfGoodsActivity

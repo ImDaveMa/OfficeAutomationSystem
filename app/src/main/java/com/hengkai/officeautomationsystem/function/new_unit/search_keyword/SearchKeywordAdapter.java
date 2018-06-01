@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.new_unit;
+package com.hengkai.officeautomationsystem.function.new_unit.search_keyword;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitKeywordEntity;
-import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 
 import java.util.List;
 
@@ -18,11 +17,11 @@ import java.util.List;
  * Created by Harry on 2018/5/8.
  * 底部弹窗的适配器
  */
-public class KeywordBottomDialogAdapter extends RecyclerView.Adapter<KeywordBottomDialogAdapter.ViewHolder> {
+public class SearchKeywordAdapter extends RecyclerView.Adapter<SearchKeywordAdapter.ViewHolder> {
 
     private List<NewUnitKeywordEntity.DATABean> mList;
 
-    public KeywordBottomDialogAdapter(List<NewUnitKeywordEntity.DATABean> list) {
+    public SearchKeywordAdapter(List<NewUnitKeywordEntity.DATABean> list) {
         mList = list;
     }
 

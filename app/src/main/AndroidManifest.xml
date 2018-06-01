@@ -108,6 +108,7 @@
         <activity android:name=".function.notice.NoticeListActivity" />
         <activity android:name=".function.notice.NoticeDetailActivity" />
         <activity android:name=".function.contacts_library.add.AddContactActivity" />
+        <activity android:name=".function.new_unit.search_keyword.SearchKeywordActivity" />
 
 
     </application>

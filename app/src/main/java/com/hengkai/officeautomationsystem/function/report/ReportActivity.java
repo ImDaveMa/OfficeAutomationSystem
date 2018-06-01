@@ -1,9 +1,9 @@
 package com.hengkai.officeautomationsystem.function.report;
 
 import android.content.Intent;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,8 +14,10 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.report.add.AddReportActivity;
 import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
 import com.jaeger.library.StatusBarUtil;
@@ -52,6 +54,15 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
     private List<ReportEntity.DATEBean> mList;
     private ReportAdapter adapter;
 
+    /**
+     * 评价时间
+     */
+    private long currentTime;
+    /**
+     * 评价内容
+     */
+    private String commentContent;
+
     @Override
     protected int setupView() {
         return R.layout.activity_report;
@@ -83,6 +94,7 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.REPORT_ACTIVITY_GET_REPORT_LIST);
+        tags.add(NetworkTagFinal.REPORT_ACTIVITY_COMMENT);
         return tags;
     }
 
@@ -128,6 +140,15 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
                 isLoadMore = true;
             }
         });
+
+        adapter.addOnCommitCommentListener(new ReportAdapter.OnCommitCommentListener() {
+            @Override
+            public void commit(String commentContent, int adapterPosition, long currentTime) {
+                ReportActivity.this.currentTime = currentTime;
+                ReportActivity.this.commentContent = commentContent;
+                mPresenter.comment(adapterPosition, mList.get(adapterPosition).id, commentContent);
+            }
+        });
     }
 
     /**
@@ -152,5 +173,23 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
         if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
             swipeToLoadLayout.setRefreshing(true);
         }
+    }
+
+    /**
+     * 添加评论刷新item
+     */
+    public void refreshItem(int position) {
+        if (currentTime != 0 && !TextUtils.isEmpty(commentContent)) {
+            ReportEntity.DATEBean.CommnetBean bean = new ReportEntity.DATEBean.CommnetBean();
+            bean.commentTime = currentTime;
+            bean.userLink = SPUtils.getString(UserInfo.ICON_LINK.toString(), "");
+            bean.createUserName = SPUtils.getString(UserInfo.REAL_NAME.toString(), "");
+            bean.commentContent = commentContent;
+            mList.get(position).commnet.add(bean);
+            adapter.notifyItemChanged(position);
+        } else {
+            swipeToLoadLayout.setRefreshing(true);
+        }
+        adapter.dismissDialog();
     }
 }

@@ -62,9 +62,18 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
         }
         holder.tvDepartment.setText(bean.department);
         holder.tvContactsName.setText(bean.contactsName);
-        String startTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, bean.startTime);
-        String endTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, bean.endTime);
-        holder.tvTime.setText(String.format("%s至%s", startTime, endTime));
+        String startTime;
+        if (bean.startTime == 0) {
+            startTime = "还未开始";
+        } else {
+            startTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, bean.startTime);
+        }
+        if (bean.endTime == 0) {
+            holder.tvTime.setText(String.format("开始时间%s", startTime));
+        } else {
+            String endTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_1, bean.endTime);
+            holder.tvTime.setText(String.format("%s至%s", startTime, endTime));
+        }
         holder.tvUserName.setText(bean.userName);
 
         holder.container.setOnClickListener(new View.OnClickListener() {

@@ -27,7 +27,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:text="红色 * 为必填项"
-                android:textColor="@color/blue1"
+                android:textColor="@color/red1"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -138,22 +138,19 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/tv_keyword"
+                <EditText
+                    android:id="@+id/et_keyword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@null"
                     android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="@color/black3"
-                    android:textSize="15sp" />
+                    android:hint="选择或输入"
+                    android:paddingStart="10dp"
+                    android:inputType="text"
+                    android:paddingEnd="3dp"
+                    android:textColor="@color/black1"
+                    android:textSize="14sp" />
 
-                <ImageView
-                    android:id="@+id/iv_keyword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="image"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_arrow_gray32" />
             </LinearLayout>
 
             <View
@@ -175,7 +172,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*"
-                    android:textColor="@color/black2" />
+                    android:textColor="@color/black2"
+                    android:visibility="invisible" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -211,7 +209,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*"
-                    android:textColor="@color/black2" />
+                    android:textColor="@color/black2"
+                    android:visibility="invisible" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -247,7 +246,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*"
-                    android:textColor="@color/black2" />
+                    android:textColor="@color/black2"
+                    android:visibility="invisible" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -283,7 +283,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*"
-                    android:textColor="@color/black2" />
+                    android:textColor="@color/black2"
+                    android:visibility="invisible" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

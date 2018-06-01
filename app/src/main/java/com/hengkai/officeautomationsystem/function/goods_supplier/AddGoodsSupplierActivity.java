@@ -189,12 +189,10 @@ public class AddGoodsSupplierActivity extends BaseActivity<AddGoodsSupplierPrese
             return;
         }
 
-        if (TextUtils.isEmpty(tvGoodsSupplierState.getTag() + "")) {
-            ToastUtil.showToast("请选择是否是合作商家");
-            etGoodsSupplierCity.requestFocus();
-            return;
+        int state = 0;
+        if (tvGoodsSupplierState.getTag() != null && !TextUtils.isEmpty(String.valueOf(tvGoodsSupplierState.getTag()))) {
+            state = Integer.parseInt(tvGoodsSupplierState.getTag() + "");
         }
-        int state = Integer.parseInt(tvGoodsSupplierState.getTag() + "");
 
         if (id <= 0) {
             mPresenter.addGoodsSupplier(name, type, etGoodsSupplierCity.getText().toString(), etGoodsSupplierAddress.getText().toString(),

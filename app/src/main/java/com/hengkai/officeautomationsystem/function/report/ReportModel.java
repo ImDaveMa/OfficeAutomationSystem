@@ -4,6 +4,8 @@ import com.hengkai.officeautomationsystem.base.model.BaseModel;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
 import com.hengkai.officeautomationsystem.network.service.ReportService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
@@ -39,6 +41,21 @@ public class ReportModel extends BaseModel {
         params.put("pageSize", String.valueOf(CommonFinal.PAGE_SIZE));
 
         service.getReportList(URLFinal.GET_REPORT_LIST, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void comment(int currentID, String commentContent, Observer<CommonReceiveMessageEntity> observer) {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("OBJECTID", String.valueOf(currentID));
+        params.put("FUNCTIONNAME", "sys_report");
+        params.put("COMMENTCONTENT", commentContent);
+
+        service.comment(URLFinal.COMMENT_URL, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

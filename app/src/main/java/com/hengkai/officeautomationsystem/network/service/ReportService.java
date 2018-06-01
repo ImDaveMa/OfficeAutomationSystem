@@ -1,5 +1,7 @@
 package com.hengkai.officeautomationsystem.network.service;
 
+import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
 
 import java.util.Map;
@@ -18,4 +20,12 @@ public interface ReportService {
     @FormUrlEncoded
     @POST
     Observable<ReportEntity> getReportList(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<CommonReceiveMessageEntity> comment(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<CommentVisitEntity> getCommentList(@Url String url, @FieldMap Map<String, String> params);
 }
