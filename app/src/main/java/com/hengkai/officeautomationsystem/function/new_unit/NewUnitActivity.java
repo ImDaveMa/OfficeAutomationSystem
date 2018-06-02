@@ -193,7 +193,8 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
      * @param list 获取单位类型的数据
      */
     public void getTypeList(List<NewUnitTypeEntity.DATABean> list) {
-        TypeBottomDialogAdapter adapter = new TypeBottomDialogAdapter(list);
+        String unitType = tvUnitType.getText().toString().trim();
+        TypeBottomDialogAdapter adapter = new TypeBottomDialogAdapter(list, unitType);
         final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
 
         adapter.setOnItemClickListener(new TypeBottomDialogAdapter.OnItemClickListener() {
