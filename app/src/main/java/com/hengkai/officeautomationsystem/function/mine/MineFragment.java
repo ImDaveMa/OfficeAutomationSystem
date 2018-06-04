@@ -3,7 +3,6 @@ package com.hengkai.officeautomationsystem.function.mine;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
@@ -13,13 +12,15 @@ import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.setting.SettingActivity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.ImageUtil;
+import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
+import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.compress.Luban;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,13 @@ public class MineFragment extends BaseFragment {
         StatusBarUtil.setColor(mActivity, getResources().getColor(R.color.app_theme_color), 0);
         unbinder = ButterKnife.bind(this, view);
 
+        initUserInfo();
+    }
+
+    /**
+     * 初始化页面信息
+     */
+    private void initUserInfo() {
         String name = SPUtils.getString(UserInfo.REAL_NAME.name(), "");
         long joinDate = SPUtils.getLong(UserInfo.CREATE_TIME.name(), 0);
         String joinDateStr = DateFormatUtils.getFormatedNewsTime(joinDate);
@@ -65,6 +73,14 @@ public class MineFragment extends BaseFragment {
         tvUserName.setText(name);
         tvDepartment.setText(department + "·" + position);
         tvTimeOfEntry.setText(joinDateStr + "入职");
+
+        Picasso.with(mActivity)
+                .load(SPUtils.getString(UserInfo.ICON_LINK.name(), ""))
+                .error(R.drawable.ic_user)
+                .transform(new PicassoCircleTransform())
+                .resize(WindowUtil.dp2px(50, mActivity), WindowUtil.dp2px(50, mActivity))
+                .centerCrop()
+                .into(ivUserHeader);
     }
 
     @Override

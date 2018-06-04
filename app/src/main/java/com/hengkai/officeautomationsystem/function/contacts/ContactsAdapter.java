@@ -83,8 +83,12 @@ public class ContactsAdapter extends GroupedRecyclerViewAdapter {
         final ContactsEntity.DIRECTORIESBean.DepartmentUserListBean bean = groupList.get(groupPosition).departmentUserList.get(childPosition);
         holder.setText(R.id.tv_contact_name, bean.name)
                 .setText(R.id.tv_contact_position, bean.position)
-                .setText(R.id.tv_phone, bean.phone)
-                .setText(R.id.tv_email, bean.email);
+                .setText(R.id.tv_phone, "电话: " + bean.phone);
+        if (TextUtils.isEmpty(bean.email)) {
+            holder.setText(R.id.tv_email, "暂无邮箱");
+        } else {
+            holder.setText(R.id.tv_email, "邮箱: " + bean.email);
+        }
 
         TextView tvLeaveTime = holder.get(R.id.tv_leave_time);
         ImageView ivContactHeader = holder.get(R.id.iv_contact_header);

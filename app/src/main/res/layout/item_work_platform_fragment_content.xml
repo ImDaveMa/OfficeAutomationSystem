@@ -7,6 +7,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="5dp"
+    android:paddingTop="5dp"
     tools:ignore="HardcodedText">
 
     <ImageView
@@ -21,8 +22,9 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:layout_marginTop="6dp"
-        android:text="请假" />
+        android:text="请假"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
 
 </LinearLayout>

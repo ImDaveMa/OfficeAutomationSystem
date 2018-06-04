@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
@@ -15,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,14 +25,10 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiAddrInfo;
-import com.baidu.mapapi.search.poi.PoiBoundSearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
 import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
@@ -45,13 +39,11 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_person.SelectVisitPersonActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit.SelectVisitUnitActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
-import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
@@ -169,6 +161,10 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
      * 新增开始或者新增保存从服务器上获取到的ID, 以便于判断当前是不是在新增开始后又点保存的状态
      */
     private int newState;
+    /**
+     * 获取到开始或者结束地址后, 赋值并在请求网络成功后填充到开始或者结束的textView里面
+     */
+    private String locationDetailAddress;
 
     @Override
     protected int setupView() {
@@ -197,7 +193,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             return "";
         }
-        return tm.getLine1Number();
+        return tm.getLine1Number() == null ? "" : tm.getLine1Number();
     }
 
     @Override
@@ -782,18 +778,29 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         adapter.setOnAdapterItemClickListener(new BottomPoiDialogAdapter.AdapterItemClickListener() {
             @Override
             public void getAddressName(String addressName) {
+                locationDetailAddress = addressName;
                 if (isStart) {
-                    tvStartAddress.setText(addressName);
-                    llStartAddress.setVisibility(View.VISIBLE);
+//                    tvStartAddress.setText(addressName);
+//                    llStartAddress.setVisibility(View.VISIBLE);
                     toStartVisit(addressName);
                 } else {
-                    tvEndAddress.setText(addressName);
-                    llEndAddress.setVisibility(View.VISIBLE);
+//                    tvEndAddress.setText(addressName);
+//                    llEndAddress.setVisibility(View.VISIBLE);
                     toEndVisit(addressName);
                 }
                 bottomDialog.dismiss();
             }
         });
+    }
+
+    public void setAddressState() {
+        if (isStart) {
+            tvStartAddress.setText(locationDetailAddress);
+            llStartAddress.setVisibility(View.VISIBLE);
+        } else {
+            tvEndAddress.setText(locationDetailAddress);
+            llEndAddress.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

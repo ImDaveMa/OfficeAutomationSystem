@@ -51,7 +51,7 @@
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="电话: 13838888888"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
@@ -60,7 +60,7 @@
                 android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="邮箱: 385784512@qq.com"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
