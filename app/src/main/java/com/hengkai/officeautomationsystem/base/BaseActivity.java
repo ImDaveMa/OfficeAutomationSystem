@@ -9,8 +9,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.application.OfficeAutomationSystemApplication;
@@ -148,4 +152,30 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
 
     protected abstract ArrayList<String> cancelNetWork();
 
+    protected void reloadData(){}
+
+    public void noData(){
+        noData(1);
+    }
+
+    public void noData(int dataLayoutIndex){
+        final ViewGroup rootView = (ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content);
+        final View childView = rootView.getChildAt(dataLayoutIndex);
+        if(childView != null){
+            childView.setVisibility(View.GONE);
+
+            final View noDataView = LayoutInflater.from(this).inflate(R.layout.layout_no_data,null);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            noDataView.setLayoutParams(layoutParams);
+            rootView.addView(noDataView);
+            noDataView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rootView.removeView(noDataView);
+                    childView.setVisibility(View.VISIBLE);
+                    reloadData();
+                }
+            });
+        }
+    }
 }

@@ -32,8 +32,9 @@ public class NoticeListPresenter extends BasePresenter<NoticeFragment> {
                 view.stopRefreshing();
                 if (mEntity.CODE == 1) {
                     view.prepareData(mEntity.DATE);
-                } else if (mEntity.CODE == -2) {
+                } else if (mEntity.CODE == 2) {
                     // 返回的数据是空，所以不能处理列表
+                    view.noData();
                 } else if (mEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
                 }
@@ -42,6 +43,7 @@ public class NoticeListPresenter extends BasePresenter<NoticeFragment> {
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                view.noData();
                 ToastUtil.showToast("请求网络失败");
             }
 

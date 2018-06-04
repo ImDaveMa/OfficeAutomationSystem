@@ -123,6 +123,13 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
         });
     }
 
+    @Override
+    protected void reloadData() {
+        super.reloadData();
+
+        mPresenter.getNoticeList(0, state);
+    }
+
     /**
      * 停止下拉刷新和上拉刷新
      */

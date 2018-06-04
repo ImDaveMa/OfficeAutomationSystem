@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
@@ -138,5 +139,32 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseFragment
                 dialog.dismiss();
             }
         }).setMessage("您目前尚未登录，是否前往登录界面").show();
+    }
+
+    protected void reloadData(){}
+
+    public void noData(){
+        noData(0);
+    }
+
+    public void noData(int dataLayoutIndex){
+        final View childView = ((ViewGroup)view).getChildAt(dataLayoutIndex);
+        if(childView != null){
+            childView.setVisibility(View.GONE);
+
+            final ViewGroup rootView = (ViewGroup)view;
+            final View noDataView = LayoutInflater.from(mActivity).inflate(R.layout.layout_no_data,null);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            noDataView.setLayoutParams(layoutParams);
+            ((ViewGroup) view).addView(noDataView);
+            noDataView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rootView.removeView(noDataView);
+                    childView.setVisibility(View.VISIBLE);
+                    reloadData();
+                }
+            });
+        }
     }
 }
