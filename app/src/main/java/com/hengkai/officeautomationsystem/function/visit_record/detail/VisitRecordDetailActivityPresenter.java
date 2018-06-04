@@ -103,6 +103,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
 
             @Override
             public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
+                view.dismissDialog();
                 switch (commonReceiveMessageEntity.CODE) {
                     case 1:
                         currentVisitRecordID = commonReceiveMessageEntity.DATA;
@@ -237,6 +238,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
 
             @Override
             public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
+                view.dismissDialog();
                 switch (commonReceiveMessageEntity.CODE) {
                     case 1:
                         ToastUtil.showToast("操作成功");
