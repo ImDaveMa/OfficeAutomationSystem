@@ -169,6 +169,10 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
      * 新增开始或者新增保存从服务器上获取到的ID, 以便于判断当前是不是在新增开始后又点保存的状态
      */
     private int newState;
+    /**
+     * 获取到开始或者结束地址后, 赋值并在请求网络成功后填充到开始或者结束的textView里面
+     */
+    private String locationDetailAddress;
 
     @Override
     protected int setupView() {
@@ -197,7 +201,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             return "";
         }
-        return tm.getLine1Number();
+        return tm.getLine1Number() == null ? "" : tm.getLine1Number();
     }
 
     @Override
@@ -782,18 +786,29 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         adapter.setOnAdapterItemClickListener(new BottomPoiDialogAdapter.AdapterItemClickListener() {
             @Override
             public void getAddressName(String addressName) {
+                locationDetailAddress = addressName;
                 if (isStart) {
-                    tvStartAddress.setText(addressName);
-                    llStartAddress.setVisibility(View.VISIBLE);
+//                    tvStartAddress.setText(addressName);
+//                    llStartAddress.setVisibility(View.VISIBLE);
                     toStartVisit(addressName);
                 } else {
-                    tvEndAddress.setText(addressName);
-                    llEndAddress.setVisibility(View.VISIBLE);
+//                    tvEndAddress.setText(addressName);
+//                    llEndAddress.setVisibility(View.VISIBLE);
                     toEndVisit(addressName);
                 }
                 bottomDialog.dismiss();
             }
         });
+    }
+
+    public void setAddressState() {
+        if (isStart) {
+            tvStartAddress.setText(locationDetailAddress);
+            llStartAddress.setVisibility(View.VISIBLE);
+        } else {
+            tvEndAddress.setText(locationDetailAddress);
+            llEndAddress.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

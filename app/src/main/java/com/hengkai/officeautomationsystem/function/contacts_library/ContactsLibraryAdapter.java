@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,11 @@ public class ContactsLibraryAdapter extends RecyclerView.Adapter<ContactsLibrary
         holder.tvName.setText(bean.name);
         holder.tvUnit.setText(bean.companyName);
         holder.tvDepartment.setText(bean.department);
-        holder.tvPhone.setText(bean.phone);
+        if (!TextUtils.isEmpty(bean.phone)) {
+            holder.tvPhone.setText(String.format("电话: %s", bean.phone));
+        } else {
+            holder.tvPhone.setText("暂无电话");
+        }
 
         holder.ivCallPhone.setOnClickListener(new View.OnClickListener() {
             @Override
