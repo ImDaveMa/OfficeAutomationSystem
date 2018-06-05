@@ -26,6 +26,23 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="BottomDialog" parent="Theme.AppCompat.Dialog">
+        <!--去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--悬浮-->
+        <item name="android:windowIsFloating">true</item>
+        <!--半透明-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--不需要标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--允许模糊--><!--意思是dialog之外的窗口模糊化-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--模糊的透明度--><!--意思是dialog之外的窗口模糊化-->
+        <item name="android:backgroundDimAmount">0.2</item>
+    </style>
+
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/white</item>

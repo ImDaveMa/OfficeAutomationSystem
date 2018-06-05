@@ -152,14 +152,21 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
 
     protected abstract ArrayList<String> cancelNetWork();
 
+    /**
+     * 子类实现, 以便于点击noData页面来加载数据
+     */
     protected void reloadData(){}
 
     public void noData(){
         noData(1);
     }
 
+    /**
+     * 显示没有数据的页面
+     * @param dataLayoutIndex 当前列表是父布局的第几个子布局
+     */
     public void noData(int dataLayoutIndex){
-        final ViewGroup rootView = (ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content);
+        final ViewGroup rootView = getWindow().getDecorView().findViewById(android.R.id.content);
         final View childView = rootView.getChildAt(dataLayoutIndex);
         if(childView != null){
             childView.setVisibility(View.GONE);

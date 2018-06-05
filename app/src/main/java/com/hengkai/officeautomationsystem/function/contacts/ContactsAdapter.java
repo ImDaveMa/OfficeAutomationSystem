@@ -71,6 +71,12 @@ public class ContactsAdapter extends GroupedRecyclerViewAdapter {
     @Override
     public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
         holder.setText(R.id.group_view_title, groupList.get(groupPosition).departmentName);
+        ImageView ivArrow = holder.get(R.id.iv_arrow);
+        if (isExpand(groupPosition)) {
+            ivArrow.setRotation(90);
+        } else {
+            ivArrow.setRotation(0);
+        }
     }
 
     @Override
@@ -115,13 +121,13 @@ public class ContactsAdapter extends GroupedRecyclerViewAdapter {
         if (!TextUtils.isEmpty(bean.iconLink)) {
             Picasso.with(mContext)
                     .load(bean.iconLink)
-                    .error(R.drawable.ic_user64)
+                    .error(R.drawable.ic_user_blue)
                     .transform(new PicassoCircleTransform())
                     .resize(WindowUtil.dp2px(40, mContext), WindowUtil.dp2px(40, mContext))
                     .centerCrop()
                     .into(ivContactHeader);
         } else {
-            ivContactHeader.setImageResource(R.drawable.ic_user64);
+            ivContactHeader.setImageResource(R.drawable.ic_user_blue);
         }
 
         ivCallPhone.setOnClickListener(new View.OnClickListener() {

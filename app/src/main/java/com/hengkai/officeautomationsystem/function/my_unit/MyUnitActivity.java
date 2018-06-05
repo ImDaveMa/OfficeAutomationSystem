@@ -80,7 +80,7 @@ public class MyUnitActivity extends BaseActivity<MyUnitPresenter> {
     }
 
     private void initTitle() {
-        tvTitle.setText("单位库");
+        tvTitle.setText("我的单位");
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

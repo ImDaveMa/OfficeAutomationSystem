@@ -24,7 +24,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class ApproveFragment extends BaseFragment<ApproveListPresenter> implements OnItemClickListener<MessageEntity.MsgBean> {
 

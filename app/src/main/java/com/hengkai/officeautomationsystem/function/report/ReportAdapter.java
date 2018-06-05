@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
+import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.squareup.picasso.Picasso;
@@ -76,13 +77,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         if (!TextUtils.isEmpty(bean.headPortrait)) {
             Picasso.with(context)
                     .load(bean.headPortrait)
-                    .error(R.drawable.ic_user64)
-//                    .transform(new PicassoCircleTransform())
+                    .error(R.drawable.ic_user_blue)
+                    .transform(new PicassoCircleTransform())
                     .resize(WindowUtil.dp2px(30, context), WindowUtil.dp2px(30, context))
                     .centerCrop()
                     .into(holder.ivHeader);
         } else {
-            holder.ivHeader.setImageResource(R.drawable.ic_user64);
+            holder.ivHeader.setImageResource(R.drawable.ic_user_blue);
         }
 
         holder.tvAddComment.setOnClickListener(new View.OnClickListener() {
@@ -109,13 +110,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 if (!TextUtils.isEmpty(commentBean.userLink)) {
                     Picasso.with(context)
                             .load(commentBean.userLink)
-                            .error(R.drawable.ic_user64)
-//                    .transform(new PicassoCircleTransform())
+                            .error(R.drawable.ic_user_blue)
+                            .transform(new PicassoCircleTransform())
                             .resize(WindowUtil.dp2px(35, context), WindowUtil.dp2px(35, context))
                             .centerCrop()
                             .into(ivHeader);
                 } else {
-                    ivHeader.setImageResource(R.drawable.ic_user64);
+                    ivHeader.setImageResource(R.drawable.ic_user_blue);
                 }
                 holder.llCommentContainer.addView(view);
             }
@@ -155,7 +156,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
     private void showAddCommentDialog(final int adapterPosition) {
-        dialog = new BottomSheetDialog(context);
+        dialog = new BottomSheetDialog(context, R.style.BottomDialog);
         View view = View.inflate(context, R.layout.dialog_add_comment, null);
         final EditText etCommentContent = view.findViewById(R.id.et_comment_content);
         TextView tvCommit = view.findViewById(R.id.tv_commit);
