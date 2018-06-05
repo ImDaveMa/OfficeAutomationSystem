@@ -37,14 +37,10 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
                 if (loginEntity.CODE == 1) {
                     saveUserInfo(loginEntity);
                     view.loginSuccess();
-                } else if (loginEntity.CODE == 2) {
-                    ToastUtil.showToast("登陆失败，账号密码错误");
-                    view.setLoginButtonStatus(true);
-                } else if (loginEntity.CODE == 3) {
-                    ToastUtil.showToast("登陆失败，账号不可用");
+                } else {
+                    ToastUtil.showToast(loginEntity.MES);
                     view.setLoginButtonStatus(true);
                 }
-
             }
 
             @Override
