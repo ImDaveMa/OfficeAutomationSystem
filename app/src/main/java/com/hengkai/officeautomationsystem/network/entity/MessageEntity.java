@@ -72,6 +72,7 @@ public class MessageEntity {
         private String project_name;
         private String type;
         private String createName;
+        private int homeState;
 
         public int getNews_type() {
             return news_type;
@@ -151,6 +152,14 @@ public class MessageEntity {
 
         public void setCreateName(String createName) {
             this.createName = createName;
+        }
+
+        public int getHomeState() {
+            return homeState;
+        }
+
+        public void setHomeState(int homeState) {
+            this.homeState = homeState;
         }
     }
 }

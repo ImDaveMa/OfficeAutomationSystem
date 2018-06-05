@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
@@ -47,7 +48,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         final MessageEntity.MsgBean bean = mMessageList.get(position);
         String op = "";
         if(bean.getNews_type() == 0){
-            op = "审批";
+            op = "";
         } else if(bean.getNews_type() == 1){
             op = "消息";
         }
@@ -76,6 +77,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         }
         holder.tvType.setText(state);
         holder.tvType.setTextColor(mContext.getResources().getColor(color));
+        holder.ivTip.setVisibility(bean.getHomeState() == 0 ? View.VISIBLE : View.GONE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +101,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         TextView tvTime;
         @BindView(R.id.tv_type)
         TextView tvType;
+        @BindView(R.id.iv_tip)
+        ImageView ivTip;
 
         public ViewHolder(View itemView) {
             super(itemView);

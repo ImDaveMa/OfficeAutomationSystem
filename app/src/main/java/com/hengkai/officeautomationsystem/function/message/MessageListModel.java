@@ -17,9 +17,8 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class MessageListModel {
-    public final int OPERATING_NEED_APPROVE = 0;
-    public final int OPERATING_COPY = 1;
-    public final int OPERATING_MY = 2;
+    public static final int STATE_APPROVE = 0;
+    public static final int STATE_MESSAGE = 1;
 
     private final MessageService service;
 
@@ -28,12 +27,13 @@ public class MessageListModel {
         service = retrofit.create(MessageService.class);
     }
 
-    public void getMsgList(Observer observer, int id) {
+    public void getMsgList(Observer observer, int id, int state) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("PAGEID", id + "");
+        params.put("SEARCHTYPE", state + "");
         params.put("PAGESIZE", CommonFinal.PAGE_SIZE + "");
 
         service.getMsgList(URLFinal.GET_MSG_LIST, params)

@@ -9,4 +9,8 @@
         <item>未读</item>
         <item>已读</item>
     </string-array>
+    <string-array name="message_state">
+        <item>审批</item>
+        <item>消息</item>
+    </string-array>
 </resources>

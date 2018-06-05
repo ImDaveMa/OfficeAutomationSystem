@@ -28,9 +28,8 @@ public class NoticeListAdapter extends RecyclerView.Adapter<NoticeListAdapter.Vi
     private List<NoticeEntity.DATEBean> mNoticeList;
     private OnItemClickListener mOnItemClickListener;
 
-    public NoticeListAdapter(Context context, OnItemClickListener onItemClickListener, List<NoticeEntity.DATEBean> noticeList) {
+    public NoticeListAdapter(OnItemClickListener onItemClickListener, List<NoticeEntity.DATEBean> noticeList) {
         super();
-        mContext = context;
         this.mNoticeList = noticeList;
         mOnItemClickListener = onItemClickListener;
     }
@@ -38,6 +37,7 @@ public class NoticeListAdapter extends RecyclerView.Adapter<NoticeListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notice, parent, false);
         return new ViewHolder(view);
     }

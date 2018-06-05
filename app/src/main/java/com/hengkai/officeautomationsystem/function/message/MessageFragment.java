@@ -1,10 +1,12 @@
-package com.hengkai.officeautomationsystem.function.notice;
+package com.hengkai.officeautomationsystem.function.message;
 
 import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -12,17 +14,26 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.notice.NoticeDetailActivity;
+import com.hengkai.officeautomationsystem.function.notice.NoticeListAdapter;
+import com.hengkai.officeautomationsystem.function.notice.NoticeListModel;
+import com.hengkai.officeautomationsystem.function.notice.NoticeListPresenter;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
+import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
+import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
+import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements OnItemClickListener<NoticeEntity.DATEBean> {
+public class MessageFragment extends BaseFragment<MessageListPresenter> implements OnItemClickListener<MessageEntity.MsgBean> {
 
     public static final String BUNDLE_KEY_STATE = "BUNDLE_KEY_STATE";
 
@@ -33,8 +44,8 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
-    private List<NoticeEntity.DATEBean> mList;
-    private NoticeListAdapter adapter;
+    private List<MessageEntity.MsgBean> mList;
+    private MessageListAdapter adapter;
     private int lastID;
     private int state;
 
@@ -48,13 +59,10 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
         ButterKnife.bind(this, view);
 
         setupRecyclerView();
-        if (getArguments() != null) {
-            state = getArguments().getInt(BUNDLE_KEY_STATE, NoticeListModel.SEARCHSTATUS_NORMAL); // 分类状态，默认全部
-        } else {
-            state = NoticeListModel.SEARCHSTATUS_NORMAL; // 全部
-        }
+
+        state = getArguments().getInt(BUNDLE_KEY_STATE, MessageListModel.STATE_APPROVE); // 默认为审批
         //请求网络
-        mPresenter.getNoticeList(0, state);
+        mPresenter.getMsgList(0, state);
     }
 
     @Override
@@ -65,19 +73,19 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
     }
 
     @Override
-    protected NoticeListPresenter bindPresenter() {
-        return new NoticeListPresenter();
+    protected MessageListPresenter bindPresenter() {
+        return new MessageListPresenter();
     }
 
     /**
      * @param list
      */
-    public void prepareData(List<NoticeEntity.DATEBean> list) {
+    public void prepareData(List<MessageEntity.MsgBean> list) {
         if (mList != null && list != null && list.size() > 0) {
             mList.addAll(list);
             adapter.notifyDataSetChanged();
             // 获取最后一个ID
-            lastID = list.get(list.size() - 1).id;
+            lastID = list.get(list.size() - 1).getId();
         } else {
             // 没有更多数据
             swipeLoadMoreFooter.setloadMoreState(LoadMoreFooterView.REFRESH_STATE_NONE);
@@ -94,7 +102,7 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
         //初始化数据列表
         mList = new ArrayList<>();
         //创建数据适配器
-        adapter = new NoticeListAdapter(this, mList);
+        adapter = new MessageListAdapter(this, mList);
         swipeTarget.setAdapter(adapter);
         swipeTarget.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
@@ -103,14 +111,14 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
             public void onRefresh() {
                 // 清空历史数据
                 mList.clear();
-                mPresenter.getNoticeList(0, state);
+                mPresenter.getMsgList(0, state);
                 swipeLoadMoreFooter.onReset();
             }
         });
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.getNoticeList(lastID, state);
+                mPresenter.getMsgList(lastID, state);
             }
         });
     }
@@ -119,7 +127,7 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
     protected void reloadData() {
         super.reloadData();
 
-        mPresenter.getNoticeList(0, state);
+        mPresenter.getMsgList(0, state);
     }
 
     /**
@@ -137,10 +145,11 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
      * @param position
      */
     @Override
-    public void onItemClick(View v, NoticeEntity.DATEBean bean, int position) {
-        Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
-        intent.putExtra(NoticeDetailActivity.EXTRA_KEY_ID, bean.id);
-        startActivityForResult(intent, 1000);
+    public void onItemClick(View v, MessageEntity.MsgBean bean, int position) {
+//        Intent intent = new Intent(getContext(), MessageDetailActivity.class);
+//        intent.putExtra(MessageDetailActivity.EXTRA_KEY_ID, bean.id);
+//        startActivityForResult(intent, 1000);
+        ToastUtil.showToast(bean.getTypeName());
     }
 
     @Override

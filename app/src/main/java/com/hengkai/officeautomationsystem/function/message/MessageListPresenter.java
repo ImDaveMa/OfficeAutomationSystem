@@ -8,10 +8,12 @@ import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MessageListPresenter extends BasePresenter<MessageListActivity> {
+public class MessageListPresenter extends BasePresenter<MessageFragment> {
 
     private final MessageListModel model;
 
@@ -19,7 +21,7 @@ public class MessageListPresenter extends BasePresenter<MessageListActivity> {
         model = new MessageListModel();
     }
 
-    public void getMsgList(int id) {
+    public void getMsgList(final int id, int state) {
         model.getMsgList(new Observer<MessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -30,11 +32,16 @@ public class MessageListPresenter extends BasePresenter<MessageListActivity> {
             public void onNext(MessageEntity msgEntity) {
                 view.stopRefreshing();
                 if (msgEntity.getCODE() == 1) {
-                    view.prepareData(msgEntity.getDATE());
-                } else if (msgEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
+                    List<MessageEntity.MsgBean> beans = msgEntity.getDATE();
+                    if(id == 0 && (beans == null || beans.size() <= 0)){
+                        view.noData();
+                    } else {
+                        view.prepareData(beans);
+                    }
                 } else if (msgEntity.getCODE() == 0) {//TOKEN失效
-                    view.showLoginDialog(view);
+                    view.showLoginDialog(view.getActivity());
+                } else {
+                    ToastUtil.showToast(msgEntity.getMES());
                 }
             }
 
@@ -48,7 +55,7 @@ public class MessageListPresenter extends BasePresenter<MessageListActivity> {
             public void onComplete() {
 
             }
-        }, id);
+        }, id, state);
 
     }
 }

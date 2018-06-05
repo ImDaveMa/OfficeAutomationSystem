@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
-import com.hengkai.officeautomationsystem.function.approve.ApproveFragment;
 import com.hengkai.officeautomationsystem.function.approve.ApproveListPresenter;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.jaeger.library.StatusBarUtil;
@@ -40,7 +38,7 @@ public class NoticeListActivity extends BaseActivity {
 
     @Override
     protected int setupView() {
-        return R.layout.activity_approve;
+        return R.layout.activity_tab_pager;
     }
 
     @Override

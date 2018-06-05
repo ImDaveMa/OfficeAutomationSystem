@@ -37,7 +37,7 @@ public class ApproveListActivity extends BaseActivity {
 
     @Override
     protected int setupView() {
-        return R.layout.activity_approve;
+        return R.layout.activity_tab_pager;
     }
 
     @Override
