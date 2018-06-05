@@ -79,7 +79,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     .load(bean.headPortrait)
                     .error(R.drawable.ic_user_blue)
                     .transform(new PicassoCircleTransform())
-                    .resize(WindowUtil.dp2px(30, context), WindowUtil.dp2px(30, context))
+                    .resize(WindowUtil.dp2px(40, context), WindowUtil.dp2px(40, context))
                     .centerCrop()
                     .into(holder.ivHeader);
         } else {

@@ -32,8 +32,8 @@
         android:layout_marginTop="8dp"
         android:background="@color/white"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp">
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,10 +50,10 @@
 
                 <ImageView
                     android:id="@+id/iv_header"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:contentDescription="header"
-                    android:src="@drawable/ic_user64" />
+                    android:src="@drawable/ic_user_blue" />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -62,8 +62,7 @@
                     android:layout_marginStart="10dp"
                     android:text="管理员"
                     android:textColor="@color/black1"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -76,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="本周完成:"
+                    android:textColor="@color/black3"
                     android:textSize="13sp" />
 
                 <TextView
@@ -83,7 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="本周完成工作"
+                    android:text="本周完成工作本周完成工作本周完成工作本周完成工作本周完成工作本周完成工作"
+                    android:lineSpacingExtra="3dp"
                     android:textColor="@color/black1"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -98,6 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="下周计划:"
+                    android:textColor="@color/black3"
                     android:textSize="13sp" />
 
                 <TextView
@@ -106,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="下周完成工作"
+                    android:lineSpacingExtra="3dp"
                     android:textColor="@color/black1"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -120,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="需协调工作:"
+                    android:textColor="@color/black3"
                     android:textSize="13sp" />
 
                 <TextView
@@ -128,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="今日完成工作"
+                    android:lineSpacingExtra="3dp"
                     android:textColor="@color/black1"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -148,7 +153,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="评论(1)"
-                    android:textColor="@color/black1" />
+                    android:textColor="@color/black1"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_add_comment"
@@ -158,7 +164,8 @@
                     android:paddingEnd="5dp"
                     android:paddingStart="40dp"
                     android:text="添加"
-                    android:textColor="@color/blue2" />
+                    android:textColor="@color/blue3"
+                    android:textSize="15sp" />
 
             </FrameLayout>
 
