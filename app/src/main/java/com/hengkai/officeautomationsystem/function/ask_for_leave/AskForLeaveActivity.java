@@ -143,6 +143,7 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
                 break;
             case R.id.iv_leave_type://选择请假类型
                 if (!tvLeaveType.getText().toString().trim().equals("请选择")) {
+                    checkedId = 0;
                     setTextViewAttribute("请选择", R.drawable.ic_arrow_gray32, R.color.black3, tvLeaveType, ivLeaveType);
                 }
                 break;
