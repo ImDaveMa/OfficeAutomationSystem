@@ -180,6 +180,10 @@ public class URLFinal {
      */
     public static final String GET_PROJECT_DETAIL = "mproject/getDetailProject";
     /**
+     * 获取供货商详情
+     */
+    public static final String GET_GOODS_SUPPLIER_DETAIL = "msupplier/toDetail";
+    /**
      * 我的单位
      */
     public static final String MY_UNIT_GET_UNIT_LIST = "conAcom/userList";

@@ -32,10 +32,10 @@ public class ManagementUseGoodsPresenter extends BasePresenter<ManagementUseGood
                 if (goodsOutEntity.getCODE() == 1) {
                     List<UseGoodsEntity.OutStorageBean> list = goodsOutEntity.getOutStorage();
                     view.prepareData(list);
-                } else if (goodsOutEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
                 } else if (goodsOutEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(goodsOutEntity.getMES());
                 }
             }
 

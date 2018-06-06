@@ -156,7 +156,6 @@
                     android:padding="10dp"
                     android:background="@color/transparent"
                     android:paddingEnd="10dp"
-                    android:inputType="number"
                     android:hint="请输入地址"
                     android:textSize="14sp" />
 

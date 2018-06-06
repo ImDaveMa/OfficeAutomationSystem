@@ -224,6 +224,7 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
         llUnit.setPadding(40, 15, 40, 15);
         final EditText etUnit = new EditText(this);
         etUnit.setHint("请填写物品单位");
+        etUnit.setHintTextColor(getResources().getColor(R.color.black3));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         etUnit.setLayoutParams(params);
         llUnit.addView(etUnit);

@@ -48,13 +48,13 @@ public class ReadUserItemAdapter extends RecyclerView.Adapter<ReadUserItemAdapte
         if (!TextUtils.isEmpty(bean.userAvatar)) {
             Picasso.with(context)
                     .load(bean.userAvatar)
-                    .error(R.drawable.ic_user64)
+                    .error(R.drawable.ic_user_blue)
                     .transform(new PicassoCircleTransform())
-                    .resize(WindowUtil.dp2px(50, context), WindowUtil.dp2px(50, context))
+                    .resize(WindowUtil.dp2px(40, context), WindowUtil.dp2px(40, context))
                     .centerCrop()
                     .into(holder.ivHeader);
         } else {
-            holder.ivHeader.setImageResource(R.drawable.ic_user64);
+            holder.ivHeader.setImageResource(R.drawable.ic_user_blue);
         }
         holder.ivHeader.setOnClickListener(new View.OnClickListener() {
             @Override

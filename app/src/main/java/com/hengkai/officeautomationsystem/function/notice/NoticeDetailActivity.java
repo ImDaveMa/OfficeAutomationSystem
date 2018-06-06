@@ -159,10 +159,12 @@ public class NoticeDetailActivity extends BaseActivity<NoticeDetailPresenter> {
         }
         // 初始化通知公告
         if (bean.notice != null) {
-            Picasso.with(this).load(bean.notice.createUserAvatar).error(R.drawable.ic_user64)
-                    .transform(new PicassoCircleTransform())
-                    .resize(WindowUtil.dp2px(50, this), WindowUtil.dp2px(50, this))
-                    .centerCrop().into(ivHeader);
+            if(!TextUtils.isEmpty(bean.notice.createUserAvatar)) {
+                Picasso.with(this).load(bean.notice.createUserAvatar).error(R.drawable.ic_user_blue)
+                        .transform(new PicassoCircleTransform())
+                        .resize(WindowUtil.dp2px(50, this), WindowUtil.dp2px(50, this))
+                        .centerCrop().into(ivHeader);
+            }
             tvName.setText(bean.notice.createUserName);
             tvTime.setText(DateFormatUtils.getFormatedNewsTime(bean.notice.createTime));
             tvNoticeTitle.setText(bean.notice.noticeTitle);
@@ -252,7 +254,7 @@ public class NoticeDetailActivity extends BaseActivity<NoticeDetailPresenter> {
         // TODO: 2018/5/31 没有头像
         ImageView ivHeader = view.findViewById(R.id.iv_header);
         String headerImage = SPUtils.getString(UserInfo.ICON_LINK.name(),"");
-        Picasso.with(this).load(headerImage).error(R.drawable.ic_user64)
+        Picasso.with(this).load(headerImage).error(R.drawable.ic_user_blue)
             .transform(new PicassoCircleTransform())
             .resize(WindowUtil.dp2px(50, this), WindowUtil.dp2px(50, this))
             .centerCrop().into(ivHeader);

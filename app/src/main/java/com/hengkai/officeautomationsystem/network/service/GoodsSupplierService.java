@@ -1,5 +1,6 @@
 package com.hengkai.officeautomationsystem.network.service;
 
+import com.hengkai.officeautomationsystem.network.entity.GoodsSupplierDetailEntity;
 import com.hengkai.officeautomationsystem.network.entity.GoodsSupplierEntity;
 
 import java.util.Map;
@@ -15,5 +16,9 @@ public interface GoodsSupplierService {
     @FormUrlEncoded
     @POST
     Observable<GoodsSupplierEntity> getGoodsSupplierList(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<GoodsSupplierDetailEntity> getGoodsSupplier(@Url String url, @FieldMap Map<String, String> params);
 
 }

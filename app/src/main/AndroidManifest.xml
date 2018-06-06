@@ -110,6 +110,7 @@
         <activity android:name=".function.contacts_library.add.AddContactActivity" />
         <activity android:name=".function.new_unit.search_keyword.SearchKeywordActivity" />
         <activity android:name=".function.new_project.NewProjectActivity" />
+        <activity android:name=".function.goods_supplier.GoodsSupplierDetailActivity" />
 
 
     </application>

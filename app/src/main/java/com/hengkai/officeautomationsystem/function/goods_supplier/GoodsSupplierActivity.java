@@ -231,6 +231,14 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
         swipeToLoadLayout.setRefreshing(false);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_ADD_OR_EDIT_GOODS && resultCode == RESULT_OK){
+            swipeToLoadLayout.setRefreshing(true);
+        }
+    }
+
     /**
      * 点击事件
      * @param v
@@ -247,6 +255,9 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
             setResult(Activity.RESULT_OK, intent);
 
             finish();
+        } else {
+            Intent intent = new Intent(this, GoodsSupplierDetailActivity.class);
+            startActivity(intent);
         }
     }
 }
