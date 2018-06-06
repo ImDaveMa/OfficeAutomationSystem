@@ -8,11 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
-import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.ask_for_leave.list.AskForLeaveListActivity;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
@@ -21,7 +22,6 @@ import com.jaeger.library.StatusBarUtil;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * Created by Harry on 2018/4/26.
  * 请假页面
  */
-public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
+public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -90,6 +90,12 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
     ImageView ivStartTime;
     @BindView(R.id.iv_end_time)
     ImageView ivEndTime;
+
+    private AlertDialog dialog;
+    private int radioGroupId;
+    private int checkedId;
+
+    private boolean changeGroup = false;
 
     private int startYear, startMonth, startDay, startHour, startMinute;
     private int endYear, endMonth, endDay, endHour, endMinute;
@@ -350,64 +356,21 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
     private void showSelectTypeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = View.inflate(this, R.layout.dialog_select_leave_type, null);
-        final TextView text1 = dialogView.findViewById(R.id.tv_text1);
-        final TextView text2 = dialogView.findViewById(R.id.tv_text2);
-        final TextView text3 = dialogView.findViewById(R.id.tv_text3);
-        final TextView text4 = dialogView.findViewById(R.id.tv_text4);
-        final TextView text5 = dialogView.findViewById(R.id.tv_text5);
-        final TextView text6 = dialogView.findViewById(R.id.tv_text6);
-        final TextView text7 = dialogView.findViewById(R.id.tv_text7);
+        RadioGroup rgGroup1 = dialogView.findViewById(R.id.rg_group1);
+        RadioGroup rgGroup2 = dialogView.findViewById(R.id.rg_group2);
+
+        if(checkedId > 0){
+            RadioButton rBtn = dialogView.findViewById(checkedId);
+            if(rBtn != null) {
+                rBtn.setChecked(true);
+            }
+        }
+
+        rgGroup1.setOnCheckedChangeListener(this);
+        rgGroup2.setOnCheckedChangeListener(this);
+
         builder.setView(dialogView);
-        final AlertDialog dialog = builder.show();
-        text1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text1.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
-        text2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text2.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
-        text3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text3.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
-        text4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text4.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
-        text5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text5.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
-        text6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text6.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
-        text7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                setTextViewAttribute(text7.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black, tvLeaveType, ivLeaveType);
-            }
-        });
+        dialog = builder.show();
     }
 
     /**
@@ -430,5 +393,33 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> {
      */
     public void setDuration(double time) {
         tvTime.setText(String.valueOf(time));
+    }
+
+    /**
+     * 切换 事假类型
+     * @param group
+     * @param checkedId
+     */
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (!changeGroup) {
+            changeGroup = true;
+            this.radioGroupId = group.getId();
+            this.checkedId = checkedId;
+
+            RadioButton rbtn = group.findViewById(checkedId);
+            setTextViewAttribute(rbtn.getText().toString().trim(), R.drawable.ic_cancel28, R.color.black1, tvLeaveType, ivLeaveType);
+
+            if (group.getId() == R.id.rg_group1) {
+                RadioGroup otherGroup = dialog.findViewById(R.id.rg_group2);
+                otherGroup.clearCheck();
+            } else if (group.getId() == R.id.rg_group2) {
+                RadioGroup otherGroup = dialog.findViewById(R.id.rg_group1);
+                otherGroup.clearCheck();
+            }
+            changeGroup = false;
+        }
+
+        dialog.dismiss();
     }
 }

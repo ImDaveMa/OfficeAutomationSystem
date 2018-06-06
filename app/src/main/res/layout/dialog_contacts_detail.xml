@@ -7,15 +7,13 @@
     android:padding="20dp"
     tools:ignore="HardcodedText">
 
-
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="孙微"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textColor="@color/black1"
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="职位:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_position"
@@ -34,8 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="ios"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="手机:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_phone"
@@ -55,8 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="15236253645"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,7 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="QQ:"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_qq"
@@ -76,8 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="15236253645"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,7 +90,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="微信:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_wei_xin"
@@ -97,8 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="15236253645"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -110,7 +112,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="邮箱:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_mail"
@@ -118,8 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="15236253645"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -131,7 +134,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="钉钉:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_ding"
@@ -139,8 +143,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="15236253645"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -152,7 +156,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="入职时间:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_entry_time"
@@ -160,8 +165,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="2018-12-12"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -173,7 +178,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="转正时间:"
-            android:textSize="15sp" />
+            android:textColor="@color/black3"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_quit_time"
@@ -181,8 +187,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="2018-12-12"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/black1"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </LinearLayout>

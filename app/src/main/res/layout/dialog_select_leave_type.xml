@@ -1,102 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:ignore="HardcodedText">
 
     <!--选择请假类型的dialog-->
 
-    <TextView
-        android:id="@+id/tv_text1"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/rg_group1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="零星假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_text2"
-        android:layout_width="match_parent"
+        android:paddingStart="30dp"
+        android:layout_weight="1"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/rbtn_radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="零星假"/>
+        <RadioButton
+            android:id="@+id/rbtn_radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="陪产假"/>
+        <RadioButton
+            android:id="@+id/rbtn_radio3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="病假"/>
+        <RadioButton
+            android:id="@+id/rbtn_radio4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="丧假"/>
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/rg_group2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="事假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_text3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="病假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_text4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="婚假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_text5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="产假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_text6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="陪产假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_text7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawablePadding="20dp"
-        android:drawableStart="@drawable/ic_radio_button32"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="丧假"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:paddingStart="30dp"
+        android:layout_weight="1"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/rbtn_radio5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="事假"/>
+        <RadioButton
+            android:id="@+id/rbtn_radio6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="婚假"/>
+        <RadioButton
+            android:id="@+id/rbtn_radio7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black1"
+            android:button="@drawable/selector_radio"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:text="产假"/>
+    </RadioGroup>
 
 </LinearLayout>
