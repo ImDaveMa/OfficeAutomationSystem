@@ -255,4 +255,17 @@ public class URLFinal {
      * 获取请假记录
      */
     public static final String GET_ASK_FOR_LEAVE_LIST = "mattendance/toList";
+
+    /**
+     * 新增项目 - 获取项目类型
+     */
+    public static final String NEW_PROJECT_GET_TYPE = "mparam/getParamName";
+    /**
+     * 新增项目 - 获取项目负责人
+     */
+    public static final String NEW_PROJECT_GET_PERSON = "mparam/getUserName";
+    /**
+     * 新增项目 - 提交
+     */
+    public static final String NEW_PROJECT_COMMIT = "mproject/addOrUpdate";
 }

@@ -18,6 +18,7 @@ import com.hengkai.officeautomationsystem.function.management_of_goods.Managemen
 import com.hengkai.officeautomationsystem.function.goods_out.ManagementUseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.goods_out.UseGoodsActivity;
 import com.hengkai.officeautomationsystem.function.my_unit.MyUnitActivity;
+import com.hengkai.officeautomationsystem.function.new_project.NewProjectActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.function.project_library.ProjectLibraryActivity;
 import com.hengkai.officeautomationsystem.function.report.ReportActivity;
@@ -120,6 +121,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_ask_for_leave: // 请假
                         onClickMethod(activity, AskForLeaveActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_new_project: // 新增项目
+                        onClickMethod(activity, NewProjectActivity.class, dbId);
                         break;
                     default:
                         ToastUtil.showToast("敬请期待！");

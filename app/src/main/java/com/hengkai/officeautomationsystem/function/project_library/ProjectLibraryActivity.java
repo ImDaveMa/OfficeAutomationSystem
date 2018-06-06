@@ -13,7 +13,9 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.new_project.NewProjectActivity;
 import com.hengkai.officeautomationsystem.function.project_library.detail.ProjectLibraryDetailActivity;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.ProjectEntity;
@@ -36,6 +38,8 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_search)
@@ -65,6 +69,7 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
         ButterKnife.bind(this);
 
         tvTitle.setText("项目库");
+        ivAdd.setVisibility(View.VISIBLE);
         setupRecyclerView();
 
         //请求网络
@@ -105,7 +110,7 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
         stopRefreshing();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.tv_search, R.id.iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -113,6 +118,10 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
                 break;
             case R.id.tv_search:
 
+                break;
+            case R.id.iv_add:
+                Intent intent = new Intent(this, NewProjectActivity.class);
+                startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
                 break;
         }
     }
@@ -165,5 +174,13 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
         Intent intent = new Intent(this, ProjectLibraryDetailActivity.class);
         intent.putExtra("projectID", bean.getProjectId());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
+            swipeToLoadLayout.setRefreshing(true);
+        }
     }
 }
