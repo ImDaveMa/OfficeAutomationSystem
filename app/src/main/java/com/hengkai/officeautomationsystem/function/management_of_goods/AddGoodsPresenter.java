@@ -20,7 +20,7 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
         model = new AddGoodsModel();
     }
 
-    public void addGoods(String name, int type, int supplier, int unit, String band, String spec, double cost, String remark) {
+    public void addGoods(String name, int type, int supplier, int unit, String band, String spec, double cost, String remark, int num, double total) {
         view.showDialog();
         model.addGoods(new Observer<CommonReceiveMessageEntity>() {
             @Override
@@ -53,7 +53,7 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
             public void onComplete() {
 
             }
-        }, name, type, supplier, unit, band, spec, cost, remark);
+        }, name, type, supplier, unit, band, spec, cost, remark, num, total);
     }
 
     public void updateGoods(int id,String name, int type, int supplier, int unit, String band, String spec, double cost, String remark, int num, double total) {

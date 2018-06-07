@@ -117,6 +117,7 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
 
         if (id <= 0) {
             tvTitle.setText("新增物品");
+            rlEditContainer.setVisibility(View.VISIBLE);
             // 请求页面参数
             mPresenter.getAddParams();
         } else {
@@ -223,9 +224,9 @@ public class AddGoodsActivity extends BaseActivity<AddGoodsPresenter> {
         double total = cost * num;
 
         if (id <= 0) {
-            mPresenter.addGoods(name, type, supplier, unit, band, spec, cost, remark);
+            mPresenter.addGoods(name, type, supplier, unit, band, spec, cost, remark, num, total);
         } else {
-            mPresenter.updateGoods(id,name, type, supplier, unit, band, spec, cost, remark, num, total);
+            mPresenter.updateGoods(id, name, type, supplier, unit, band, spec, cost, remark, num, total);
         }
     }
 

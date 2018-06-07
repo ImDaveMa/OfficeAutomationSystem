@@ -38,8 +38,10 @@ public class AddGoodsModel {
      * @param spec     规格
      * @param cost     单价
      * @param remark   备注
+     * @param num      数量
+     * @param total    总价
      */
-    public void addGoods(Observer observer, String name, int type, int supplier, int unit, String band, String spec, double cost, String remark) {
+    public void addGoods(Observer observer, String name, int type, int supplier, int unit, String band, String spec, double cost, String remark, int num, double total) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
@@ -52,6 +54,8 @@ public class AddGoodsModel {
         params.put("SPEC", spec); // 规格
         params.put("COST", cost + ""); // 单价
         params.put("REMARK", remark); // 备注
+        params.put("NUM", num + ""); // 数量
+        params.put("TOTAL", total + ""); // 总数
 
         service.addGoods(URLFinal.ADD_GOODS_URL, params)
                 .subscribeOn(Schedulers.io())
