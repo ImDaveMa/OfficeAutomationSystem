@@ -257,6 +257,7 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
             finish();
         } else {
             Intent intent = new Intent(this, GoodsSupplierDetailActivity.class);
+            intent.putExtra(GoodsSupplierDetailActivity.EXTRA_KEY_ID, unitBean.getId());
             startActivity(intent);
         }
     }
