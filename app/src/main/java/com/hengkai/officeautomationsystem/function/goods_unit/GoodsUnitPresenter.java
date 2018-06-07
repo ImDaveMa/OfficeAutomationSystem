@@ -31,12 +31,16 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
             public void onNext(GoodsUnitEntity unitEntity) {
                 view.stopRefreshing();
                 if (unitEntity.getCODE() == 1) {
-                    List<GoodsUnitEntity.UnitBean> list = unitEntity.getList();
-                    view.prepareData(list);
-                } else if (unitEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
+                    List<GoodsUnitEntity.UnitBean> beans = unitEntity.getList();
+                    if(beans == null || beans.size() <= 0){
+                        view.noData();
+                    } else {
+                        view.prepareData(beans);
+                    }
                 } else if (unitEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(unitEntity.getMES());
                 }
             }
 
@@ -66,10 +70,10 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
                 view.dismissDialog();
                 if (entity.CODE == 1) {
                     view.addSuccess();
-                } else if (entity.CODE == -2 || entity.CODE == 3) {
-                    ToastUtil.showToast(entity.MES);
                 } else if (entity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(entity.MES);
                 }
             }
 
@@ -99,10 +103,10 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
                 view.dismissDialog();
                 if (entity.CODE == 1) {
                     view.deleteSuccess(position);
-                } else if (entity.CODE == -2 || entity.CODE == 3) {
-                    ToastUtil.showToast(entity.MES);
                 } else if (entity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(entity.MES);
                 }
             }
 

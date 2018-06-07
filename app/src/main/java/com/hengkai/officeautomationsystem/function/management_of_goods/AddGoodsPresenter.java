@@ -30,16 +30,14 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
 
             @Override
             public void onNext(CommonReceiveMessageEntity msgEntity) {
+                view.dismissDialog();
                 if (msgEntity.CODE == 1) {
-                    view.dismissDialog();
                     view.addSuccess();
-                } else if (msgEntity.CODE == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，添加物品失败");
                 } else if (msgEntity.CODE == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(msgEntity.MES);
                 }
             }
 
@@ -66,16 +64,14 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
 
             @Override
             public void onNext(CommonReceiveMessageEntity msgEntity) {
+                view.dismissDialog();
                 if (msgEntity.CODE == 1) {
-                    view.dismissDialog();
                     view.editSuccess();
-                } else if (msgEntity.CODE == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，修改物品失败");
                 } else if (msgEntity.CODE == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(msgEntity.MES);
                 }
             }
 
@@ -103,17 +99,14 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
 
             @Override
             public void onNext(AddGoodsEntity addEntity) {
+                view.dismissDialog();
                 if (addEntity.CODE == 1) {
-                    view.dismissDialog();
                     view.getAddParamsSuccess(addEntity);
-                } else if (addEntity.CODE == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，获取参数失败");
-                    view.finish();
                 } else if (addEntity.CODE == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(addEntity.MES);
                 }
             }
 
@@ -141,17 +134,14 @@ public class AddGoodsPresenter extends BasePresenter<AddGoodsActivity> {
 
             @Override
             public void onNext(EditGoodsEntity goodsParamsEntity) {
+                view.dismissDialog();
                 if (goodsParamsEntity.CODE == 1) {
-                    view.dismissDialog();
                     view.getEditParamsSuccess(goodsParamsEntity);
-                } else if (goodsParamsEntity.CODE == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，获取参数失败");
-                    view.finish();
                 } else if (goodsParamsEntity.CODE == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(goodsParamsEntity.MES);
                 }
             }
 

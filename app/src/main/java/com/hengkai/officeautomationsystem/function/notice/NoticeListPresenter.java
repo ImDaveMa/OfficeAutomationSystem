@@ -9,6 +9,8 @@ import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -20,7 +22,7 @@ public class NoticeListPresenter extends BasePresenter<NoticeFragment> {
         model = new NoticeListModel();
     }
 
-    public void getNoticeList(int id, int state) {
+    public void getNoticeList(final int id, int state) {
         model.getNoticeList(id, state, new Observer<NoticeEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -31,12 +33,16 @@ public class NoticeListPresenter extends BasePresenter<NoticeFragment> {
             public void onNext(NoticeEntity mEntity) {
                 view.stopRefreshing();
                 if (mEntity.CODE == 1) {
-                    view.prepareData(mEntity.DATE);
-                } else if (mEntity.CODE == 2) {
-                    // 返回的数据是空，所以不能处理列表
-                    view.noData();
+                    List<NoticeEntity.DATEBean> beans = mEntity.DATE;
+                    if(id == 0 && (beans == null || beans.size() <= 0)){
+                        view.noData();
+                    } else {
+                        view.prepareData(beans);
+                    }
                 } else if (mEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
+                } else {
+                    ToastUtil.showToast(mEntity.MES);
                 }
             }
 

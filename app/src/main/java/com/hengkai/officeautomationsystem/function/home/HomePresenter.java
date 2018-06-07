@@ -38,10 +38,10 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
                 if (contactsEntity.getCODE() == 1) {
                     List<MessageEntity.MsgBean> list = contactsEntity.getDATE();
                     view.prepareApproveList(list, contactsEntity.getTOTAL());
-                } else if (contactsEntity.getCODE() == -1) {
-                    ToastUtil.showToast("获取审批列表");
                 } else if (contactsEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
+                } else {
+                    ToastUtil.showToast(contactsEntity.getMES());
                 }
             }
 
@@ -69,10 +69,10 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
                 if (contactsEntity.getCODE() == 1) {
                     List<MessageEntity.MsgBean> list = contactsEntity.getDATE();
                     view.prepareMsgList(list);
-                } else if (contactsEntity.getCODE() == -1) {
-                    ToastUtil.showToast("获取消息失败");
                 } else if (contactsEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
+                } else {
+                    ToastUtil.showToast(contactsEntity.getMES());
                 }
             }
 
@@ -106,10 +106,10 @@ public class HomePresenter extends BasePresenter<HomeFragment> {
                         }
                     }
                     view.prepareNoticeList(list, total);
-                } else if (noticeEntity.CODE == -1) {
-                    ToastUtil.showToast("获取通知公告失败");
                 } else if (noticeEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
+                } else {
+                    ToastUtil.showToast(noticeEntity.MES);
                 }
             }
 

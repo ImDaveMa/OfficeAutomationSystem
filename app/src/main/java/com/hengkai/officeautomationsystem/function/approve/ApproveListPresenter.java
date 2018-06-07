@@ -34,10 +34,10 @@ public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
                 view.stopRefreshing();
                 if (msgEntity.getCODE() == 1) {
                     view.prepareData(msgEntity.getDATE());
-                } else if (msgEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
                 } else if (msgEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
+                } else {
+                    ToastUtil.showToast(msgEntity.getMES());
                 }
             }
 

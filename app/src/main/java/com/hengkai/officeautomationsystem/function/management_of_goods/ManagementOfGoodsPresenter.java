@@ -20,7 +20,7 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
         model = new ManagementOfGoodsModel();
     }
 
-    public void getGoodsList(int id) {
+    public void getGoodsList(final int id) {
         model.getGoodsList(new Observer<GoodsEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -31,12 +31,16 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
             public void onNext(GoodsEntity goodsEntity) {
                 view.stopRefreshing();
                 if (goodsEntity.getCODE() == 1) {
-                    List<GoodsEntity.GoodsBean> list = goodsEntity.getList();
-                    view.prepareData(list);
-                } else if (goodsEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
+                    List<GoodsEntity.GoodsBean> beans = goodsEntity.getList();
+                    if(id == 0 && (beans == null || beans.size() <= 0)){
+                        view.noData(2);
+                    } else {
+                        view.prepareData(beans);
+                    }
                 } else if (goodsEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(goodsEntity.getMES());
                 }
             }
 
@@ -66,10 +70,10 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
                 view.dismissDialog();
                 if (entity.CODE == 1) {
                     view.deleteSuccess(position);
-                } else if (entity.CODE == -2 || entity.CODE == 3) {
-                    ToastUtil.showToast(entity.MES);
                 } else if (entity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(entity.MES);
                 }
             }
 

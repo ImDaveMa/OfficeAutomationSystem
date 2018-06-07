@@ -28,18 +28,14 @@ public class GoodsInPresenter extends BasePresenter<GoodsInActivity> {
 
             @Override
             public void onNext(CommonReceiveMessageEntity msgEntity) {
+                view.dismissDialog();
                 if (msgEntity.CODE == 1) {
-                    view.dismissDialog();
                     view.submitSuccess();
-                } else if (msgEntity.CODE == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，申请提交失败");
                 } else if (msgEntity.CODE == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
                 } else {
-                    view.dismissDialog();
+                    ToastUtil.showToast(msgEntity.MES);
                 }
             }
 
@@ -66,23 +62,14 @@ public class GoodsInPresenter extends BasePresenter<GoodsInActivity> {
 
             @Override
             public void onNext(GoodsParamsEntity goodsParamsEntity) {
+                view.dismissDialog();
                 if (goodsParamsEntity.getCODE() == 1) {
-                    view.dismissDialog();
                     view.getParamsSuccess(goodsParamsEntity);
-                } else if (goodsParamsEntity.getCODE() == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，获取参数失败");
-                    view.finish();
                 } else if (goodsParamsEntity.getCODE() == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
-                } else if (goodsParamsEntity.getCODE() == -2) {
-                    ToastUtil.showToast("系统没有设置参数，请联系管理员");
-                    view.dismissDialog();
-                    view.finish();
                 } else {
-                    view.dismissDialog();
+                    ToastUtil.showToast(goodsParamsEntity.getMES());
                 }
             }
 

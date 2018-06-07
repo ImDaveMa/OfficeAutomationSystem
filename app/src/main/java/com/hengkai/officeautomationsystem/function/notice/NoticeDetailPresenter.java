@@ -31,16 +31,12 @@ public class NoticeDetailPresenter extends BasePresenter<NoticeDetailActivity> {
             @Override
             public void onNext(NoticeDetailEntity mEntity) {
                 view.dismissDialog();
-                if (mEntity.CODE == -1) { // 缺少参数
-                    ToastUtil.showToast("缺少参数");
-                    view.finish();
+                if (mEntity.CODE == 1) {
+                    view.prepareData(mEntity.DATE);
                 } else if (mEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view);
-                }  else if (mEntity.CODE == 1 || mEntity.CODE == 2) {
-                    view.prepareData(mEntity.DATE);
-                }else if(mEntity.CODE == 3){
-                    ToastUtil.showToast("获取内容失败");
-                    view.finish();
+                } else {
+                    ToastUtil.showToast(mEntity.MES);
                 }
             }
 
@@ -67,22 +63,14 @@ public class NoticeDetailPresenter extends BasePresenter<NoticeDetailActivity> {
                 switch (commentVisitEntity.CODE) {
                     //查询结果不为空
                     case 1:
-                    //查询结果为空
-                    case 2:
                         view.prepareCommentList(commentVisitEntity.DATE);
                         break;
-                    case 0:
+                    case 0: // TOKEN无效
+                        ToastUtil.showToast("登录失效");
                         view.showLoginDialog(view);
                         break;
-                    case -1:
-                        //缺少参数
-                        ToastUtil.showToast("查询评论失败");
-                        break;
-                    case 3:
-                        //操作失败
-                        ToastUtil.showToast("查询评论失败");
-                        break;
                     default:
+                        ToastUtil.showToast(commentVisitEntity.MES);
                         break;
                 }
             }
@@ -108,16 +96,12 @@ public class NoticeDetailPresenter extends BasePresenter<NoticeDetailActivity> {
             @Override
             public void onNext(CommonReceiveMessageEntity mEntity) {
                 view.dismissDialog();
-                if (mEntity.CODE == -1) { // 缺少参数
-                    ToastUtil.showToast("缺少参数");
-                    view.finish();
+                if (mEntity.CODE == 1) {
+                    view.addCommentSuccess();
                 } else if (mEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view);
-                }  else if (mEntity.CODE == 1) {
-                    view.addCommentSuccess();
-                }else if(mEntity.CODE == 3){
-                    ToastUtil.showToast("评论失败");
-                    view.finish();
+                } else {
+                    ToastUtil.showToast(mEntity.MES);
                 }
             }
 

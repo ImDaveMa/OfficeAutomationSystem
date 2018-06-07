@@ -30,13 +30,17 @@ public class GoodsSupplierPresenter extends BasePresenter<GoodsSupplierActivity>
             public void onNext(GoodsSupplierEntity goodsSupplierEntity) {
                 view.stopRefreshing();
                 if (goodsSupplierEntity.getCODE() == 1) {
-                    List<GoodsSupplierEntity.SupplierBean> list = goodsSupplierEntity.getSupplier();
-                    List<GoodsSupplierEntity.ParamBean> paramList = goodsSupplierEntity.getParam();
-                    view.prepareData(list, paramList);
-                } else if (goodsSupplierEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
+                    List<GoodsSupplierEntity.SupplierBean> beans = goodsSupplierEntity.getSupplier();
+                    if(beans == null || beans.size() <= 0){
+                        view.noData();
+                    } else {
+                        List<GoodsSupplierEntity.ParamBean> paramList = goodsSupplierEntity.getParam();
+                        view.prepareData(beans, paramList);
+                    }
                 } else if (goodsSupplierEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(goodsSupplierEntity.getMES());
                 }
             }
 

@@ -19,7 +19,7 @@ public class ManagementGoodsInPresenter extends BasePresenter<ManagementGoodsInA
         model = new ManagementGoodsInModel();
     }
 
-    public void getGoodsInList(int id) {
+    public void getGoodsInList(final int id) {
         model.getGoodsList(new Observer<GoodsInEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -30,12 +30,16 @@ public class ManagementGoodsInPresenter extends BasePresenter<ManagementGoodsInA
             public void onNext(GoodsInEntity goodsInEntity) {
                 view.stopRefreshing();
                 if (goodsInEntity.getCODE() == 1) {
-                    List<GoodsInEntity.InStorageBean> list = goodsInEntity.getInStorage();
-                    view.prepareData(list);
-                } else if (goodsInEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
+                    List<GoodsInEntity.InStorageBean> beans = goodsInEntity.getInStorage();
+                    if(id == 0 && (beans == null || beans.size() <= 0)){
+                        view.noData();
+                    } else {
+                        view.prepareData(beans);
+                    }
                 } else if (goodsInEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(goodsInEntity.getMES());
                 }
             }
 

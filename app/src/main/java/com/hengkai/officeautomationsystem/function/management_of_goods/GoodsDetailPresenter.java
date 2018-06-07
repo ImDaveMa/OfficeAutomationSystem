@@ -28,16 +28,14 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailActivity> {
 
             @Override
             public void onNext(GoodsDetailEntity msgEntity) {
+                view.dismissDialog();
                 if (msgEntity.getCODE() == 1) {
-                    view.dismissDialog();
                     view.getSuccess(msgEntity.getList().get(0));
-                } else if (msgEntity.getCODE() == 3) {
-                    view.dismissDialog();
-                    ToastUtil.showToast("系统异常，获取内容失败");
                 } else if (msgEntity.getCODE() == 0) {//TOKEN失效
-                    view.dismissDialog();
                     ToastUtil.showToast("登录失效，请重新登录");
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(msgEntity.getMES());
                 }
             }
 

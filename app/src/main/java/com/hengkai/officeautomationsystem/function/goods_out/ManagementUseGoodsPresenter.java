@@ -19,7 +19,7 @@ public class ManagementUseGoodsPresenter extends BasePresenter<ManagementUseGood
         model = new ManagementUseGoodsModel();
     }
 
-    public void getUseGoodsList(int id) {
+    public void getUseGoodsList(final int id) {
         model.getUseGoodsList(new Observer<UseGoodsEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -30,8 +30,12 @@ public class ManagementUseGoodsPresenter extends BasePresenter<ManagementUseGood
             public void onNext(UseGoodsEntity goodsOutEntity) {
                 view.stopRefreshing();
                 if (goodsOutEntity.getCODE() == 1) {
-                    List<UseGoodsEntity.OutStorageBean> list = goodsOutEntity.getOutStorage();
-                    view.prepareData(list);
+                    List<UseGoodsEntity.OutStorageBean> beans = goodsOutEntity.getOutStorage();
+                    if(id == 0 && (beans == null || beans.size() <= 0)){
+                        view.noData();
+                    } else {
+                        view.prepareData(beans);
+                    }
                 } else if (goodsOutEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
                 } else {
