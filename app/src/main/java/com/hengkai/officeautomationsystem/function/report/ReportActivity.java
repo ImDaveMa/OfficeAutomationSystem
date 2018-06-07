@@ -146,6 +146,7 @@ public class ReportActivity extends BaseActivity<ReportPresenter> {
             public void commit(String commentContent, int adapterPosition, long currentTime) {
                 ReportActivity.this.currentTime = currentTime;
                 ReportActivity.this.commentContent = commentContent;
+                showDialog();
                 mPresenter.comment(adapterPosition, mList.get(adapterPosition).id, commentContent);
             }
         });

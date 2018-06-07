@@ -203,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="主要负责人:"
+                    android:text="营销负责人:"
                     android:textColor="@color/black2"
                     android:textSize="15sp" />
 
@@ -373,7 +373,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="项目组长:"
+                    android:text="技术负责人:"
                     android:textColor="@color/black2"
                     android:textSize="15sp" />
 

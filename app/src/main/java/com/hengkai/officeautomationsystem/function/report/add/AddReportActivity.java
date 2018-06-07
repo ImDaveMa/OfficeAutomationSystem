@@ -163,28 +163,16 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
                 String tomorrow = etTomorrow.getText().toString().trim();
                 String needHelp = etNeedHelp.getText().toString().trim();
                 if (type == 0) {    //日报
-                    if (TextUtils.isEmpty(today)) {
-                        ToastUtil.showToast("今日完成未填写, 请补全");
-                        return;
-                    } else if (TextUtils.isEmpty(tomorrow)) {
-                        ToastUtil.showToast("明日计划未填写, 请补全");
-                        return;
-                    } else if (TextUtils.isEmpty(needHelp)) {
-                        ToastUtil.showToast("需协调的工作未填写, 请补全");
+                    if (TextUtils.isEmpty(today) && TextUtils.isEmpty(tomorrow) && TextUtils.isEmpty(needHelp)) {
+                        ToastUtil.showToast("什么都不填写是不能提交的");
                         return;
                     } else if (TextUtils.isEmpty(ids)) {
                         ToastUtil.showToast("您还未选择通知人, 请选择");
                         return;
                     }
                 } else {    //周报
-                    if (TextUtils.isEmpty(today)) {
-                        ToastUtil.showToast("本周完成未填写, 请补全");
-                        return;
-                    } else if (TextUtils.isEmpty(tomorrow)) {
-                        ToastUtil.showToast("下周计划未填写, 请补全");
-                        return;
-                    } else if (TextUtils.isEmpty(needHelp)) {
-                        ToastUtil.showToast("需协调的工作未填写, 请补全");
+                    if (TextUtils.isEmpty(today) && TextUtils.isEmpty(tomorrow) && TextUtils.isEmpty(needHelp)) {
+                        ToastUtil.showToast("什么都不填写是不能提交的");
                         return;
                     } else if (TextUtils.isEmpty(ids)) {
                         ToastUtil.showToast("您还未选择通知人, 请选择");

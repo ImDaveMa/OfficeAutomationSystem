@@ -87,11 +87,12 @@ public class ReportPresenter extends BasePresenter<ReportActivity> {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.showToast("网络连接错误");
+                view.dismissDialog();
             }
 
             @Override
             public void onComplete() {
-
+                view.dismissDialog();
             }
         });
     }
