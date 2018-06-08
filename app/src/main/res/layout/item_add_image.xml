@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:contentDescription="外出"
-        android:src="@drawable/ic_add128"
+        android:src="@drawable/ic_add_pic"
         tools:ignore="HardcodedText" />
 
     <ImageView

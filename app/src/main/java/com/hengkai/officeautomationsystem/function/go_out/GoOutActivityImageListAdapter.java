@@ -41,7 +41,7 @@ public class GoOutActivityImageListAdapter extends RecyclerView.Adapter<GoOutAct
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.ivCancel.setImageResource(R.drawable.ic_cancel32);
         if (position == list.size()) {
-            holder.ivAddImage.setImageResource(R.drawable.ic_add128);
+            holder.ivAddImage.setImageResource(R.drawable.ic_add_pic);
             holder.ivCancel.setVisibility(View.GONE);
             holder.ivAddImage.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -133,11 +133,14 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
         return new SelectVisitUnitPresenter();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_operation, R.id.tv_search})
+    @OnClick({R.id.iv_back, R.id.tv_operation, R.id.tv_search, R.id.tv_cancel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_cancel:
+                setViewState(false);
                 break;
             case R.id.tv_operation:
                 Intent intent = new Intent(this, NewUnitActivity.class);

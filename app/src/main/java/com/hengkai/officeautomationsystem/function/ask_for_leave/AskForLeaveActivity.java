@@ -70,16 +70,8 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
     EditText etLeaveReason;
     @BindView(R.id.ll_leave_reason)
     LinearLayout llLeaveReason;
-    @BindView(R.id.tv_examine_and_approve1)
-    TextView tvExamineAndApprove1;
-    @BindView(R.id.tv_examine_and_approve2)
-    TextView tvExamineAndApprove2;
     @BindView(R.id.ll_examine_and_approve)
     LinearLayout llExamineAndApprove;
-    @BindView(R.id.tv_sender1)
-    TextView tvSender1;
-    @BindView(R.id.tv_sender2)
-    TextView tvSender2;
     @BindView(R.id.ll_sender)
     LinearLayout llSender;
     @BindView(R.id.btn_commit)

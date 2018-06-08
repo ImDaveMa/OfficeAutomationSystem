@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="单位名称:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/black2"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="单位类型:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/black2"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="详细地址:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -99,15 +99,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/black2"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black4" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="社会信用代码:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -130,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/black2"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -152,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="单位网站:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -160,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/black2"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -182,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="单位介绍:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -190,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:textColor="@color/black2"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
             </LinearLayout>

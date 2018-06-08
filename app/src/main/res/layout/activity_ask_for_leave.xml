@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:text="时长(小时)"
+                    android:text="时长"
                     android:textColor="@color/black1"
                     android:textSize="15sp" />
 
@@ -284,6 +284,13 @@
                     android:text="0.0"
                     android:textColor="@color/black2"
                     android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black1"
+                    android:layout_marginStart="5dp"
+                    android:text="小时"/>
             </LinearLayout>
 
             <LinearLayout
@@ -371,27 +378,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:padding="5dp">
+                    <include layout="@layout/item_person" />
 
-                    <TextView
-                        android:id="@+id/tv_examine_and_approve1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:textColor="@color/black2"
-                        android:text="朱哲锋" />
-
-                    <TextView
-                        android:id="@+id/tv_examine_and_approve2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:textColor="@color/black2"
-                        android:text="朱哲锋" />
+                    <include layout="@layout/item_person" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -432,27 +421,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:padding="5dp">
+                    <include layout="@layout/item_person" />
 
-                    <TextView
-                        android:id="@+id/tv_sender1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:textColor="@color/black2"
-                        android:text="朱哲锋" />
-
-                    <TextView
-                        android:id="@+id/tv_sender2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:textColor="@color/black2"
-                        android:text="朱哲锋" />
+                    <include layout="@layout/item_person" />
                 </LinearLayout>
             </LinearLayout>
 

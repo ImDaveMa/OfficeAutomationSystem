@@ -82,7 +82,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:text="开始时间"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
                 <TextView
@@ -132,7 +132,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:text="结束时间"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
                 <TextView
@@ -181,8 +181,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:text="时长(小时)"
-                    android:textColor="@color/black"
+                    android:text="时长"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
                 <TextView
@@ -193,6 +193,13 @@
                     android:text="0.0"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black1"
+                    android:layout_marginStart="5dp"
+                    android:text="小时"/>
             </LinearLayout>
 
             <LinearLayout
@@ -224,7 +231,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:text="外出事由"
-                        android:textColor="@color/black"
+                        android:textColor="@color/black1"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -258,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="图片"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black1"
                     android:textSize="15sp" />
 
                 <android.support.v7.widget.RecyclerView
@@ -299,7 +306,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:text="审批人"
-                        android:textColor="@color/black"
+                        android:textColor="@color/black1"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -309,24 +316,9 @@
                     android:layout_marginTop="5dp"
                     android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/tv_examine_and_approve1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:text="朱哲锋" />
+                    <include layout="@layout/item_person" />
 
-                    <TextView
-                        android:id="@+id/tv_examine_and_approve2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:text="朱哲锋" />
+                    <include layout="@layout/item_person" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -358,7 +350,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:text="抄送人"
-                        android:textColor="@color/black"
+                        android:textColor="@color/black1"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -368,24 +360,9 @@
                     android:layout_marginTop="5dp"
                     android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/tv_sender1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:text="朱哲锋" />
+                    <include layout="@layout/item_person" />
 
-                    <TextView
-                        android:id="@+id/tv_sender2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:drawablePadding="6dp"
-                        android:drawableTop="@drawable/ic_user64"
-                        android:gravity="center"
-                        android:text="朱哲锋" />
+                    <include layout="@layout/item_person" />
                 </LinearLayout>
             </LinearLayout>
 

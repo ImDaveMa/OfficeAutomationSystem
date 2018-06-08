@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="搜索"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <FrameLayout
@@ -70,7 +70,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@id/swipe_target"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
 
             <com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView
                 android:id="@id/swipe_load_more_footer"
@@ -87,13 +88,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
                     android:text="---- 关键字 ----"
                     android:textColor="@color/black3"
@@ -105,7 +107,7 @@
                     android:layout_height="match_parent"
                     android:padding="10dp"
                     app:labelBackground="@drawable/shape_text_view_bg"
-                    app:labelTextColor="@color/teal"
+                    app:labelTextColor="@color/black2"
                     app:labelTextPaddingBottom="3dp"
                     app:labelTextPaddingLeft="10dp"
                     app:labelTextPaddingRight="10dp"

@@ -172,7 +172,11 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                finish();
+                if(swipeToLoadLayout.isShown()){
+                    setViewState(false);
+                } else {
+                    finish();
+                }
                 break;
             case R.id.tv_search:
                 searchContent = etSearch.getText().toString().trim();

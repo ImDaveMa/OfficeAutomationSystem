@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp"
+    android:background="?android:attr/selectableItemBackground"
     tools:ignore="HardcodedText">
 
     <RelativeLayout
@@ -17,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="恒凯"
-            android:textColor="@color/black"
+            android:textColor="@color/black1"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -27,11 +28,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_unit_name"
             android:layout_marginTop="10dp"
+            android:textColor="@color/black3"
+            android:textSize="12sp"
             android:text="洛阳市王城大道111号 紫禁城3层 恒凯科技" />
     </RelativeLayout>
 
     <ImageView
-        android:layout_width="25dp"
+        android:layout_width="15dp"
         android:layout_height="25dp"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="10dp"

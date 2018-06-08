@@ -7,25 +7,31 @@
 
     <include layout="@layout/layout_title_bar_more" />
 
-    <TextView
-        android:id="@+id/tv_search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/shape_edit_text_border"
-        android:drawablePadding="5dp"
-        android:drawableStart="@drawable/ic_search48"
-        android:gravity="center_vertical"
-        android:paddingBottom="5dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:paddingTop="5dp"
-        android:text="搜索"
-        android:textSize="13sp"
-        tools:ignore="HardcodedText" />
+        android:background="@drawable/layer_list_border_bottom">
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_search48"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:text="点击搜索"
+            android:textSize="13sp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
         android:id="@+id/swipeToLoadLayout"
@@ -41,7 +47,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
 
         <com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView
             android:id="@id/swipe_load_more_footer"
