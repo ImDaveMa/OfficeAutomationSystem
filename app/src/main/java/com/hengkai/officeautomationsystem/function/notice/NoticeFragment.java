@@ -117,8 +117,6 @@ public class NoticeFragment extends BaseFragment<NoticeListPresenter> implements
 
     @Override
     protected void reloadData() {
-        super.reloadData();
-
         mPresenter.getNoticeList(0, state);
     }
 

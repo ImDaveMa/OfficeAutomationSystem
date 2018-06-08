@@ -32,10 +32,14 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
                 view.stopRefreshing();
                 if (unitEntity.getCODE() == 1) {
                     List<GoodsUnitEntity.UnitBean> beans = unitEntity.getList();
-                    if(beans == null || beans.size() <= 0){
+                    if (beans == null || beans.size() <= 0) {
                         view.noData();
                     } else {
-                        view.prepareData(beans);
+                        if (beans != null && beans.size() > 0) {
+                            view.prepareData(beans);
+                        } else {
+                            ToastUtil.showToast("没有更多数据");
+                        }
                     }
                 } else if (unitEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
@@ -47,6 +51,7 @@ public class GoodsUnitPresenter extends BasePresenter<GoodsUnitActivity> {
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                view.noData();
                 ToastUtil.showToast("请求网络失败:" + e.getMessage());
             }
 

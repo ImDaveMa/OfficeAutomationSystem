@@ -125,8 +125,6 @@ public class MessageFragment extends BaseFragment<MessageListPresenter> implemen
 
     @Override
     protected void reloadData() {
-        super.reloadData();
-
         mPresenter.getMsgList(0, state);
     }
 

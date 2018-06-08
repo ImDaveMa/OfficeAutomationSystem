@@ -181,4 +181,9 @@ public class ManagementUseGoodsActivity extends BaseActivity<ManagementUseGoodsP
             }
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getUseGoodsList(0);
+    }
 }

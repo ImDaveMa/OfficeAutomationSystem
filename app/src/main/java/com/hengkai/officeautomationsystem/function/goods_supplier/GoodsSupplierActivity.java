@@ -261,4 +261,9 @@ public class GoodsSupplierActivity extends BaseActivity<GoodsSupplierPresenter> 
             startActivity(intent);
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getGoodsSupplierList("",0,0);
+    }
 }

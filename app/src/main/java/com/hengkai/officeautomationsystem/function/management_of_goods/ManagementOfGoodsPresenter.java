@@ -47,6 +47,9 @@ public class ManagementOfGoodsPresenter extends BasePresenter<ManagementOfGoodsA
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                if(id == 0){
+                    view.noData(2);
+                }
                 ToastUtil.showToast("请求网络失败:" + e.getMessage());
             }
 

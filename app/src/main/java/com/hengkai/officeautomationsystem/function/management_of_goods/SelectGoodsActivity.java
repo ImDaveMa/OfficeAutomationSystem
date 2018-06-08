@@ -201,4 +201,9 @@ public class SelectGoodsActivity extends BaseActivity<SelectGoodsPresenter> impl
             }
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getGoodsList(0);
+    }
 }

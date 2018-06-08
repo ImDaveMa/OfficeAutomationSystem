@@ -295,4 +295,9 @@ public class GoodsUnitActivity extends BaseActivity<GoodsUnitPresenter> implemen
             finish();
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getGoodsUnitList();
+    }
 }

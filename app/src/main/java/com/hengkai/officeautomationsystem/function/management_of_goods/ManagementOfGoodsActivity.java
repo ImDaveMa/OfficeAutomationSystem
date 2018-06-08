@@ -267,4 +267,9 @@ public class ManagementOfGoodsActivity extends BaseActivity<ManagementOfGoodsPre
             }
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getGoodsList(0);
+    }
 }

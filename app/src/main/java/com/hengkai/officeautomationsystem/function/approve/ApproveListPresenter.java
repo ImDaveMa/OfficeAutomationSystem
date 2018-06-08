@@ -22,7 +22,7 @@ public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
         model = new ApproveListModel();
     }
 
-    public void getApproveList(int id, int operating, int searchDay, int state) {
+    public void getApproveList(final int id, int operating, int searchDay, int state) {
         model.getApproveList(new Observer<MessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -33,7 +33,16 @@ public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
             public void onNext(MessageEntity msgEntity) {
                 view.stopRefreshing();
                 if (msgEntity.getCODE() == 1) {
-                    view.prepareData(msgEntity.getDATE());
+                    List<MessageEntity.MsgBean> beans = msgEntity.getDATE();
+                    if (id == 0 && (beans == null || beans.size() <= 0)) {
+                        view.noData();
+                    } else {
+                        if (beans != null && beans.size() > 0) {
+                            view.prepareData(beans);
+                        } else {
+                            ToastUtil.showToast("没有更多数据");
+                        }
+                    }
                 } else if (msgEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view.getContext());
                 } else {
@@ -44,6 +53,9 @@ public class ApproveListPresenter extends BasePresenter<ApproveFragment> {
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                if (id == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
             }
 

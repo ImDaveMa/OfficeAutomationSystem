@@ -34,8 +34,12 @@ public class GoodsSupplierPresenter extends BasePresenter<GoodsSupplierActivity>
                     if(beans == null || beans.size() <= 0){
                         view.noData();
                     } else {
-                        List<GoodsSupplierEntity.ParamBean> paramList = goodsSupplierEntity.getParam();
-                        view.prepareData(beans, paramList);
+                        if(beans != null && beans.size() > 0){
+                            List<GoodsSupplierEntity.ParamBean> paramList = goodsSupplierEntity.getParam();
+                            view.prepareData(beans, paramList);
+                        } else {
+                            ToastUtil.showToast("没有更多数据");
+                        }
                     }
                 } else if (goodsSupplierEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
@@ -47,6 +51,7 @@ public class GoodsSupplierPresenter extends BasePresenter<GoodsSupplierActivity>
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                view.noData();
                 ToastUtil.showToast("请求网络失败:" + e.getMessage());
             }
 

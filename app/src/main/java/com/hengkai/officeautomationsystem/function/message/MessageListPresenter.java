@@ -36,7 +36,11 @@ public class MessageListPresenter extends BasePresenter<MessageFragment> {
                     if(id == 0 && (beans == null || beans.size() <= 0)){
                         view.noData();
                     } else {
-                        view.prepareData(beans);
+                        if(beans != null && beans.size() > 0){
+                            view.prepareData(beans);
+                        } else {
+                            ToastUtil.showToast("没有更多数据");
+                        }
                     }
                 } else if (msgEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view.getActivity());
@@ -48,6 +52,9 @@ public class MessageListPresenter extends BasePresenter<MessageFragment> {
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                if(id == 0){
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
             }
 

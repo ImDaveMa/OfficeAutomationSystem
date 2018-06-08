@@ -152,4 +152,10 @@ public class ApproveFragment extends BaseFragment<ApproveListPresenter> implemen
 //        startActivity(intent);
         ToastUtil.showToast(bean.getTypeName());
     }
+
+    @Override
+    protected void reloadData() {
+        //请求网络
+        mPresenter.getApproveList(0, 0, -1, state);
+    }
 }

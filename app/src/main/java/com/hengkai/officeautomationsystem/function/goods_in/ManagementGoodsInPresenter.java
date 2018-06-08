@@ -31,10 +31,14 @@ public class ManagementGoodsInPresenter extends BasePresenter<ManagementGoodsInA
                 view.stopRefreshing();
                 if (goodsInEntity.getCODE() == 1) {
                     List<GoodsInEntity.InStorageBean> beans = goodsInEntity.getInStorage();
-                    if(id == 0 && (beans == null || beans.size() <= 0)){
+                    if (id == 0 && (beans == null || beans.size() <= 0)) {
                         view.noData();
                     } else {
-                        view.prepareData(beans);
+                        if (beans != null && beans.size() > 0) {
+                            view.prepareData(beans);
+                        } else {
+                            ToastUtil.showToast("没有更多数据");
+                        }
                     }
                 } else if (goodsInEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
@@ -46,6 +50,9 @@ public class ManagementGoodsInPresenter extends BasePresenter<ManagementGoodsInA
             @Override
             public void onError(Throwable e) {
                 view.stopRefreshing();
+                if (id == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
             }
 
