@@ -164,7 +164,7 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
                 String needHelp = etNeedHelp.getText().toString().trim();
                 if (type == 0) {    //日报
                     if (TextUtils.isEmpty(today) && TextUtils.isEmpty(tomorrow) && TextUtils.isEmpty(needHelp)) {
-                        ToastUtil.showToast("什么都不填写是不能提交的");
+                        ToastUtil.showToast("请至少填写一项内容");
                         return;
                     } else if (TextUtils.isEmpty(ids)) {
                         ToastUtil.showToast("您还未选择通知人, 请选择");
@@ -172,7 +172,7 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
                     }
                 } else {    //周报
                     if (TextUtils.isEmpty(today) && TextUtils.isEmpty(tomorrow) && TextUtils.isEmpty(needHelp)) {
-                        ToastUtil.showToast("什么都不填写是不能提交的");
+                        ToastUtil.showToast("请至少填写一项内容");
                         return;
                     } else if (TextUtils.isEmpty(ids)) {
                         ToastUtil.showToast("您还未选择通知人, 请选择");

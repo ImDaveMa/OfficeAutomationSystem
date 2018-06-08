@@ -442,4 +442,9 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
     public void deleteItem() {
         adapter.updateData(position);
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getVisitRecordList(String.valueOf(0), 0);
+    }
 }

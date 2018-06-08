@@ -136,4 +136,8 @@ public class GroupMemberActivity extends BaseActivity<GroupMemberPresenter> {
         }
     }
 
+    @Override
+    protected void reloadData() {
+        mPresenter.getGroupMemberList();
+    }
 }

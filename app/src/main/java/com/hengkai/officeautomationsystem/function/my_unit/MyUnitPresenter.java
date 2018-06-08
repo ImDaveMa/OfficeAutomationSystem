@@ -6,6 +6,8 @@ import com.hengkai.officeautomationsystem.network.entity.MyUnitEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -30,14 +32,22 @@ public class MyUnitPresenter extends BasePresenter<MyUnitActivity> {
             @Override
             public void onNext(MyUnitEntity myUnitEntity) {
                 if (myUnitEntity.CODE == 1) {
-                    view.getUnitList(myUnitEntity.DATA);
+                    List<MyUnitEntity.DATABean> data = myUnitEntity.DATA;
+                    if (data != null && data.size() != 0) {
+                        view.getUnitList(data);
+                    } else {
+                        view.noData();
+                    }
                 } else if (myUnitEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast("获取失败: " + myUnitEntity.MES);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                view.noData();
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }

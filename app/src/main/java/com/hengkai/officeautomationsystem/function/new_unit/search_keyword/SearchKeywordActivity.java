@@ -108,4 +108,9 @@ public class SearchKeywordActivity extends BaseActivity<SearchKeywordPresenter> 
                 break;
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getKeywordList("");
+    }
 }

@@ -129,4 +129,10 @@ public class AskForLeaveListActivity extends BaseActivity<AskForLeaveListPresent
                 break;
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getAskForLeaveList(0);
+    }
+
 }

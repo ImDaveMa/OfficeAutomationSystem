@@ -148,10 +148,10 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
                 }
                 break;
             case R.id.ll_start_time://开始请假时间
-                if (tvLeaveType.getText().toString().trim().equals("请选择")) {
-                    ToastUtil.showToast("请先选择请假类型");
-                    return;
-                }
+//                if (tvLeaveType.getText().toString().trim().equals("请选择")) {
+//                    ToastUtil.showToast("请先选择请假类型");
+//                    return;
+//                }
                 MaterialDateTimePickerUtils.showDatePickerDialog(getFragmentManager(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -167,8 +167,8 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
                 }
                 break;
             case R.id.ll_end_time://结束请假时间
-                if (tvLeaveType.getText().toString().trim().equals("请选择")) {
-                    ToastUtil.showToast("请先选择请假类型");
+                if (tvStartTime.getText().toString().trim().equals("请选择") || TextUtils.isEmpty(tvStartTime.getText().toString().trim())) {
+                    ToastUtil.showToast("请先选择开始时间");
                     return;
                 }
                 MaterialDateTimePickerUtils.showDatePickerDialog(getFragmentManager(), new DatePickerDialog.OnDateSetListener() {

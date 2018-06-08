@@ -161,4 +161,9 @@ public class UnitLibraryActivity extends BaseActivity<UnitLibraryActivityPresent
             swipeToLoadLayout.setRefreshing(true);
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getUnitList(0);
+    }
 }

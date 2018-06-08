@@ -30,18 +30,22 @@ public class SearchKeywordPresenter extends BasePresenter<SearchKeywordActivity>
             @Override
             public void onNext(NewUnitKeywordEntity newUnitKeywordEntity) {
                 if (newUnitKeywordEntity.CODE == 1) {
-                    if (newUnitKeywordEntity.DATA.size() == 0) {
-                        ToastUtil.showToast("暂无相关关键词数据");
+                    if (newUnitKeywordEntity.DATA == null || newUnitKeywordEntity.DATA.size() == 0) {
+                        view.noData(2);
                     } else {
                         view.getKeywordList(newUnitKeywordEntity.DATA);
                     }
                 } else if (newUnitKeywordEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(newUnitKeywordEntity.MES);
                 }
+
             }
 
             @Override
             public void onError(Throwable e) {
+                view.noData(2);
                 ToastUtil.showToast("请求网络失败");
                 view.dismissDialog();
             }

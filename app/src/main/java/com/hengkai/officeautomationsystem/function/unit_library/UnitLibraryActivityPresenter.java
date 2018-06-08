@@ -6,6 +6,8 @@ import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -20,7 +22,7 @@ public class UnitLibraryActivityPresenter extends BasePresenter<UnitLibraryActiv
         model = new UnitLibraryActivityModel();
     }
 
-    public void getUnitList(int ID) {
+    public void getUnitList(final int ID) {
         model.getUnitList(ID, new Observer<UnitLibraryEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -30,14 +32,28 @@ public class UnitLibraryActivityPresenter extends BasePresenter<UnitLibraryActiv
             @Override
             public void onNext(UnitLibraryEntity unitLibraryEntity) {
                 if (unitLibraryEntity.CODE == 1) {
-                    view.getUnitList(unitLibraryEntity.DATA);
+                    List<UnitLibraryEntity.DATABean> data = unitLibraryEntity.DATA;
+                    if (ID == 0 && (data == null || data.size() == 0)) {
+                        view.noData(2);
+                    } else {
+                        if (data != null && data.size() != 0) {
+                            view.getUnitList(unitLibraryEntity.DATA);
+                        } else {
+                            ToastUtil.showToast("没有更多数据了");
+                        }
+                    }
                 } else if (unitLibraryEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(unitLibraryEntity.MES);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                if (ID == 0) {
+                    view.noData(2);
+                }
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }

@@ -36,7 +36,7 @@ public class CommentVisitPresenter extends BasePresenter<CommentVisitActivity> {
                     view.showLoginDialog(view);
                 } else {
                     //传入ID为空
-                    ToastUtil.showToast("获取信息出错了");
+                    ToastUtil.showToast(visitRecordDetailEntity.MES);
                 }
             }
 
@@ -63,24 +63,17 @@ public class CommentVisitPresenter extends BasePresenter<CommentVisitActivity> {
             public void onNext(CommentVisitEntity commentVisitEntity) {
                 switch (commentVisitEntity.CODE) {
                     case 1:
-                        view.getCommentList(commentVisitEntity.DATE);
+                        if (commentVisitEntity.DATE == null || commentVisitEntity.DATE.size() == 0) {
+                            ToastUtil.showToast("暂无评论数据");
+                        } else {
+                            view.getCommentList(commentVisitEntity.DATE);
+                        }
                         break;
                     case 0:
                         view.showLoginDialog(view);
                         break;
-                    case -1:
-                        //缺少参数
-                        ToastUtil.showToast("查询评论失败");
-                        break;
-                    case 2:
-                        //查询结果为空
-                        view.getCommentList(commentVisitEntity.DATE);
-                        break;
-                    case 3:
-                        //操作失败
-                        ToastUtil.showToast("查询评论失败");
-                        break;
                     default:
+                        ToastUtil.showToast(commentVisitEntity.MES);
                         break;
                 }
             }

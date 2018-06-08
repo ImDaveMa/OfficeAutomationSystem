@@ -30,38 +30,6 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
         model = new VisitRecordDetailActivityModel();
     }
 
-//    public void getVisitCustomerList(int unitID) {
-//        model.getVisitCustomerList(unitID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//                RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_CUSTOMER_LIST, d);
-//            }
-//
-//            @Override
-//            public void onNext(VisitRecordDetailGetVisitUnitEntity visitRecordDetailGetVisitUnitEntity) {
-//                if (visitRecordDetailGetVisitUnitEntity.CODE == 1) {
-//                    view.getVisitCustomerList(visitRecordDetailGetVisitUnitEntity.DATA);
-//                } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
-//                    view.showLoginDialog(view);
-//                } else {
-//                    //code=-2
-//                    ToastUtil.showToast("暂无相关联系人");
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                view.dismissDialog();
-//                ToastUtil.showToast("网络连接错误");
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                view.dismissDialog();
-//            }
-//        });
-//    }
-
     public void getVisitProjectList(String customerID) {
         model.getVisitProjectList(customerID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
             @Override
@@ -75,6 +43,8 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                     view.getVisitProjectList(visitRecordDetailGetVisitUnitEntity.DATA);
                 } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(visitRecordDetailGetVisitUnitEntity.MES);
                 }
             }
 
@@ -126,6 +96,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                         break;
 
                     default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }
@@ -175,6 +146,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                         break;
 
                     default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }
@@ -210,7 +182,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                     view.showLoginDialog(view);
                 } else {
                     //传入ID为空
-                    ToastUtil.showToast("获取信息出错了");
+                    ToastUtil.showToast(visitRecordDetailEntity.MES);
                 }
             }
 
@@ -256,6 +228,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                         ToastUtil.showToast("数据已提交，禁止修改 (开始结束)");
                         break;
                     default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }
@@ -303,6 +276,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                         ToastUtil.showToast("数据已提交，禁止修改 (开始结束)");
                         break;
                     default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }
@@ -359,6 +333,7 @@ public class VisitRecordDetailActivityPresenter extends BasePresenter<VisitRecor
                         view.showLoginDialog(view);
                         break;
                     default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }

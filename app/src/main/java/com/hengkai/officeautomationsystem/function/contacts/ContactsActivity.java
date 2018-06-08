@@ -244,4 +244,9 @@ public class ContactsActivity extends BaseActivity<ContactsActivityPresenter> im
         mList.addAll(list);
         adapter.changeDataSet();
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getContactsList();
+    }
 }

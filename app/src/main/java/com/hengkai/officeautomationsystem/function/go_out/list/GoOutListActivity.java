@@ -126,4 +126,9 @@ public class GoOutListActivity extends BaseActivity<GoOutListPresenter> {
         mList.addAll(list);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getAskForLeaveList(0);
+    }
 }

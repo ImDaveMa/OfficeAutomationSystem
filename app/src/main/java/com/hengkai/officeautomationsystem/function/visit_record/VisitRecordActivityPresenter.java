@@ -7,6 +7,8 @@ import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -21,7 +23,7 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
         model = new VisitRecordActivityModel();
     }
 
-    public void getVisitRecordList(String userID, int pageNum) {
+    public void getVisitRecordList(String userID, final int pageNum) {
         model.getVisitRecordList(userID, pageNum, new Observer<VisitRecordEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -31,18 +33,28 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
             @Override
             public void onNext(VisitRecordEntity visitRecordEntity) {
                 if (visitRecordEntity.CODE == 1) {
-                    if (visitRecordEntity.DATA.size() == 0) {
-                        ToastUtil.showToast("没有更多数据了");
+                    List<VisitRecordEntity.DATABean> data = visitRecordEntity.DATA;
+                    if (pageNum == 0 && (data == null || data.size() == 0)) {
+                        view.noData();
                     } else {
-                        view.getVisitRecordList(visitRecordEntity.DATA);
+                        if (data != null && data.size() != 0) {
+                            view.getVisitRecordList(visitRecordEntity.DATA);
+                        } else {
+                            ToastUtil.showToast("没有更多数据了");
+                        }
                     }
                 } else if (visitRecordEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(visitRecordEntity.MES);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                if (pageNum == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }
@@ -54,7 +66,7 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
         });
     }
 
-    public void getVisitRecordListByDay(int day, String userID, int pageNum) {
+    public void getVisitRecordListByDay(int day, String userID, final int pageNum) {
         model.getVisitRecordListByDay(day, userID, pageNum, new Observer<VisitRecordEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -64,11 +76,17 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
             @Override
             public void onNext(VisitRecordEntity visitRecordEntity) {
                 if (visitRecordEntity.CODE == 1) {
-                    if (visitRecordEntity.DATA.size() == 0) {
-                        ToastUtil.showToast("没有更多数据了");
+                    List<VisitRecordEntity.DATABean> data = visitRecordEntity.DATA;
+                    if (pageNum == 0 && (data == null || data.size() == 0)) {
+                        view.noData();
                     } else {
-                        view.getVisitRecordList(visitRecordEntity.DATA);
+                        if (data != null && data.size() != 0) {
+                            view.getVisitRecordList(visitRecordEntity.DATA);
+                        } else {
+                            ToastUtil.showToast("没有更多数据了");
+                        }
                     }
+
                 } else if (visitRecordEntity.CODE == 0) {
                     view.showLoginDialog(view);
                 }
@@ -76,6 +94,9 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
 
             @Override
             public void onError(Throwable e) {
+                if (pageNum == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }
@@ -100,6 +121,8 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
                     view.deleteItem();
                 } else if (commonReceiveMessageEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(commonReceiveMessageEntity.MES);
                 }
             }
 

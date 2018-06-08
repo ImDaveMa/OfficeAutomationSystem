@@ -23,37 +23,37 @@ public class AddContactPresenter extends BasePresenter<AddContactActivity> {
 
     public void saveContact(String name, String phone, int companyId, String birthday, boolean sex,
                             String department, String rank, String weChat, String landline, String mailBox,
-                            String hobby,  String licensePlate) {
+                            String hobby, String licensePlate) {
         view.showDialog();
         model.saveContact(name, phone, companyId, birthday, sex, department, rank, weChat, landline, mailBox,
-                hobby,  licensePlate, new Observer<CommonReceiveMessageEntity>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.ADD_CONTACT_ACTIVITY_ADD_CONTACT, d);
-            }
+                hobby, licensePlate, new Observer<CommonReceiveMessageEntity>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        RxApiManager.get().add(NetworkTagFinal.ADD_CONTACT_ACTIVITY_ADD_CONTACT, d);
+                    }
 
-            @Override
-            public void onNext(CommonReceiveMessageEntity msgEntity) {
-                if (msgEntity.CODE == 1) {
-                    view.addSuccess();
-                } else if (msgEntity.CODE == 3) {
-                    ToastUtil.showToast("系统异常，新增联系人失败");
-                } else if (msgEntity.CODE == 0) {//TOKEN失效
-                    ToastUtil.showToast("登录失效，请重新登录");
-                    view.showLoginDialog(view);
-                }
-            }
+                    @Override
+                    public void onNext(CommonReceiveMessageEntity msgEntity) {
+                        if (msgEntity.CODE == 1) {
+                            view.addSuccess();
+                        } else if (msgEntity.CODE == 0) {//TOKEN失效
+                            ToastUtil.showToast("登录失效，请重新登录");
+                            view.showLoginDialog(view);
+                        } else {
+                            ToastUtil.showToast(msgEntity.MES);
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                view.dismissDialog();
-                ToastUtil.showToast("请求网络失败");
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        view.dismissDialog();
+                        ToastUtil.showToast("请求网络失败");
+                    }
 
-            @Override
-            public void onComplete() {
-                view.dismissDialog();
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                        view.dismissDialog();
+                    }
+                });
     }
 }

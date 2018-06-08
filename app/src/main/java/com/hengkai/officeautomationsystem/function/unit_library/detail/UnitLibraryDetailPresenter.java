@@ -33,6 +33,8 @@ public class UnitLibraryDetailPresenter extends BasePresenter<UnitLibraryDetailA
                     view.setUnitDetail(unitLibraryDetailEntity.DATA);
                 } else if (unitLibraryDetailEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(unitLibraryDetailEntity.MES);
                 }
             }
 

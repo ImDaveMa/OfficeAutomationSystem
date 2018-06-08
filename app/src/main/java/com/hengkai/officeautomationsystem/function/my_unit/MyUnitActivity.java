@@ -119,4 +119,9 @@ public class MyUnitActivity extends BaseActivity<MyUnitPresenter> {
         mList.addAll(list);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getUnitList();
+    }
 }

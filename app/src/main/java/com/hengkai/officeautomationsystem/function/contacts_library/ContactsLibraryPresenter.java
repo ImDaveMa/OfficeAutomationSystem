@@ -6,6 +6,8 @@ import com.hengkai.officeautomationsystem.network.entity.ContactsLibraryEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -20,7 +22,7 @@ public class ContactsLibraryPresenter extends BasePresenter<ContactsLibraryActiv
         model = new ContactsLibraryModel();
     }
 
-    public void getContactsList(int ID, int unitID) {
+    public void getContactsList(final int ID, int unitID) {
         model.getContactsList(ID, unitID, new Observer<ContactsLibraryEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -30,14 +32,28 @@ public class ContactsLibraryPresenter extends BasePresenter<ContactsLibraryActiv
             @Override
             public void onNext(ContactsLibraryEntity contactsLibraryEntity) {
                 if (contactsLibraryEntity.CODE == 1) {
-                    view.getContactsList(contactsLibraryEntity.DATA);
+                    List<ContactsLibraryEntity.DATABean> data = contactsLibraryEntity.DATA;
+                    if (ID == 0 && (data == null || data.size() == 0)) {
+                        view.noData();
+                    } else {
+                        if (data != null && data.size() != 0) {
+                            view.getContactsList(data);
+                        } else {
+                            ToastUtil.showToast("没有更多数据了");
+                        }
+                    }
                 } else if (contactsLibraryEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast("获取失败: " + contactsLibraryEntity.MES);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                if (ID == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }

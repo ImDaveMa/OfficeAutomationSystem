@@ -128,4 +128,9 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
             mPresenter.getVisitCustomerList(unitID);
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getVisitCustomerList(unitID);
+    }
 }

@@ -222,4 +222,9 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
         }
     }
 
+    @Override
+    protected void reloadData() {
+        mPresenter.getKeywordList();
+        setViewState(false);
+    }
 }

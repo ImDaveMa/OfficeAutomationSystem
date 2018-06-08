@@ -6,6 +6,8 @@ import com.hengkai.officeautomationsystem.network.entity.GetAskForLeaveListEntit
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -20,7 +22,7 @@ public class AskForLeaveListPresenter extends BasePresenter<AskForLeaveListActiv
         model = new AskForLeaveListModel();
     }
 
-    public void getAskForLeaveList(int searchID) {
+    public void getAskForLeaveList(final int searchID) {
         model.getAskForLeaveList(searchID, new Observer<GetAskForLeaveListEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -31,22 +33,31 @@ public class AskForLeaveListPresenter extends BasePresenter<AskForLeaveListActiv
             public void onNext(GetAskForLeaveListEntity getAskForLeaveListEntity) {
                 switch (getAskForLeaveListEntity.CODE) {
                     case 1:
-                        view.getAskForLeaveList(getAskForLeaveListEntity.DATA);
+                        List<GetAskForLeaveListEntity.DATABean> data = getAskForLeaveListEntity.DATA;
+                        if (searchID == 0 && (data == null || data.size() == 0)) {
+                            view.noData();
+                        } else {
+                            if (data != null && data.size() != 0) {
+                                view.getAskForLeaveList(data);
+                            } else {
+                                ToastUtil.showToast("没有更多数据了");
+                            }
+                        }
                         break;
                     case 0:
                         view.showLoginDialog(view);
                         break;
-                    case -2:
-                        ToastUtil.showToast("没有更多数据了");
-                        break;
-
                     default:
+                        ToastUtil.showToast("操作失败: " + getAskForLeaveListEntity.MES);
                         break;
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                if (searchID == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }

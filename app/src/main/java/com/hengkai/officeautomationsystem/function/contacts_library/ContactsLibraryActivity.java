@@ -225,4 +225,8 @@ public class ContactsLibraryActivity extends BaseActivity<ContactsLibraryPresent
 
     }
 
+    @Override
+    protected void reloadData() {
+        mPresenter.getContactsList(0, unitID);
+    }
 }

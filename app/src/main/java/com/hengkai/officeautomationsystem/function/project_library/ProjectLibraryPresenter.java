@@ -19,7 +19,7 @@ public class ProjectLibraryPresenter extends BasePresenter<ProjectLibraryActivit
         model = new ProjectLibraryModel();
     }
 
-    public void getProjectList(int id) {
+    public void getProjectList(final int id) {
         model.getProjectList(new Observer<ProjectEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -31,18 +31,27 @@ public class ProjectLibraryPresenter extends BasePresenter<ProjectLibraryActivit
                 view.stopRefreshing();
                 if (projectEntity.getCODE() == 1) {
                     List<ProjectEntity.ProjectBean> list = projectEntity.getDATE();
-                    view.prepareData(list);
-                } else if (projectEntity.getCODE() == -2) {
-                    // 返回的数据是空，所以不能处理列表
+                    if (id == 0 && (list == null || list.size() == 0)) {
+                        view.noData(2);
+                    } else {
+                        if (list != null && list.size() != 0) {
+                            view.prepareData(list);
+                        } else {
+                            ToastUtil.showToast("没有更多数据了");
+                        }
+                    }
                 } else if (projectEntity.getCODE() == 0) {//TOKEN失效
                     view.showLoginDialog(view);
-                } else if(projectEntity.getCODE() == -1){ //缺少参数
-                    ToastUtil.showToast("请求缺少参数，列表加载失败");
+                } else { //缺少参数
+                    ToastUtil.showToast(projectEntity.getMES());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                if (id == 0) {
+                    view.noData(2);
+                }
                 view.stopRefreshing();
                 ToastUtil.showToast("请求网络失败");
             }

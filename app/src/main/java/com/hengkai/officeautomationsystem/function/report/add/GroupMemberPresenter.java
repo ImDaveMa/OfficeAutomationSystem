@@ -31,13 +31,14 @@ public class GroupMemberPresenter extends BasePresenter<GroupMemberActivity> {
             public void onNext(ReportContactsEntity reportContactsEntity) {
                 switch (reportContactsEntity.CODE) {
                     case 1:
-                        view.getGroupMemberList(reportContactsEntity.DATE);
+                        if (reportContactsEntity.DATE == null || reportContactsEntity.DATE.size() == 0) {
+                            view.noData();
+                        } else {
+                            view.getGroupMemberList(reportContactsEntity.DATE);
+                        }
                         break;
                     case 0:
                         view.showLoginDialog(view);
-                        break;
-                    case -2:
-                        ToastUtil.showToast("没有更多数据了");
                         break;
                     default:
                         ToastUtil.showToast(reportContactsEntity.MES);
@@ -47,6 +48,7 @@ public class GroupMemberPresenter extends BasePresenter<GroupMemberActivity> {
 
             @Override
             public void onError(Throwable e) {
+                view.noData();
                 ToastUtil.showToast("请求网络失败");
             }
 

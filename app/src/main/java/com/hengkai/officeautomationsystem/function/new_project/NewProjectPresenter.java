@@ -36,7 +36,7 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
             public void onNext(NewProjectGetTypeEntity newProjectGetTypeEntity) {
                 switch (newProjectGetTypeEntity.CODE) {
                     case 1:
-                        if (newProjectGetTypeEntity.DATE.size() == 0) {
+                        if (newProjectGetTypeEntity.DATE == null || newProjectGetTypeEntity.DATE.size() == 0) {
                             ToastUtil.showToast("暂无项目类型");
                         } else {
                             view.getTypeList(newProjectGetTypeEntity.DATE);
@@ -45,14 +45,8 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
                     case 0:
                         view.showLoginDialog(view);
                         break;
-                    case 2:
-                        ToastUtil.showToast("查询失败:" + newProjectGetTypeEntity.MES);
-                        break;
-                    case 3:
-                        ToastUtil.showToast("提交参数有误");
-                        break;
-                    case 4:
-                        ToastUtil.showToast("出现异常");
+                    default:
+                        ToastUtil.showToast(newProjectGetTypeEntity.MES);
                         break;
                 }
             }
@@ -81,7 +75,7 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
             public void onNext(NewProjectGetPersonEntity newProjectGetPersonEntity) {
                 switch (newProjectGetPersonEntity.CODE) {
                     case 1:
-                        if (newProjectGetPersonEntity.DATE.size() == 0) {
+                        if (newProjectGetPersonEntity.DATE == null || newProjectGetPersonEntity.DATE.size() == 0) {
                             ToastUtil.showToast("暂无项目负责人");
                         } else {
                             view.getPersonList(newProjectGetPersonEntity.DATE);
@@ -90,14 +84,8 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
                     case 0:
                         view.showLoginDialog(view);
                         break;
-                    case 2:
-                        ToastUtil.showToast("查询失败:" + newProjectGetPersonEntity.MES);
-                        break;
-                    case 3:
-                        ToastUtil.showToast("提交参数有误");
-                        break;
-                    case 4:
-                        ToastUtil.showToast("出现异常");
+                    default:
+                        ToastUtil.showToast(newProjectGetPersonEntity.MES);
                         break;
                 }
             }
@@ -133,14 +121,8 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
                     case 0:
                         view.showLoginDialog(view);
                         break;
-                    case 2:
-                        ToastUtil.showToast("操作失败:" + commonReceiveMessageEntity.MES);
-                        break;
-                    case 3:
-                        ToastUtil.showToast("提交参数有误");
-                        break;
-                    case 4:
-                        ToastUtil.showToast("出现异常");
+                    default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }

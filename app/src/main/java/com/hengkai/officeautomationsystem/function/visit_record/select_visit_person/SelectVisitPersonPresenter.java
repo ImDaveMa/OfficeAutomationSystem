@@ -6,6 +6,8 @@ import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVis
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -30,17 +32,23 @@ public class SelectVisitPersonPresenter extends BasePresenter<SelectVisitPersonA
             @Override
             public void onNext(VisitRecordDetailGetVisitUnitEntity visitRecordDetailGetVisitUnitEntity) {
                 if (visitRecordDetailGetVisitUnitEntity.CODE == 1) {
-                    view.getVisitCustomerList(visitRecordDetailGetVisitUnitEntity.DATA);
+                    List<VisitRecordDetailGetVisitUnitEntity.DATABean> data = visitRecordDetailGetVisitUnitEntity.DATA;
+                    if (data == null || data.size() == 0) {
+                        view.noData();
+                    } else {
+                        view.getVisitCustomerList(visitRecordDetailGetVisitUnitEntity.DATA);
+                    }
                 } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {
                     view.showLoginDialog(view);
                 } else {
                     //code=-2
-                    ToastUtil.showToast("暂无相关联系人");
+                    ToastUtil.showToast(visitRecordDetailGetVisitUnitEntity.MES);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                view.noData();
                 ToastUtil.showToast("网络连接错误");
             }
 

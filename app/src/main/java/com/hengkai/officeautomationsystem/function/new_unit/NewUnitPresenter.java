@@ -36,13 +36,15 @@ public class NewUnitPresenter extends BasePresenter<NewUnitActivity> {
             @Override
             public void onNext(NewUnitTypeEntity newUnitTypeEntity) {
                 if (newUnitTypeEntity.CODE == 1) {
-                    if (newUnitTypeEntity.DATA.size() == 0) {
+                    if (newUnitTypeEntity.DATA == null || newUnitTypeEntity.DATA.size() == 0) {
                         ToastUtil.showToast("暂无单位类型数据");
                     } else {
                         view.getTypeList(newUnitTypeEntity.DATA);
                     }
                 } else if (newUnitTypeEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(newUnitTypeEntity.MES);
                 }
             }
 
@@ -72,10 +74,10 @@ public class NewUnitPresenter extends BasePresenter<NewUnitActivity> {
                     ToastUtil.showToast("提交成功");
                     view.setResult(Activity.RESULT_OK);
                     view.finish();
-                } else if (commonReceiveMessageEntity.CODE == 2) {
-                    ToastUtil.showToast("参数不完整");
-                } else if (commonReceiveMessageEntity.CODE == -1) {
-                    ToastUtil.showToast("单位名称重复");
+                } else if (commonReceiveMessageEntity.CODE == 0) {
+                    view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(commonReceiveMessageEntity.MES);
                 }
             }
 

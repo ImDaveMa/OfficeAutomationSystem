@@ -8,6 +8,8 @@ import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -22,7 +24,7 @@ public class ReportPresenter extends BasePresenter<ReportActivity> {
         model = new ReportModel();
     }
 
-    public void getReportList(int type, int searchID) {
+    public void getReportList(int type, final int searchID) {
         model.getReportList(type, searchID, new Observer<ReportEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -33,13 +35,19 @@ public class ReportPresenter extends BasePresenter<ReportActivity> {
             public void onNext(ReportEntity reportEntity) {
                 switch (reportEntity.CODE) {
                     case 1:
-                        view.getReportList(reportEntity.DATE);
+                        List<ReportEntity.DATEBean> data = reportEntity.DATE;
+                        if (searchID == 0 && (data == null || data.size() == 0)) {
+                            view.noData();
+                        } else {
+                            if (data != null && data.size() != 0) {
+                                view.getReportList(data);
+                            } else {
+                                ToastUtil.showToast("没有更多数据了");
+                            }
+                        }
                         break;
                     case 0:
                         view.showLoginDialog(view);
-                        break;
-                    case -2:
-                        ToastUtil.showToast("没有更多数据了");
                         break;
                     default:
                         ToastUtil.showToast(reportEntity.MES);
@@ -49,6 +57,9 @@ public class ReportPresenter extends BasePresenter<ReportActivity> {
 
             @Override
             public void onError(Throwable e) {
+                if (searchID == 0) {
+                    view.noData();
+                }
                 ToastUtil.showToast("请求网络失败");
                 view.stopRefreshing();
             }
@@ -64,7 +75,6 @@ public class ReportPresenter extends BasePresenter<ReportActivity> {
         model.comment(currentID, commentContent, new Observer<CommonReceiveMessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.GO_TO_COMMENT_ACTIVITY, d);
                 RxApiManager.get().add(NetworkTagFinal.REPORT_ACTIVITY_COMMENT, d);
             }
 
@@ -79,7 +89,7 @@ public class ReportPresenter extends BasePresenter<ReportActivity> {
                         view.showLoginDialog(view);
                         break;
                     default:
-                        ToastUtil.showToast("提交评论失败");
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }

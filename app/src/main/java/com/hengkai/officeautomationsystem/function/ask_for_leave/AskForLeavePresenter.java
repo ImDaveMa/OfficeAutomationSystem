@@ -40,20 +40,8 @@ public class AskForLeavePresenter extends BasePresenter<AskForLeaveActivity> {
                     case 0:
                         view.showLoginDialog(view);
                         break;
-                    case -1:
-                        ToastUtil.showToast("服务器异常");
-                        break;
-                    case -2:
-                        ToastUtil.showToast("时间参数格式错误");
-                        break;
-                    case -3:
-                        ToastUtil.showToast("单位名称不能为空");
-                        break;
-                    case -4:
-                        ToastUtil.showToast("数据参数不完整");
-                        break;
-
                     default:
+                        ToastUtil.showToast("操作失败: " + commonReceiveMessageEntity.MES);
                         break;
                 }
             }

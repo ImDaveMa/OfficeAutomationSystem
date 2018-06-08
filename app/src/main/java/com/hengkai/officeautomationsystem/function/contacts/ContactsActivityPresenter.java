@@ -33,9 +33,13 @@ public class ContactsActivityPresenter extends BasePresenter<ContactsActivity> {
             public void onNext(ContactsEntity contactsEntity) {
                 if (contactsEntity.CODE == 1) {
                     List<ContactsEntity.DIRECTORIESBean> list = contactsEntity.DIRECTORIES;
-                    view.prepareData(list);
+                    if (list != null && list.size() != 0) {
+                        view.prepareData(list);
+                    } else {
+                        view.noData();
+                    }
                 } else if (contactsEntity.CODE == -1) {
-                    ToastUtil.showToast("获取通讯录失败(原因是系统里没有部门)");
+                    ToastUtil.showToast("操作失败: " + contactsEntity.MES);
                 } else if (contactsEntity.CODE == 0) {//TOKEN失效
                     view.showLoginDialog(view);
                 }
@@ -43,6 +47,7 @@ public class ContactsActivityPresenter extends BasePresenter<ContactsActivity> {
 
             @Override
             public void onError(Throwable e) {
+                view.noData();
                 ToastUtil.showToast("请求网络失败");
             }
 

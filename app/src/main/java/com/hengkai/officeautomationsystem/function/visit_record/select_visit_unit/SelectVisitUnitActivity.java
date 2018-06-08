@@ -260,4 +260,10 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
             }
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getKeywordList();
+        setViewState(false);
+    }
 }

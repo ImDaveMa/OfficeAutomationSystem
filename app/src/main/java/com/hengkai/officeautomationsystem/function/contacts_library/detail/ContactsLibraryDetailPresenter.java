@@ -33,6 +33,8 @@ public class ContactsLibraryDetailPresenter extends BasePresenter<ContactsLibrar
                     view.setContactsDetail(contactsLibraryDetailEntity.DATA);
                 } else if (contactsLibraryDetailEntity.CODE == 0) {
                     view.showLoginDialog(view);
+                } else {
+                    ToastUtil.showToast(contactsLibraryDetailEntity.MES);
                 }
             }
 

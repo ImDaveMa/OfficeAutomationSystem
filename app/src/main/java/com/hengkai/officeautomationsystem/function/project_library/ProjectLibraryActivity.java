@@ -165,6 +165,7 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
 
     /**
      * 列表项点击事件
+     *
      * @param v
      * @param bean
      * @param position
@@ -182,5 +183,10 @@ public class ProjectLibraryActivity extends BaseActivity<ProjectLibraryPresenter
         if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
             swipeToLoadLayout.setRefreshing(true);
         }
+    }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getProjectList(0);
     }
 }
