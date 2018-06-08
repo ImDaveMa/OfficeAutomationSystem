@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="恒凯公司"
-                android:textColor="@color/black2"
+                android:textColor="@color/black3"
                 android:textSize="15sp" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="销售部"
-                android:textColor="@color/black2" />
+                android:textColor="@color/black3" />
         </LinearLayout>
 
 
@@ -57,7 +57,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
             android:text="188888888888"
-            android:textColor="@color/black3" />
+            android:textColor="@color/black1" />
     </LinearLayout>
 
     <ImageView

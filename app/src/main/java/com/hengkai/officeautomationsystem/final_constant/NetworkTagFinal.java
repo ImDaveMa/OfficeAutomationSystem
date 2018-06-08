@@ -198,6 +198,10 @@ public class NetworkTagFinal {
      */
     public static final String APPROVE_LIST_ACTIVITY_GET_LIST = "APPROVE_LIST_ACTIVITY_GET_LIST";
     /**
+     * NoticeFragment
+     */
+    public static final String NOTICE_FRAGMENT_GET_LIST = "NOTICE_FRAGMENT_GET_LIST";
+    /**
      * MessageListActivity
      */
     public static final String MESSAGE_LIST_ACTIVITY_GET_LIST = "MESSAGE_LIST_ACTIVITY_GET_LIST";

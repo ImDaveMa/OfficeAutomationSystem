@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/iv_add_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:contentDescription="外出"
         android:src="@drawable/ic_add_pic"

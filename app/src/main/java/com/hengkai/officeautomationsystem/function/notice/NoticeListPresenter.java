@@ -26,7 +26,7 @@ public class NoticeListPresenter extends BasePresenter<NoticeFragment> {
         model.getNoticeList(id, state, new Observer<NoticeEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-                RxApiManager.get().add(NetworkTagFinal.APPROVE_LIST_ACTIVITY_GET_LIST, d);
+                RxApiManager.get().add(NetworkTagFinal.NOTICE_FRAGMENT_GET_LIST, d);
             }
 
             @Override

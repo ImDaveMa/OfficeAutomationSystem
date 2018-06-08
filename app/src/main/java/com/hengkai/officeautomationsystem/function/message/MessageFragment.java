@@ -68,7 +68,7 @@ public class MessageFragment extends BaseFragment<MessageListPresenter> implemen
     @Override
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.APPROVE_LIST_ACTIVITY_GET_LIST);
+        tags.add(NetworkTagFinal.MESSAGE_LIST_ACTIVITY_GET_LIST);
         return tags;
     }
 
