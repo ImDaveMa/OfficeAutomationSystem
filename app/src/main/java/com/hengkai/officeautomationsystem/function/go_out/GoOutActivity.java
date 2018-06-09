@@ -18,13 +18,17 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.go_out.list.GoOutListActivity;
+import com.hengkai.officeautomationsystem.network.entity.GoOutEntity;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
+import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
+import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -75,6 +79,10 @@ public class GoOutActivity extends BaseActivity<GoOutPresenter> implements EasyP
     LinearLayout llExamineAndApprove;
     @BindView(R.id.ll_sender)
     LinearLayout llSender;
+    @BindView(R.id.ll_sp)
+    LinearLayout llSP;
+    @BindView(R.id.ll_cs)
+    LinearLayout llCS;
     @BindView(R.id.btn_commit)
     Button btnCommit;
 
@@ -100,6 +108,8 @@ public class GoOutActivity extends BaseActivity<GoOutPresenter> implements EasyP
         tvTitle.setText("外出");
 
         setupRecyclerView();
+
+        mPresenter.getCopyPerson();
     }
 
     private void setupRecyclerView() {
@@ -136,6 +146,7 @@ public class GoOutActivity extends BaseActivity<GoOutPresenter> implements EasyP
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_ADD);
         tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_DURATION);
+        tags.add(NetworkTagFinal.ASK_FOR_LEAVE_ACTIVITY_GET_COPY_PERSON);
         return tags;
     }
 
@@ -448,4 +459,31 @@ public class GoOutActivity extends BaseActivity<GoOutPresenter> implements EasyP
     }
 
 
+    /**
+     * @param list 获取抄送人和审批人
+     */
+    public void getCopyPerson(List<GoOutEntity.DATABean> list) {
+        for (GoOutEntity.DATABean bean : list) {
+            View view = View.inflate(this, R.layout.item_person, null);
+            ImageView ivHeader = view.findViewById(R.id.iv_header);
+            TextView tvName = view.findViewById(R.id.tv_name);
+            tvName.setText(bean.userName);
+            if (!TextUtils.isEmpty(bean.iconLink)) {
+                Picasso.with(this)
+                        .load(bean.iconLink)
+                        .error(R.drawable.ic_user_blue)
+                        .transform(new PicassoCircleTransform())
+                        .resize(WindowUtil.dp2px(40, this), WindowUtil.dp2px(40, this))
+                        .centerCrop()
+                        .into(ivHeader);
+            } else {
+                ivHeader.setImageResource(R.drawable.ic_user_blue);
+            }
+            if (bean.type == 1) { //审批
+                llSP.addView(view);
+            } else {  //抄送
+                llCS.addView(view);
+            }
+        }
+    }
 }

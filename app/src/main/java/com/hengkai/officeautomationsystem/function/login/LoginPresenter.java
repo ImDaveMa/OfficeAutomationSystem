@@ -80,6 +80,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         SPUtils.putString(UserInfo.ICON_LINK.name(), loginEntity.USER.iconLink);
         SPUtils.putString(UserInfo.POSITION.name(), loginEntity.USER.position);
         SPUtils.putString(UserInfo.DEPARTMENT_NAME.name(), loginEntity.USER.departmentName);
+        SPUtils.putString(UserInfo.DEPARTMENT_ID.name(), String.valueOf(loginEntity.USER.departmentId));
         SPUtils.putString(UserInfo.DEPARTMENT_PERMISSION.name(), loginEntity.USER.departmentPermission);
         SPUtils.putString(UserInfo.REAL_NAME.name(), loginEntity.USER.realName);
     }

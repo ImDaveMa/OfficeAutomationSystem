@@ -189,6 +189,7 @@ public class NetworkTagFinal {
      */
     public static final String ASK_FOR_LEAVE_ACTIVITY_ADD = "ASK_FOR_LEAVE_ACTIVITY_ADD";
     public static final String ASK_FOR_LEAVE_ACTIVITY_DURATION = "ASK_FOR_LEAVE_ACTIVITY_DURATION";
+    public static final String ASK_FOR_LEAVE_ACTIVITY_GET_COPY_PERSON = "ASK_FOR_LEAVE_ACTIVITY_GET_COPY_PERSON";
     /**
      * AskForLeaveListActivity
      */

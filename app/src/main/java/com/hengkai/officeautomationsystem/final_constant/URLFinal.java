@@ -15,7 +15,7 @@ public class URLFinal {
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/mobile/";
     public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/";
-//    public static final String BASE_URL = "http://192.168.2.18/OA_inside/mobile/";
+//    public static final String BASE_URL = "http://192.168.2.22:8080/OA_inside/mobile/";
 //    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/";
 
 
@@ -255,6 +255,14 @@ public class URLFinal {
      * 计算请假或者外出时长的接口
      */
     public static final String DURATION = "mattendance/computationTime";
+    /**
+     * 外出 - 获取抄送人和审批人
+     */
+    public static final String GO_OUT_GET_PERSON = "mattendance/selectApprovalPeoplewcsp";
+    /**
+     * 请假 - 获取抄送人和审批人
+     */
+    public static final String ASK_FOR_LEAVE_GET_PERSON = "mattendance/selectApprovalPeopleqjsp";
     /**
      * 获取请假记录
      */

@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:text="零星假: 剩余0小时"
                     android:textColor="@color/black_80"
-                    android:textSize="9sp"  />
+                    android:textSize="9sp" />
 
                 <TextView
                     android:id="@+id/tv_holiday2"
@@ -288,9 +288,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black1"
                     android:layout_marginStart="5dp"
-                    android:text="小时"/>
+                    android:text="小时"
+                    android:textColor="@color/black1" />
             </LinearLayout>
 
             <LinearLayout
@@ -374,14 +374,12 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:padding="5dp">
-                    <include layout="@layout/item_person" />
-
-                    <include layout="@layout/item_person" />
-                </LinearLayout>
+                    android:orientation="horizontal"
+                    android:padding="5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -417,14 +415,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_cs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:padding="5dp">
-                    <include layout="@layout/item_person" />
+                    android:orientation="horizontal"
+                    android:padding="5dp" />
 
-                    <include layout="@layout/item_person" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
