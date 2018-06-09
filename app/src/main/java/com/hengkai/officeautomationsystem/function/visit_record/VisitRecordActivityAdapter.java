@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final VisitRecordEntity.DATABean bean = mList.get(position);
-        holder.tvUnitName.setText(bean.companyName);
         if (!bean.isSubmission) {
             holder.tvStateType.setText("已提交");
         } else {
@@ -59,6 +59,11 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
             case "2":   //招待
                 holder.tvType.setText("招待");
                 break;
+        }
+        if(!TextUtils.isEmpty(bean.companyName)){
+            holder.tvUnitName.setText(bean.companyName);
+        } else {
+            holder.tvUnitName.setText(String.format("%s的%s", bean.userName, holder.tvType.getText().toString()));
         }
         holder.tvDepartment.setText(bean.department);
         holder.tvContactsName.setText(bean.contactsName);
