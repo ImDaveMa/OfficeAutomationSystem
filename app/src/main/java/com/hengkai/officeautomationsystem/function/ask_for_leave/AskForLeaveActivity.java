@@ -16,9 +16,13 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.ask_for_leave.list.AskForLeaveListActivity;
+import com.hengkai.officeautomationsystem.network.entity.GoOutEntity;
 import com.hengkai.officeautomationsystem.utils.MaterialDateTimePickerUtils;
+import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
+import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.jaeger.library.StatusBarUtil;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -26,6 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -74,6 +79,10 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
     LinearLayout llExamineAndApprove;
     @BindView(R.id.ll_sender)
     LinearLayout llSender;
+    @BindView(R.id.ll_sp)
+    LinearLayout llSP;
+    @BindView(R.id.ll_cs)
+    LinearLayout llCS;
     @BindView(R.id.btn_commit)
     Button btnCommit;
     @BindView(R.id.iv_leave_type)
@@ -105,6 +114,8 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
         ButterKnife.bind(this);
 
         tvTitle.setText("请假");
+
+        mPresenter.getCopyPerson();
     }
 
     @Override
@@ -414,5 +425,33 @@ public class AskForLeaveActivity extends BaseActivity<AskForLeavePresenter> impl
         }
 
         dialog.dismiss();
+    }
+
+    /**
+     * @param list 获取抄送人和审批人
+     */
+    public void getCopyPerson(List<GoOutEntity.DATABean> list) {
+        for (GoOutEntity.DATABean bean : list) {
+            View view = View.inflate(this, R.layout.item_person, null);
+            ImageView ivHeader = view.findViewById(R.id.iv_header);
+            TextView tvName = view.findViewById(R.id.tv_name);
+            tvName.setText(bean.userName);
+            if (!TextUtils.isEmpty(bean.iconLink)) {
+                Picasso.with(this)
+                        .load(bean.iconLink)
+                        .error(R.drawable.ic_user_blue)
+                        .transform(new PicassoCircleTransform())
+                        .resize(WindowUtil.dp2px(40, this), WindowUtil.dp2px(40, this))
+                        .centerCrop()
+                        .into(ivHeader);
+            } else {
+                ivHeader.setImageResource(R.drawable.ic_user_blue);
+            }
+            if (bean.type == 1) { //审批
+                llSP.addView(view);
+            } else {  //抄送
+                llCS.addView(view);
+            }
+        }
     }
 }

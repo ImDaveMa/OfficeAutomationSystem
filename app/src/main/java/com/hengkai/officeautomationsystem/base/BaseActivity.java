@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public abstract class BaseActivity<P extends BasePresenter> extends BaseActivityImpl<P> {
 
     private OfficeAutomationSystemApplication application;
-    private Dialog dialog;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,27 +79,33 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
     /**
      * 初始化Dialog
      */
+//    private void initDialog() {
+//        dialog = new Dialog(this, R.style.LoadingDialog);
+//        final AVLoadingIndicatorView indicatorView = new AVLoadingIndicatorView(this);
+//        indicatorView.setIndicator(LoadingDialogType.BallScaleMultipleIndicator.name());    //设置dialog的样式
+//        indicatorView.setIndicatorColor(getResources().getColor(R.color.white));
+//
+//        dialog.setContentView(indicatorView);
+//
+//        int deviceWidth = WindowUtil.getScreenWidth();
+//        int deviceHeight = WindowUtil.getScreenHeight();
+//
+//        final Window dialogWindow = dialog.getWindow();
+//        if (dialogWindow != null) {
+//            WindowManager.LayoutParams params = dialogWindow.getAttributes();
+//            params.width = deviceWidth / 8;
+//            params.height = deviceHeight / 8;
+//            params.gravity = Gravity.CENTER;
+//            dialogWindow.setAttributes(params);
+//        }
+//
+//        dialog.setCancelable(false);
+//    }
     private void initDialog() {
-        dialog = new Dialog(this, R.style.LoadingDialog);
-        final AVLoadingIndicatorView indicatorView = new AVLoadingIndicatorView(this);
-        indicatorView.setIndicator(LoadingDialogType.BallScaleMultipleIndicator.name());    //设置dialog的样式
-        indicatorView.setIndicatorColor(getResources().getColor(R.color.white));
-
-        dialog.setContentView(indicatorView);
-
-        int deviceWidth = WindowUtil.getScreenWidth();
-        int deviceHeight = WindowUtil.getScreenHeight();
-
-        final Window dialogWindow = dialog.getWindow();
-        if (dialogWindow != null) {
-            WindowManager.LayoutParams params = dialogWindow.getAttributes();
-            params.width = deviceWidth / 8;
-            params.height = deviceHeight / 8;
-            params.gravity = Gravity.CENTER;
-            dialogWindow.setAttributes(params);
-        }
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.LoadingDialog);
+        dialog = builder.create();
         dialog.setCancelable(false);
+        dialog.setView(View.inflate(this, R.layout.dialog_base, null));
     }
 
     /**

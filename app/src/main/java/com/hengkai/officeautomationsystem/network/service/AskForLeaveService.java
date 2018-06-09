@@ -3,6 +3,7 @@ package com.hengkai.officeautomationsystem.network.service;
 import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.DurationEntity;
 import com.hengkai.officeautomationsystem.network.entity.GetAskForLeaveListEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoOutEntity;
 
 import java.util.Map;
 
@@ -28,4 +29,8 @@ public interface AskForLeaveService {
     @FormUrlEncoded
     @POST
     Observable<DurationEntity> duration(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<GoOutEntity> getCopyPerson(@Url String url, @FieldMap Map<String, String> params);
 }

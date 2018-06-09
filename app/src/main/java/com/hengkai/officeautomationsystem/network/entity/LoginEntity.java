@@ -7,12 +7,11 @@ import java.util.List;
  */
 public class LoginEntity {
 
-
     /**
      * CODE : 1
      * MES : 登录成功
-     * USER : {"id":1,"loginName":"admin","status":0,"jobNumber":"hk001","lastLoginTime":1525311665000,"createUserId":0,"createTime":1520301699000,"iconLink":null,"position":"JAVA","departmentName":"恒凯科技","departmentPermission":"hk","realName":"裴淳","role":[{"rolePermission":"temporary_employee","roleName":"临时员工"},{"rolePermission":"administrators","roleName":"管理员"},{"rolePermission":"technology_manager","roleName":"技术部-经理"},{"rolePermission":"technology_leader","roleName":"技术部-组长"},{"rolePermission":"technology_member","roleName":"技术部-组员"},{"rolePermission":"marketing_manager","roleName":"销售部-经理"},{"rolePermission":"marketing_assistant","roleName":"销售部-助理"}]}
-     * TOKEN : 592CF8CDE242DFEDAE687B91CD3EA1B8
+     * USER : {"id":1,"loginName":"admin","phone":"18888888888","status":0,"jobNumber":"hk001","lastLoginTime":1528442774000,"createUserId":1,"createTime":1520265600000,"iconLink":"http://192.168.2.157:8080/oa/file/20180604092613091_752.jpeg","position":"运营管理","departmentId":16,"departmentName":"恒凯科技","departmentPermission":"hk","realName":"管理员","role":[{"rolePermission":"admin","roleName":"超级管理员"}]}
+     * TOKEN : CF22C345AC6E1F39D2BB25ED8762EA37
      */
 
     public int CODE;
@@ -34,17 +33,19 @@ public class LoginEntity {
         /**
          * id : 1
          * loginName : admin
+         * phone : 18888888888
          * status : 0
          * jobNumber : hk001
-         * lastLoginTime : 1525311665000
-         * createUserId : 0
-         * createTime : 1520301699000
-         * iconLink : null
-         * position : JAVA
+         * lastLoginTime : 1528442774000
+         * createUserId : 1
+         * createTime : 1520265600000
+         * iconLink : http://192.168.2.157:8080/oa/file/20180604092613091_752.jpeg
+         * position : 运营管理
+         * departmentId : 16
          * departmentName : 恒凯科技
          * departmentPermission : hk
-         * realName : 裴淳
-         * role : [{"rolePermission":"temporary_employee","roleName":"临时员工"},{"rolePermission":"administrators","roleName":"管理员"},{"rolePermission":"technology_manager","roleName":"技术部-经理"},{"rolePermission":"technology_leader","roleName":"技术部-组长"},{"rolePermission":"technology_member","roleName":"技术部-组员"},{"rolePermission":"marketing_manager","roleName":"销售部-经理"},{"rolePermission":"marketing_assistant","roleName":"销售部-助理"}]
+         * realName : 管理员
+         * role : [{"rolePermission":"admin","roleName":"超级管理员"}]
          */
 
         public int id;
@@ -57,6 +58,7 @@ public class LoginEntity {
         public long createTime;
         public String iconLink;
         public String position;
+        public int departmentId;
         public String departmentName;
         public String departmentPermission;
         public String realName;
@@ -67,13 +69,15 @@ public class LoginEntity {
             return "USERBean{" +
                     "id=" + id +
                     ", loginName='" + loginName + '\'' +
+                    ", phone='" + phone + '\'' +
                     ", status=" + status +
                     ", jobNumber='" + jobNumber + '\'' +
                     ", lastLoginTime=" + lastLoginTime +
                     ", createUserId=" + createUserId +
                     ", createTime=" + createTime +
-                    ", iconLink=" + iconLink +
+                    ", iconLink='" + iconLink + '\'' +
                     ", position='" + position + '\'' +
+                    ", departmentId=" + departmentId +
                     ", departmentName='" + departmentName + '\'' +
                     ", departmentPermission='" + departmentPermission + '\'' +
                     ", realName='" + realName + '\'' +
@@ -83,8 +87,8 @@ public class LoginEntity {
 
         public static class RoleBean {
             /**
-             * rolePermission : temporary_employee
-             * roleName : 临时员工
+             * rolePermission : admin
+             * roleName : 超级管理员
              */
 
             public String rolePermission;

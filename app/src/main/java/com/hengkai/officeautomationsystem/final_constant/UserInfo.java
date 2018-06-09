@@ -19,6 +19,7 @@ public enum UserInfo {
     ICON_LINK,
     POSITION,
     DEPARTMENT_NAME,
+    DEPARTMENT_ID,
     DEPARTMENT_PERMISSION,
     REAL_NAME,
     ROLE

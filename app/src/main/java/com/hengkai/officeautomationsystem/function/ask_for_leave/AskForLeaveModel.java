@@ -5,6 +5,7 @@ import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.DurationEntity;
+import com.hengkai.officeautomationsystem.network.entity.GoOutEntity;
 import com.hengkai.officeautomationsystem.network.service.AskForLeaveService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
@@ -47,6 +48,17 @@ public class AskForLeaveModel extends BaseModel {
         params.put("endTime", endTime);
 
         service.duration(URLFinal.DURATION, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getCopyPerson(Observer<GoOutEntity> observer) {
+        Map<String, String> params = new HashMap<>();
+        params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+
+        service.getCopyPerson(URLFinal.ASK_FOR_LEAVE_GET_PERSON, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
