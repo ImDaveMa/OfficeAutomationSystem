@@ -47,6 +47,7 @@ public class MyReceiver extends BroadcastReceiver {
 				Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知");
 				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
 				Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+				processJPushReceive(context);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
@@ -108,7 +109,15 @@ public class MyReceiver extends BroadcastReceiver {
 		}
 		return sb.toString();
 	}
-	
+
+	// 发送收到新通知的广播
+	private void processJPushReceive(Context context) {
+		if (MainActivity.isForeground) {
+			Intent msgIntent = new Intent(MainActivity.NOTIFICATION_RECEIVED_ACTION);
+			LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
+		}
+	}
+
 	//send msg to MainActivity
 	private void processCustomMessage(Context context, Bundle bundle) {
 		if (MainActivity.isForeground) {

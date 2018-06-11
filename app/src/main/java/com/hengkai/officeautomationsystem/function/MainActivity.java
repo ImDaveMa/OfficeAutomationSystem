@@ -18,7 +18,6 @@ import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.function.home.HomeFragment;
 import com.hengkai.officeautomationsystem.function.mine.MineFragment;
 import com.hengkai.officeautomationsystem.function.work_platform.WorkPlatformFragment;
-import com.hengkai.officeautomationsystem.jpush.JPushUtil;
 import com.hengkai.officeautomationsystem.utils.OpenActivityUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 
@@ -55,7 +54,8 @@ public class MainActivity extends BaseActivity {
 
         bottomNavigationBar.selectTab(0);
 
-        registerMessageReceiver();  // used for receive msg
+        // 收到通知公告广播注册
+        registerReceiver();
     }
 
     @Override
@@ -211,27 +211,35 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNotificationReceiver);
         super.onDestroy();
     }
 
 
-    // 处理自定义消息
-    //for receive customer msg from jpush server
-    private MessageReceiver mMessageReceiver;
+
+    private NotificationReceiver mNotificationReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.hengkai.officeautomationsystem.MESSAGE_RECEIVED_ACTION";
+    public static final String NOTIFICATION_RECEIVED_ACTION = "com.hengkai.officeautomationsystem.NOTIFICATION_RECEIVED_ACTION";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
 
-    public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
+    public void registerReceiver() {
+        // 处理自定义消息
+        mNotificationReceiver = new NotificationReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mNotificationReceiver, filter);
+
+        // 接收到新的通知的广播
+        mNotificationReceiver = new NotificationReceiver();
+        filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(NOTIFICATION_RECEIVED_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mNotificationReceiver, filter);
     }
 
-    public class MessageReceiver extends BroadcastReceiver {
+    public class NotificationReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -240,6 +248,8 @@ public class MainActivity extends BaseActivity {
                     String messge = intent.getStringExtra(KEY_MESSAGE);
                     String extras = intent.getStringExtra(KEY_EXTRAS);
                     setCostomMsg(messge);
+                } else if(NOTIFICATION_RECEIVED_ACTION.equals(intent.getAction())){
+                    reloadData();
                 }
             } catch (Exception e){
             }
@@ -249,5 +259,4 @@ public class MainActivity extends BaseActivity {
     private void setCostomMsg(String msg){
         ToastUtil.showToast(msg);
     }
-
 }
