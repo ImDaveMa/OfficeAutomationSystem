@@ -7,6 +7,8 @@ import com.baidu.mapapi.SDKInitializer;
 
 import java.util.Stack;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Harry on 2018/4/26.
  */
@@ -21,6 +23,11 @@ public class OfficeAutomationSystemApplication extends Application {
 
         appContext = this;
         SDKInitializer.initialize(this);
+
+        // jPush
+        // TODO: 2018/6/11 正式发布请修改为false
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     public static OfficeAutomationSystemApplication getAppContext() {

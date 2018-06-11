@@ -5,13 +5,21 @@ import android.util.Log;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
+import com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper;
 import com.hengkai.officeautomationsystem.network.entity.LoginEntity;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.ACTION_ADD;
+import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.TagAliasBean;
+import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.sequence;
 
 /**
  * Created by Harry on 2018/5/2.
@@ -83,5 +91,19 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         SPUtils.putString(UserInfo.DEPARTMENT_ID.name(), String.valueOf(loginEntity.USER.departmentId));
         SPUtils.putString(UserInfo.DEPARTMENT_PERMISSION.name(), loginEntity.USER.departmentPermission);
         SPUtils.putString(UserInfo.REAL_NAME.name(), loginEntity.USER.realName);
+
+        // 添加极光推送别名
+        TagAliasBean tagAliasBean = new TagAliasBean();
+        tagAliasBean.action = ACTION_ADD;
+        tagAliasBean.alias = loginEntity.TOKEN;
+        tagAliasBean.isAliasAction = true;
+        TagAliasOperatorHelper.getInstance().handleAction(view,sequence,tagAliasBean);
+
+        // 添加极光推送标签
+        Set<String> tags = new HashSet<>();
+        tags.add(String.valueOf(loginEntity.USER.departmentId));
+        tagAliasBean.tags = tags;
+        tagAliasBean.isAliasAction = false;
+        TagAliasOperatorHelper.getInstance().handleAction(view,sequence,tagAliasBean);
     }
 }
