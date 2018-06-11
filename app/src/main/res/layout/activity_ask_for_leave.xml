@@ -361,7 +361,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="*"
-                        android:textColor="@color/red1" />
+                        android:textColor="@color/red1"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -402,7 +403,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="*"
-                        android:textColor="@color/red1" />
+                        android:textColor="@color/red1"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:layout_width="0dp"
