@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.hengkai.officeautomationsystem.jpush.JPushUtil;
+import com.hengkai.officeautomationsystem.jpush.Logger;
 
 import java.util.Stack;
 
@@ -25,8 +27,15 @@ public class OfficeAutomationSystemApplication extends Application {
         SDKInitializer.initialize(this);
 
         // jPush
+        // 设为false关闭调试
         // TODO: 2018/6/11 正式发布请修改为false
-        JPushInterface.setDebugMode(true);
+        boolean isDebug = true;
+
+        // 原本定义的是private final，为了统一管理修改为public删掉final
+        Logger.LOG_ENABLE = isDebug;
+        JPushUtil.TOAST_ENABLE = isDebug;
+
+        JPushInterface.setDebugMode(isDebug);
         JPushInterface.init(this);
     }
 

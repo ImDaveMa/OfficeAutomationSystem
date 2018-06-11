@@ -17,6 +17,7 @@ import java.util.Set;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
+import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.ACTION_SET;
 import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.ACTION_ADD;
 import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.TagAliasBean;
 import static com.hengkai.officeautomationsystem.jpush.TagAliasOperatorHelper.sequence;
@@ -94,7 +95,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
 
         // 添加极光推送别名
         TagAliasBean tagAliasBean = new TagAliasBean();
-        tagAliasBean.action = ACTION_ADD;
+        tagAliasBean.action = ACTION_SET;
         tagAliasBean.alias = loginEntity.TOKEN;
         tagAliasBean.isAliasAction = true;
         TagAliasOperatorHelper.getInstance().handleAction(view,sequence,tagAliasBean);
@@ -102,6 +103,7 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         // 添加极光推送标签
         Set<String> tags = new HashSet<>();
         tags.add(String.valueOf(loginEntity.USER.departmentId));
+        tagAliasBean.action = ACTION_ADD;
         tagAliasBean.tags = tags;
         tagAliasBean.isAliasAction = false;
         TagAliasOperatorHelper.getInstance().handleAction(view,sequence,tagAliasBean);

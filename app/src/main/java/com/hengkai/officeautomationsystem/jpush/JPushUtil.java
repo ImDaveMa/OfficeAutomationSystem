@@ -27,6 +27,9 @@ public class JPushUtil {
     public static final String PREFS_END_TIME = "PREFS_END_TIME";
     public static final String KEY_APP_KEY = "JPUSH_APPKEY";
 
+    //设为false关闭Toast
+    public static boolean TOAST_ENABLE = true;
+
     public static boolean isEmpty(String s) {
         if (null == s)
             return true;
@@ -89,15 +92,17 @@ public class JPushUtil {
     }
 
     public static void showToast(final String toast, final Context context) {
-        new Thread(new Runnable() {
+        if(TOAST_ENABLE) {
+            new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-                Looper.prepare();
-                Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
-        }).start();
+                @Override
+                public void run() {
+                    Looper.prepare();
+                    Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }).start();
+        }
     }
 
     public static boolean isConnected(Context context) {
