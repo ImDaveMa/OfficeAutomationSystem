@@ -172,23 +172,26 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
      * @param dataLayoutIndex 当前列表是父布局的第几个子布局
      */
     public void noData(int dataLayoutIndex){
-        final ViewGroup rootView = getWindow().getDecorView().findViewById(android.R.id.content);
-        final View childView = rootView.getChildAt(dataLayoutIndex);
-        if(childView != null){
-            childView.setVisibility(View.GONE);
+        final ViewGroup view = getWindow().getDecorView().findViewById(android.R.id.content);
+        final ViewGroup rootView = (ViewGroup)view.getChildAt(0);
+        if(rootView != null) {
+            final View childView = rootView.getChildAt(dataLayoutIndex);
+            if (childView != null) {
+                childView.setVisibility(View.GONE);
 
-            final View noDataView = LayoutInflater.from(this).inflate(R.layout.layout_no_data,null);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            noDataView.setLayoutParams(layoutParams);
-            rootView.addView(noDataView);
-            noDataView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rootView.removeView(noDataView);
-                    childView.setVisibility(View.VISIBLE);
-                    reloadData();
-                }
-            });
+                final View noDataView = LayoutInflater.from(this).inflate(R.layout.layout_no_data, null);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                noDataView.setLayoutParams(layoutParams);
+                rootView.addView(noDataView);
+                noDataView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rootView.removeView(noDataView);
+                        childView.setVisibility(View.VISIBLE);
+                        reloadData();
+                    }
+                });
+            }
         }
     }
 }
