@@ -14,6 +14,7 @@ import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.ImageUtil;
 import com.hengkai.officeautomationsystem.utils.PicassoCircleTransform;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
+import com.hengkai.officeautomationsystem.utils.VersionUtils;
 import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -44,6 +45,8 @@ public class MineFragment extends BaseFragment {
     TextView tvDepartment;
     @BindView(R.id.tv_time_of_entry)
     TextView tvTimeOfEntry;
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
 
     Unbinder unbinder;
 
@@ -57,6 +60,8 @@ public class MineFragment extends BaseFragment {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
         StatusBarUtil.setColor(mActivity, getResources().getColor(R.color.app_theme_color), 0);
         unbinder = ButterKnife.bind(this, view);
+
+        tvVersion.setText(VersionUtils.getVerName(mActivity));
 
         initUserInfo();
     }
