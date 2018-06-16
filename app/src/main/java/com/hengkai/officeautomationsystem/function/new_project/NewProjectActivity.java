@@ -1,6 +1,5 @@
 package com.hengkai.officeautomationsystem.function.new_project;
 
-import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;

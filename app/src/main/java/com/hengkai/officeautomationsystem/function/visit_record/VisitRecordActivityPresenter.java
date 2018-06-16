@@ -23,8 +23,8 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
         model = new VisitRecordActivityModel();
     }
 
-    public void getVisitRecordList(String userID, final int pageNum) {
-        model.getVisitRecordList(userID, pageNum, new Observer<VisitRecordEntity>() {
+    public void getVisitRecordList(boolean isMyList, final int pageNum) {
+        model.getVisitRecordList(isMyList, pageNum, new Observer<VisitRecordEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST, d);
@@ -66,8 +66,8 @@ public class VisitRecordActivityPresenter extends BasePresenter<VisitRecordActiv
         });
     }
 
-    public void getVisitRecordListByDay(int day, String userID, final int pageNum) {
-        model.getVisitRecordListByDay(day, userID, pageNum, new Observer<VisitRecordEntity>() {
+    public void getVisitRecordListByDay(int day, boolean isMyList, final int pageNum) {
+        model.getVisitRecordListByDay(day, isMyList, pageNum, new Observer<VisitRecordEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_ACTIVITY_GET_VISIT_RECORD_LIST, d);

@@ -15,7 +15,7 @@ public class URLFinal {
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/mobile/";
     public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/";
-//    public static final String BASE_URL = "http://192.168.2.77:8080/OA_inside/mobile/";
+//    public static final String BASE_URL = "http://192.168.2.18/OA_inside/mobile/";
 //    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/";
 
 
@@ -131,6 +131,10 @@ public class URLFinal {
      * 物品详情
      */
     public static final String GOODS_DETAIL_URL = "mgoods/toDetail";
+    /**
+     * 拜访跟进接口整合(保存 开始 结束 提交)
+     */
+    public static final String VISIT_RECORD_SUBMISSION_DATA = "visit/submissionData";
     /**
      * 拜访跟进详情页面 - 获取单位列表
      */

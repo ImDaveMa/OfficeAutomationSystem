@@ -1,7 +1,6 @@
 package com.hengkai.officeautomationsystem.function.visit_record;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
-import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 

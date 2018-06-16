@@ -91,7 +91,6 @@
         <activity android:name=".function.go_out.GoOutPreviewActivity" />
         <activity android:name=".function.unit_library.UnitLibraryActivity" />
         <activity android:name=".function.visit_record.VisitRecordActivity" />
-        <activity android:name=".function.visit_record.detail.VisitRecordDetailActivity" />
         <activity android:name=".function.goods_out.UseGoodsActivity" />
         <activity android:name=".function.management_of_goods.SelectGoodsActivity" />
         <activity android:name=".function.management_of_goods.AddGoodsActivity" />
@@ -152,6 +151,8 @@
                 <category android:name="com.hengkai.officeautomationsystem" />
             </intent-filter>
         </activity>
+        <activity android:name=".function.visit_record.detail_x.VisitRecordDetailActivity" />
+        <activity android:name=".function.visit_record.select_visit_project.SelectVisitProjectActivity" />
 
         <!-- Required SDK 核心功能-->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->

@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.visit_record.detail;
+package com.hengkai.officeautomationsystem.function.visit_record.detail_x;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

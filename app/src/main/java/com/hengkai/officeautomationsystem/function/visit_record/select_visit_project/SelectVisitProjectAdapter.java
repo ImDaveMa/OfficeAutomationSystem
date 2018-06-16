@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.visit_record.detail;
+package com.hengkai.officeautomationsystem.function.visit_record.select_visit_project;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,15 +14,14 @@ import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVis
 import java.util.List;
 
 /**
- * Created by Harry on 2018/5/8.
- * 底部弹窗的适配器
+ * Created by Harry on 2018/6/16.
  */
-public class BottomDialogAdapter extends RecyclerView.Adapter<BottomDialogAdapter.ViewHolder> {
+public class SelectVisitProjectAdapter extends RecyclerView.Adapter<SelectVisitProjectAdapter.ViewHolder> {
 
     private List<VisitRecordDetailGetVisitUnitEntity.DATABean> mList;
 
-    public BottomDialogAdapter(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
-        mList = list;
+    public SelectVisitProjectAdapter(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
+        this.mList = list;
     }
 
     @NonNull
@@ -36,11 +35,11 @@ public class BottomDialogAdapter extends RecyclerView.Adapter<BottomDialogAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final VisitRecordDetailGetVisitUnitEntity.DATABean bean = mList.get(position);
         holder.tvName.setText(bean.name);
-        holder.container.setOnClickListener(new View.OnClickListener() {
+        holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onClick(bean);
+                    mListener.onClick(bean.id, bean.name);
                 }
             }
         });
@@ -54,23 +53,23 @@ public class BottomDialogAdapter extends RecyclerView.Adapter<BottomDialogAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvName;
-        FrameLayout container;
+        FrameLayout item;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
-            container = (FrameLayout) itemView;
+            item = (FrameLayout) itemView;
         }
     }
 
     public interface OnItemClickListener {
-        void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean);
+        void onClick(int ID, String name);
     }
 
     private OnItemClickListener mListener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
+        this.mListener = listener;
     }
 
 }

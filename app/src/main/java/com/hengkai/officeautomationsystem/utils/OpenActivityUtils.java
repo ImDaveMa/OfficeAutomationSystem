@@ -25,7 +25,7 @@ import com.hengkai.officeautomationsystem.function.report.ReportActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.VisitRecordActivity;
-import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.detail_x.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.holder.MenuViewHolder;
 import com.hengkai.officeautomationsystem.utils.dbhelper.MenuDbHelper;
 

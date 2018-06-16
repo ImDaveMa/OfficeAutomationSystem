@@ -1,4 +1,4 @@
-package com.hengkai.officeautomationsystem.function.visit_record.detail;
+package com.hengkai.officeautomationsystem.function.visit_record.detail_x;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -40,17 +40,15 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_person.SelectVisitPersonActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.select_visit_project.SelectVisitProjectActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit.SelectVisitUnitActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
-import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,31 +57,47 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * Created by Harry on 2018/5/8.
+ * Created by Harry on 2018/6/15.
  * 拜访跟进详情页面
  */
-public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailActivityPresenter> implements EasyPermissions.PermissionCallbacks {
+public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPresenter> implements EasyPermissions.PermissionCallbacks {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_save)
+    TextView tvSave;
     @BindView(R.id.tv_visit_type)
     TextView tvVisitType;
     @BindView(R.id.iv_visit_type)
     ImageView ivVisitType;
+    @BindView(R.id.tv_red_dot1)
+    TextView tvRedDot1;
     @BindView(R.id.tv_visit_unit)
     TextView tvVisitUnit;
     @BindView(R.id.iv_visit_unit)
     ImageView ivVisitUnit;
+    @BindView(R.id.tv_red_dot2)
+    TextView tvRedDot2;
     @BindView(R.id.tv_visit_customer)
     TextView tvVisitCustomer;
     @BindView(R.id.iv_visit_customer)
     ImageView ivVisitCustomer;
     @BindView(R.id.tv_visit_department)
     TextView tvVisitDepartment;
+    @BindView(R.id.tv_red_dot3)
+    TextView tvRedDot3;
     @BindView(R.id.tv_project)
     TextView tvProject;
-    @BindView(R.id.tv_save)
-    TextView tvSave;
     @BindView(R.id.iv_project)
     ImageView ivProject;
+    @BindView(R.id.tv_start_address)
+    TextView tvStartAddress;
+    @BindView(R.id.ll_start_address)
+    LinearLayout llStartAddress;
+    @BindView(R.id.tv_end_address)
+    TextView tvEndAddress;
+    @BindView(R.id.ll_end_address)
+    LinearLayout llEndAddress;
     @BindView(R.id.et_visit_summary)
     EditText etVisitSummary;
     @BindView(R.id.btn_start)
@@ -100,71 +114,37 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     LinearLayout llVisitCustomer;
     @BindView(R.id.ll_project)
     LinearLayout llProject;
-    @BindView(R.id.ll_start_address)
-    LinearLayout llStartAddress;
-    @BindView(R.id.ll_end_address)
-    LinearLayout llEndAddress;
-    @BindView(R.id.tv_start_address)
-    TextView tvStartAddress;
-    @BindView(R.id.tv_end_address)
-    TextView tvEndAddress;
-    @BindView(R.id.tv_red_dot1)
-    TextView tvRedDot1;
-    @BindView(R.id.tv_red_dot2)
-    TextView tvRedDot2;
     /**
-     * 根据type的值判断提交类型(typeYM字段), 以区分是新增按钮进入还是列表item进入当前页面
+     * 当前拜访跟进的ID
      */
-    private int type;
+    private int currentVisitRecordID = 0;
+    /**
+     * 当前拜访单位的ID
+     */
+    private int currentUnitID = 0;
+    /**
+     * 当前拜访客户的ID
+     */
+    private String currentCustomerID = "";
 
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
+    private PoiSearch poiSearch;
     /**
-     * 所选单位的ID
+     * 判断当前状态是否为已经开始拜访的
      */
-    private int unitID = -1;
+    private boolean isStart;
+    private String locationStartAddress, locationEndAddress;
+    private double locationLatitude;
+    private double locationLongitude;
     /**
-     * 所选拜访人的ID
-     */
-    private String customerID = "-1";
-    /**
-     * 拜访类型的ID
+     * 拜访类型
      */
     private int visitTypeID = -1;
     /**
      * 所选项目的ID
      */
-    private int projectID = -1;
-    /**
-     * 纬度
-     */
-    private double locationLatitude;
-    /**
-     * 经度
-     */
-    private double locationLongitude;
-    /**
-     * 详细地址
-     */
-    private String locationAddress;
-    /**
-     * 点击列表传入到当前页面的ID
-     */
-    private int currentID = -1;
-
-    /**
-     * 判断当前是开启状态还是结束状态
-     */
-    private boolean isStart;
-    private PoiSearch poiSearch;
-    /**
-     * 新增开始或者新增保存从服务器上获取到的ID, 以便于判断当前是不是在新增开始后又点保存的状态
-     */
-    private int newState;
-    /**
-     * 获取到开始或者结束地址后, 赋值并在请求网络成功后填充到开始或者结束的textView里面
-     */
-    private String locationDetailAddress;
+    private int projectID = 0;
 
     @Override
     protected int setupView() {
@@ -177,40 +157,170 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         ButterKnife.bind(this);
 
-        getCurrentPhoneNumber();
+        //初始化提交和结束按钮的状态
+        btnCommit.setEnabled(false);
+        btnEnd.setEnabled(false);
 
-        initButtonStatus();
         judgeType();
+        initButtonStatus();
         initBaiDuLocation();
-
-    }
-
-    /**
-     * @return 获取硬件上的电话号码
-     */
-    private String getCurrentPhoneNumber() {
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return "";
-        }
-        return tm.getLine1Number() == null ? "" : tm.getLine1Number();
     }
 
     @Override
     protected ArrayList<String> cancelNetWork() {
         ArrayList<String> tags = new ArrayList<>();
-        tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_LIST);
-        tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_CUSTOMER_LIST);
-        tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_PROJECT_LIST);
-        tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_TO_SAVE_ON_NEW_ADD);
         tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET);
-        tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_TO_END);
+        tags.add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY);
         return tags;
     }
 
     @Override
-    protected VisitRecordDetailActivityPresenter bindPresenter() {
-        return new VisitRecordDetailActivityPresenter();
+    protected VisitRecordDetailPresenter bindPresenter() {
+        return new VisitRecordDetailPresenter();
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_save, R.id.ll_visit_type, R.id.ll_visit_unit, R.id.ll_visit_customer, R.id.ll_project, R.id.btn_start, R.id.btn_end, R.id.btn_commit})
+    public void onViewClicked(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.iv_back:
+                setResult(CommonFinal.VISIT_RECORD_RESULT_CODE);
+                finish();
+                break;
+            case R.id.tv_save:  //保存
+                showDialog();
+                mPresenter.submissionData("visit_save", String.valueOf(currentVisitRecordID),
+                        String.valueOf(currentUnitID), String.valueOf(visitTypeID), String.valueOf(projectID),
+                        String.valueOf(currentCustomerID), tvVisitDepartment.getText().toString().trim(),
+                        etVisitSummary.getText().toString().trim(), null, null, null,
+                        null, null, null, null, null);
+                break;
+            case R.id.ll_visit_type://选择拜访类型
+                selectVisitType();
+                break;
+            case R.id.ll_visit_unit://选择拜访单位
+                if (visitTypeID == -1) {
+                    ToastUtil.showToast("请先选择拜访类型");
+                    return;
+                }
+                intent = new Intent(this, SelectVisitUnitActivity.class);
+                startActivityForResult(intent, CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE);
+                break;
+            case R.id.ll_visit_customer://选择拜访人
+                if (currentUnitID <= 0) {
+                    ToastUtil.showToast("请先选择拜访单位");
+                    return;
+                }
+                intent = new Intent(this, SelectVisitPersonActivity.class);
+                intent.putExtra("unitID", currentUnitID);
+                startActivityForResult(intent, CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
+                break;
+            case R.id.ll_project://选择跟进项目
+                if (TextUtils.isEmpty(currentCustomerID)) {
+                    ToastUtil.showToast("请先选择拜访人");
+                    return;
+                }
+                intent = new Intent(this, SelectVisitProjectActivity.class);
+                intent.putExtra("currentCustomerID", currentCustomerID);
+                startActivityForResult(intent, CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
+                break;
+            case R.id.btn_start://开始
+                if (!verificationTextView()) {
+                    return;
+                }
+                isStart = true;
+                showDialog();
+                easyPermission();
+                break;
+            case R.id.btn_end://结束
+                if (!verificationTextView()) {
+                    return;
+                }
+                isStart = false;
+                showDialog();
+                mLocationClient.start();
+                break;
+            case R.id.btn_commit://提交
+                showDialog();
+                if (currentCustomerID.equals("null")) {
+                    currentCustomerID = "";
+                }
+                mPresenter.submissionData("visit_submission", String.valueOf(currentVisitRecordID),
+                        String.valueOf(currentUnitID), String.valueOf(visitTypeID), String.valueOf(projectID),
+                        currentCustomerID, tvVisitDepartment.getText().toString().trim(),
+                        etVisitSummary.getText().toString().trim(), null, null,
+                        null, null, null, null, null, null);
+                break;
+        }
+    }
+
+    /**
+     * @param currentVisitRecordID 当前拜访的ID, 通过保存, 开始, 结束后获得
+     */
+    public void callbackSubmissionData(int currentVisitRecordID) {
+        this.currentVisitRecordID = currentVisitRecordID;
+
+    }
+
+    /**
+     * 选择拜访类型
+     */
+    private void selectVisitType() {
+        View view = View.inflate(this, R.layout.dialog_visit_record_detail_visit_type, null);
+        final TextView tvBF = view.findViewById(R.id.tv_bf);
+        final TextView tvGJ = view.findViewById(R.id.tv_gj);
+        final TextView tvZD = view.findViewById(R.id.tv_zd);
+        final BottomSheetDialog dialog = getBottomSheetDialog(view);
+
+        tvBF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 1;
+                tvVisitType.setText(tvBF.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        tvGJ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 0;
+                tvVisitType.setText(tvGJ.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        tvZD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 2;
+                tvVisitType.setText(tvZD.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.INVISIBLE);
+                tvRedDot2.setVisibility(View.INVISIBLE);
+                tvRedDot3.setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 获取到底部弹窗的实例
+     */
+    private BottomSheetDialog getBottomSheetDialog(View view) {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(view);
+        return dialog;
     }
 
     /**
@@ -218,10 +328,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
      */
     private void judgeType() {
         String add = getIntent().getStringExtra("type");
-        if (add.equals("add")) {
-            type = 1001;    //点击新增按钮进入当前页面
+        if (add.equals("add")) {//点击新增按钮进入当前页面
 
-            // 处理参数
+            // 从联系人库 - 联系人详情 - 进入到当前页面
             int companyId = getIntent().getIntExtra("companyId", 0);
             String companyName = getIntent().getStringExtra("companyName");
             int userId = getIntent().getIntExtra("userId", 0);
@@ -233,372 +342,25 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
                 tvVisitCustomer.setText(userName);
                 ivVisitCustomer.setVisibility(View.GONE);
                 tvVisitDepartment.setText(department);
-                unitID = companyId;
-                customerID = String.valueOf(userId);
+                currentUnitID = companyId;
+                currentCustomerID = String.valueOf(userId);
             }
-        } else {
-            type = 1002;    //点击列表item进入当前页面
-            currentID = getIntent().getIntExtra("currentID", 0);
+        } else {//点击列表item进入当前页面
+            currentVisitRecordID = getIntent().getIntExtra("currentID", 0);
             //如果是从列表进入的话, 需要拿到ID请求网络 获取相关信息
-            mPresenter.getVisitRecordDetail(currentID);
-        }
-    }
-
-    @OnClick({R.id.iv_back, R.id.tv_save, R.id.ll_visit_type, R.id.ll_visit_unit, R.id.ll_visit_customer, R.id.ll_project, R.id.btn_start, R.id.btn_end, R.id.btn_commit})
-    public void onViewClicked(View view) {
-        Intent intent;
-        switch (view.getId()) {
-            case R.id.iv_back:  //返回
-                setResult(CommonFinal.VISIT_RECORD_RESULT_CODE);
-                finish();
-                break;
-            case R.id.ll_visit_type:    //拜访类型
-                visitType();
-                break;
-            case R.id.ll_visit_unit:    //拜访单位:
-                intent = new Intent(this, SelectVisitUnitActivity.class);
-                startActivityForResult(intent, CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE);
-                break;
-            case R.id.ll_visit_customer:    //拜访人
-                if (unitID == -1) {
-                    ToastUtil.showToast("请先选择拜访单位");
-                    return;
-                }
-                intent = new Intent(this, SelectVisitPersonActivity.class);
-                intent.putExtra("unitID", unitID);
-                startActivityForResult(intent, CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
-                break;
-            case R.id.ll_project:   //跟进的项目
-                if (customerID.equals("-1")) {
-                    ToastUtil.showToast("请先选择拜访人");
-                    return;
-                }
-                mPresenter.getVisitProjectList(customerID);
-                break;
-            case R.id.tv_save:  //保存
-//                verificationTextView();
-                if (type == 1001) {
-                    //点击新增按钮进入当前页面
-                    Map<String, String> params = new HashMap<>();
-                    params.put("typeYM", "add");
-                    params.put("companyId", String.valueOf(unitID));
-                    params.put("type", String.valueOf(visitTypeID));
-                    params.put("contactsId", customerID);
-                    params.put("department", tvVisitDepartment.getText().toString().trim());
-                    if (projectID != -1) {
-                        params.put("projectId", String.valueOf(projectID));
-                    }
-                    params.put("summary", etVisitSummary.getText().toString().trim());
-                    showDialog();
-                    if (newState != 0) {
-                        params.put("typeYM", "pro");
-                        params.put("ID", String.valueOf(newState));
-                        mPresenter.toSaveOrCommit(false, params);
-                    } else {
-                        mPresenter.toSaveCurrentPageOnNewAdd(params);
-                    }
-                } else {
-                    //点击列表item进入当前页面
-                    Map<String, String> params = new HashMap<>();
-                    params.put("ID", String.valueOf(currentID));
-                    params.put("typeYM", "pro");
-                    params.put("companyId", String.valueOf(unitID));
-                    params.put("type", String.valueOf(visitTypeID));
-                    if (projectID != -1) {
-                        params.put("projectId", String.valueOf(projectID));
-                    }
-                    params.put("contactsId", customerID);
-                    params.put("department", tvVisitDepartment.getText().toString().trim());
-                    params.put("summary", etVisitSummary.getText().toString().trim());
-
-                    showDialog();
-                    mPresenter.toSaveOrCommit(false, params);
-                }
-                break;
-            case R.id.btn_start:    //开始
-                isStart = true;
-                if (!verificationTextView()) {
-                    return;
-                }
-                showDialog();
-                easyPermission();
-                break;
-            case R.id.btn_end:      //结束
-                isStart = false;
-                if (!verificationTextView()) {
-                    return;
-                }
-                showDialog();
-                mLocationClient.start();
-                break;
-            case R.id.btn_commit:   //提交
-                Map<String, String> params = new HashMap<>();
-                params.put("ID", String.valueOf(currentID));
-                params.put("typeYM", "approval");
-                params.put("companyId", String.valueOf(unitID));
-                params.put("type", String.valueOf(visitTypeID));
-                if (projectID != -1) {
-                    params.put("projectId", String.valueOf(projectID));
-                }
-                params.put("contactsId", customerID);
-                params.put("department", tvVisitDepartment.getText().toString().trim());
-                params.put("summary", etVisitSummary.getText().toString().trim());
-
-                showDialog();
-                mPresenter.toSaveOrCommit(true, params);
-                break;
+            mPresenter.getVisitRecordDetail(currentVisitRecordID);
         }
     }
 
     /**
-     * 拜访结束是点击 执行这个方法
-     *
-     * @param addressName
+     * @return 获取硬件上的电话号码
      */
-    private void toEndVisit(String addressName) {
-        if (locationLatitude == 0 || locationLongitude == 0 || TextUtils.isEmpty(locationAddress)) {
-            ToastUtil.showToast("获取地址失败, 请重新点击开始");
-            return;
+    private String getCurrentPhoneNumber() {
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
         }
-
-        Map<String, String> params = new HashMap<>();
-        params.put("ID", String.valueOf(currentID));
-        params.put("typeYM", "end");
-        params.put("companyId", String.valueOf(unitID));
-        params.put("type", String.valueOf(visitTypeID));
-        if (projectID != -1) {
-            params.put("projectId", String.valueOf(projectID));
-        }
-        params.put("contactsId", customerID);
-        params.put("department", tvVisitDepartment.getText().toString().trim());
-        params.put("endLongitude", String.valueOf(locationLongitude));
-        params.put("endLatitude", String.valueOf(locationLatitude));
-        params.put("address", addressName);
-//        params.put("phone", SPUtils.getString(UserInfo.PHONE.name(), ""));
-        params.put("phone", getCurrentPhoneNumber());
-        params.put("summary", etVisitSummary.getText().toString().trim());
-
-        mPresenter.toEnd(params);
-    }
-
-
-    /**
-     * 初始化button状态
-     */
-    private void initButtonStatus() {
-        btnCommit.setEnabled(false);
-        btnEnd.setEnabled(false);
-    }
-
-    /**
-     * 当点击开始按钮后, 修改开始按钮的状态
-     */
-    public void setupStartButton() {
-        String currentTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, System.currentTimeMillis());
-        btnStart.setText(String.format("开始 %s", currentTime));
-        btnStart.setEnabled(false);
-        btnEnd.setEnabled(true);
-    }
-
-    /**
-     * 当点击结束按钮后, 修改结束按钮的状态
-     */
-    public void setupEndButton() {
-        String currentTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, System.currentTimeMillis());
-        btnEnd.setText(String.format("结束 %s", currentTime));
-        btnEnd.setEnabled(false);
-        btnCommit.setEnabled(true);
-    }
-
-    /**
-     * 开始拜访, 在确认了定位权限后调用
-     *
-     * @param addressName
-     */
-    private void toStartVisit(String addressName) {
-        if (locationLatitude == 0 || locationLongitude == 0 || TextUtils.isEmpty(locationAddress)) {
-            ToastUtil.showToast("获取地址失败, 请重新点击");
-            return;
-        }
-
-        if (type == 1001) {
-            //点击新增按钮进入当前页面
-            Map<String, String> params = new HashMap<>();
-            params.put("typeYM", "addS");
-            params.put("companyId", String.valueOf(unitID));
-            params.put("type", String.valueOf(visitTypeID));
-            params.put("contactsId", customerID);
-            params.put("department", tvVisitDepartment.getText().toString().trim());
-            if (projectID != -1) {
-                params.put("projectId", String.valueOf(projectID));
-            }
-            params.put("startLongitude", String.valueOf(locationLongitude));
-            params.put("startLatitude", String.valueOf(locationLatitude));
-            params.put("address", addressName);
-            params.put("phone", getCurrentPhoneNumber());
-            params.put("summary", etVisitSummary.getText().toString().trim());
-
-            showDialog();
-            mPresenter.toStartCurrentPageOnNewAdd(params);
-            //清空全局变量, 以便于结束按钮获取地址信息
-            locationLongitude = 0;
-            locationLatitude = 0;
-            locationAddress = "";
-        } else {
-            //点击列表item进入当前页面
-            Map<String, String> params = new HashMap<>();
-            params.put("ID", String.valueOf(currentID));
-            params.put("typeYM", "start");
-            params.put("companyId", String.valueOf(unitID));
-            params.put("type", String.valueOf(visitTypeID));
-            if (projectID != -1) {
-                params.put("projectId", String.valueOf(projectID));
-            }
-            params.put("contactsId", customerID);
-            params.put("department", tvVisitDepartment.getText().toString().trim());
-            params.put("startLongitude", String.valueOf(locationLongitude));
-            params.put("startLatitude", String.valueOf(locationLatitude));
-            params.put("address", addressName);
-            params.put("phone", getCurrentPhoneNumber());
-            params.put("summary", etVisitSummary.getText().toString().trim());
-
-            showDialog();
-            mPresenter.toStart(params);
-        }
-    }
-
-    /**
-     * 验证必填参数是否为空
-     */
-    private boolean verificationTextView() {
-        String visitType = tvVisitType.getText().toString().trim();
-        String visitUnit = tvVisitUnit.getText().toString().trim();
-        String visitCustomer = tvVisitCustomer.getText().toString().trim();
-        String visitProject = tvProject.getText().toString().trim();
-        if (TextUtils.isEmpty(visitType) || visitType.equals("请选择")) {
-            ToastUtil.showToast("请选择拜访类型");
-            return false;
-        }
-        if (visitType.equals("拜访") || visitType.equals("跟进")) {
-            if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
-                ToastUtil.showToast("请选择拜访单位");
-                return false;
-            } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
-                ToastUtil.showToast("请选择拜访人");
-                return false;
-            }
-        }
-        if (visitType.equals("跟进")) {
-            if (TextUtils.isEmpty(visitProject) || visitUnit.equals("请选择")) {
-                ToastUtil.showToast("请选择跟进项目");
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 从服务器上通过拜访人的ID获取到项目列表
-     */
-    public void getVisitProjectList(List<VisitRecordDetailGetVisitUnitEntity.DATABean> list) {
-        if (list.size() == 0) {
-            ToastUtil.showToast("暂时没有跟进的项目");
-            return;
-        }
-        BottomDialogAdapter adapter = new BottomDialogAdapter(list);
-        final BottomSheetDialog dialog = getBottomSheetDialog(adapter);
-        adapter.setOnItemClickListener(new BottomDialogAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(VisitRecordDetailGetVisitUnitEntity.DATABean bean) {
-                projectID = bean.id;
-                tvProject.setText(bean.name);
-                tvProject.setTextColor(getResources().getColor(R.color.black1));
-                ivProject.setVisibility(View.GONE);
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-    }
-
-    /**
-     * 拜访类型
-     */
-    private void visitType() {
-        View view = View.inflate(this, R.layout.dialog_visit_record_detail_visit_type, null);
-        final TextView tvBF = view.findViewById(R.id.tv_bf);
-        final TextView tvGJ = view.findViewById(R.id.tv_gj);
-        final TextView tvZD = view.findViewById(R.id.tv_zd);
-        final BottomSheetDialog dialog = getBottomSheetDialog(view);
-
-        tvBF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                visitTypeID = 1;
-                String bf = tvBF.getText().toString().trim();
-                tvVisitType.setText(bf);
-                tvVisitType.setTextColor(getResources().getColor(R.color.black1));
-                ivVisitType.setVisibility(View.GONE);
-                dialog.dismiss();
-                tvRedDot1.setVisibility(View.VISIBLE);
-                tvRedDot2.setVisibility(View.VISIBLE);
-            }
-        });
-
-        tvGJ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                visitTypeID = 0;
-                tvVisitType.setText(tvGJ.getText().toString().trim());
-                tvVisitType.setTextColor(getResources().getColor(R.color.black1));
-                ivVisitType.setVisibility(View.GONE);
-                dialog.dismiss();
-                tvRedDot1.setVisibility(View.VISIBLE);
-                tvRedDot2.setVisibility(View.VISIBLE);
-            }
-        });
-
-        tvZD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                visitTypeID = 2;
-                tvVisitType.setText(tvZD.getText().toString().trim());
-                tvVisitType.setTextColor(getResources().getColor(R.color.black1));
-                ivVisitType.setVisibility(View.GONE);
-                dialog.dismiss();
-                tvRedDot1.setVisibility(View.INVISIBLE);
-                tvRedDot2.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        dialog.show();
-    }
-
-    /**
-     * @return 获取底部弹窗
-     */
-    private BottomSheetDialog getBottomSheetDialog(View view) {
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setContentView(view);
-        return dialog;
-    }
-
-    /**
-     * 获取底部弹窗并且弹出
-     */
-    private BottomSheetDialog getBottomSheetDialog(BottomDialogAdapter adapter) {
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        dialog.setCanceledOnTouchOutside(true);
-        View view = View.inflate(this, R.layout.dialog_visit_record_detail, null);
-        dialog.setContentView(view);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-        return dialog;
+        return tm.getLine1Number() == null ? "" : tm.getLine1Number();
     }
 
     /**
@@ -667,11 +429,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
 
     }
 
-    public void setNewState(int newState) {
-        this.newState = newState;
-    }
-
     public class MyLocationListener extends BDAbstractLocationListener {
+
         @Override
         public void onReceiveLocation(BDLocation location) {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
@@ -690,15 +449,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             int errorCode = location.getLocType();
             //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
 
-            locationAddress = location.getAddrStr();//获取详细地址
+            String locationAddress = location.getAddrStr();//获取详细地址
 
             setupPoiSearch(location.getAddress().street, location.getLatitude(), location.getLongitude());
-
-//            if (isStart) {
-//                toStartVisit();
-//            } else {
-//                toEndVisit();
-//            }
 
             mLocationClient.stop();//定位获得到结果后停止定位
         }
@@ -778,14 +531,11 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         adapter.setOnAdapterItemClickListener(new BottomPoiDialogAdapter.AdapterItemClickListener() {
             @Override
             public void getAddressName(String addressName) {
-                locationDetailAddress = addressName;
                 if (isStart) {
-//                    tvStartAddress.setText(addressName);
-//                    llStartAddress.setVisibility(View.VISIBLE);
+                    locationStartAddress = addressName;
                     toStartVisit(addressName);
                 } else {
-//                    tvEndAddress.setText(addressName);
-//                    llEndAddress.setVisibility(View.VISIBLE);
+                    locationEndAddress = addressName;
                     toEndVisit(addressName);
                 }
                 bottomDialog.dismiss();
@@ -793,14 +543,52 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         });
     }
 
-    public void setAddressState() {
-        if (isStart) {
-            tvStartAddress.setText(locationDetailAddress);
-            llStartAddress.setVisibility(View.VISIBLE);
-        } else {
-            tvEndAddress.setText(locationDetailAddress);
-            llEndAddress.setVisibility(View.VISIBLE);
+    private void toStartVisit(String addressName) {
+        if (locationLatitude == 0 || locationLongitude == 0) {
+            ToastUtil.showToast("获取地址失败, 请重新点击");
+            return;
         }
+        if (visitTypeID == -1) {
+            ToastUtil.showToast("请选择拜访类型");
+            return;
+        } else if (visitTypeID == 1) {//拜访
+            if (currentUnitID == 0 || TextUtils.isEmpty(currentCustomerID)) {
+                ToastUtil.showToast("填写的信息不完整, 请按星标填写");
+                return;
+            }
+        } else if (visitTypeID == 0) {//跟进
+            if (currentUnitID <= 0 || TextUtils.isEmpty(currentCustomerID) || projectID <= 0) {
+                ToastUtil.showToast("填写的信息不完整, 请按星标填写");
+                return;
+            }
+        } else if (visitTypeID == 2){//招待
+            //可以都不用填写
+        }
+        showDialog();
+        mPresenter.submissionData("visit_start", String.valueOf(currentVisitRecordID),
+                String.valueOf(currentUnitID), String.valueOf(visitTypeID), String.valueOf(projectID),
+                String.valueOf(currentCustomerID), tvVisitDepartment.getText().toString().trim(),
+                etVisitSummary.getText().toString().trim(), String.valueOf(locationLongitude),
+                String.valueOf(locationLatitude), getCurrentPhoneNumber(), addressName,
+                null, null, null, null);
+
+        //清空全局变量, 以便于结束按钮获取地址信息
+        locationLongitude = 0;
+        locationLatitude = 0;
+    }
+
+    private void toEndVisit(String addressName) {
+        if (locationLatitude == 0 || locationLongitude == 0) {
+            ToastUtil.showToast("获取地址失败, 请重新点击");
+            return;
+        }
+        showDialog();
+        mPresenter.submissionData("visit_end", String.valueOf(currentVisitRecordID),
+                String.valueOf(currentUnitID), String.valueOf(visitTypeID), String.valueOf(projectID),
+                String.valueOf(currentCustomerID), tvVisitDepartment.getText().toString().trim(),
+                etVisitSummary.getText().toString().trim(), null, null, null, null,
+                String.valueOf(locationLongitude), String.valueOf(locationLatitude),
+                getCurrentPhoneNumber(), addressName);
     }
 
     /**
@@ -829,8 +617,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         tvVisitDepartment.setText(bean.department);
         tvProject.setText(bean.projectName);
         etVisitSummary.setText(bean.summary);
-        unitID = bean.companyId;
-        customerID = bean.contactsId;
+        currentUnitID = bean.companyId;
+        currentCustomerID = bean.contactsId;
         projectID = bean.projectId;
         tvVisitType.setTextColor(getResources().getColor(R.color.black1));
         tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));
@@ -858,7 +646,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             tvSave.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(bean.startAddress)) {
+        if (!TextUtils.isEmpty(bean.startAddress)) {    //为开始地址栏和结束地址栏赋值
             llStartAddress.setVisibility(View.VISIBLE);
             tvStartAddress.setText(bean.startAddress);
 
@@ -870,6 +658,19 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
     }
 
     /**
+     * 点击开始或者结束按钮成功后 在页面里显示当前地址信息
+     */
+    public void setAddressState() {
+        if (isStart) {
+            tvStartAddress.setText(locationStartAddress);
+            llStartAddress.setVisibility(View.VISIBLE);
+        } else {
+            tvEndAddress.setText(locationEndAddress);
+            llEndAddress.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
      * 当点击开始按钮后, 禁止用户修改数据
      */
     public void setupLinearLayout() {
@@ -877,6 +678,64 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
         llVisitUnit.setEnabled(false);
         llVisitCustomer.setEnabled(false);
         llProject.setEnabled(false);
+    }
+
+    /**
+     * 初始化button状态
+     */
+    private void initButtonStatus() {
+        btnCommit.setEnabled(false);
+        btnEnd.setEnabled(false);
+    }
+
+    /**
+     * 当点击开始按钮后, 修改开始按钮的状态
+     */
+    public void setupStartButton() {
+        String currentTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, System.currentTimeMillis());
+        btnStart.setText(String.format("开始 %s", currentTime));
+        btnStart.setEnabled(false);
+        btnEnd.setEnabled(true);
+    }
+
+    /**
+     * 当点击结束按钮后, 修改结束按钮的状态
+     */
+    public void setupEndButton() {
+        String currentTime = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_5, System.currentTimeMillis());
+        btnEnd.setText(String.format("结束 %s", currentTime));
+        btnEnd.setEnabled(false);
+        btnCommit.setEnabled(true);
+    }
+
+    /**
+     * 验证必填参数是否为空
+     */
+    private boolean verificationTextView() {
+        String visitType = tvVisitType.getText().toString().trim();
+        String visitUnit = tvVisitUnit.getText().toString().trim();
+        String visitCustomer = tvVisitCustomer.getText().toString().trim();
+        String visitProject = tvProject.getText().toString().trim();
+        if (TextUtils.isEmpty(visitType) || visitType.equals("请选择")) {
+            ToastUtil.showToast("请选择拜访类型");
+            return false;
+        }
+        if (visitType.equals("拜访") || visitType.equals("跟进")) {
+            if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访单位");
+                return false;
+            } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访人");
+                return false;
+            }
+        }
+        if (visitType.equals("跟进")) {
+            if (TextUtils.isEmpty(visitProject) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择跟进项目");
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -927,31 +786,31 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailAct
             mLocationClient.start();
         } else if (requestCode == CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE) {
             String name = data.getStringExtra("name");
-            unitID = data.getIntExtra("ID", 0);
+            currentUnitID = data.getIntExtra("ID", 0);
             tvVisitUnit.setText(name);
-            tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));
             ivVisitUnit.setVisibility(View.GONE);
 
             tvVisitCustomer.setText("请选择");
-            tvVisitCustomer.setTextColor(getResources().getColor(R.color.black3));
             ivVisitCustomer.setVisibility(View.VISIBLE);
             tvVisitDepartment.setText("");
             tvProject.setText("请选择");
-            tvProject.setTextColor(getResources().getColor(R.color.black3));
             ivProject.setVisibility(View.VISIBLE);
         } else if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE) {
             String name = data.getStringExtra("name");
             String department = data.getStringExtra("department");
-            customerID = data.getStringExtra("ID");
+            currentCustomerID = data.getStringExtra("ID");
             tvVisitCustomer.setText(name);
-            tvVisitCustomer.setTextColor(getResources().getColor(R.color.black1));
             ivVisitCustomer.setVisibility(View.GONE);
             tvVisitDepartment.setText(department);
-            tvVisitDepartment.setTextColor(getResources().getColor(R.color.black1));
 
             tvProject.setText("请选择");
-            tvProject.setTextColor(getResources().getColor(R.color.black3));
             ivProject.setVisibility(View.VISIBLE);
+        } else if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE) {
+            String name = data.getStringExtra("name");
+            projectID = data.getIntExtra("ID", 0);
+
+            tvProject.setText(name);
+            ivProject.setVisibility(View.GONE);
         }
 
     }

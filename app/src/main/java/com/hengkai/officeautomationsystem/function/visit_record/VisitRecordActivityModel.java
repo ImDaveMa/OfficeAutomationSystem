@@ -30,13 +30,16 @@ public class VisitRecordActivityModel extends BaseModel {
         service = retrofit.create(VisitRecordService.class);
     }
 
-    public void getVisitRecordList(String userID, int pageNum, Observer<VisitRecordEntity> observer) {
+    public void getVisitRecordList(boolean isMyList, int pageNum, Observer<VisitRecordEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("ID", String.valueOf(pageNum));  //用于分页查询, 根据ID的顺序来分页, 0是查看第一页
         params.put("pageSize", String.valueOf(CommonFinal.PAGE_SIZE));  //用于分页查询, 根据ID的顺序来分页
-        params.put("userId", userID);   //传0是查全部, 传具体数值是查看当前用户
+        params.put("userId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        if (isMyList) {
+            params.put("isOwn", "1");   //有值查自己 查看全部则不传这个参数
+        }
 
 
         service.getVisitRecordList(URLFinal.GET_VISIT_RECORD_LIST, params)
@@ -45,13 +48,16 @@ public class VisitRecordActivityModel extends BaseModel {
                 .subscribe(observer);
     }
 
-    public void getVisitRecordListByDay(int day, String userID, int pageNum, Observer<VisitRecordEntity> observer) {
+    public void getVisitRecordListByDay(int day, boolean isMyList, int pageNum, Observer<VisitRecordEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("ID", String.valueOf(pageNum));  //用于分页查询, 根据ID的顺序来分页
         params.put("pageSize", String.valueOf(CommonFinal.PAGE_SIZE));  //用于分页查询, 根据ID的顺序来分页
-        params.put("userId", userID);   //传0是查全部, 传具体数值是查看当前用户
+        params.put("userId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        if (isMyList) {
+            params.put("isOwn", "1");   //有值查自己 查看全部则不传这个参数
+        }
         params.put("type", String.valueOf(day));
 
 

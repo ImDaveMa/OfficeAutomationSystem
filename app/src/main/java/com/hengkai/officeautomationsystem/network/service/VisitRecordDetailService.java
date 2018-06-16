@@ -20,6 +20,10 @@ public interface VisitRecordDetailService {
 
     @FormUrlEncoded
     @POST
+    Observable<CommonReceiveMessageEntity> submissionData(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
     Observable<VisitRecordDetailGetVisitUnitEntity> getVisitUnitList(@Url String url, @FieldMap Map<String, String> params);
 
     @FormUrlEncoded

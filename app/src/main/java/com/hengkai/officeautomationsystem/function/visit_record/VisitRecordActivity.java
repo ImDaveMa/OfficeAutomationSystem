@@ -24,7 +24,7 @@ import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.visit_record.comment.CommentVisitActivity;
-import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.detail_x.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordEntity;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
@@ -99,7 +99,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         setupRecyclerView();
 
         //请求网络 获取列表数据
-        mPresenter.getVisitRecordList(String.valueOf(0), 0);
+        mPresenter.getVisitRecordList(false, 0);
     }
 
     @Override
@@ -175,7 +175,68 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getVisitRecordList(String.valueOf(0), 0);
+//                mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                String isMyList = "1";//1表示我自己的列表, 0 表示全部
+                switch (listStatus) {
+                    case 1:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordList(true, 0);
+                        } else {
+                            mPresenter.getVisitRecordList(false, 0);
+                        }
+                        break;
+                    case 2:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordListByDay(0, true, 0);
+                        } else {
+                            mPresenter.getVisitRecordListByDay(0, false, 0);
+                        }
+                        break;
+                    case 3:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordListByDay(1, true, 0);
+                        } else {
+                            mPresenter.getVisitRecordListByDay(1, false, 0);
+                        }
+                        break;
+                    case 4:
+                        if (isMySelf) {
+                            mPresenter.getVisitRecordListByDay(2, true, 0);
+                        } else {
+                            mPresenter.getVisitRecordListByDay(2, false, 0);
+                        }
+                        break;
+                    case 5:
+                        if (whichDay == 1) {
+                            mPresenter.getVisitRecordList(true, 0);
+                        } else if (whichDay == 2) {
+                            mPresenter.getVisitRecordListByDay(0, true, 0);
+                        } else if (whichDay == 3) {
+                            mPresenter.getVisitRecordListByDay(1, true, 0);
+                        } else if (whichDay == 4) {
+                            mPresenter.getVisitRecordListByDay(2, true, 0);
+                        } else {
+                            mPresenter.getVisitRecordList(true, 0);
+                        }
+                        break;
+                    case 6:
+                        if (whichDay == 1) {
+                            mPresenter.getVisitRecordList(false, 0);
+                        } else if (whichDay == 2) {
+                            mPresenter.getVisitRecordListByDay(0, false, 0);
+                        } else if (whichDay == 3) {
+                            mPresenter.getVisitRecordListByDay(1, false, 0);
+                        } else if (whichDay == 4) {
+                            mPresenter.getVisitRecordListByDay(2, false, 0);
+                        } else {
+                            mPresenter.getVisitRecordList(false, 0);
+                        }
+                        break;
+
+                    default:
+                        mPresenter.getVisitRecordList(false, 0);
+                        break;
+                }
                 isLoadMore = false;
             }
         });
@@ -183,65 +244,64 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
             @Override
             public void onLoadMore() {
                 VisitRecordEntity.DATABean bean = mList.get(mList.size() - 1);
-                String userID = SPUtils.getString(UserInfo.USER_ID.name(), "");
                 switch (listStatus) {
                     case 1:
                         if (isMySelf) {
-                            mPresenter.getVisitRecordList(userID, bean.id);
+                            mPresenter.getVisitRecordList(true, bean.id);
                         } else {
-                            mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordList(false, bean.id);
                         }
                         break;
                     case 2:
                         if (isMySelf) {
-                            mPresenter.getVisitRecordListByDay(1, userID, bean.id);
+                            mPresenter.getVisitRecordListByDay(0, true, bean.id);
                         } else {
-                            mPresenter.getVisitRecordListByDay(1, String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordListByDay(0, false, bean.id);
                         }
                         break;
                     case 3:
                         if (isMySelf) {
-                            mPresenter.getVisitRecordListByDay(7, userID, bean.id);
+                            mPresenter.getVisitRecordListByDay(1, true, bean.id);
                         } else {
-                            mPresenter.getVisitRecordListByDay(7, String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordListByDay(1, false, bean.id);
                         }
                         break;
                     case 4:
                         if (isMySelf) {
-                            mPresenter.getVisitRecordListByDay(15, userID, bean.id);
+                            mPresenter.getVisitRecordListByDay(2, true, bean.id);
                         } else {
-                            mPresenter.getVisitRecordListByDay(15, String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordListByDay(2, false, bean.id);
                         }
                         break;
                     case 5:
                         if (whichDay == 1) {
-                            mPresenter.getVisitRecordList(userID, bean.id);
+                            mPresenter.getVisitRecordList(true, bean.id);
                         } else if (whichDay == 2) {
-                            mPresenter.getVisitRecordListByDay(1, userID, bean.id);
+                            mPresenter.getVisitRecordListByDay(0, true, bean.id);
                         } else if (whichDay == 3) {
-                            mPresenter.getVisitRecordListByDay(7, userID, bean.id);
+                            mPresenter.getVisitRecordListByDay(1, true, bean.id);
                         } else if (whichDay == 4) {
-                            mPresenter.getVisitRecordListByDay(15, userID, bean.id);
+                            mPresenter.getVisitRecordListByDay(2, true, bean.id);
                         } else {
-                            mPresenter.getVisitRecordList(userID, bean.id);
+                            mPresenter.getVisitRecordList(true, bean.id);
                         }
                         break;
                     case 6:
                         if (whichDay == 1) {
-                            mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordList(false, bean.id);
                         } else if (whichDay == 2) {
-                            mPresenter.getVisitRecordListByDay(1, String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordListByDay(0, false, bean.id);
                         } else if (whichDay == 3) {
-                            mPresenter.getVisitRecordListByDay(7, String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordListByDay(1, false, bean.id);
                         } else if (whichDay == 4) {
-                            mPresenter.getVisitRecordListByDay(15, String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordListByDay(2, false, bean.id);
                         } else {
-                            mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                            mPresenter.getVisitRecordList(false, bean.id);
                         }
                         break;
 
                     default:
-                        mPresenter.getVisitRecordList(String.valueOf(0), bean.id);
+                        mPresenter.getVisitRecordList(false, bean.id);
                         break;
                 }
                 isLoadMore = true;
@@ -340,9 +400,9 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 listStatus = 1;
                 whichDay = 1;
                 if (isMySelf) {
-                    mPresenter.getVisitRecordList(userID, 0);
+                    mPresenter.getVisitRecordList(true, 0);
                 } else {
-                    mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                    mPresenter.getVisitRecordList(false, 0);
                 }
                 popupWindow.dismiss();
             }
@@ -353,9 +413,9 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 listStatus = 2;
                 whichDay = 2;
                 if (isMySelf) {
-                    mPresenter.getVisitRecordListByDay(1, userID, 0);
+                    mPresenter.getVisitRecordListByDay(0, true, 0);
                 } else {
-                    mPresenter.getVisitRecordListByDay(1, String.valueOf(0), 0);
+                    mPresenter.getVisitRecordListByDay(0, false, 0);
                 }
                 popupWindow.dismiss();
             }
@@ -366,9 +426,9 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 listStatus = 3;
                 whichDay = 3;
                 if (isMySelf) {
-                    mPresenter.getVisitRecordListByDay(7, userID, 0);
+                    mPresenter.getVisitRecordListByDay(1, true, 0);
                 } else {
-                    mPresenter.getVisitRecordListByDay(7, String.valueOf(0), 0);
+                    mPresenter.getVisitRecordListByDay(1, false, 0);
                 }
                 popupWindow.dismiss();
             }
@@ -379,9 +439,9 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 listStatus = 4;
                 whichDay = 4;
                 if (isMySelf) {
-                    mPresenter.getVisitRecordListByDay(15, userID, 0);
+                    mPresenter.getVisitRecordListByDay(2, true, 0);
                 } else {
-                    mPresenter.getVisitRecordListByDay(15, String.valueOf(0), 0);
+                    mPresenter.getVisitRecordListByDay(2, false, 0);
                 }
                 popupWindow.dismiss();
             }
@@ -393,15 +453,15 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 isMySelf = true;
 
                 if (whichDay == 1) {
-                    mPresenter.getVisitRecordList(userID, 0);
+                    mPresenter.getVisitRecordList(true, 0);
                 } else if (whichDay == 2) {
-                    mPresenter.getVisitRecordListByDay(1, userID, 0);
+                    mPresenter.getVisitRecordListByDay(0, true, 0);
                 } else if (whichDay == 3) {
-                    mPresenter.getVisitRecordListByDay(7, userID, 0);
+                    mPresenter.getVisitRecordListByDay(1, true, 0);
                 } else if (whichDay == 4) {
-                    mPresenter.getVisitRecordListByDay(15, userID, 0);
+                    mPresenter.getVisitRecordListByDay(2, true, 0);
                 } else {
-                    mPresenter.getVisitRecordList(userID, 0);
+                    mPresenter.getVisitRecordList(true, 0);
                 }
                 popupWindow.dismiss();
             }
@@ -413,15 +473,15 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                 isMySelf = false;
 
                 if (whichDay == 1) {
-                    mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                    mPresenter.getVisitRecordList(false, 0);
                 } else if (whichDay == 2) {
-                    mPresenter.getVisitRecordListByDay(1, String.valueOf(0), 0);
+                    mPresenter.getVisitRecordListByDay(0, false, 0);
                 } else if (whichDay == 3) {
-                    mPresenter.getVisitRecordListByDay(7, String.valueOf(0), 0);
+                    mPresenter.getVisitRecordListByDay(1, false, 0);
                 } else if (whichDay == 4) {
-                    mPresenter.getVisitRecordListByDay(15, String.valueOf(0), 0);
+                    mPresenter.getVisitRecordListByDay(2, false, 0);
                 } else {
-                    mPresenter.getVisitRecordList(String.valueOf(0), 0);
+                    mPresenter.getVisitRecordList(false, 0);
                 }
                 popupWindow.dismiss();
             }
@@ -445,6 +505,6 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
 
     @Override
     protected void reloadData() {
-        mPresenter.getVisitRecordList(String.valueOf(0), 0);
+        mPresenter.getVisitRecordList(false, 0);
     }
 }

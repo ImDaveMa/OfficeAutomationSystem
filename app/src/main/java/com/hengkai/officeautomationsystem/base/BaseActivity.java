@@ -194,4 +194,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
             }
         }
     }
+
+    public void removeNoDataLayout(int noDataLayoutIndex){
+        final ViewGroup view = getWindow().getDecorView().findViewById(android.R.id.content);
+        final ViewGroup rootView = (ViewGroup)view.getChildAt(0);
+        if(rootView != null) {
+            View childView = rootView.getChildAt(noDataLayoutIndex - 1);
+            View noDataView = rootView.getChildAt(noDataLayoutIndex);
+            if (noDataView != null && childView != null) {
+                rootView.removeView(noDataView);
+                childView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 }

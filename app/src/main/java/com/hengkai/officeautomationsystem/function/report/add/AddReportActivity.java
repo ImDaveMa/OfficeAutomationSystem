@@ -82,7 +82,7 @@ public class AddReportActivity extends BaseActivity<AddReportPresenter> {
         if (type == 0) {
             tvTitle.setText("新增日报");
             tvToday.setText("今日完成");
-            tvTomorrow.setText("明日计划");
+            tvTomorrow.setText("下步计划");
         } else {
             tvTitle.setText("新增周报");
             tvToday.setText("本周完成");

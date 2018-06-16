@@ -1,7 +1,6 @@
 package com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -140,6 +139,7 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
                 finish();
                 break;
             case R.id.tv_cancel:
+                removeNoDataLayout(3);
                 setViewState(false);
                 break;
             case R.id.tv_operation:

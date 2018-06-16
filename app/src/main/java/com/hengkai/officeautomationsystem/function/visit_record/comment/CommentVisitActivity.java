@@ -24,7 +24,7 @@ import butterknife.OnClick;
 
 /**
  * Created by Harry on 2018/5/16.
- * 拜访跟进(比较后显示的评论页面)的评论页面
+ * 拜访跟进(提交后显示的评论页面)的评论页面
  */
 public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
 

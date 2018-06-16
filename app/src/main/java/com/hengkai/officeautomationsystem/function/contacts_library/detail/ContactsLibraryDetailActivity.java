@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.visit_record.detail.VisitRecordDetailActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.detail_x.VisitRecordDetailActivity;
 import com.hengkai.officeautomationsystem.network.entity.ContactsLibraryDetailEntity;
 import com.jaeger.library.StatusBarUtil;
 

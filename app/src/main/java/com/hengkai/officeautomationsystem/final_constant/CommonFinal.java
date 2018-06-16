@@ -39,6 +39,8 @@ public class CommonFinal {
     public static final int SELECT_VISIT_UNIT_RESULT_CODE = 1006;
     public static final int SELECT_VISIT_PERSON_REQUEST_CODE = 1007;
     public static final int SELECT_VISIT_PERSON_RESULT_CODE = 1008;
+    public static final int SELECT_VISIT_PROJECT_REQUEST_CODE = 1012;
+    public static final int SELECT_VISIT_PROJECT_RESULT_CODE = 1011;
     /**
      * 添加联系人的请求码和结果码
      */
