@@ -441,15 +441,21 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             locationLatitude = location.getLatitude();
             //获取经度信息
             locationLongitude = location.getLongitude();
-            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
+            // float radius = location.getRadius();    //获取定位精度，默认值为0.0f
 
-            String coorType = location.getCoorType();
+            // String coorType = location.getCoorType();
             //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
 
             int errorCode = location.getLocType();
             //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
+            if(errorCode == 505){
+                ToastUtil.showToast("百度定位KEY不存在或者非法，请按照说明文档重新申请KEY");
+                dismissDialog(); // 防止无法关闭弹窗，导致假死
+                mLocationClient.stop();//定位获得到结果后停止定位
+                return;
+            }
 
-            String locationAddress = location.getAddrStr();//获取详细地址
+            // String locationAddress = location.getAddrStr();//获取详细地址
 
             setupPoiSearch(location.getAddress().street, location.getLatitude(), location.getLongitude());
 
