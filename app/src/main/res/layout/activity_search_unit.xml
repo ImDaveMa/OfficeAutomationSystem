@@ -80,43 +80,23 @@
                 android:gravity="center" />
         </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
-        <ScrollView
-            android:id="@+id/scroll_view"
+        <RelativeLayout
+            android:id="@+id/rl_keyword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_height="match_parent" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="---- 关键字 ----"
-                    android:textColor="@color/black3"
-                    android:textSize="12sp" />
-
-                <com.donkingliang.labels.LabelsView
-                    android:id="@+id/labels_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:labelBackground="@drawable/shape_text_view_bg"
-                    app:labelTextColor="@color/black2"
-                    app:labelTextPaddingBottom="3dp"
-                    app:labelTextPaddingLeft="10dp"
-                    app:labelTextPaddingRight="10dp"
-                    app:labelTextPaddingTop="3dp"
-                    app:labelTextSize="14sp"
-                    app:lineMargin="10dp"
-                    app:wordMargin="10dp" />
-            </LinearLayout>
-        </ScrollView>
+            <com.hengkai.officeautomationsystem.view.QuickIndexBar
+                android:id="@+id/quick_index_bar"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@color/black4" />
+        </RelativeLayout>
 
     </FrameLayout>
 

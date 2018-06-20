@@ -1,5 +1,9 @@
 package com.hengkai.officeautomationsystem.network.entity;
 
+import android.support.annotation.NonNull;
+
+import com.hengkai.officeautomationsystem.utils.PinYinUtil;
+
 import java.util.List;
 
 /**
@@ -17,7 +21,7 @@ public class NewUnitKeywordEntity {
     public String MES;
     public List<DATABean> DATA;
 
-    public static class DATABean {
+    public static class DATABean implements Comparable<DATABean> {
         /**
          * name : 科技
          * id : 1
@@ -25,5 +29,15 @@ public class NewUnitKeywordEntity {
 
         public String name;
         public int id;
+        public String pinyin;
+
+//        public DATABean(String name) {
+//            pinyin = PinYinUtil.getPinYin(name);
+//        }
+
+        @Override
+        public int compareTo(@NonNull DATABean o) {
+            return pinyin.compareTo(o.pinyin);
+        }
     }
 }

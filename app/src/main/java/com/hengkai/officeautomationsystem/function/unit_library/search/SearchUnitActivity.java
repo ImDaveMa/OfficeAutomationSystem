@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -17,13 +18,17 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivityAdapter;
+import com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit.KeywordAdapter;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitKeywordEntity;
 import com.hengkai.officeautomationsystem.network.entity.UnitLibraryEntity;
+import com.hengkai.officeautomationsystem.utils.PinYinUtil;
+import com.hengkai.officeautomationsystem.view.QuickIndexBar;
 import com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView;
 import com.hengkai.officeautomationsystem.view.refreshing.RefreshHeaderView;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,10 +51,12 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
     LoadMoreFooterView swipeLoadMoreFooter;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
-    @BindView(R.id.labels_view)
-    LabelsView labelsView;
-    @BindView(R.id.scroll_view)
-    ScrollView scrollView;
+    @BindView(R.id.rl_keyword)
+    RelativeLayout rlKeyword;
+    @BindView(R.id.quick_index_bar)
+    QuickIndexBar quickIndexBar;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     private boolean isLoadMore = false;
     private List<NewUnitKeywordEntity.DATABean> mKeywordList;
@@ -63,6 +70,8 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
     private int requestCode = -1;
     private String searchContent;
     private int keywordId;
+    private LinearLayoutManager layoutManager;
+    private KeywordAdapter keywordAdapter;
 
     @Override
     protected int setupView() {
@@ -76,6 +85,8 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
         ButterKnife.bind(this);
 
         mList = new ArrayList<>();
+        mKeywordList = new ArrayList<>();
+        setupKeywordList();
 
         mPresenter.getKeywordList();
         setupSwipeRefresh();
@@ -85,20 +96,38 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
      * 配置关键词标签
      */
     private void setupKeywordList() {
-        labelsView.setLabels(mKeywordList, new LabelsView.LabelTextProvider<NewUnitKeywordEntity.DATABean>() {
-            @Override
-            public CharSequence getLabelText(TextView label, int position, NewUnitKeywordEntity.DATABean data) {
-                return data.name;
-            }
-        });
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        keywordAdapter = new KeywordAdapter(mKeywordList);
+        recyclerView.setAdapter(keywordAdapter);
 
-        labelsView.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
+        keywordAdapter.setOnItemClickListener(new KeywordAdapter.OnItemClickListener() {
             @Override
-            public void onLabelClick(TextView label, Object data, int position) {
-                //label是被点击的标签，data是标签所对应的数据，position是标签的位置。
+            public void onClick(int position) {
                 keywordId = mKeywordList.get(position).id;
                 mPresenter.getUnitListWithKeyword(true, keywordId, 0);
                 requestCode = 1;
+            }
+        });
+
+        quickIndexBar.setOnTouchLetterListener(new QuickIndexBar.OnTouchLetterListener() {
+            @Override
+            public void onTouchLetter(String letter) {
+                //根据当前触摸的字母, 去集合中找那个item的首字母和letter一样
+                //然后将对应的item放到屏幕顶端
+                for (int i = 0; i < mKeywordList.size(); i++) {
+                    String firstWord = mKeywordList.get(i).pinyin.charAt(0) + "";
+                    if (letter.equals(firstWord)) {
+                        layoutManager.scrollToPositionWithOffset(i, 0);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onTouchLeave() {
+
             }
         });
     }
@@ -192,8 +221,14 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
     }
 
     public void getKeywordList(List<NewUnitKeywordEntity.DATABean> list) {
-        mKeywordList = list;
-        setupKeywordList();
+        mKeywordList.clear();
+        mKeywordList.addAll(list);
+        for (int i = 0; i < mKeywordList.size(); i++) {
+            mKeywordList.get(i).pinyin = PinYinUtil.getPinYin(mKeywordList.get(i).name);
+        }
+        //对数据进行排序
+        Collections.sort(mKeywordList);
+        keywordAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -219,10 +254,10 @@ public class SearchUnitActivity extends BaseActivity<SearchUnitPresenter> {
     public void setViewState(boolean state) {
         if (state) {
             swipeToLoadLayout.setVisibility(View.VISIBLE);
-            scrollView.setVisibility(View.GONE);
+            rlKeyword.setVisibility(View.GONE);
         } else {
             swipeToLoadLayout.setVisibility(View.GONE);
-            scrollView.setVisibility(View.VISIBLE);
+            rlKeyword.setVisibility(View.VISIBLE);
         }
     }
 

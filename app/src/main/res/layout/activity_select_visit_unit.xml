@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title_bar_text" />
@@ -37,8 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="@color/app_theme_color"
             android:text="搜索"
+            android:textColor="@color/app_theme_color"
             android:textSize="14sp" />
 
         <TextView
@@ -46,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="@color/black3"
             android:text="取消"
+            android:textColor="@color/black3"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:id="@id/swipe_target"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"/>
+                android:background="@color/white" />
 
             <com.hengkai.officeautomationsystem.view.refreshing.LoadMoreFooterView
                 android:id="@id/swipe_load_more_footer"
@@ -80,43 +80,60 @@
                 android:gravity="center" />
         </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
-        <ScrollView
-            android:id="@+id/scroll_view"
+        <RelativeLayout
+            android:id="@+id/rl_keyword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_height="match_parent" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="---- 关键字 ----"
-                    android:textColor="@color/black3"
-                    android:textSize="12sp" />
+            <com.hengkai.officeautomationsystem.view.QuickIndexBar
+                android:id="@+id/quick_index_bar"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@color/black4" />
+        </RelativeLayout>
+        <!--<ScrollView-->
+        <!--android:id="@+id/scroll_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-                <com.donkingliang.labels.LabelsView
-                    android:id="@+id/labels_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:labelBackground="@drawable/shape_text_view_bg"
-                    app:labelTextColor="@color/black2"
-                    app:labelTextPaddingBottom="3dp"
-                    app:labelTextPaddingLeft="10dp"
-                    app:labelTextPaddingRight="10dp"
-                    app:labelTextPaddingTop="3dp"
-                    app:labelTextSize="14sp"
-                    app:lineMargin="10dp"
-                    app:wordMargin="10dp" />
-            </LinearLayout>
-        </ScrollView>
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/white"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="&#45;&#45;&#45;&#45; 关键字 &#45;&#45;&#45;&#45;"-->
+        <!--android:textColor="@color/black3"-->
+        <!--android:textSize="12sp" />-->
+
+        <!--<com.donkingliang.labels.LabelsView-->
+        <!--android:id="@+id/labels_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="10dp"-->
+        <!--app:labelBackground="@drawable/shape_text_view_bg"-->
+        <!--app:labelTextColor="@color/black2"-->
+        <!--app:labelTextPaddingBottom="3dp"-->
+        <!--app:labelTextPaddingLeft="10dp"-->
+        <!--app:labelTextPaddingRight="10dp"-->
+        <!--app:labelTextPaddingTop="3dp"-->
+        <!--app:labelTextSize="14sp"-->
+        <!--app:lineMargin="10dp"-->
+        <!--app:wordMargin="10dp" />-->
+        <!--</LinearLayout>-->
+        <!--</ScrollView>-->
 
     </FrameLayout>
 
