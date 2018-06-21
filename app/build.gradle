@@ -7,7 +7,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "v1.0.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -87,4 +87,8 @@ dependencies {
     implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.2'
     //汉字转换拼音
     implementation 'com.belerweb:pinyin4j:2.5.1'
+    //FileDownloader
+    implementation 'com.liulishuo.filedownloader:library:1.7.4'
+    //基础工具库
+    implementation "com.github.vondear.RxTool:RxKit:v2.0.1"
 }

@@ -6,6 +6,7 @@ import android.app.Application;
 import com.baidu.mapapi.SDKInitializer;
 import com.hengkai.officeautomationsystem.jpush.JPushUtil;
 import com.hengkai.officeautomationsystem.jpush.Logger;
+import com.vondear.rxtool.RxTool;
 
 import java.util.Stack;
 
@@ -37,6 +38,8 @@ public class OfficeAutomationSystemApplication extends Application {
 
         JPushInterface.setDebugMode(isDebug);
         JPushInterface.init(this);
+
+        RxTool.init(this);
     }
 
     public static OfficeAutomationSystemApplication getAppContext() {

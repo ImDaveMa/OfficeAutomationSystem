@@ -20,6 +20,14 @@ public class URLFinal {
 
 
     /**
+     * 检测版本号
+     */
+    public static final String CHECK_VERSION = "version/getLatestVersion";
+    /**
+     * 下载新的版本信息
+     */
+    public static final String DOWNLOAD_NEW_VERSION = "http://192.168.2.157:8080/oa/file/app/hkoaV1.0.0.apk";
+    /**
      * 登录
      */
     public static final String LOGIN_URL = "login/password";
