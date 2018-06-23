@@ -28,17 +28,6 @@ public interface VisitRecordDetailService {
 
     @FormUrlEncoded
     @POST
-    Observable<CommonReceiveMessageEntity> toSaveOnNewAdd(@Url String url, @FieldMap Map<String, String> params);
-
-    @FormUrlEncoded
-    @POST
     Observable<VisitRecordDetailEntity> getVisitRecordDetail(@Url String url, @FieldMap Map<String, String> params);
 
-    @FormUrlEncoded
-    @POST
-    Observable<CommonReceiveMessageEntity> toEnd(@Url String url, @FieldMap Map<String, String> params);
-
-    @FormUrlEncoded
-    @POST
-    Observable<CommonReceiveMessageEntity> toSaveOrCommit(@Url String url, @FieldMap Map<String, String> params);
 }
