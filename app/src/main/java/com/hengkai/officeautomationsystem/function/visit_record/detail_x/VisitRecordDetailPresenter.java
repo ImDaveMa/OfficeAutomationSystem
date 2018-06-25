@@ -87,6 +87,7 @@ public class VisitRecordDetailPresenter extends BasePresenter<VisitRecordDetailA
                             //传入ID为空
                             ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         }
+                        view.dismissDialog();
                     }
 
                     @Override

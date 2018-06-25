@@ -3,6 +3,7 @@ package com.hengkai.officeautomationsystem.function.visit_record.comment;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;
@@ -31,7 +32,7 @@ public class CommentVisitPresenter extends BasePresenter<CommentVisitActivity> {
             @Override
             public void onNext(VisitRecordDetailEntity visitRecordDetailEntity) {
                 if (visitRecordDetailEntity.CODE == 1) {
-                    view.getVisitRecordDetail(visitRecordDetailEntity.DATA);
+                    view.getVisitRecordDetail(visitRecordDetailEntity.DATA, visitRecordDetailEntity);
                 } else if (visitRecordDetailEntity.CODE == 0) {
                     view.showLoginDialog(view);
                 } else {
@@ -74,6 +75,41 @@ public class CommentVisitPresenter extends BasePresenter<CommentVisitActivity> {
                         break;
                     default:
                         ToastUtil.showToast(commentVisitEntity.MES);
+                        break;
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtil.showToast("网络连接错误");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void approval(int approvalID, final int approvalState) {
+        model.approval(approvalID, approvalState, new Observer<CommonReceiveMessageEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                RxApiManager.get().add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_APPROVAL, d);
+            }
+
+            @Override
+            public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
+                switch (commonReceiveMessageEntity.CODE) {
+                    case 1:
+                        ToastUtil.showToast("操作成功");
+                        view.setApprovalState(approvalState);
+                        break;
+                    case 0:
+                        view.showLoginDialog(view);
+                        break;
+                    default:
+                        ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         break;
                 }
             }

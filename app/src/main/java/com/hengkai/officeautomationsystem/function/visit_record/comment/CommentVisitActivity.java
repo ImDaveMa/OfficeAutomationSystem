@@ -1,18 +1,24 @@
 package com.hengkai.officeautomationsystem.function.visit_record.comment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -52,10 +58,18 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
     TextView tvStartAddress;
     @BindView(R.id.tv_end_address)
     TextView tvEndAddress;
+    @BindView(R.id.tv_state_of_approval)
+    TextView tvStateOfApproval;
+    @BindView(R.id.btn_approval)
+    Button btnApproval;
 
     private List<CommentVisitEntity.DATEBean> mList;
     private CommentVisitAdapter adapter;
     private int currentID;
+    /**
+     * 审批ID
+     */
+    private int examineId;
 
     @Override
     protected int setupView() {
@@ -72,6 +86,7 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         setupRecyclerView();
         currentID = getIntent().getIntExtra("currentID", 0);
         mPresenter.getVisitRecordDetail(currentID);
+
     }
 
     @Override
@@ -79,6 +94,7 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         ArrayList<String> tags = new ArrayList<>();
         tags.add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_GET_VISIT_DETAIL);
         tags.add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_GET_COMMENT_LIST);
+        tags.add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_APPROVAL);
         return tags;
     }
 
@@ -87,10 +103,13 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         return new CommentVisitPresenter();
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_comment})
+    @OnClick({R.id.iv_back, R.id.tv_comment, R.id.btn_approval})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                if (!TextUtils.isEmpty(tvStateOfApproval.getText().toString().trim())) {
+                    setResult(CommonFinal.COMMON_RESULT_CODE);
+                }
                 finish();
                 break;
             case R.id.tv_comment:
@@ -98,6 +117,44 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                 Intent intent = new Intent(this, GoToCommentActivity.class);
                 intent.putExtra("currentID", currentID);
                 startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
+                break;
+            case R.id.btn_approval:
+                if (examineId > 0) {
+                    String btnName = btnApproval.getText().toString().trim();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    if (btnName.equals("撤销")) {
+                        builder.setCancelable(false);
+                        builder.setMessage("确认撤销吗?");
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.approval(examineId, 3);
+                                dialog.dismiss();
+                            }
+                        }).show();
+                    } else if (btnName.equals("审批")) {
+                        builder.setCancelable(true);
+                        builder.setMessage("请确认审批操作");
+                        builder.setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.approval(examineId, 2);
+                                dialog.dismiss();
+                            }
+                        }).setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.approval(examineId, 1);
+                                dialog.dismiss();
+                            }
+                        }).show();
+                    }
+                }
                 break;
         }
     }
@@ -107,6 +164,14 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == CommonFinal.COMMON_RESULT_CODE && requestCode == CommonFinal.COMMON_REQUEST_CODE) {
             mPresenter.getCommentList(currentID);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (!TextUtils.isEmpty(tvStateOfApproval.getText().toString().trim())) {
+            setResult(CommonFinal.COMMON_RESULT_CODE);
         }
     }
 
@@ -131,9 +196,10 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
     }
 
     /**
-     * @param bean 从服务器上获取到页面的详情信息
+     * @param bean   从服务器上获取到页面的详情信息
+     * @param entity
      */
-    public void getVisitRecordDetail(VisitRecordDetailEntity.DATABean bean) {
+    public void getVisitRecordDetail(VisitRecordDetailEntity.DATABean bean, VisitRecordDetailEntity entity) {
         //优先获取信息, 在获取评价
         mPresenter.getCommentList(currentID);
 
@@ -170,6 +236,40 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
 
         tvStartAddress.setText(bean.startAddress);
         tvEndAddress.setText(bean.endAddress);
+
+        tvStateOfApproval.setText(entity.examineState);
+        examineId = entity.examineId;
+
+        if (bean.userId == Integer.valueOf(SPUtils.getString(UserInfo.USER_ID.name(), ""))) {
+            btnApproval.setText("撤销");
+            btnApproval.setVisibility(View.VISIBLE);
+        } else {
+            btnApproval.setText("审批");
+            if (entity.isOptionable == 1) {
+                btnApproval.setVisibility(View.VISIBLE);
+            } else {
+                btnApproval.setVisibility(View.GONE);
+            }
+        }
+
+    }
+
+    /**
+     * @param approvalState 1同意2拒绝3撤销
+     */
+    public void setApprovalState(int approvalState) {
+        btnApproval.setVisibility(View.GONE);
+        switch (approvalState) {
+            case 1:
+                tvStateOfApproval.setText("同意");
+                break;
+            case 2:
+                tvStateOfApproval.setText("拒绝");
+                break;
+            case 3:
+                tvStateOfApproval.setText("撤销");
+                break;
+        }
     }
 
     public void getCommentList(List<CommentVisitEntity.DATEBean> list) {

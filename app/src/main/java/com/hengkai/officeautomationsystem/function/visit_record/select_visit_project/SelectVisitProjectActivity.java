@@ -122,4 +122,9 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
             mPresenter.getVisitProjectList(currentCustomerID);
         }
     }
+
+    @Override
+    protected void reloadData() {
+        mPresenter.getVisitProjectList(currentCustomerID);
+    }
 }

@@ -1,6 +1,7 @@
 package com.hengkai.officeautomationsystem.network.service;
 
 import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 
 import java.util.Map;
@@ -23,4 +24,8 @@ public interface CommentVisitService {
     @FormUrlEncoded
     @POST
     Observable<CommentVisitEntity> getCommentList(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Observable<CommonReceiveMessageEntity> approval(@Url String url, @FieldMap Map<String, String> params);
 }

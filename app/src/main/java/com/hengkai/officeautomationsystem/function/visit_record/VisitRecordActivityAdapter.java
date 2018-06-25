@@ -42,10 +42,22 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final VisitRecordEntity.DATABean bean = mList.get(position);
-        if (!bean.isSubmission) {
-            holder.tvStateType.setText("已提交");
-        } else {
-            holder.tvStateType.setText("保存中");
+        switch (bean.state) {
+            case 0://未审批
+                holder.tvStateType.setText("待审批");
+                break;
+            case 1://通过
+                holder.tvStateType.setText("通过");
+                break;
+            case 2://未通过
+                holder.tvStateType.setText("未通过");
+                break;
+            case 3://已撤销
+                holder.tvStateType.setText("已撤销");
+                break;
+            case 4://已保存
+                holder.tvStateType.setText("已保存");
+                break;
         }
         switch (bean.type) {
             case "0":   //跟进
@@ -58,7 +70,7 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
                 holder.tvType.setText("招待");
                 break;
         }
-        if(!TextUtils.isEmpty(bean.companyName)){
+        if (!TextUtils.isEmpty(bean.companyName)) {
             holder.tvUnitName.setText(bean.companyName);
         } else {
             holder.tvUnitName.setText(String.format("%s的%s", bean.userName, holder.tvType.getText().toString()));

@@ -14,6 +14,19 @@ public class VisitRecordDetailEntity {
     public int CODE;
     public DATABean DATA;
     public String MES;
+    /**
+     * 审批ID
+     */
+    public int examineId;
+    /**
+     * 审批状态
+     */
+    public String examineState;
+    /**
+     * 0不允许, 1允许
+     * <p>否允许操作(经理级别可操作, 可审批), 即使是经理级别如果操作完成后不可在操作</p>
+     */
+    public int isOptionable;
 
     public static class DATABean {
         /**

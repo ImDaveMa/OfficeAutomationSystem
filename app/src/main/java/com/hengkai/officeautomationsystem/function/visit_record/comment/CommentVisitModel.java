@@ -4,6 +4,7 @@ import com.hengkai.officeautomationsystem.base.model.BaseModel;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
+import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.network.service.CommentVisitService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
@@ -33,6 +34,7 @@ public class CommentVisitModel extends BaseModel {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("ID", String.valueOf(currentVisitRecordID));
 
         service.getVisitRecordDetail(URLFinal.GET_VISIT_RECORD_DETAIL, params)
@@ -49,6 +51,25 @@ public class CommentVisitModel extends BaseModel {
         params.put("FUNCTIONNAME", "approval_bfgj");
 
         service.getCommentList(URLFinal.GET_COMMENT_LIST, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    /**
+     * @param approvalID    审批ID
+     * @param approvalState 审批状态（只能为1,2,3）  1同意2拒绝3撤销
+     * @param observer      回调
+     */
+    public void approval(int approvalID, int approvalState, Observer<CommonReceiveMessageEntity> observer) {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("APPROVALID", String.valueOf(approvalID));
+        params.put("APPROVALSTATE", String.valueOf(approvalState));
+
+        service.approval(URLFinal.GO_TO_APPROVAL, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

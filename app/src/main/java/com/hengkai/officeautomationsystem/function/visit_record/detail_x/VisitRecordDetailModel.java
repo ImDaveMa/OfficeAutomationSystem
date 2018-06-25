@@ -119,6 +119,7 @@ public class VisitRecordDetailModel extends BaseModel {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("ID", String.valueOf(currentVisitRecordID));
 
         service.getVisitRecordDetail(URLFinal.GET_VISIT_RECORD_DETAIL, params)

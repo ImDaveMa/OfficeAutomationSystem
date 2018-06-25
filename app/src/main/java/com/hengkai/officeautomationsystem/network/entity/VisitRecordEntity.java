@@ -43,7 +43,10 @@ public class VisitRecordEntity {
         public int userId;
         public int companyId;
         public String identification;
-        public boolean isSubmission;
+        /**
+         *  0：未审批 1通过 2未通过 3 已撤销 4 未提交
+         */
+        public int state;
         public String contactsId;
         public long startTime;
         public int id;

@@ -26,7 +26,7 @@ public class URLFinal {
     /**
      * 下载新的版本信息
      */
-    public static final String DOWNLOAD_NEW_VERSION = "http://192.168.2.157:8080/oa/file/app/hkoaV1.0.0.apk";
+    public static final String DOWNLOAD_NEW_VERSION = "http://oa.lyyisun.com/oa/file/app/hkoa.apk";
     /**
      * 登录
      */
@@ -207,6 +207,10 @@ public class URLFinal {
      * 评论列表
      */
     public static final String GET_COMMENT_LIST = "mcomment/commentList";
+    /**
+     * 拜访跟进审批接口
+     */
+    public static final String GO_TO_APPROVAL = "mapprovalInf/updateApproval";
     /**
      * 评论
      */

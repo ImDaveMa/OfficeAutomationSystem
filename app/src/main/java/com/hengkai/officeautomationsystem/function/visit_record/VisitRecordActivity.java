@@ -127,17 +127,17 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         adapter.setOnItemClickListener(new VisitRecordActivityAdapter.OnItemClickListener() {
             @Override
             public void onClick(VisitRecordEntity.DATABean bean) {
-                if (!bean.isSubmission) {
-                    //已提交
-                    Intent intent = new Intent(VisitRecordActivity.this, CommentVisitActivity.class);
-                    intent.putExtra("currentID", bean.id);
-                    startActivity(intent);
-                } else {
+                if (bean.state == 4) {
                     //保存中
                     Intent intent = new Intent(VisitRecordActivity.this, VisitRecordDetailActivity.class);
                     intent.putExtra("type", "item");
                     intent.putExtra("currentID", bean.id);
                     startActivityForResult(intent, CommonFinal.VISIT_RECORD_REQUEST_CODE);
+                } else {
+                    //已提交
+                    Intent intent = new Intent(VisitRecordActivity.this, CommentVisitActivity.class);
+                    intent.putExtra("currentID", bean.id);
+                    startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
                 }
 
             }
@@ -145,15 +145,7 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
             @Override
             public void onLongClick(final VisitRecordEntity.DATABean bean, final int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VisitRecordActivity.this);
-                if (!bean.isSubmission) {
-                    builder.setMessage("已提交的工作不可删除!");
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
-                } else {
+                if (bean.state == 4) {
                     builder.setMessage("是否删除当前项?");
                     builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
@@ -163,6 +155,14 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
                             dialog.dismiss();
                         }
                     }).setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+                } else {
+                    builder.setMessage("已提交的工作不可删除!");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -493,6 +493,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == CommonFinal.VISIT_RECORD_RESULT_CODE) {
             swipeToLoadLayout.setRefreshing(true);//保存或者新增后刷新列表
+        } else if (resultCode == CommonFinal.COMMON_RESULT_CODE && requestCode == CommonFinal.COMMON_REQUEST_CODE) {
+            swipeToLoadLayout.setRefreshing(true);//审批结束后刷新列表
         }
     }
 
