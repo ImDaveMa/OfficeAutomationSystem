@@ -242,18 +242,13 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
 
         if (bean.userId == Integer.valueOf(SPUtils.getString(UserInfo.USER_ID.name(), ""))) {
             btnApproval.setText("撤销");
-            if (entity.isOptionable == 1) {
-                btnApproval.setVisibility(View.VISIBLE);
-            } else {
-                btnApproval.setVisibility(View.GONE);
-            }
         } else {
             btnApproval.setText("审批");
-            if (entity.isOptionable == 1) {
-                btnApproval.setVisibility(View.VISIBLE);
-            } else {
-                btnApproval.setVisibility(View.GONE);
-            }
+        }
+        if (entity.isOptionable == 1) {
+            btnApproval.setVisibility(View.VISIBLE);
+        } else {
+            btnApproval.setVisibility(View.GONE);
         }
 
     }
