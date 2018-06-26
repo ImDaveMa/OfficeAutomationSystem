@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import com.hengkai.officeautomationsystem.function.MainActivity;
 import com.hengkai.officeautomationsystem.function.notice.NoticeDetailActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.comment.CommentVisitActivity;
 import com.hengkai.officeautomationsystem.jpush.JPushUtil;
 import com.hengkai.officeautomationsystem.jpush.Logger;
 
@@ -81,6 +82,11 @@ public class MyReceiver extends BroadcastReceiver {
                         case "notice":  // 通知公告详情
                             toIntent.setClass(context, NoticeDetailActivity.class) ;
                             toIntent.putExtra(NoticeDetailActivity.EXTRA_KEY_ID, id);
+                            context.startActivity(toIntent);
+                            break;
+                        case "approval_bfgj": // 拜访跟进
+                            toIntent.setClass(context, CommentVisitActivity.class) ;
+                            toIntent.putExtra("currentID", id);
                             context.startActivity(toIntent);
                             break;
                         default:
