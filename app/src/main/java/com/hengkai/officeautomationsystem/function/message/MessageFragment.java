@@ -18,6 +18,7 @@ import com.hengkai.officeautomationsystem.function.notice.NoticeDetailActivity;
 import com.hengkai.officeautomationsystem.function.notice.NoticeListAdapter;
 import com.hengkai.officeautomationsystem.function.notice.NoticeListModel;
 import com.hengkai.officeautomationsystem.function.notice.NoticeListPresenter;
+import com.hengkai.officeautomationsystem.function.visit_record.comment.CommentVisitActivity;
 import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
@@ -147,7 +148,18 @@ public class MessageFragment extends BaseFragment<MessageListPresenter> implemen
 //        Intent intent = new Intent(getContext(), MessageDetailActivity.class);
 //        intent.putExtra(MessageDetailActivity.EXTRA_KEY_ID, bean.id);
 //        startActivityForResult(intent, 1000);
-        ToastUtil.showToast(bean.getTypeName());
+
+
+        switch (state){
+            case MessageListModel.STATE_APPROVE: // 审批
+                Intent toIntent = new Intent(mActivity,CommentVisitActivity.class);
+                toIntent.putExtra("currentID", bean.getProject_id());
+                startActivity(toIntent);
+                break;
+            case MessageListModel.STATE_MESSAGE: // 消息
+                ToastUtil.showToast(bean.getTypeName());
+                break;
+        }
     }
 
     @Override

@@ -156,21 +156,9 @@ public class URLFinal {
      */
     public static final String GET_VISIT_UNIT_PROJECT_LIST = "visit/contactsDetails";
     /**
-     * 拜访跟进详情页面 - 从新增按钮进入到当前页面去保存当前页面
-     */
-    public static final String TO_SAVE_ON_NEW_ADD = "visit/ar";
-    /**
      * 拜访跟进详情页面 - 从列表item点击进入
      */
     public static final String GET_VISIT_RECORD_DETAIL = "visit/details";
-    /**
-     * 拜访跟进详情页面 - 结束的接口
-     */
-    public static final String TO_END = "visit/se";
-    /**
-     * 拜访跟进详情页面 - 列表页进入点击保存, 或者提交的接口
-     */
-    public static final String TO_SAVE_OR_COMMIT = "visit/ps";
     /**
      * 新增单位 - 获取关键词列表
      */
