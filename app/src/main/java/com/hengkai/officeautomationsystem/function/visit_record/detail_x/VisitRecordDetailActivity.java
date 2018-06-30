@@ -773,7 +773,6 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         //同意了授权
         mLocationClient.start();
-        showDialog();
     }
 
     @Override

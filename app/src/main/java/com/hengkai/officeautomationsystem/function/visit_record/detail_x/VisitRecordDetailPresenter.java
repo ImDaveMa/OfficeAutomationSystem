@@ -60,6 +60,7 @@ public class VisitRecordDetailPresenter extends BasePresenter<VisitRecordDetailA
 
                     @Override
                     public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
+                        view.dismissDialog();
                         if (commonReceiveMessageEntity.CODE == 1) {
                             view.callbackSubmissionData(commonReceiveMessageEntity.DATA);
                             switch (requestType) {
@@ -87,7 +88,6 @@ public class VisitRecordDetailPresenter extends BasePresenter<VisitRecordDetailA
                             //传入ID为空
                             ToastUtil.showToast(commonReceiveMessageEntity.MES);
                         }
-                        view.dismissDialog();
                     }
 
                     @Override
