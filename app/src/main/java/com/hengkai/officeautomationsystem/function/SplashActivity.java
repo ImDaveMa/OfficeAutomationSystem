@@ -21,11 +21,11 @@ public class SplashActivity extends AppCompatActivity {
         public boolean handleMessage(Message msg) {
             countNum();
             if (continueCount) {
-                handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
+                handler.sendMessageDelayed(handler.obtainMessage(-1), 1000);
             }
             return false;
         }
-    }) ;
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         // 第一次执行
         countNum();
         if (continueCount) {
-            handler.sendMessageDelayed(handler.obtainMessage(-1),1000);
+            handler.sendMessageDelayed(handler.obtainMessage(-1), 1000);
         }
     }
 
@@ -52,11 +52,16 @@ public class SplashActivity extends AppCompatActivity {
     public void toNextActivity() {//根据是否保存有 token 判断去登录界面还是主界面
         String token = SPUtils.getString(UserInfo.TOKEN.name(), "");
         boolean isAutoLogin = SPUtils.getBoolean(UserInfo.IS_LOGIN.name(), false);
+        boolean isFirst = SPUtils.getBoolean(UserInfo.IS_FIRST_ENTER.name(), true);
         Intent intent;
-        if(!TextUtils.isEmpty(token) && isAutoLogin){
-            intent = new Intent(this, MainActivity.class);
+        if (isFirst) {
+            intent = new Intent(this, GuideActivity.class);
         } else {
-            intent = new Intent(this, LoginActivity.class);
+            if (!TextUtils.isEmpty(token) && isAutoLogin) {
+                intent = new Intent(this, MainActivity.class);
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+            }
         }
 
         startActivity(intent);

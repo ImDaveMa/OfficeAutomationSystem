@@ -154,6 +154,7 @@
         </activity>
         <activity android:name=".function.visit_record.detail_x.VisitRecordDetailActivity" />
         <activity android:name=".function.visit_record.select_visit_project.SelectVisitProjectActivity" />
+        <activity android:name=".function.GuideActivity" />
 
         <!-- Required SDK 核心功能-->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->

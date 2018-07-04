@@ -14,6 +14,7 @@
     <color name="blue3">#2196F3</color>
     <color name="blue4">#4895c9</color>
     <color name="blue5">#3F63E6</color>
+    <color name="blue6">#6DBAFC</color>
     <color name="grey">#607D8B</color>
     <color name="grey2">#737373</color>
     <color name="orange">#F57C00</color>
@@ -38,6 +39,7 @@
     <color name="white2">#ddd</color>
     <color name="white3">#FFFAFA</color>
     <color name="white4">#F1F1F1</color>
+    <color name="dark_gray1">#929292</color>
 
     <color name="transparent">#00000000</color>
     <color name="transparent1">#33000000</color>

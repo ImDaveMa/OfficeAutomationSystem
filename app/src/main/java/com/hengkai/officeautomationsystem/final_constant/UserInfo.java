@@ -22,6 +22,7 @@ public enum UserInfo {
     DEPARTMENT_ID,
     DEPARTMENT_PERMISSION,
     REAL_NAME,
-    ROLE
+    ROLE,
+    IS_FIRST_ENTER
 
 }
