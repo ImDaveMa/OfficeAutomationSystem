@@ -375,7 +375,7 @@
                         android:layout_height="wrap_content"
                         android:text="*"
                         android:textColor="@color/red1"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
 
                     <TextView
                         android:layout_width="0dp"

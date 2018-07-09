@@ -241,6 +241,11 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 mLocationClient.start();
                 break;
             case R.id.btn_commit://提交
+                String summary = etVisitSummary.getText().toString().trim();
+                if (TextUtils.isEmpty(summary)) {
+                    ToastUtil.showToast("请填写总结");
+                    return;
+                }
                 showDialog();
                 if (currentCustomerID.equals("null")) {
                     currentCustomerID = "";
