@@ -1,5 +1,8 @@
 package com.hengkai.officeautomationsystem.final_constant;
 
+import com.hengkai.officeautomationsystem.application.OfficeAutomationSystemApplication;
+import com.hengkai.officeautomationsystem.utils.VersionUtils;
+
 /**
  * Created by Harry on 2018/4/17.
  * 存储url地址
@@ -9,14 +12,13 @@ public class URLFinal {
     /**
      * 版本控制
      */
-    public static final String VERSION = "v1.0.0/";
+    public static final String VERSION = VersionUtils.getVerName(OfficeAutomationSystemApplication.getAppContext());
     /**
      * baseURL
      */
-//    public static final String BASE_URL = "http://192.168.2.157:8080/" + VERSION + "OA_inside/mobile/";
-    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/";
+    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/" + VERSION + "/";
 //    public static final String BASE_URL = "http://192.168.2.18/OA_inside/mobile/";
-//    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/";
+//    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/" + VERSION + "/";
 
 
     /**

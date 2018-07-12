@@ -46,4 +46,49 @@
         android:textColor="@color/black1"
         android:textSize="15sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black5" />
+
+    <TextView
+        android:id="@+id/tv_fa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="方案"
+        android:textColor="@color/black1"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black5" />
+
+    <TextView
+        android:id="@+id/tv_ht"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="合同"
+        android:textColor="@color/black1"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black5" />
+
+    <TextView
+        android:id="@+id/tv_bs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="标书"
+        android:textColor="@color/black1"
+        android:textSize="15sp" />
+
 </LinearLayout>

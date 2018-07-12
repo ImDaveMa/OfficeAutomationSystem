@@ -259,6 +259,11 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         }
     }
 
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+    }
+
     /**
      * @param currentVisitRecordID 当前拜访的ID, 通过保存, 开始, 结束后获得
      */
@@ -275,6 +280,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         final TextView tvBF = view.findViewById(R.id.tv_bf);
         final TextView tvGJ = view.findViewById(R.id.tv_gj);
         final TextView tvZD = view.findViewById(R.id.tv_zd);
+        final TextView tvHT = view.findViewById(R.id.tv_ht);
+        final TextView tvBS = view.findViewById(R.id.tv_bs);
+        final TextView tvFA = view.findViewById(R.id.tv_fa);
         final BottomSheetDialog dialog = getBottomSheetDialog(view);
 
         tvBF.setOnClickListener(new View.OnClickListener() {
@@ -283,9 +291,16 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 visitTypeID = 1;
                 tvVisitType.setText(tvBF.getText().toString().trim());
                 ivVisitType.setVisibility(View.GONE);
-                tvRedDot1.setVisibility(View.VISIBLE);
-                tvRedDot2.setVisibility(View.VISIBLE);
-                tvRedDot3.setVisibility(View.INVISIBLE);
+                //判断当前页面是否是从列表进入, 如果当前状态是开始的状态, 则添加小红点判断
+                if (currentVisitRecordID != 0 && !btnStart.isEnabled() && btnEnd.isEnabled()) {
+                    tvRedDot1.setVisibility(View.VISIBLE);
+                    tvRedDot2.setVisibility(View.VISIBLE);
+                    tvRedDot3.setVisibility(View.INVISIBLE);
+                } else {
+                    tvRedDot1.setVisibility(View.INVISIBLE);
+                    tvRedDot2.setVisibility(View.INVISIBLE);
+                    tvRedDot3.setVisibility(View.INVISIBLE);
+                }
                 dialog.dismiss();
             }
         });
@@ -312,6 +327,45 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 tvRedDot1.setVisibility(View.INVISIBLE);
                 tvRedDot2.setVisibility(View.INVISIBLE);
                 tvRedDot3.setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        tvFA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 3;
+                tvVisitType.setText(tvFA.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        tvHT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 4;
+                tvVisitType.setText(tvHT.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        tvBS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 5;
+                tvVisitType.setText(tvBS.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
         });
@@ -453,7 +507,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
 
             int errorCode = location.getLocType();
             //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
-            if(errorCode == 505){
+            if (errorCode == 505) {
                 ToastUtil.showToast("百度定位KEY不存在或者非法，请按照说明文档重新申请KEY");
                 dismissDialog(); // 防止无法关闭弹窗，导致假死
                 mLocationClient.stop();//定位获得到结果后停止定位
@@ -562,17 +616,17 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         if (visitTypeID == -1) {
             ToastUtil.showToast("请选择拜访类型");
             return;
-        } else if (visitTypeID == 1) {//拜访
+        } /*else if (visitTypeID == 1) {//拜访
             if (currentUnitID == 0 || TextUtils.isEmpty(currentCustomerID)) {
                 ToastUtil.showToast("填写的信息不完整, 请按星标填写");
                 return;
             }
-        } else if (visitTypeID == 0) {//跟进
+        }*/ else if (visitTypeID == 0) {//跟进
             if (currentUnitID <= 0 || TextUtils.isEmpty(currentCustomerID) || projectID <= 0) {
                 ToastUtil.showToast("填写的信息不完整, 请按星标填写");
                 return;
             }
-        } else if (visitTypeID == 2){//招待
+        } else if (visitTypeID == 2) {//招待
             //可以都不用填写
         }
         showDialog();
@@ -592,6 +646,12 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         if (locationLatitude == 0 || locationLongitude == 0) {
             ToastUtil.showToast("获取地址失败, 请重新点击");
             return;
+        }
+        if (visitTypeID == 1) {//拜访
+            if (currentUnitID == 0 || TextUtils.isEmpty(currentCustomerID)) {
+                ToastUtil.showToast("填写的信息不完整, 请按星标填写");
+                return;
+            }
         }
         showDialog();
         mPresenter.submissionData("visit_end", String.valueOf(currentVisitRecordID),
@@ -615,9 +675,21 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 tvVisitType.setText("拜访");
                 visitTypeID = 1;
                 break;
-            default:
+            case "2":
                 tvVisitType.setText("招待");
                 visitTypeID = 2;
+                break;
+            case "3":   //方案
+                tvVisitType.setText("方案");
+                visitTypeID = 3;
+                break;
+            case "4":   //合同
+                tvVisitType.setText("合同");
+                visitTypeID = 4;
+                break;
+            case "5":   //标书
+                tvVisitType.setText("标书");
+                visitTypeID = 5;
                 break;
         }
         ivVisitType.setVisibility(View.GONE);
@@ -648,6 +720,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             btnEnd.setText(String.format("结束 %s", endTime));
             btnEnd.setEnabled(false);
             btnCommit.setEnabled(true);
+            setupLinearLayout();
         }
         if (!bean.isSubmission) {//如果已提交, 则所有按钮都不能点
             btnCommit.setEnabled(false);
@@ -689,6 +762,15 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         llVisitUnit.setEnabled(false);
         llVisitCustomer.setEnabled(false);
         llProject.setEnabled(false);
+//        if (tvVisitType.getText().toString().trim().equals("拜访")) {
+//            llVisitUnit.setEnabled(true);
+//            llVisitCustomer.setEnabled(true);
+//            llProject.setEnabled(true);
+//        } else {
+//            llVisitUnit.setEnabled(false);
+//            llVisitCustomer.setEnabled(false);
+//            llProject.setEnabled(false);
+//        }
     }
 
     /**
@@ -707,6 +789,11 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         btnStart.setText(String.format("开始 %s", currentTime));
         btnStart.setEnabled(false);
         btnEnd.setEnabled(true);
+
+        //点击开始成功后, 显示拜访单位和拜访人为必填项, 以便于在结束的时候做判断
+        tvRedDot1.setVisibility(View.VISIBLE);
+        tvRedDot2.setVisibility(View.VISIBLE);
+        tvRedDot3.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -731,7 +818,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             ToastUtil.showToast("请选择拜访类型");
             return false;
         }
-        if (visitType.equals("拜访") || visitType.equals("跟进")) {
+        if (visitType.equals("拜访") && isStart) {
             if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
                 ToastUtil.showToast("请选择拜访单位");
                 return false;
@@ -741,7 +828,25 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             }
         }
         if (visitType.equals("跟进")) {
-            if (TextUtils.isEmpty(visitProject) || visitUnit.equals("请选择")) {
+            if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访单位");
+                return false;
+            } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访人");
+                return false;
+            }else if (TextUtils.isEmpty(visitProject) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择跟进项目");
+                return false;
+            }
+        }
+        if (visitType.equals("方案") || visitType.equals("合同") || visitType.equals("标书")) {
+            if (TextUtils.isEmpty(visitUnit) || visitUnit.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访单位");
+                return false;
+            } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
+                ToastUtil.showToast("请选择拜访人");
+                return false;
+            } else if (TextUtils.isEmpty(visitProject) || visitProject.equals("请选择")) {
                 ToastUtil.showToast("请选择跟进项目");
                 return false;
             }

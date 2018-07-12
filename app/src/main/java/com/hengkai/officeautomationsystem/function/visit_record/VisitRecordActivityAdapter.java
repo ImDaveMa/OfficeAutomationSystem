@@ -69,6 +69,15 @@ public class VisitRecordActivityAdapter extends RecyclerView.Adapter<VisitRecord
             case "2":   //招待
                 holder.tvType.setText("招待");
                 break;
+            case "3":   //方案
+                holder.tvType.setText("方案");
+                break;
+            case "4":   //合同
+                holder.tvType.setText("合同");
+                break;
+            case "5":   //标书
+                holder.tvType.setText("标书");
+                break;
         }
         if (!TextUtils.isEmpty(bean.companyName)) {
             holder.tvUnitName.setText(bean.companyName);

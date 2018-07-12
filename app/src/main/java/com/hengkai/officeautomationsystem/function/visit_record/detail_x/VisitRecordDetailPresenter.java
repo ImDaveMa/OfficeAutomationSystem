@@ -66,12 +66,13 @@ public class VisitRecordDetailPresenter extends BasePresenter<VisitRecordDetailA
                             switch (requestType) {
                                 case "visit_start": //开始
                                     view.setupStartButton();
-                                    view.setupLinearLayout();
+//                                    view.setupLinearLayout();
                                     view.setAddressState();
                                     break;
                                 case "visit_end": //结束
                                     view.setupEndButton();
                                     view.setAddressState();
+                                    view.setupLinearLayout();
                                     break;
                                 case "visit_save": //保存
                                     ToastUtil.showToast("保存成功");
