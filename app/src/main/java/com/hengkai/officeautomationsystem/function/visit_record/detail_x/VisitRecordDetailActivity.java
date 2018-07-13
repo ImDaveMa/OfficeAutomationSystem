@@ -670,26 +670,49 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             case "0":
                 tvVisitType.setText("跟进");
                 visitTypeID = 0;
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
                 break;
             case "1":
                 tvVisitType.setText("拜访");
                 visitTypeID = 1;
+                tvRedDot1.setVisibility(View.INVISIBLE);
+                tvRedDot2.setVisibility(View.INVISIBLE);
+                tvRedDot3.setVisibility(View.INVISIBLE);
+                if (bean.startTime != 0 && bean.endTime == 0) {
+                    tvRedDot1.setVisibility(View.VISIBLE);
+                    tvRedDot2.setVisibility(View.VISIBLE);
+                    tvRedDot3.setVisibility(View.INVISIBLE);
+                }
                 break;
             case "2":
                 tvVisitType.setText("招待");
                 visitTypeID = 2;
+                tvRedDot1.setVisibility(View.INVISIBLE);
+                tvRedDot2.setVisibility(View.INVISIBLE);
+                tvRedDot3.setVisibility(View.INVISIBLE);
                 break;
             case "3":   //方案
                 tvVisitType.setText("方案");
                 visitTypeID = 3;
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
                 break;
             case "4":   //合同
                 tvVisitType.setText("合同");
                 visitTypeID = 4;
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
                 break;
             case "5":   //标书
                 tvVisitType.setText("标书");
                 visitTypeID = 5;
+                tvRedDot1.setVisibility(View.VISIBLE);
+                tvRedDot2.setVisibility(View.VISIBLE);
+                tvRedDot3.setVisibility(View.VISIBLE);
                 break;
         }
         ivVisitType.setVisibility(View.GONE);
@@ -729,6 +752,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             tvSave.setEnabled(false);
             tvSave.setVisibility(View.GONE);
         }
+
 
         if (!TextUtils.isEmpty(bean.startAddress)) {    //为开始地址栏和结束地址栏赋值
             llStartAddress.setVisibility(View.VISIBLE);
