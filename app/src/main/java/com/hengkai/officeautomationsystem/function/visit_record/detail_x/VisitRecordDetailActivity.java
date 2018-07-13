@@ -834,7 +834,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             } else if (TextUtils.isEmpty(visitCustomer) || visitCustomer.equals("请选择")) {
                 ToastUtil.showToast("请选择拜访人");
                 return false;
-            }else if (TextUtils.isEmpty(visitProject) || visitUnit.equals("请选择")) {
+            }else if (TextUtils.isEmpty(visitProject) || visitProject.equals("请选择")) {
                 ToastUtil.showToast("请选择跟进项目");
                 return false;
             }

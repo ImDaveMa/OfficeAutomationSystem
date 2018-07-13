@@ -143,6 +143,7 @@ public class NewProjectActivity extends BaseActivity<NewProjectPresenter> {
                 break;
             case R.id.rl_unit://选择单位
                 intent = new Intent(this, SelectVisitUnitActivity.class);
+
                 startActivityForResult(intent, CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE);
                 break;
             case R.id.rl_person://选择甲方负责人

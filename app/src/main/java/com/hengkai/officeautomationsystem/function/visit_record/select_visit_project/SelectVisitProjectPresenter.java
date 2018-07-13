@@ -36,6 +36,7 @@ public class SelectVisitProjectPresenter extends BasePresenter<SelectVisitProjec
                     if (data == null || data.size() == 0) {
                         view.noData();
                     } else {
+                        view.removeNoDataLayout(2);
                         view.getVisitProjectList(visitRecordDetailGetVisitUnitEntity.DATA);
                     }
                 } else if (visitRecordDetailGetVisitUnitEntity.CODE == 0) {

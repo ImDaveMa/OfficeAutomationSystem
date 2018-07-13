@@ -149,7 +149,7 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
     }
 
     private void initTitleBar() {
-        tvTitle.setText("拜访单位");
+        tvTitle.setText("选择单位");
         tvOperation.setVisibility(View.VISIBLE);
         tvOperation.setText("新增");
     }

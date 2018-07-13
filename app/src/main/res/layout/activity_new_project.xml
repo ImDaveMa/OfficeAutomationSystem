@@ -271,9 +271,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/layer_list_border_bottom"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -298,7 +299,6 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
                     android:background="@null"
                     android:gravity="start|top"
                     android:hint="请输入项目简述"
