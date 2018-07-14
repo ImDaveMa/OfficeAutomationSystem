@@ -48,7 +48,7 @@ public class CommentVisitModel extends BaseModel {
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("OBJECTID", String.valueOf(currentID));
-        params.put("FUNCTIONNAME", "approval_bfgj");
+        params.put("FUNCTIONNAME", "sd_visit");
 
         service.getCommentList(URLFinal.GET_COMMENT_LIST, params)
                 .subscribeOn(Schedulers.io())
