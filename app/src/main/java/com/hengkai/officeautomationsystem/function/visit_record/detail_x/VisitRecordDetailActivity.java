@@ -814,10 +814,12 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         btnStart.setEnabled(false);
         btnEnd.setEnabled(true);
 
-        //点击开始成功后, 显示拜访单位和拜访人为必填项, 以便于在结束的时候做判断
-        tvRedDot1.setVisibility(View.VISIBLE);
-        tvRedDot2.setVisibility(View.VISIBLE);
-        tvRedDot3.setVisibility(View.INVISIBLE);
+        if (tvVisitType.getText().toString().trim().equals("拜访")) {
+            //点击开始成功后, 显示拜访单位和拜访人为必填项, 以便于在结束的时候做判断
+            tvRedDot1.setVisibility(View.VISIBLE);
+            tvRedDot2.setVisibility(View.VISIBLE);
+            tvRedDot3.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**

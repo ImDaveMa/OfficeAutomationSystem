@@ -60,14 +60,16 @@ public class CommentVisitModel extends BaseModel {
      * @param approvalID    审批ID
      * @param approvalState 审批状态（只能为1,2,3）  1同意2拒绝3撤销
      * @param observer      回调
+     * @param comment       拒绝理由
      */
-    public void approval(int approvalID, int approvalState, Observer<CommonReceiveMessageEntity> observer) {
+    public void approval(int approvalID, int approvalState, String comment, Observer<CommonReceiveMessageEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("APPROVALID", String.valueOf(approvalID));
         params.put("APPROVALSTATE", String.valueOf(approvalState));
+        params.put("COMMENT", comment);
 
         service.approval(URLFinal.GO_TO_APPROVAL, params)
                 .subscribeOn(Schedulers.io())

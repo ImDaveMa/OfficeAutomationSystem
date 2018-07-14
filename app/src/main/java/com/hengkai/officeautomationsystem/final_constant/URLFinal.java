@@ -16,8 +16,8 @@ public class URLFinal {
     /**
      * baseURL
      */
-    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/" + VERSION + "/";
-//    public static final String BASE_URL = "http://192.168.2.18/OA_inside/mobile/";
+//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/" + VERSION + "/";
+    public static final String BASE_URL = "http://192.168.2.18/OA_inside/mobile/" + VERSION + "/";
 //    public static final String BASE_URL = "http://oa.lyyisun.com/mobile/" + VERSION + "/";
 
 

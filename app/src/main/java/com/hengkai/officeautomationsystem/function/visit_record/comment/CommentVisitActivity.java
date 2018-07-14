@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
@@ -122,6 +123,7 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                 if (examineId > 0) {
                     String btnName = btnApproval.getText().toString().trim();
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    final AlertDialog dialog = builder.create();
                     if (btnName.equals("撤销")) {
                         builder.setCancelable(false);
                         builder.setMessage("确认撤销吗?");
@@ -133,26 +135,48 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                         }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mPresenter.approval(examineId, 3);
+                                mPresenter.approval(examineId, 3, "");
                                 dialog.dismiss();
                             }
                         }).show();
                     } else if (btnName.equals("审批")) {
                         builder.setCancelable(true);
-                        builder.setMessage("请确认审批操作");
-                        builder.setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+//                        builder.setMessage("请确认审批操作");
+//                        builder.setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                mPresenter.approval(examineId, 2);
+//                                dialog.dismiss();
+//                            }
+//                        }).setPositiveButton("同意", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                mPresenter.approval(examineId, 1);
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
+                        View dialogView = View.inflate(this, R.layout.dialog_visit_approval, null);
+                        final EditText etReason = dialogView.findViewById(R.id.et_reason);
+                        Button btnAgree = dialogView.findViewById(R.id.btn_agree);
+                        Button btnRefuse = dialogView.findViewById(R.id.btn_refuse);
+                        btnAgree.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mPresenter.approval(examineId, 2);
+                            public void onClick(View v) {
+                                String reason = etReason.getText().toString().trim();
+                                mPresenter.approval(examineId, 1, reason);
                                 dialog.dismiss();
                             }
-                        }).setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                        });
+                        btnRefuse.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mPresenter.approval(examineId, 1);
+                            public void onClick(View v) {
+                                String reason = etReason.getText().toString().trim();
+                                mPresenter.approval(examineId, 2, reason);
                                 dialog.dismiss();
                             }
-                        }).show();
+                        });
+                        dialog.setView(dialogView);
+                        dialog.show();
                     }
                 }
                 break;

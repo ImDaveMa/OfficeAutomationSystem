@@ -91,8 +91,8 @@ public class CommentVisitPresenter extends BasePresenter<CommentVisitActivity> {
         });
     }
 
-    public void approval(int approvalID, final int approvalState) {
-        model.approval(approvalID, approvalState, new Observer<CommonReceiveMessageEntity>() {
+    public void approval(int approvalID, final int approvalState, String comment) {
+        model.approval(approvalID, approvalState, comment, new Observer<CommonReceiveMessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.COMMENT_VISIT_ACTIVITY_APPROVAL, d);
