@@ -45,6 +45,7 @@ public class PersonBottomDialogAdapter extends RecyclerView.Adapter<PersonBottom
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final NewProjectGetPersonEntity.DATEBean bean = mList.get(position);
+        holder.tvName.setTextColor(context.getResources().getColor(R.color.black1));
         holder.tvName.setText(bean.userName);
         holder.tvDepartment.setText(bean.dName);
         if (bean.userName.equals(name)) {
