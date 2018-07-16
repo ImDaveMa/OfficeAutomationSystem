@@ -20,6 +20,7 @@ import com.hengkai.officeautomationsystem.network.entity.CommentVisitEntity;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
+import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -171,8 +172,13 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                             @Override
                             public void onClick(View v) {
                                 String reason = etReason.getText().toString().trim();
-                                mPresenter.approval(examineId, 2, reason);
-                                dialog.dismiss();
+                                if (TextUtils.isEmpty(reason)) {
+                                    ToastUtil.showToast("请填写拒绝理由");
+                                    return;
+                                } else {
+                                    mPresenter.approval(examineId, 2, reason);
+                                    dialog.dismiss();
+                                }
                             }
                         });
                         dialog.setView(dialogView);
