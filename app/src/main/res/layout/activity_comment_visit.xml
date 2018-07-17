@@ -121,19 +121,20 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="拜访单位"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_visit_unit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -152,19 +153,20 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="拜访人"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_visit_customer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -183,19 +185,20 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="拜访人部门"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_visit_department"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -214,19 +217,20 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="跟进的项目"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_project"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -245,19 +249,20 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="开始时间"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_start_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -276,19 +281,20 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="结束时间"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_end_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/black3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -398,11 +404,11 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:visibility="visible"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/selector_visit_record_btn_bg_start"
                 android:text="审批"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="visible" />
 
             <TextView
                 android:layout_width="match_parent"
