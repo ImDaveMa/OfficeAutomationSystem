@@ -121,18 +121,19 @@
                     android:textColor="@color/red1" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="拜访单位"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_visit_unit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical|end"
                     android:hint="请选择"
                     android:textColor="@color/black1"
@@ -168,18 +169,19 @@
                     android:textColor="@color/red1" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="拜访人"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_visit_customer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical|end"
                     android:hint="请选择"
                     android:textColor="@color/black1"
@@ -255,18 +257,19 @@
                     android:visibility="invisible" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_weight="1"
                     android:text="跟进的项目"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_project"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical|end"
                     android:hint="请选择"
                     android:textColor="@color/black1"
@@ -285,12 +288,12 @@
                 android:id="@+id/ll_start_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -326,9 +329,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
