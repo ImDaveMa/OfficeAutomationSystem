@@ -299,6 +299,7 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                 tvStateOfApproval.setText("撤销");
                 break;
         }
+        mPresenter.getCommentList(currentID);
     }
 
     public void getCommentList(List<CommentVisitEntity.DATEBean> list) {

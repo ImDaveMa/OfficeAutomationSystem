@@ -34,7 +34,7 @@ public class GoToCommentModel extends BaseModel {
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
         params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("OBJECTID", String.valueOf(currentID));
-        params.put("FUNCTIONNAME", "approval_bfgj");
+        params.put("FUNCTIONNAME", "sd_visit");
         params.put("COMMENTCONTENT", commentContent);
 
         service.comment(URLFinal.COMMENT_URL, params)

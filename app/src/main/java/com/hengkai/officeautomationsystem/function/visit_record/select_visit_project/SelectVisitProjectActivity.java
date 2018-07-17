@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -36,7 +38,16 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
 
     private List<VisitRecordDetailGetVisitUnitEntity.DATABean> mList;
     private SelectVisitProjectAdapter adapter;
+    /**
+     * 当前单位下客户的ID
+     */
     private String currentCustomerID;
+    /**
+     * 当前单位ID
+     */
+    private int currentUnitID;
+    private String customerName;
+    private String unitName;
 
     @Override
     protected int setupView() {
@@ -53,7 +64,12 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
         mList = new ArrayList<>();
 
         setupRecyclerView();
+
         currentCustomerID = getIntent().getStringExtra("currentCustomerID");
+        customerName = getIntent().getStringExtra("customerName");
+        unitName = getIntent().getStringExtra("unitName");
+        currentUnitID = getIntent().getIntExtra("unitID", 0);
+
         mPresenter.getVisitProjectList(currentCustomerID);
     }
 
@@ -70,7 +86,14 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
                 finish();
                 break;
             case R.id.tv_operation:
-                startActivityForResult(new Intent(this, NewProjectActivity.class),
+                Intent intent = new Intent(this, NewProjectActivity.class);
+                if (!TextUtils.isEmpty(currentCustomerID) && currentUnitID != 0) {
+                    intent.putExtra("currentCustomerID", currentCustomerID);
+                    intent.putExtra("unitID", currentUnitID);
+                    intent.putExtra("customerName", customerName);
+                    intent.putExtra("unitName", unitName);
+                }
+                startActivityForResult(intent,
                         CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
                 break;
         }

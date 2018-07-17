@@ -222,6 +222,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 }
                 intent = new Intent(this, SelectVisitProjectActivity.class);
                 intent.putExtra("currentCustomerID", currentCustomerID);
+                intent.putExtra("unitID", currentUnitID);
+                intent.putExtra("customerName", tvVisitCustomer.getText().toString().trim());
+                intent.putExtra("unitName", tvVisitUnit.getText().toString().trim());
                 startActivityForResult(intent, CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
                 break;
             case R.id.btn_start://开始

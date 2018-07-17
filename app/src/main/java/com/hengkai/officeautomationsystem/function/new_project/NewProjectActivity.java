@@ -103,6 +103,23 @@ public class NewProjectActivity extends BaseActivity<NewProjectPresenter> {
 
         tvTitle.setText("新增项目");
 
+        initParams();
+    }
+
+    private void initParams() {
+        String currentCustomerID = getIntent().getStringExtra("currentCustomerID");
+        int currentUnitID = getIntent().getIntExtra("unitID", 0);
+        String customerName = getIntent().getStringExtra("customerName");
+        String unitName = getIntent().getStringExtra("unitName");
+
+        if (!TextUtils.isEmpty(currentCustomerID) && currentUnitID != 0) {
+            personID = Integer.valueOf(currentCustomerID);
+            unitID = currentUnitID;
+
+            tvPerson.setText(customerName);
+            tvUnit.setText(unitName);
+        }
+
     }
 
     @Override
