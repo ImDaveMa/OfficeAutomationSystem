@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -29,6 +28,7 @@ import com.hengkai.officeautomationsystem.function.mine.MineFragment;
 import com.hengkai.officeautomationsystem.function.work_platform.WorkPlatformFragment;
 import com.hengkai.officeautomationsystem.network.entity.CheckVersionEntity;
 import com.hengkai.officeautomationsystem.network.service.CheckVersionService;
+import com.hengkai.officeautomationsystem.utils.NotificationUtil;
 import com.hengkai.officeautomationsystem.utils.OpenActivityUtils;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
@@ -68,6 +68,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private MineFragment mineFragment;
 
     public static boolean isForeground = false;
+    private NotificationUtil notificationUtil;
 
     @Override
     protected int setupView() {
@@ -86,6 +87,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         registerReceiver();
 
         checkVersionNumber();
+
+        notificationUtil = new NotificationUtil(this);
     }
 
     /**
@@ -172,17 +175,22 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         //等待，已经进入下载队列
                         Toast.makeText(MainActivity.this, "正在下载中, 请稍后", Toast.LENGTH_LONG).show();
+                        notificationUtil.prepare();
                     }
 
                     @Override
                     protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         // Log.i("666", "progress: " + soFarBytes / totalBytes * 100);
+                        int progress = (int)((float)soFarBytes / (float)totalBytes * 100);
+                        notificationUtil.start(progress);
                     }
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         File file = new File(task.getPath());
                         RxAppTool.installApp(MainActivity.this, file);//安装apk
+                        notificationUtil.complete();
+                        notificationUtil.cancel();
                     }
 
                     @Override
@@ -193,6 +201,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
                         e.printStackTrace();
+                        notificationUtil.cancel();
                     }
 
                     @Override

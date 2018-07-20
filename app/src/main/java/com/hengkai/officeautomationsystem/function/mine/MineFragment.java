@@ -72,7 +72,7 @@ public class MineFragment extends BaseFragment {
     private void initUserInfo() {
         String name = SPUtils.getString(UserInfo.REAL_NAME.name(), "");
         long joinDate = SPUtils.getLong(UserInfo.CREATE_TIME.name(), 0);
-        String joinDateStr = DateFormatUtils.getFormatedNewsTime(joinDate);
+        String joinDateStr = DateFormatUtils.getFormatedDateTime(DateFormatUtils.PATTERN_3, joinDate);
         String position = SPUtils.getString(UserInfo.POSITION.name(), "");
         String department = SPUtils.getString(UserInfo.DEPARTMENT_NAME.name(), "");
         tvUserName.setText(name);

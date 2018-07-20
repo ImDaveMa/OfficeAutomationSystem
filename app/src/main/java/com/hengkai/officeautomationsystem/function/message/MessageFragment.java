@@ -152,9 +152,13 @@ public class MessageFragment extends BaseFragment<MessageListPresenter> implemen
 
         switch (state){
             case MessageListModel.STATE_APPROVE: // 审批
-                Intent toIntent = new Intent(mActivity,CommentVisitActivity.class);
-                toIntent.putExtra("currentID", bean.getProject_id());
-                startActivity(toIntent);
+                if(bean.getProject_name().equals("sd_visit")) {//拜访跟进审批
+                    Intent toIntent = new Intent(mActivity, CommentVisitActivity.class);
+                    toIntent.putExtra("currentID", bean.getProject_id());
+                    startActivity(toIntent);
+                } else {
+                    ToastUtil.showToast("暂无其它审批");
+                }
                 break;
             case MessageListModel.STATE_MESSAGE: // 消息
                 ToastUtil.showToast(bean.getTypeName());
