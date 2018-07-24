@@ -125,7 +125,7 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                     String btnName = btnApproval.getText().toString().trim();
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     final AlertDialog dialog = builder.create();
-                    if (btnName.equals("撤销")) {
+                    if (btnName.equals("撤销")) {// TODO: 2018/7/24 撤销功能暂时删除掉了, 这里暂时先不删除
                         builder.setCancelable(false);
                         builder.setMessage("确认撤销吗?");
                         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -142,20 +142,6 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
                         }).show();
                     } else if (btnName.equals("审批")) {
                         builder.setCancelable(true);
-//                        builder.setMessage("请确认审批操作");
-//                        builder.setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                mPresenter.approval(examineId, 2);
-//                                dialog.dismiss();
-//                            }
-//                        }).setPositiveButton("同意", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                mPresenter.approval(examineId, 1);
-//                                dialog.dismiss();
-//                            }
-//                        }).show();
                         View dialogView = View.inflate(this, R.layout.dialog_visit_approval, null);
                         final EditText etReason = dialogView.findViewById(R.id.et_reason);
                         Button btnAgree = dialogView.findViewById(R.id.btn_agree);
@@ -270,11 +256,11 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
         tvStateOfApproval.setText(entity.examineState);
         examineId = entity.examineId;
 
-        if (bean.userId == Integer.valueOf(SPUtils.getString(UserInfo.USER_ID.name(), ""))) {
-            btnApproval.setText("撤销");
-        } else {
-            btnApproval.setText("审批");
-        }
+//        if (bean.userId == Integer.valueOf(SPUtils.getString(UserInfo.USER_ID.name(), ""))) {
+//            btnApproval.setText("撤销");
+//        } else {
+//            btnApproval.setText("审批");
+//        }
         if (entity.isOptionable == 1) {
             btnApproval.setVisibility(View.VISIBLE);
         } else {

@@ -24,7 +24,7 @@ public class VisitRecordDetailEntity {
     public String examineState;
     /**
      * 0不允许, 1允许
-     * <p>否允许操作(经理级别可操作, 可审批), 即使是经理级别如果操作完成后不可在操作</p>
+     * <p>否允许操作(经理(销售部老大)级别可操作, 可审批), 即使是经理级别如果操作完成后不可在操作</p>
      */
     public int isOptionable;
 
