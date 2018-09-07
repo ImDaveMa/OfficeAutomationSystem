@@ -28,7 +28,7 @@ public class URLFinal {
     /**
      * 下载新的版本信息
      */
-    public static final String DOWNLOAD_NEW_VERSION = "http://oa.lyyisun.com/oa/file/app/hkoa.apk";
+    public static final String DOWNLOAD_NEW_VERSION = "http://oa.lyyisun.com:8042/oa/file/app/hkoa.apk";
     /**
      * 登录
      */
