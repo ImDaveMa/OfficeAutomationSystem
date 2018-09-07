@@ -79,6 +79,8 @@ public class MineFragment extends BaseFragment {
         tvDepartment.setText(department + "·" + position);
         tvTimeOfEntry.setText(joinDateStr + "入职");
 
+
+
         Picasso.with(mActivity)
                 .load(SPUtils.getString(UserInfo.ICON_LINK.name(), ""))
                 .error(R.drawable.ic_user)
