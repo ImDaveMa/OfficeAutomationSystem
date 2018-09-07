@@ -82,6 +82,7 @@ public class MineFragment extends BaseFragment {
         Picasso.with(mActivity)
                 .load(SPUtils.getString(UserInfo.ICON_LINK.name(), ""))
                 .error(R.drawable.ic_user)
+                .placeholder(R.drawable.ic_user)
                 .transform(new PicassoCircleTransform())
                 .resize(WindowUtil.dp2px(50, mActivity), WindowUtil.dp2px(50, mActivity))
                 .centerCrop()
