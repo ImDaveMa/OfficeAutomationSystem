@@ -28,11 +28,12 @@ public class SelectVisitProjectModel extends BaseModel {
         service = retrofit.create(VisitRecordDetailService.class);
     }
 
-    public void getVisitProjectList(String customerID, Observer<VisitRecordDetailGetVisitUnitEntity> observer) {
+    public void getVisitProjectList(int unitID, Observer<VisitRecordDetailGetVisitUnitEntity> observer) {
         Map<String, String> params = new HashMap<>();
 
         params.put("TOKEN", SPUtils.getString(UserInfo.TOKEN.name(), ""));
-        params.put("ID", customerID);
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("COMPANYID", unitID + "");
 
         service.getVisitUnitList(URLFinal.GET_VISIT_UNIT_PROJECT_LIST, params)
                 .subscribeOn(Schedulers.io())

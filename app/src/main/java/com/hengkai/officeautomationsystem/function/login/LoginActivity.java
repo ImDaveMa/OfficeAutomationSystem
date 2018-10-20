@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements EasyP
                 easyPermission();
                 break;
             case R.id.tv_forget_password:
-
+                ToastUtil.showToast("请联系管理员重置密码");
                 break;
         }
     }

@@ -17,8 +17,9 @@ public class URLFinal {
      * baseURL
      */
 //    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/" + VERSION + "/";
-//    public static final String BASE_URL = "http://192.168.2.18/OA_inside/mobile/" + VERSION + "/";
-    public static final String BASE_URL = "http://oa.lyyisun.com:8042/mobile/" + VERSION + "/";
+//    public static final String BASE_URL = "http://192.168.2.22:8080/OA_inside/mobile/" + VERSION + "/";
+//    public static final String BASE_URL = "http://oa.lyyisun.com:8042/mobile/" + VERSION + "/";
+    public static final String BASE_URL = "http://oa.hkkj.net:8043/mobile/" + VERSION + "/";
 
 
     /**
@@ -33,6 +34,10 @@ public class URLFinal {
      * 登录
      */
     public static final String LOGIN_URL = "login/password";
+    /**
+     * 登出
+     */
+    public static final String LOGOUT_URL = "login/logout";
     /**
      * 获取待办事项列表
      */
@@ -286,4 +291,8 @@ public class URLFinal {
      * 新增项目 - 提交
      */
     public static final String NEW_PROJECT_COMMIT = "mproject/addOrUpdate";
+    /**
+     * 修改密码
+     */
+    public static final String CHANGE_PASSWORD = "user/updatePwd";
 }

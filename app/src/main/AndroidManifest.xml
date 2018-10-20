@@ -131,6 +131,7 @@
         <activity android:name=".function.new_unit.search_keyword.SearchKeywordActivity" />
         <activity android:name=".function.new_project.NewProjectActivity" />
         <activity android:name=".function.goods_supplier.GoodsSupplierDetailActivity" />
+        <activity android:name=".function.setting.ChangePasswordActivity" />
 
 
         <!-- Rich push 核心功能 since 2.0.6-->

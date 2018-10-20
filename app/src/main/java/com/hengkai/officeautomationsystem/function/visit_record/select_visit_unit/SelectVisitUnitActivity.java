@@ -76,6 +76,11 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
     private LinearLayoutManager layoutManager;
     private KeywordAdapter keywordAdapter;
 
+    /**
+     * 是否为拜访跟进
+     */
+    private boolean openByVisit;
+
     @Override
     protected int setupView() {
         return R.layout.activity_select_visit_unit;
@@ -89,6 +94,12 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
 
         mList = new ArrayList<>();
         mKeywordList = new ArrayList<>();
+
+        // 获取配置
+        Intent intent = getIntent();
+        if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
+            openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT,false);
+        }
 
         initTitleBar();
         setupRecyclerView();
@@ -181,6 +192,7 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
                 break;
             case R.id.tv_operation:
                 Intent intent = new Intent(this, NewUnitActivity.class);
+                intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, openByVisit);
                 startActivityForResult(intent, CommonFinal.COMMON_REQUEST_CODE);
                 break;
             case R.id.tv_search:
@@ -290,9 +302,28 @@ public class SelectVisitUnitActivity extends BaseActivity<SelectVisitUnitPresent
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == RESULT_OK) {
-            if (swipeToLoadLayout.getVisibility() == View.VISIBLE) {
-                swipeToLoadLayout.setRefreshing(true);
+//            if (swipeToLoadLayout.getVisibility() == View.VISIBLE) {
+//                swipeToLoadLayout.setRefreshing(true);
+//            }
+
+            Intent intent = new Intent();
+            if(openByVisit) {
+                intent.putExtra("personID", data.getIntExtra("ID", 0));
+                intent.putExtra("personName", data.getStringExtra("name"));
+                intent.putExtra("personDepartment", data.getStringExtra("department"));
+
+                // 项目信息
+                if(data.hasExtra("projectID")){
+                    intent.putExtra("projectID", data.getIntExtra("projectID",0));
+                    intent.putExtra("projectName", data.getStringExtra("projectName"));
+                }
             }
+
+            // 单位信息
+            intent.putExtra("ID", data.getIntExtra("unitID",0));
+            intent.putExtra("name", data.getStringExtra("unitName"));
+            setResult(CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE, intent);
+            finish();
         }
     }
 

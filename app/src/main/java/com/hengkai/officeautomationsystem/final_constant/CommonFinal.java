@@ -46,4 +46,9 @@ public class CommonFinal {
      */
     public static final int ADD_CONTACT_REQUEST_CODE = 1009;
     public static final int ADD_CONTACT_RESULT_CODE = 1010;
+
+    /**
+     * 是否是从拜访跟新打开的Activity的：Extra数据Key
+     */
+    public static final String EXTRA_KEY_OPEN_BY_VISIT = "OPEN_BY_VISIT";
 }

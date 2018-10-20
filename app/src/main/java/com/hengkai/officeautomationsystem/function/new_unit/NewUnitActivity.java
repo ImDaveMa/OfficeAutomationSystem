@@ -1,6 +1,10 @@
 package com.hengkai.officeautomationsystem.function.new_unit;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.DividerItemDecoration;
@@ -20,6 +24,7 @@ import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.new_unit.search_keyword.SearchKeywordActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.search_keyword.SearchKeywordAdapter;
+import com.hengkai.officeautomationsystem.function.visit_record.select_visit_person.SelectVisitPersonActivity;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitKeywordEntity;
 import com.hengkai.officeautomationsystem.network.entity.NewUnitTypeEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
@@ -66,6 +71,14 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
      * 单位关键字ID
      */
     private int keywordID;
+    /**
+     * 当前添加的单位ID
+     */
+    private int currentID;
+    /**
+     * 是否为拜访跟进
+     */
+    private boolean openByVisit;
 
     @Override
     protected int setupView() {
@@ -79,6 +92,12 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
         ButterKnife.bind(this);
 
         tvTitle.setText("新增单位");
+
+        // 获取配置
+        Intent intent = getIntent();
+        if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
+            openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT,false);
+        }
 
         setEditTextListener();
     }
@@ -172,6 +191,45 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
         showDialog();
     }
 
+    protected void commitResultSuccess(final int currentUnitID){
+        currentID = currentUnitID;
+
+        final Intent resultIntent = new Intent();
+        resultIntent.putExtra("unitID", currentUnitID);
+        resultIntent.putExtra("unitName", titName.getText().toString().trim());
+
+        if(openByVisit){
+            new AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("是否继续选择拜访人？")
+                    .setCancelable(false)
+                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                            // 打开选择拜访人界面
+                            Intent intent = new Intent(NewUnitActivity.this, SelectVisitPersonActivity.class);
+                            intent.putExtra("unitID", currentUnitID);
+                            intent.putExtra("unitName", titName.getText().toString().trim());
+                            intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, true);
+                            startActivityForResult(intent, CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
+                        }
+                    })
+                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            setResult(Activity.RESULT_OK, resultIntent);
+                            finish();
+                        }
+                    }).show();
+        } else {
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }
+    }
+
     /**
      * 获取底部弹窗并且弹出
      */
@@ -218,6 +276,27 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
             etKeyword.setText(data.getStringExtra("name"));
             etKeyword.setTextColor(getResources().getColor(R.color.black1));
             keywordID = data.getIntExtra("ID", 0);
+        } else
+        // 从选择拜访人返回
+        if(requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE){
+            Intent intent = new Intent();
+            // 单位信息
+            intent.putExtra("unitID", currentID);
+            intent.putExtra("unitName", titName.getText().toString().trim());
+
+            // 拜访人信息
+            intent.putExtra("personID", data.getIntExtra("ID",0));
+            intent.putExtra("personName", data.getStringExtra("name"));
+            intent.putExtra("personDepartment", data.getStringExtra("department"));
+
+            // 项目信息
+            if(data.hasExtra("projectID")){
+                intent.putExtra("projectID", data.getIntExtra("projectID",0));
+                intent.putExtra("projectName", data.getStringExtra("projectName"));
+            }
+
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 }

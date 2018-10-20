@@ -70,7 +70,7 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
         unitName = getIntent().getStringExtra("unitName");
         currentUnitID = getIntent().getIntExtra("unitID", 0);
 
-        mPresenter.getVisitProjectList(currentCustomerID);
+        mPresenter.getVisitProjectList(currentUnitID);
     }
 
     private void initTitleBar() {
@@ -142,12 +142,12 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
-            mPresenter.getVisitProjectList(currentCustomerID);
+            mPresenter.getVisitProjectList(currentUnitID);
         }
     }
 
     @Override
     protected void reloadData() {
-        mPresenter.getVisitProjectList(currentCustomerID);
+        mPresenter.getVisitProjectList(currentUnitID);
     }
 }

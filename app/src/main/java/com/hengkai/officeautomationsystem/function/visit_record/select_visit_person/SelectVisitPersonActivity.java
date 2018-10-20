@@ -1,5 +1,8 @@
 package com.hengkai.officeautomationsystem.function.visit_record.select_visit_person;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,6 +18,8 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.contacts_library.add.AddContactActivity;
+import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
+import com.hengkai.officeautomationsystem.function.visit_record.select_visit_project.SelectVisitProjectActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit.SelectVisitUnitAdapter;
 import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailGetVisitUnitEntity;
 import com.jaeger.library.StatusBarUtil;
@@ -40,6 +45,14 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
     private List<VisitRecordDetailGetVisitUnitEntity.DATABean> mList;
     private SelectVisitPersonAdapter adapter;
     private int unitID;
+    private String unitName;
+
+    private final Intent resultIntent = new Intent(); // 返回结果
+
+    /**
+     * 是否为拜访跟进
+     */
+    private boolean openByVisit;
 
     @Override
     protected int setupView() {
@@ -54,10 +67,17 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
 
         mList = new ArrayList<>();
 
+        // 获取配置
+        Intent intent = getIntent();
+        unitID = intent.getIntExtra("unitID", 0);
+        if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
+            openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT,false);
+            unitName = intent.getStringExtra("unitName");
+        }
+
         initTitleBar();
         setupRecyclerView();
 
-        unitID = getIntent().getIntExtra("unitID", 0);
         mPresenter.getVisitCustomerList(unitID);
     }
 
@@ -110,13 +130,42 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
 
         adapter.setOnItemClickListener(new SelectVisitPersonAdapter.OnItemClickListener() {
             @Override
-            public void onClick(int ID, String name, String department) {
-                Intent intent = new Intent();
-                intent.putExtra("ID", String.valueOf(ID));
-                intent.putExtra("name", name);
-                intent.putExtra("department", department);
-                setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, intent);
-                finish();
+            public void onClick(final int ID, final String name, String department) {
+                resultIntent.putExtra("ID", String.valueOf(ID));
+                resultIntent.putExtra("name", name);
+                resultIntent.putExtra("department", department);
+
+                if(openByVisit){
+                    new AlertDialog.Builder(SelectVisitPersonActivity.this)
+                            .setTitle("提示")
+                            .setMessage("是否继续选择项目？")
+                            .setCancelable(false)
+                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                    // 选择项目
+                                    Intent intent = new Intent(SelectVisitPersonActivity.this, SelectVisitProjectActivity.class);
+                                    intent.putExtra("currentCustomerID", String.valueOf(ID));
+                                    intent.putExtra("unitID", unitID);
+                                    intent.putExtra("customerName", name);
+                                    intent.putExtra("unitName", unitName);
+                                    startActivityForResult(intent, CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
+                                }
+                            })
+                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, resultIntent);
+                                    finish();
+                                }
+                            }).show();
+                } else {
+                    setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, resultIntent);
+                    finish();
+                }
             }
         });
     }
@@ -126,6 +175,13 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == RESULT_OK) {
             mPresenter.getVisitCustomerList(unitID);
+        } else if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE){ // 继续选择项目返回
+            // 接着选择过的拜访人继续添加参数
+            resultIntent.putExtra("projectID", data.getIntExtra("ID",0));
+            resultIntent.putExtra("projectName", data.getStringExtra("name"));
+
+            setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, resultIntent);
+            finish();
         }
     }
 

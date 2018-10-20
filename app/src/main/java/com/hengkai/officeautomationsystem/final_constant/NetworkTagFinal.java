@@ -234,4 +234,9 @@ public class NetworkTagFinal {
     public static final String NEW_PROJECT_ACTIVITY_GET_TYPE_LIST = "NEW_PROJECT_ACTIVITY_GET_TYPE_LIST";
     public static final String NEW_PROJECT_ACTIVITY_GET_PERSON_LIST = "NEW_PROJECT_ACTIVITY_GET_PERSON_LIST";
 
+    /**
+     * ChangePasswordActivity
+     */
+    public static final String CHANGE_PASSWORD_ACTIVITY_URL = "CHANGE_PASSWORD_ACTIVITY_URL";
+    public static final String SETTING_ACTIVITY_LOGOUT_URL = "SETTING_ACTIVITY_LOGOUT_URL";
 }

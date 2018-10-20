@@ -22,8 +22,8 @@ public class SelectVisitProjectPresenter extends BasePresenter<SelectVisitProjec
         model = new SelectVisitProjectModel();
     }
 
-    public void getVisitProjectList(String customerID) {
-        model.getVisitProjectList(customerID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
+    public void getVisitProjectList(int unitID) {
+        model.getVisitProjectList(unitID, new Observer<VisitRecordDetailGetVisitUnitEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
                 RxApiManager.get().add(NetworkTagFinal.VISIT_RECORD_DETAIL_ACTIVITY_GET_VISIT_UNIT_PROJECT_LIST, d);

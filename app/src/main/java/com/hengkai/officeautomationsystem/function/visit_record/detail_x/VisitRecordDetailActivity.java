@@ -46,6 +46,7 @@ import com.hengkai.officeautomationsystem.network.entity.VisitRecordDetailEntity
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
+import com.luck.picture.lib.tools.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -204,6 +205,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                     return;
                 }
                 intent = new Intent(this, SelectVisitUnitActivity.class);
+                intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, true);
                 startActivityForResult(intent, CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE);
                 break;
             case R.id.ll_visit_customer://选择拜访人
@@ -216,8 +218,14 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 startActivityForResult(intent, CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
                 break;
             case R.id.ll_project://选择跟进项目
-                if (TextUtils.isEmpty(currentCustomerID)) {
-                    ToastUtil.showToast("请先选择拜访人");
+                // 项目跟着拜访单位走，不用验证拜访人
+//                if (TextUtils.isEmpty(currentCustomerID)) {
+//                    ToastUtil.showToast("请先选择拜访人");
+//                    return;
+//                }
+                // 验证拜访单位
+                if (currentUnitID <= 0) {
+                    ToastUtil.showToast("请先选择拜访单位");
                     return;
                 }
                 intent = new Intent(this, SelectVisitProjectActivity.class);
@@ -934,12 +942,31 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             tvVisitUnit.setText(name);
             ivVisitUnit.setVisibility(View.GONE);
 
-            tvVisitCustomer.setText("请选择");
-            ivVisitCustomer.setVisibility(View.VISIBLE);
-            tvVisitDepartment.setText("");
-            tvProject.setText("请选择");
-            ivProject.setVisibility(View.VISIBLE);
+            // 拜访人信息
+            if(data.hasExtra("personName")) {
+                String personName = data.getStringExtra("personName");
+                String department = data.getStringExtra("personDepartment");
+                currentCustomerID = data.getStringExtra("personID");
+                tvVisitCustomer.setText(personName);
+                ivVisitCustomer.setVisibility(View.GONE);
+                tvVisitDepartment.setText(department);
+            } else { // 如果没有拜访人信息，则界面状态为空
+                tvVisitCustomer.setText("请选择");
+                ivVisitCustomer.setVisibility(View.VISIBLE);
+                tvVisitDepartment.setText("");
+            }
+
+            // 项目信息
+            if(data.hasExtra("projectID")){
+                projectID = data.getIntExtra("projectID",0);
+                tvProject.setText(data.getStringExtra("projectName"));
+                ivProject.setVisibility(View.GONE);
+            } else {
+                tvProject.setText("请选择");
+                ivProject.setVisibility(View.VISIBLE);
+            }
         } else if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE) {
+            // 给拜访人赋值
             String name = data.getStringExtra("name");
             String department = data.getStringExtra("department");
             currentCustomerID = data.getStringExtra("ID");
@@ -947,8 +974,15 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             ivVisitCustomer.setVisibility(View.GONE);
             tvVisitDepartment.setText(department);
 
-            tvProject.setText("请选择");
-            ivProject.setVisibility(View.VISIBLE);
+            // 项目信息
+            if(data.hasExtra("projectID")){
+                projectID = data.getIntExtra("projectID",0);
+                tvProject.setText(data.getStringExtra("projectName"));
+                ivProject.setVisibility(View.GONE);
+            } else {
+                tvProject.setText("请选择");
+                ivProject.setVisibility(View.VISIBLE);
+            }
         } else if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE) {
             String name = data.getStringExtra("name");
             projectID = data.getIntExtra("ID", 0);

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
+import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.function.login.LoginActivity;
 import com.hengkai.officeautomationsystem.utils.SPUtils;
@@ -25,10 +26,12 @@ import butterknife.OnClick;
  * Created by Harry on 2018/5/3.
  * 设置页面
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity<SettingPresenter> {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_change_password)
+    TextView tvChangePassword;
 
     @Override
     protected int setupView() {
@@ -46,20 +49,25 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected ArrayList<String> cancelNetWork() {
-        return null;
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add(NetworkTagFinal.SETTING_ACTIVITY_LOGOUT_URL);
+        return tags;
     }
 
     @Override
-    protected BasePresenter bindPresenter() {
-        return null;
+    protected SettingPresenter bindPresenter() {
+        return new SettingPresenter();
     }
 
-    @OnClick({R.id.tv_logout, R.id.iv_back})
+    @OnClick({R.id.tv_logout, R.id.iv_back, R.id.tv_change_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_logout:
                 logout();
-
+                break;
+            case R.id.tv_change_password:
+                Intent intent = new Intent(this, ChangePasswordActivity.class);
+                startActivity(intent);
                 break;
             case R.id.iv_back:
                 finish();
@@ -82,6 +90,9 @@ public class SettingActivity extends BaseActivity {
                 SPUtils.putString(UserInfo.ICON_LINK.name(), "");
                 dialog.dismiss();
                 // TODO: 2018/5/3 退出登录, 变更当前用户的头像为默认的空头像, 清空头像下方的名字, 并把改textView改为登录的字样
+
+                // 网络请求退出系统
+                mPresenter.logout();
 
                 Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
