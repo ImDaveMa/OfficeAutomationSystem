@@ -140,7 +140,7 @@ public class AddContactActivity extends BaseActivity<AddContactPresenter> {
      * 添加成功
      */
     protected void addSuccess() {
-        ToastUtil.showToast("物品供应商添加成功");
+        ToastUtil.showToast("联系人添加成功");
         setResult(RESULT_OK);
         finish();
     }

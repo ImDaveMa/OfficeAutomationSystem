@@ -396,7 +396,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start|top"
-                    android:hint="请输入外出事由"
+                    android:hint="请输入拜访总结"
                     android:inputType="textMultiLine"
                     android:lines="4"
                     android:padding="5dp"
