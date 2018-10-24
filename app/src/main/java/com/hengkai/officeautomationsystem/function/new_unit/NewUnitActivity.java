@@ -22,6 +22,7 @@ import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
+import com.hengkai.officeautomationsystem.function.contacts_library.add.AddContactActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.search_keyword.SearchKeywordActivity;
 import com.hengkai.officeautomationsystem.function.new_unit.search_keyword.SearchKeywordAdapter;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_person.SelectVisitPersonActivity;
@@ -79,6 +80,8 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
      * 是否为拜访跟进
      */
     private boolean openByVisit;
+
+    private Intent resultIntent = new Intent();
 
     @Override
     protected int setupView() {
@@ -194,22 +197,21 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
     protected void commitResultSuccess(final int currentUnitID){
         currentID = currentUnitID;
 
-        final Intent resultIntent = new Intent();
         resultIntent.putExtra("unitID", currentUnitID);
         resultIntent.putExtra("unitName", titName.getText().toString().trim());
 
         if(openByVisit){
             new AlertDialog.Builder(this)
                     .setTitle("提示")
-                    .setMessage("是否继续选择拜访人？")
+                    .setMessage("是否继续添加拜访人？")
                     .setCancelable(false)
                     .setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
 
-                            // 打开选择拜访人界面
-                            Intent intent = new Intent(NewUnitActivity.this, SelectVisitPersonActivity.class);
+                            // 打开新增联系人界面
+                            Intent intent = new Intent(NewUnitActivity.this, AddContactActivity.class);
                             intent.putExtra("unitID", currentUnitID);
                             intent.putExtra("unitName", titName.getText().toString().trim());
                             intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, true);
@@ -220,7 +222,7 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            setResult(Activity.RESULT_OK, resultIntent);
+                            setResult(CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE, resultIntent);
                             finish();
                         }
                     }).show();
@@ -284,10 +286,12 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
             intent.putExtra("unitID", currentID);
             intent.putExtra("unitName", titName.getText().toString().trim());
 
-            // 拜访人信息
-            intent.putExtra("personID", data.getIntExtra("ID",0));
-            intent.putExtra("personName", data.getStringExtra("name"));
-            intent.putExtra("personDepartment", data.getStringExtra("department"));
+            if(data.hasExtra("personID")) {
+                // 拜访人信息
+                intent.putExtra("personID", data.getIntExtra("personID", 0));
+                intent.putExtra("personName", data.getStringExtra("personName"));
+                intent.putExtra("personDepartment", data.getStringExtra("personDepartment"));
+            }
 
             // 项目信息
             if(data.hasExtra("projectID")){
@@ -295,7 +299,7 @@ public class NewUnitActivity extends BaseActivity<NewUnitPresenter> {
                 intent.putExtra("projectName", data.getStringExtra("projectName"));
             }
 
-            setResult(Activity.RESULT_OK, intent);
+            setResult(CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE, intent);
             finish();
         }
     }

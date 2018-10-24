@@ -70,9 +70,9 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
         // 获取配置
         Intent intent = getIntent();
         unitID = intent.getIntExtra("unitID", 0);
+        unitName = intent.getStringExtra("unitName");
         if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
             openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT,false);
-            unitName = intent.getStringExtra("unitName");
         }
 
         initTitleBar();
@@ -107,8 +107,11 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
                 finish();
                 break;
             case R.id.tv_operation:
-                startActivityForResult(new Intent(this, AddContactActivity.class),
-                        CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
+                Intent intent = new Intent(this, AddContactActivity.class);
+                intent.putExtra("unitID", unitID);
+                intent.putExtra("unitName", unitName);
+                intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, openByVisit);
+                startActivityForResult(intent, CommonFinal.ADD_CONTACT_REQUEST_CODE);
                 break;
         }
     }
@@ -131,9 +134,9 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
         adapter.setOnItemClickListener(new SelectVisitPersonAdapter.OnItemClickListener() {
             @Override
             public void onClick(final int ID, final String name, String department) {
-                resultIntent.putExtra("ID", String.valueOf(ID));
-                resultIntent.putExtra("name", name);
-                resultIntent.putExtra("department", department);
+                resultIntent.putExtra("personID", ID);
+                resultIntent.putExtra("personName", name);
+                resultIntent.putExtra("personDepartment", department);
 
                 if(openByVisit){
                     new AlertDialog.Builder(SelectVisitPersonActivity.this)
@@ -147,7 +150,8 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
 
                                     // 选择项目
                                     Intent intent = new Intent(SelectVisitPersonActivity.this, SelectVisitProjectActivity.class);
-                                    intent.putExtra("currentCustomerID", String.valueOf(ID));
+                                    intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, openByVisit);
+                                    intent.putExtra("currentCustomerID", ID);
                                     intent.putExtra("unitID", unitID);
                                     intent.putExtra("customerName", name);
                                     intent.putExtra("unitName", unitName);
@@ -176,9 +180,22 @@ public class SelectVisitPersonActivity extends BaseActivity<SelectVisitPersonPre
         if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == RESULT_OK) {
             mPresenter.getVisitCustomerList(unitID);
         } else if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE){ // 继续选择项目返回
-            // 接着选择过的拜访人继续添加参数
-            resultIntent.putExtra("projectID", data.getIntExtra("ID",0));
-            resultIntent.putExtra("projectName", data.getStringExtra("name"));
+
+            // 接着选择或者添加的项目参数
+            resultIntent.putExtra("projectID", data.getIntExtra("projectID",0));
+            resultIntent.putExtra("projectName", data.getStringExtra("projectName"));
+
+            setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, resultIntent);
+            finish();
+        } else if (requestCode == CommonFinal.ADD_CONTACT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE){ // 新增反馈
+            // 接着新增的拜访人继续添加参数
+            resultIntent.putExtra("personID", data.getIntExtra("personID",0));
+            resultIntent.putExtra("personName", data.getStringExtra("personName"));
+            resultIntent.putExtra("personDepartment", data.getStringExtra("personDepartment"));
+
+            // 接着选择或者添加的项目参数
+            resultIntent.putExtra("projectID", data.getIntExtra("projectID",0));
+            resultIntent.putExtra("projectName", data.getStringExtra("projectName"));
 
             setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, resultIntent);
             finish();

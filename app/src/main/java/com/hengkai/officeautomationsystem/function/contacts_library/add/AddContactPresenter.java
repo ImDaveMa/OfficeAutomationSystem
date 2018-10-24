@@ -35,7 +35,7 @@ public class AddContactPresenter extends BasePresenter<AddContactActivity> {
                     @Override
                     public void onNext(CommonReceiveMessageEntity msgEntity) {
                         if (msgEntity.CODE == 1) {
-                            view.addSuccess();
+                            view.addSuccess(msgEntity.DATA);
                         } else if (msgEntity.CODE == 0) {//TOKEN失效
                             ToastUtil.showToast("登录失效，请重新登录");
                             view.showLoginDialog(view);

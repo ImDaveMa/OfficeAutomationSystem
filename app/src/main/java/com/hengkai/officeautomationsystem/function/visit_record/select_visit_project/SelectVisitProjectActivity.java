@@ -41,13 +41,18 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
     /**
      * 当前单位下客户的ID
      */
-    private String currentCustomerID;
+    private int currentCustomerID;
     /**
      * 当前单位ID
      */
     private int currentUnitID;
     private String customerName;
     private String unitName;
+
+    /**
+     * 是否为拜访跟进
+     */
+    private boolean openByVisit;
 
     @Override
     protected int setupView() {
@@ -65,10 +70,17 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
 
         setupRecyclerView();
 
-        currentCustomerID = getIntent().getStringExtra("currentCustomerID");
-        customerName = getIntent().getStringExtra("customerName");
-        unitName = getIntent().getStringExtra("unitName");
-        currentUnitID = getIntent().getIntExtra("unitID", 0);
+        // 获取配置
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
+            openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, false);
+        }
+
+        currentCustomerID = intent.getIntExtra("currentCustomerID", 0);
+        customerName = intent.getStringExtra("customerName");
+        unitName = intent.getStringExtra("unitName");
+        currentUnitID = intent.getIntExtra("unitID", 0);
 
         mPresenter.getVisitProjectList(currentUnitID);
     }
@@ -87,11 +99,12 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
                 break;
             case R.id.tv_operation:
                 Intent intent = new Intent(this, NewProjectActivity.class);
-                if (!TextUtils.isEmpty(currentCustomerID) && currentUnitID != 0) {
+                if (currentCustomerID != 0 && currentUnitID != 0) {
                     intent.putExtra("currentCustomerID", currentCustomerID);
                     intent.putExtra("unitID", currentUnitID);
                     intent.putExtra("customerName", customerName);
                     intent.putExtra("unitName", unitName);
+                    intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, openByVisit);
                 }
                 startActivityForResult(intent,
                         CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
@@ -112,8 +125,8 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
             @Override
             public void onClick(int ID, String name) {
                 Intent intent = new Intent();
-                intent.putExtra("ID", ID);
-                intent.putExtra("name", name);
+                intent.putExtra("projectID", ID);
+                intent.putExtra("projectName", name);
                 setResult(CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE, intent);
                 finish();
             }
@@ -143,6 +156,12 @@ public class SelectVisitProjectActivity extends BaseActivity<SelectVisitProjectP
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE) {
             mPresenter.getVisitProjectList(currentUnitID);
+        } else if(requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE) {
+            Intent intent = new Intent();
+            intent.putExtra("projectID", data.getIntExtra("projectID",0));
+            intent.putExtra("projectName", data.getStringExtra("projectName"));
+            setResult(CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE, intent);
+            finish();
         }
     }
 

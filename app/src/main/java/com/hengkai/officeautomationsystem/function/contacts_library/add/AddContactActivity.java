@@ -1,5 +1,8 @@
 package com.hengkai.officeautomationsystem.function.contacts_library.add;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
@@ -15,6 +18,8 @@ import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.contacts_library.ContactsLibraryActivity;
+import com.hengkai.officeautomationsystem.function.new_project.NewProjectActivity;
+import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.select_visit_unit.SelectVisitUnitActivity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
@@ -66,7 +71,17 @@ public class AddContactActivity extends BaseActivity<AddContactPresenter> {
     EditText etPhone;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
+
     private int unitID;
+    private String unitName;
+    private int personID;
+
+    /**
+     * 是否为拜访跟进
+     */
+    private boolean openByVisit;
+
+    private Intent resultIntent = new Intent();
 
     @Override
     protected int setupView() {
@@ -80,10 +95,32 @@ public class AddContactActivity extends BaseActivity<AddContactPresenter> {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
         tvTitle.setText("添加联系人");
 
-        unitID = getIntent().getIntExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, 0);
-        String unitName = getIntent().getStringExtra("unitName");
-        if (unitID != 0 && !TextUtils.isEmpty(unitName)) {
-            tvUnit.setText(unitName);
+        // 获取配置
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
+            openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT,false);
+            if(openByVisit){
+                unitID = intent.getIntExtra("unitID", 0);
+                unitName = getIntent().getStringExtra("unitName");
+                if (unitID != 0 && !TextUtils.isEmpty(unitName)) {
+                    tvUnit.setText(unitName);
+                }
+                // 禁止选择单位
+                rlUnit.setClickable(false);
+            } else {
+                unitID = intent.getIntExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, 0);
+                unitName = getIntent().getStringExtra("unitName");
+                if (unitID != 0 && !TextUtils.isEmpty(unitName)) {
+                    tvUnit.setText(unitName);
+                }
+            }
+        } else {
+            unitID = intent.getIntExtra(ContactsLibraryActivity.EXTRA_KEY_UNIT_ID, 0);
+            unitName = getIntent().getStringExtra("unitName");
+            if (unitID != 0 && !TextUtils.isEmpty(unitName)) {
+                tvUnit.setText(unitName);
+            }
         }
     }
 
@@ -139,10 +176,43 @@ public class AddContactActivity extends BaseActivity<AddContactPresenter> {
     /**
      * 添加成功
      */
-    protected void addSuccess() {
-        ToastUtil.showToast("联系人添加成功");
-        setResult(RESULT_OK);
-        finish();
+    protected void addSuccess(final int personID) {
+        this.personID = personID;
+        resultIntent.putExtra("personID", personID);
+        resultIntent.putExtra("personName", etName.getText().toString().trim());
+        resultIntent.putExtra("personDepartment", etDepartment.getText().toString().trim());
+
+        if(openByVisit){
+            new AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("是否继续添加项目？")
+                    .setCancelable(false)
+                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                            Intent intent = new Intent(AddContactActivity.this, NewProjectActivity.class);
+                            intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, openByVisit);
+                            intent.putExtra("currentCustomerID", personID);
+                            intent.putExtra("customerName", etName.getText().toString().trim());
+                            intent.putExtra("unitID", unitID);
+                            intent.putExtra("unitName", unitName);
+                            startActivityForResult(intent, CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
+                        }
+                    })
+                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, resultIntent);
+                            finish();
+                        }
+                    }).show();
+        } else {
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }
     }
 
     @OnClick({R.id.rl_unit, R.id.rl_sex, R.id.tv_submit, R.id.iv_back})
@@ -196,6 +266,25 @@ public class AddContactActivity extends BaseActivity<AddContactPresenter> {
         if (requestCode == CommonFinal.SELECT_VISIT_UNIT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_UNIT_RESULT_CODE) {
             unitID = data.getIntExtra("ID", 0);
             tvUnit.setText(data.getStringExtra("name"));
+        } else
+        // 从新增项目返回
+        if(requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE){
+            Intent intent = new Intent();
+
+            // 拜访人信息
+            intent.putExtra("personID", personID);
+            intent.putExtra("personName", etName.getText().toString().trim());
+            intent.putExtra("personDepartment", etDepartment.getText().toString().trim());
+
+
+            // 项目信息
+            if(data.hasExtra("projectID")){
+                intent.putExtra("projectID", data.getIntExtra("projectID",0));
+                intent.putExtra("projectName", data.getStringExtra("projectName"));
+            }
+
+            setResult(CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE, intent);
+            finish();
         }
     }
 }

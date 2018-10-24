@@ -104,6 +104,7 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
     }
 
     public void commit(Map<String, String> params) {
+        view.showDialog();
         model.commit(params, new Observer<CommonReceiveMessageEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -112,11 +113,11 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
 
             @Override
             public void onNext(CommonReceiveMessageEntity commonReceiveMessageEntity) {
+                view.dismissDialog();
                 switch (commonReceiveMessageEntity.CODE) {
                     case 1:
-                        ToastUtil.showToast("新增成功");
-                        view.setResult(CommonFinal.COMMON_RESULT_CODE);
-                        view.finish();
+                        ToastUtil.showToast("新增项目成功");
+                        view.commitSuccess(commonReceiveMessageEntity.DATA);
                         break;
                     case 0:
                         view.showLoginDialog(view);
@@ -129,12 +130,13 @@ public class NewProjectPresenter extends BasePresenter<NewProjectActivity> {
 
             @Override
             public void onError(Throwable e) {
+                view.dismissDialog();
                 ToastUtil.showToast("网络请求错误");
             }
 
             @Override
             public void onComplete() {
-
+                view.dismissDialog();
             }
         });
     }

@@ -126,7 +126,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
     /**
      * 当前拜访客户的ID
      */
-    private String currentCustomerID = "";
+    private int currentCustomerID = 0;
 
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
@@ -134,7 +134,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
     /**
      * 判断当前状态是否为已经开始拜访的
      */
-    private boolean isStart;
+    private boolean isStart = false;
     private String locationStartAddress, locationEndAddress;
     private double locationLatitude;
     private double locationLongitude;
@@ -215,6 +215,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 }
                 intent = new Intent(this, SelectVisitPersonActivity.class);
                 intent.putExtra("unitID", currentUnitID);
+                intent.putExtra("unitName", tvVisitUnit.getText().toString().trim());
+                intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, true);
                 startActivityForResult(intent, CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE);
                 break;
             case R.id.ll_project://选择跟进项目
@@ -233,13 +235,13 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 intent.putExtra("unitID", currentUnitID);
                 intent.putExtra("customerName", tvVisitCustomer.getText().toString().trim());
                 intent.putExtra("unitName", tvVisitUnit.getText().toString().trim());
+                intent.putExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, true);
                 startActivityForResult(intent, CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE);
                 break;
             case R.id.btn_start://开始
                 if (!verificationTextView()) {
                     return;
                 }
-                isStart = true;
                 showDialog();
                 easyPermission();
                 break;
@@ -258,12 +260,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                     return;
                 }
                 showDialog();
-                if (currentCustomerID.equals("null")) {
-                    currentCustomerID = "";
-                }
                 mPresenter.submissionData("visit_submission", String.valueOf(currentVisitRecordID),
                         String.valueOf(currentUnitID), String.valueOf(visitTypeID), String.valueOf(projectID),
-                        currentCustomerID, tvVisitDepartment.getText().toString().trim(),
+                        String.valueOf(currentCustomerID), tvVisitDepartment.getText().toString().trim(),
                         etVisitSummary.getText().toString().trim(), null, null,
                         null, null, null, null, null, null);
                 break;
@@ -413,7 +412,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 ivVisitCustomer.setVisibility(View.GONE);
                 tvVisitDepartment.setText(department);
                 currentUnitID = companyId;
-                currentCustomerID = String.valueOf(userId);
+                currentCustomerID = userId;
             }
         } else {//点击列表item进入当前页面
             currentVisitRecordID = getIntent().getIntExtra("currentID", 0);
@@ -633,7 +632,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 return;
             }
         }*/ else if (visitTypeID == 0) {//跟进
-            if (currentUnitID <= 0 || TextUtils.isEmpty(currentCustomerID) || projectID <= 0) {
+            if (currentUnitID <= 0 || currentCustomerID <= 0 || projectID <= 0) {
                 ToastUtil.showToast("填写的信息不完整, 请按星标填写");
                 return;
             }
@@ -659,7 +658,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             return;
         }
         if (visitTypeID == 1) {//拜访
-            if (currentUnitID == 0 || TextUtils.isEmpty(currentCustomerID)) {
+            if (currentUnitID == 0 || currentCustomerID == 0) {
                 ToastUtil.showToast("填写的信息不完整, 请按星标填写");
                 return;
             }
@@ -735,7 +734,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         tvProject.setText(bean.projectName);
         etVisitSummary.setText(bean.summary);
         currentUnitID = bean.companyId;
-        currentCustomerID = bean.contactsId;
+        currentCustomerID = bean.contactsId == null || "null".equals(bean.contactsId) ? 0 : Integer.parseInt(bean.contactsId);
         projectID = bean.projectId;
         tvVisitType.setTextColor(getResources().getColor(R.color.black1));
         tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));
@@ -830,6 +829,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             tvRedDot1.setVisibility(View.VISIBLE);
             tvRedDot2.setVisibility(View.VISIBLE);
             tvRedDot3.setVisibility(View.INVISIBLE);
+
+            isStart = true;
         }
     }
 
@@ -946,7 +947,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             if(data.hasExtra("personName")) {
                 String personName = data.getStringExtra("personName");
                 String department = data.getStringExtra("personDepartment");
-                currentCustomerID = data.getStringExtra("personID");
+                currentCustomerID = data.getIntExtra("personID",0);
                 tvVisitCustomer.setText(personName);
                 ivVisitCustomer.setVisibility(View.GONE);
                 tvVisitDepartment.setText(department);
@@ -967,9 +968,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             }
         } else if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE) {
             // 给拜访人赋值
-            String name = data.getStringExtra("name");
-            String department = data.getStringExtra("department");
-            currentCustomerID = data.getStringExtra("ID");
+            String name = data.getStringExtra("personName");
+            String department = data.getStringExtra("personDepartment");
+            currentCustomerID = data.getIntExtra("personID",0);
             tvVisitCustomer.setText(name);
             ivVisitCustomer.setVisibility(View.GONE);
             tvVisitDepartment.setText(department);

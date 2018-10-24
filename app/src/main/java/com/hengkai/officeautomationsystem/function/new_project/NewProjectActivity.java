@@ -90,6 +90,11 @@ public class NewProjectActivity extends BaseActivity<NewProjectPresenter> {
      */
     private int personType = 0;
 
+    /**
+     * 是否为拜访跟进
+     */
+    private boolean openByVisit;
+
     @Override
     protected int setupView() {
         return R.layout.activity_new_project;
@@ -107,17 +112,26 @@ public class NewProjectActivity extends BaseActivity<NewProjectPresenter> {
     }
 
     private void initParams() {
-        String currentCustomerID = getIntent().getStringExtra("currentCustomerID");
-        int currentUnitID = getIntent().getIntExtra("unitID", 0);
-        String customerName = getIntent().getStringExtra("customerName");
-        String unitName = getIntent().getStringExtra("unitName");
+        // 获取配置
+        Intent intent = getIntent();
 
-        if (!TextUtils.isEmpty(currentCustomerID) && currentUnitID != 0) {
-            personID = Integer.valueOf(currentCustomerID);
-            unitID = currentUnitID;
+        if(intent.hasExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT)) {
+            openByVisit = intent.getBooleanExtra(CommonFinal.EXTRA_KEY_OPEN_BY_VISIT, false);
+        }
 
+        int currentCustomerID = intent.getIntExtra("currentCustomerID", 0);
+        String customerName = intent.getStringExtra("customerName");
+        int currentUnitID = intent.getIntExtra("unitID", 0);
+        String unitName = intent.getStringExtra("unitName");
+
+        if (currentCustomerID != 0 && currentUnitID != 0) {
+            personID = currentCustomerID;
             tvPerson.setText(customerName);
+            rlPerson.setClickable(false);
+
+            unitID = currentUnitID;
             tvUnit.setText(unitName);
+            rlUnit.setClickable(false);
         }
 
     }
@@ -215,6 +229,19 @@ public class NewProjectActivity extends BaseActivity<NewProjectPresenter> {
         mPresenter.commit(params);
     }
 
+    public void commitSuccess(int projectID){
+        Intent intent = new Intent();
+        intent.putExtra("projectID", projectID);
+        intent.putExtra("projectName", etName.getText().toString().trim());
+
+        if(openByVisit){
+            setResult(CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE, intent);
+        } else {
+            setResult(CommonFinal.COMMON_RESULT_CODE, intent);
+        }
+        finish();
+    }
+
     public void getTypeList(List<NewProjectGetTypeEntity.DATEBean> list) {
         String type = tvType.getText().toString().trim();
         TypeBottomDialogAdapter adapter = new TypeBottomDialogAdapter(list, type);
@@ -290,8 +317,8 @@ public class NewProjectActivity extends BaseActivity<NewProjectPresenter> {
             tvUnit.setText(name);
 
         } else if (requestCode == CommonFinal.SELECT_VISIT_PERSON_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PERSON_RESULT_CODE) {
-            String name = data.getStringExtra("name");
-            personID = Integer.valueOf(data.getStringExtra("ID"));
+            String name = data.getStringExtra("personName");
+            personID = Integer.valueOf(data.getStringExtra("personID"));
             tvPerson.setText(name);
         }
     }

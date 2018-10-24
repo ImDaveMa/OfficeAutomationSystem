@@ -79,7 +79,7 @@ public class ChangePasswordActivity extends BaseActivity<ChangePasswordPresenter
             tvConfirmPassword.requestFocus();
             return;
         }
-        mPresenter.changePassword(newPassword, confirmPassword);
+        mPresenter.changePassword(password, newPassword);
     }
 
     @Override

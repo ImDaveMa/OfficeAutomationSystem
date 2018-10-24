@@ -25,9 +25,9 @@ public class ChangePasswordPresenter extends BasePresenter<ChangePasswordActivit
 
     public void changePassword(String oldPwd, String newPwd) {
         Map<String,String> params = new HashMap<>();
-        params.put("oldPwd", oldPwd);
-        params.put("newPwd", newPwd);
-        params.put("userId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
+        params.put("OLDPWD", oldPwd);
+        params.put("NEWPWD", newPwd);
+        params.put("USERID", SPUtils.getString(UserInfo.USER_ID.name(), ""));
 
         view.showDialog();
         model.request(URLFinal.CHANGE_PASSWORD, params, new Observer<CommonReceiveMessageEntity>() {
@@ -41,6 +41,7 @@ public class ChangePasswordPresenter extends BasePresenter<ChangePasswordActivit
                 view.dismissDialog();
                 if (commonEntity.CODE == 1) {
                     ToastUtil.showToast("密码修改成功");
+                    view.finish();
                 } else if (commonEntity.CODE == 0) {
                     view.showLoginDialog(view);
                 } else {
