@@ -249,7 +249,6 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 if (!verificationTextView()) {
                     return;
                 }
-                isStart = false;
                 showDialog();
                 mLocationClient.start();
                 break;
@@ -606,7 +605,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         adapter.setOnAdapterItemClickListener(new BottomPoiDialogAdapter.AdapterItemClickListener() {
             @Override
             public void getAddressName(String addressName) {
-                if (isStart) {
+                if (!isStart) {
                     locationStartAddress = addressName;
                     toStartVisit(addressName);
                 } else {
@@ -829,9 +828,9 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
             tvRedDot1.setVisibility(View.VISIBLE);
             tvRedDot2.setVisibility(View.VISIBLE);
             tvRedDot3.setVisibility(View.INVISIBLE);
-
-            isStart = true;
         }
+
+        isStart = true;
     }
 
     /**
@@ -842,6 +841,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         btnEnd.setText(String.format("结束 %s", currentTime));
         btnEnd.setEnabled(false);
         btnCommit.setEnabled(true);
+
+        isStart = false;
     }
 
     /**
@@ -985,8 +986,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 ivProject.setVisibility(View.VISIBLE);
             }
         } else if (requestCode == CommonFinal.SELECT_VISIT_PROJECT_REQUEST_CODE && resultCode == CommonFinal.SELECT_VISIT_PROJECT_RESULT_CODE) {
-            String name = data.getStringExtra("name");
-            projectID = data.getIntExtra("ID", 0);
+            String name = data.getStringExtra("projectName");
+            projectID = data.getIntExtra("projectID", 0);
 
             tvProject.setText(name);
             ivProject.setVisibility(View.GONE);
