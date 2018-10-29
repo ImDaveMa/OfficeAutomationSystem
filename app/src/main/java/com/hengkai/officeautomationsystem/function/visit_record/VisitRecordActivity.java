@@ -397,6 +397,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         tv_pop_all_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getVisitRecordList(new ArrayList<VisitRecordEntity.DATABean>());
+                removeNoDataLayout(2);
                 listStatus = 1;
                 whichDay = 1;
                 if (isMySelf) {
@@ -410,6 +412,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         tv_pop_one_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getVisitRecordList(new ArrayList<VisitRecordEntity.DATABean>());
+                removeNoDataLayout(2);
                 listStatus = 2;
                 whichDay = 2;
                 if (isMySelf) {
@@ -423,6 +427,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         tv_pop_seven_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getVisitRecordList(new ArrayList<VisitRecordEntity.DATABean>());
+                removeNoDataLayout(2);
                 listStatus = 3;
                 whichDay = 3;
                 if (isMySelf) {
@@ -436,6 +442,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         tv_pop_Fifteen_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getVisitRecordList(new ArrayList<VisitRecordEntity.DATABean>());
+                removeNoDataLayout(2);
                 listStatus = 4;
                 whichDay = 4;
                 if (isMySelf) {
@@ -449,6 +457,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         tv_pop_current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getVisitRecordList(new ArrayList<VisitRecordEntity.DATABean>());
+                removeNoDataLayout(2);
                 listStatus = 5;
                 isMySelf = true;
 
@@ -469,6 +479,8 @@ public class VisitRecordActivity extends BaseActivity<VisitRecordActivityPresent
         tv_pop_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getVisitRecordList(new ArrayList<VisitRecordEntity.DATABean>());
+                removeNoDataLayout(2);
                 listStatus = 6;
                 isMySelf = false;
 
