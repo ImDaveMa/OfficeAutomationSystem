@@ -296,4 +296,12 @@ public class URLFinal {
      * 修改密码
      */
     public static final String CHANGE_PASSWORD = "user/updatePwd";
+    /**
+     * 获取某年某月日程
+     */
+    public static final String GET_CALENDAR_LIST = "schedule/selectHaveSchedule";
+    /**
+     * 获取某年某月某日日程
+     */
+    public static final String GET_CALENDAR_LIST_WITH_DAY = "schedule/selectHaveSchedule";
 }

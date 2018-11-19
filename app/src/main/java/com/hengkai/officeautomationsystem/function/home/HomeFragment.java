@@ -1,27 +1,24 @@
 package com.hengkai.officeautomationsystem.function.home;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.approve.ApproveListActivity;
 import com.hengkai.officeautomationsystem.function.message.MessageListActivity;
 import com.hengkai.officeautomationsystem.function.notice.NoticeListActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.NoticeEntity;
 import com.hengkai.officeautomationsystem.utils.DateFormatUtils;
-import com.hengkai.officeautomationsystem.utils.WindowUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.paradoxie.autoscrolltextview.VerticalTextview;
 
@@ -152,7 +149,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
                 startActivity(new Intent(mActivity, ScheduleActivity.class));
                 break;
             case R.id.cv_home_approve_container:
-                startActivity(new Intent(mActivity, NoticeListActivity.class));
+                startActivityForResult(new Intent(mActivity, NoticeListActivity.class), NoticeListActivity.NOTICE_LIST_REQUEST_CODE);
                 break;
             case R.id.cv_home_msg_container:
                 startActivity(new Intent(mActivity, MessageListActivity.class));
@@ -190,19 +187,28 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
     }
 
     protected void prepareNoticeList(List<NoticeEntity.DATEBean> list, int total) {
-        tvToDo.setText(String.format("%d条未读", total));
         ArrayList<String> items = new ArrayList<>();
-        if (list != null && list.size() > 0) {
+        if(list == null || list.size() == 0 || total == 0){
+            tvToDo.setText(" ");
+            items.add("暂无数据");
+        } else {
+            tvToDo.setText(String.format("%d条未读", total));
             for (NoticeEntity.DATEBean bean :  list) {
                 items.add(bean.noticeTitle);
             }
-        } else {
-            items.add("暂无数据");
         }
         tvReceiveMessage.setTextList(items);
     }
 
-//    //停止滚动 报错
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == NoticeListActivity.NOTICE_LIST_REQUEST_CODE){
+            mPresenter.getNoticeList();
+        }
+    }
+
+    //    //停止滚动 报错
 //    @Override
 //    public void onPause() {
 //        super.onPause();

@@ -2,8 +2,6 @@ package com.hengkai.officeautomationsystem.function.message;
 
 import com.hengkai.officeautomationsystem.base.presenter.BasePresenter;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.function.approve.ApproveListActivity;
-import com.hengkai.officeautomationsystem.function.approve.ApproveListModel;
 import com.hengkai.officeautomationsystem.network.entity.MessageEntity;
 import com.hengkai.officeautomationsystem.utils.ToastUtil;
 import com.hengkai.officeautomationsystem.utils.rx.RxApiManager;

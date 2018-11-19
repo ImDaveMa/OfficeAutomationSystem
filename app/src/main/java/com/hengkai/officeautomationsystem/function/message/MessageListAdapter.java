@@ -47,9 +47,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final MessageEntity.MsgBean bean = mMessageList.get(position);
         String op = "";
-        if(bean.getNews_type() == 0){
+        if(bean.getNews_type() == MessageListModel.STATE_APPROVE){
             op = "";
-        } else if(bean.getNews_type() == 1){
+        } else if(bean.getNews_type() == MessageListModel.STATE_MESSAGE){
             op = "消息";
         }
         holder.tvContent.setText(String.format("您收到了一条%s%s",bean.getTypeName(),op));
@@ -57,23 +57,36 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         holder.tvTime.setText(String.format("消息时间：%s", DateFormatUtils.getFormatedNewsTime(bean.getCreateTime())));
         String state = "";
         int color = R.color.blue;
-        switch (bean.getState()){
-            case 0:
-                state = "待审核";
-                color = R.color.state_orange;
-                break;
-            case 1:
-                state = "已通过";
-                color = R.color.state_green;
-                break;
-            case 2:
-                state = "已拒绝";
-                color = R.color.state_red;
-                break;
-            case 3:
-                state = "已撤销";
-                color = R.color.state_blue;
-                break;
+        if(bean.getNews_type() == MessageListModel.STATE_APPROVE) { // 审核状态
+            switch (bean.getState()) {
+                case 0:
+                    state = "待审核";
+                    color = R.color.state_orange;
+                    break;
+                case 1:
+                    state = "已通过";
+                    color = R.color.state_green;
+                    break;
+                case 2:
+                    state = "已拒绝";
+                    color = R.color.state_red;
+                    break;
+                case 3:
+                    state = "已撤销";
+                    color = R.color.state_blue;
+                    break;
+            }
+        } else if(bean.getNews_type() == MessageListModel.STATE_MESSAGE) { // 消息状态
+            switch (bean.getState()) {
+                case 0:
+                    state = "未读";
+                    color = R.color.state_orange;
+                    break;
+                case 1:
+                    state = "已读";
+                    color = R.color.state_blue;
+                    break;
+            }
         }
         holder.tvType.setText(state);
         holder.tvType.setTextColor(mContext.getResources().getColor(color));

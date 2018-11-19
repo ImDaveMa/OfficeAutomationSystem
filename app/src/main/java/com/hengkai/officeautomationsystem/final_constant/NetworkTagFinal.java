@@ -239,4 +239,10 @@ public class NetworkTagFinal {
      */
     public static final String CHANGE_PASSWORD_ACTIVITY_URL = "CHANGE_PASSWORD_ACTIVITY_URL";
     public static final String SETTING_ACTIVITY_LOGOUT_URL = "SETTING_ACTIVITY_LOGOUT_URL";
+
+    /**
+     * ScheduleActivity
+     */
+    public static final String SCHEDULE_ACTIVITY_GET_LIST = "SCHEDULE_ACTIVITY_GET_LIST";
+    public static final String SCHEDULE_ACTIVITY_GET_LIST_WITH_DAY = "SCHEDULE_ACTIVITY_GET_LIST_WITH_DAY";
 }

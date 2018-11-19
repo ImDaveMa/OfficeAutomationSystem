@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NoticeListActivity extends BaseActivity {
+    public static final int NOTICE_LIST_REQUEST_CODE = 10238;
 
     @BindView(R.id.iv_back)
     ImageView ivBack;

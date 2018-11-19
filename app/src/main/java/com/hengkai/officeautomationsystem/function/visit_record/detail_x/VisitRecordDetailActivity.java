@@ -675,6 +675,8 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
      * 通过列表进入当前页面, 并传值给各个控件
      */
     public void setupCurrentPage(VisitRecordDetailEntity.DATABean bean) {
+        isStart = true;
+
         switch (bean.type) {
             case "0":
                 tvVisitType.setText("跟进");

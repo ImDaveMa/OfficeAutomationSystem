@@ -23,6 +23,7 @@ import com.hengkai.officeautomationsystem.function.new_unit.NewUnitActivity;
 import com.hengkai.officeautomationsystem.function.project_library.ProjectLibraryActivity;
 import com.hengkai.officeautomationsystem.function.report.ReportActivity;
 import com.hengkai.officeautomationsystem.function.schedule.ScheduleActivity;
+import com.hengkai.officeautomationsystem.function.setting.ChangePasswordActivity;
 import com.hengkai.officeautomationsystem.function.unit_library.UnitLibraryActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.VisitRecordActivity;
 import com.hengkai.officeautomationsystem.function.visit_record.detail_x.VisitRecordDetailActivity;
@@ -124,6 +125,9 @@ public class OpenActivityUtils {
                         break;
                     case R.drawable.ic_new_project: // 新增项目
                         onClickMethod(activity, NewProjectActivity.class, dbId);
+                        break;
+                    case R.drawable.ic_modify_password: // 修改密码
+                        onClickMethod(activity, ChangePasswordActivity.class, dbId);
                         break;
                     default:
                         ToastUtil.showToast("敬请期待！");

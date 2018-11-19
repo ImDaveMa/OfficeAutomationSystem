@@ -13,6 +13,7 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseFragment;
+import com.hengkai.officeautomationsystem.final_constant.CommonFinal;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
 import com.hengkai.officeautomationsystem.function.notice.NoticeDetailActivity;
 import com.hengkai.officeautomationsystem.function.notice.NoticeListAdapter;
@@ -155,7 +156,7 @@ public class MessageFragment extends BaseFragment<MessageListPresenter> implemen
                 if(bean.getProject_name().equals("sd_visit")) {//拜访跟进审批
                     Intent toIntent = new Intent(mActivity, CommentVisitActivity.class);
                     toIntent.putExtra("currentID", bean.getProject_id());
-                    startActivity(toIntent);
+                    startActivityForResult(toIntent, CommonFinal.COMMON_REQUEST_CODE);
                 } else {
                     ToastUtil.showToast("暂无其它审批");
                 }
@@ -169,7 +170,7 @@ public class MessageFragment extends BaseFragment<MessageListPresenter> implemen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000){
+        if (requestCode == CommonFinal.COMMON_REQUEST_CODE && resultCode == CommonFinal.COMMON_RESULT_CODE){
             swipeToLoadLayout.setRefreshing(true);
         }
     }
