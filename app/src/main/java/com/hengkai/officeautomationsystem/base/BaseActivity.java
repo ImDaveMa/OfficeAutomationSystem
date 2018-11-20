@@ -108,6 +108,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends BaseActivity
         dialog.setView(View.inflate(this, R.layout.dialog_base, null));
     }
 
+    public AlertDialog createDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.LoadingDialog);
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setView(View.inflate(this, R.layout.dialog_base, null));
+        return dialog;
+    }
+
     /**
      * 显示LoadingDialog
      */

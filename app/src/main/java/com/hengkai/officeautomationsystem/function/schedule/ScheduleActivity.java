@@ -1,6 +1,8 @@
 package com.hengkai.officeautomationsystem.function.schedule;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +14,8 @@ import com.haibin.calendarview.CalendarView;
 import com.hengkai.officeautomationsystem.R;
 import com.hengkai.officeautomationsystem.base.BaseActivity;
 import com.hengkai.officeautomationsystem.final_constant.NetworkTagFinal;
-import com.hengkai.officeautomationsystem.network.entity.ReportEntity;
+import com.hengkai.officeautomationsystem.listener.OnItemClickListener;
+import com.hengkai.officeautomationsystem.network.entity.ScheduleEntity;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import butterknife.OnClick;
  * Created by Harry on 2018/4/26.
  * Edit by Dave on 2018/11/19
  */
-public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
+public class ScheduleActivity extends BaseActivity<SchedulePresenter> implements OnItemClickListener {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -41,11 +44,16 @@ public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    public AlertDialog changeMonthDialog;
+    private List<ScheduleEntity.ScheduleBean> mList = new ArrayList<>();
+    private ScheduleListAdapter mAdapter;
+
     @Override
     protected int setupView() {
         return R.layout.activity_schedule;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void initView() {
         ButterKnife.bind(this);
@@ -53,11 +61,19 @@ public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
         //设置沉浸式状态栏, 参数2: 颜色, 参数3: 透明度(0-255, 0表示透明, 255不透明)
         StatusBarUtil.setColor(this, getResources().getColor(R.color.app_theme_color), 0);
 
-        tvTitle.setText("日程");
+        tvTitle.setText(String.format("%d-%d", calendarView.getCurYear(), calendarView.getCurMonth()));
         tvOperation.setVisibility(View.VISIBLE);
         tvOperation.setText("新增");
 
         initCalendarView();
+
+        // 初始化列表
+        mAdapter = new ScheduleListAdapter(this, mList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(mAdapter);
+
+        changeMonthDialog = createDialog();
+        mPresenter.getCalendarList(calendarView.getCurYear(), calendarView.getCurMonth());
     }
 
     @OnClick({R.id.iv_back,R.id.tv_operation})
@@ -87,8 +103,10 @@ public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
 
     private void initCalendarView() {
         calendarView.setOnMonthChangeListener(new CalendarView.OnMonthChangeListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onMonthChange(int year, int month) {
+                tvTitle.setText(String.format("%d-%d", year, month));
                 mPresenter.getCalendarList(year, month);
             }
         });
@@ -102,7 +120,7 @@ public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
 
     public void renderCalendar(List<String> data){
         List<Calendar> list = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < data.size(); i++) {
             String[] date = data.get(i).split("-");
 
             int year = Integer.parseInt(date[0]);
@@ -119,8 +137,10 @@ public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
      * 呈现选中的天
      * @param data
      */
-    public void renderDayCalendars(List<String> data){
-
+    public void renderDayCalendars(List<ScheduleEntity.ScheduleBean> data){
+        mList.clear();
+        mList.addAll(data);
+        mAdapter.notifyDataSetChanged();
     }
 
     private Calendar getSchemeCalendar(int year, int month, int day, int color, String text) {
@@ -131,5 +151,10 @@ public class ScheduleActivity extends BaseActivity<SchedulePresenter> {
         calendar.setSchemeColor(color);//如果单独标记颜色、则会使用这个颜色
         calendar.setScheme(text);
         return calendar;
+    }
+
+    @Override
+    public void onItemClick(View v, Object o, int position) {
+
     }
 }

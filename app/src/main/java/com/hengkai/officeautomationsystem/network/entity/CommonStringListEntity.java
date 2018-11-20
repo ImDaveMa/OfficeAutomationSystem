@@ -6,5 +6,5 @@ public class CommonStringListEntity {
 
     public int CODE;
     public String MES;
-    public List<String> DATE;
+    public List<String> DATA;
 }

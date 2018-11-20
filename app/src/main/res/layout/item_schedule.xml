@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="15dp">
+    <TextView
+        android:id="@+id/tv_schedule_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="时间：2018-10-12 12:30:22 至 2018-10-12 14:30:22"/>
+    <TextView
+        android:id="@+id/tv_schedule_item_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black1"
+        android:text="这里是日程内容，这里是日程内容，这里是日程内容，这里是日程内容，这里是日程内容，这里是日程内容"/>
+</LinearLayout>

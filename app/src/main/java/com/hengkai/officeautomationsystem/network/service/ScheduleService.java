@@ -2,6 +2,7 @@ package com.hengkai.officeautomationsystem.network.service;
 
 import com.hengkai.officeautomationsystem.network.entity.CommonReceiveMessageEntity;
 import com.hengkai.officeautomationsystem.network.entity.CommonStringListEntity;
+import com.hengkai.officeautomationsystem.network.entity.ScheduleEntity;
 
 import java.util.Map;
 
@@ -19,6 +20,6 @@ public interface ScheduleService {
 
     @FormUrlEncoded
     @POST
-    Observable<CommonStringListEntity> getCalendarListWithDay(@Url String url, @FieldMap Map<String, String> params);
+    Observable<ScheduleEntity> getCalendarListWithDay(@Url String url, @FieldMap Map<String, String> params);
 
 }

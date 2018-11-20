@@ -2,9 +2,12 @@ package com.hengkai.officeautomationsystem.function.schedule;
 
 import com.hengkai.officeautomationsystem.base.model.BaseModel;
 import com.hengkai.officeautomationsystem.final_constant.URLFinal;
+import com.hengkai.officeautomationsystem.final_constant.UserInfo;
 import com.hengkai.officeautomationsystem.network.entity.CommonStringListEntity;
+import com.hengkai.officeautomationsystem.network.entity.ScheduleEntity;
 import com.hengkai.officeautomationsystem.network.service.ScheduleService;
 import com.hengkai.officeautomationsystem.utils.RetrofitHelper;
+import com.hengkai.officeautomationsystem.utils.SPUtils;
 
 import java.util.Map;
 
@@ -25,6 +28,7 @@ public class ScheduleModel extends BaseModel {
     public void getCalendarList(int year, int month, Observer<CommonStringListEntity> observer) {
         Map<String, String> params = getDefaultParams();
 
+        params.put("UserId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("Year", String.valueOf(year));
         params.put("Month", String.valueOf(month));
 
@@ -34,9 +38,10 @@ public class ScheduleModel extends BaseModel {
                 .subscribe(observer);
     }
 
-    public void getCalendarListWithDay(int year, int month, int day, Observer<CommonStringListEntity> observer) {
+    public void getCalendarListWithDay(int year, int month, int day, Observer<ScheduleEntity> observer) {
         Map<String, String> params = getDefaultParams();
 
+        params.put("UserId", SPUtils.getString(UserInfo.USER_ID.name(), ""));
         params.put("Year", String.valueOf(year));
         params.put("Month", String.valueOf(month));
         params.put("Day", String.valueOf(day));
