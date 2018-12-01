@@ -70,6 +70,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public static boolean isForeground = false;
     private NotificationUtil notificationUtil;
 
+    private String DOWNLOAD_NEW_VERSION;
+
     @Override
     protected int setupView() {
         return R.layout.activity_main;
@@ -111,6 +113,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     public void onNext(CheckVersionEntity checkVersionEntity) {
                         if (checkVersionEntity.CODE == 1) {
                             if (!checkVersionEntity.versionNumber.equals(VersionUtils.getVerName(MainActivity.this))) {
+                                DOWNLOAD_NEW_VERSION = checkVersionEntity.MES; // 这里返回了下载地址
                                 easyPermission();
                             }
                         } else if (checkVersionEntity.CODE == 0) {
@@ -168,7 +171,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 file1.delete();
             }
         }
-        FileDownloader.getImpl().create(URLFinal.DOWNLOAD_NEW_VERSION)
+        FileDownloader.getImpl().create(DOWNLOAD_NEW_VERSION)
                 .setPath(path + "/hk_OA.apk")
                 .setListener(new FileDownloadListener() {
                     @Override

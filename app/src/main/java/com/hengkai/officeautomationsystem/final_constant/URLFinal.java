@@ -16,12 +16,8 @@ public class URLFinal {
     /**
      * baseURL
      */
-//    public static final String BASE_URL = "http://192.168.2.157:8080/OA_inside/mobile/" + VERSION + "/";
-//    public static final String BASE_URL = "http://192.168.2.22:8080/OA2.0/mobile/" + VERSION + "/";
-//    public static final String BASE_URL = "http://oa.lyyisun.com:8042/mobile/" + VERSION + "/";
-//    public static final String BASE_URL = "http://oa.hkkj.net:8043/mobile/" + VERSION + "/";
-    public static final String BASE_URL = "http://192.168.2.199:8081/OA2.0/mobile/" + VERSION + "/";
-
+    public static final String BASE_URL = "http://oa.hkkj.net:8043/" + VERSION + "/mobile/";
+//    public static final String BASE_URL = "http://192.168.2.199:8081/" + VERSION + "/mobile/";
 
     /**
      * 检测版本号
@@ -30,7 +26,7 @@ public class URLFinal {
     /**
      * 下载新的版本信息
      */
-    public static final String DOWNLOAD_NEW_VERSION = "http://oa.lyyisun.com:8042/oa/file/app/hkoa.apk";
+//    public static final String DOWNLOAD_NEW_VERSION = "http://oa.hkkj.net:8043/oa2.0/file/app/hkoa.apk";
     /**
      * 登录
      */
