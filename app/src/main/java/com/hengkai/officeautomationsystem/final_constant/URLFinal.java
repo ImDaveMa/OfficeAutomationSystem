@@ -16,8 +16,8 @@ public class URLFinal {
     /**
      * baseURL
      */
-    public static final String BASE_URL = "http://oa.hkkj.net:8043/" + VERSION + "/mobile/";
-//    public static final String BASE_URL = "http://192.168.2.199:8081/" + VERSION + "/mobile/";
+//    public static final String BASE_URL = "http://oa.hkkj.net:8043/" + VERSION + "/mobile/";
+    public static final String BASE_URL = "http://192.168.2.176/OA_API/mobile/";
 
     /**
      * 检测版本号

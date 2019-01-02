@@ -91,4 +91,18 @@
         android:textColor="@color/black1"
         android:textSize="15sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black5" />
+
+    <TextView
+        android:id="@+id/tv_rc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="日常工作"
+        android:textColor="@color/black1"
+        android:textSize="15sp" />
 </LinearLayout>

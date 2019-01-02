@@ -292,6 +292,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         final TextView tvHT = view.findViewById(R.id.tv_ht);
         final TextView tvBS = view.findViewById(R.id.tv_bs);
         final TextView tvFA = view.findViewById(R.id.tv_fa);
+        final TextView tvRC = view.findViewById(R.id.tv_rc);
         final BottomSheetDialog dialog = getBottomSheetDialog(view);
 
         tvBF.setOnClickListener(new View.OnClickListener() {
@@ -378,6 +379,20 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 dialog.dismiss();
             }
         });
+
+        tvRC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitTypeID = 6;
+                tvVisitType.setText(tvRC.getText().toString().trim());
+                ivVisitType.setVisibility(View.GONE);
+                tvRedDot1.setVisibility(View.INVISIBLE);
+                tvRedDot2.setVisibility(View.INVISIBLE);
+                tvRedDot3.setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
@@ -725,6 +740,13 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
                 tvRedDot2.setVisibility(View.VISIBLE);
                 tvRedDot3.setVisibility(View.VISIBLE);
                 break;
+            case "6":   //日常工作
+                tvVisitType.setText("日常工作");
+                visitTypeID = 6;
+                tvRedDot1.setVisibility(View.INVISIBLE);
+                tvRedDot2.setVisibility(View.INVISIBLE);
+                tvRedDot3.setVisibility(View.INVISIBLE);
+                break;
         }
         ivVisitType.setVisibility(View.GONE);
         tvVisitUnit.setText(bean.companyName);
@@ -735,7 +757,7 @@ public class VisitRecordDetailActivity extends BaseActivity<VisitRecordDetailPre
         tvProject.setText(bean.projectName);
         etVisitSummary.setText(bean.summary);
         currentUnitID = bean.companyId;
-        currentCustomerID = bean.contactsId == null || "null".equals(bean.contactsId) ? 0 : Integer.parseInt(bean.contactsId);
+        currentCustomerID = bean.contactsId == null || "".equals(bean.contactsId) || "null".equals(bean.contactsId) ? 0 : Integer.parseInt(bean.contactsId);
         projectID = bean.projectId;
         tvVisitType.setTextColor(getResources().getColor(R.color.black1));
         tvVisitUnit.setTextColor(getResources().getColor(R.color.black1));

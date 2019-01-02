@@ -226,8 +226,20 @@ public class CommentVisitActivity extends BaseActivity<CommentVisitPresenter> {
             case "1":
                 tvVisitType.setText("拜访");
                 break;
-            default:
+            case "2":
                 tvVisitType.setText("招待");
+                break;
+            case "3":
+                tvVisitType.setText("方案");
+                break;
+            case "4":
+                tvVisitType.setText("合同");
+                break;
+            case "5":
+                tvVisitType.setText("标书");
+                break;
+            default:
+                tvVisitType.setText("日常工作");
                 break;
         }
         tvVisitUnit.setText(bean.companyName);
